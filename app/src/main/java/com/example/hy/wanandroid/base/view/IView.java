@@ -1,10 +1,10 @@
 package com.example.hy.wanandroid.base.view;
 
 /**
- * View的基类
+ * View接口
  * Created by 陈健宇 at 2018/10/21
  */
-public interface AbstractView {
+public interface IView {
 
     //显示加载错误布局
     void showErrorView();

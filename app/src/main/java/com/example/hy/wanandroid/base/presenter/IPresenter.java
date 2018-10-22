@@ -1,6 +1,6 @@
 package com.example.hy.wanandroid.base.presenter;
 
-import com.example.hy.wanandroid.base.view.AbstractView;
+import com.example.hy.wanandroid.base.view.IView;
 
 import io.reactivex.disposables.Disposable;
 
@@ -8,7 +8,7 @@ import io.reactivex.disposables.Disposable;
  * presenter接口
  * Created by 陈健宇 at 2018/10/21
  */
-public interface AbstractPresenter<T extends AbstractView>{
+public interface IPresenter<T extends IView>{
 
     //注入View
     void attachView(T view);

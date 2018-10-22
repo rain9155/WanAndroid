@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tl_comment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tl_common"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    app:elevation="@dimen/dp_5">
+
+    <ImageView
+        android:id="@+id/iv_common"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:src="@drawable/ic_navigation"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_common"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:paddingLeft="@dimen/dp_10"
+        android:textSize="@dimen/sp_18"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dp_10"
+        tools:text="首页"
+        tools:ignore="RtlSymmetry" />
 
 </androidx.appcompat.widget.Toolbar>
