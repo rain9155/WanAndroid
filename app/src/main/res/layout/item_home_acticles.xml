@@ -32,11 +32,12 @@
             android:paddingTop="@dimen/dp_10"
             android:paddingLeft="@dimen/dp_5"
             android:paddingBottom="@dimen/dp_5"
+            android:paddingStart="@dimen/dp_5"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/tv_author"
-            android:paddingStart="@dimen/dp_5"
-            tools:text="这是标题"
+            app:layout_constrainedWidth="true"
+            tools:text="这是标题.........................................."
             tools:ignore="RtlSymmetry" />
 
         <TextView
@@ -51,6 +52,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constrainedWidth="true"
             android:paddingStart="@dimen/dp_5"
             tools:text="作者：rain"
             tools:ignore="RtlSymmetry" />
@@ -67,6 +69,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_author"
             app:layout_constraintLeft_toRightOf="@id/tv_author"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constrainedWidth="true"
             android:paddingStart="@dimen/dp_5"
             tools:text="分类：rain"
             tools:ignore="RtlSymmetry" />
@@ -84,6 +87,7 @@
             app:layout_constraintLeft_toRightOf="@id/tv_classify"
             app:layout_constraintBottom_toBottomOf="parent"
             android:paddingStart="@dimen/dp_5"
+            app:layout_constrainedWidth="true"
             tools:text="时间：2018/1/1"
             tools:ignore="RtlSymmetry" />
 
@@ -91,8 +95,9 @@
             android:id="@+id/barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:barrierDirection="end"
-            app:constraint_referenced_ids="tv_title, tv_publish_time"
+            android:layout_marginLeft="@dimen/dp_5"
+            app:barrierDirection="right"
+            app:constraint_referenced_ids="iv_collection"
             tools:ignore="UnknownId" />
 
         <ImageView
