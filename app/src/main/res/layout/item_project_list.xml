@@ -12,7 +12,7 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:selectableItemBackground"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/foreground"
     app:cardElevation="@dimen/dp_8"
     app:cardCornerRadius="@dimen/dp_8"
     app:cardUseCompatPadding="true"
@@ -22,8 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_10">
-        
-        
+
         <ImageView
             android:id="@+id/iv_project_image"
             android:layout_width="@dimen/dp_100"
@@ -32,7 +31,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:src="@drawable/girl"/>
+            tools:src="@drawable/girl"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -40,10 +40,12 @@
             android:layout_height="wrap_content"
             android:textColor="@color/primaryText"
             android:textSize="@dimen/sp_22"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingStart="@dimen/dp_5"
             app:layout_constraintLeft_toRightOf="@id/iv_project_image"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/tv_details"
-            app:layout_constraintRight_toLeftOf="@+id/barrier"
+            app:layout_constrainedWidth="true"
             tools:text="这是标题"
             tools:ignore="RtlSymmetry" />
 
@@ -53,11 +55,16 @@
             android:layout_height="wrap_content"
             android:textColor="@color/secondaryText"
             android:textSize="@dimen/sp_18"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
             app:layout_constraintLeft_toRightOf="@id/iv_project_image"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
             app:layout_constraintRight_toLeftOf="@+id/barrier"
+            app:layout_constrainedWidth="true"
             tools:text="这是详情..........................................."
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="RtlSymmetry"
+            android:paddingStart="@dimen/dp_5" />
 
         <TextView
             android:id="@+id/tv_author"
@@ -65,12 +72,14 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_16"
             android:textColor="@color/secondaryText"
+            android:paddingLeft="@dimen/dp_5"
             app:layout_constraintLeft_toRightOf="@id/iv_project_image"
             app:layout_constraintBottom_toTopOf="@+id/tv_publish_time"
             app:layout_constraintTop_toBottomOf="@id/tv_details"
-            app:layout_constraintRight_toLeftOf="@+id/barrier"
+            app:layout_constrainedWidth="true"
             tools:text="作者：rain"
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="RtlSymmetry"
+            android:paddingStart="@dimen/dp_5" />
 
         <TextView
             android:id="@+id/tv_publish_time"
@@ -78,20 +87,24 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_16"
             android:textColor="@color/secondaryText"
+            android:paddingLeft="@dimen/dp_5"
             app:layout_constraintLeft_toRightOf="@id/iv_project_image"
             app:layout_constraintTop_toBottomOf="@id/tv_author"
-            app:layout_constraintRight_toLeftOf="@+id/barrier"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constrainedWidth="true"
             tools:text="时间：2018/1/1"
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="RtlSymmetry"
+            android:paddingStart="@dimen/dp_5" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
             app:barrierDirection="left"
             app:constraint_referenced_ids="iv_collection"
-            tools:ignore="UnknownId" />
+            tools:ignore="UnknownId"
+            android:layout_marginStart="@dimen/dp_5" />
 
         <ImageView
             android:id="@+id/iv_collection"

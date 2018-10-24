@@ -23,8 +23,8 @@ public abstract class BaseActivity<T extends IPresenter> extends SwipeBackActivi
     private Unbinder mUnbinder;
 
     protected abstract int getLayoutId();//获取Activity的布局Id
-    protected abstract int initView();//初始化控件
-    protected abstract int initData();//初始化数据
+    protected abstract void initView();//初始化控件
+    protected abstract void initData();//初始化数据
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

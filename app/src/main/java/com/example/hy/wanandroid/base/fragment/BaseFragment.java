@@ -28,8 +28,8 @@ public abstract class BaseFragment<T extends IPresenter> extends SwipeBackFragme
     private Unbinder mUnbinder;
 
     protected abstract int getLayoutId();//获取Fragment的布局Id
-    protected abstract int initView();//初始化控件，如setAdapter（）
-    protected abstract int initData();//初始化数据，如为adapter设置数据
+    protected abstract void initView();//初始化控件，如setAdapter（）
+    protected abstract void initData();//初始化数据，如为adapter设置数据
 
     @Nullable
     @Override
@@ -57,5 +57,35 @@ public abstract class BaseFragment<T extends IPresenter> extends SwipeBackFragme
             mUnbinder.unbind();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void showErrorView() {
+
+    }
+
+    @Override
+    public void showErrorMes() {
+
+    }
+
+    @Override
+    public void reLoad() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void showToast() {
+
+    }
+
+    @Override
+    public void showSnackBar() {
+
     }
 }

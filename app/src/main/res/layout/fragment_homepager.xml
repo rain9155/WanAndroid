@@ -3,11 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/background">
 
     <include layout="@layout/common_toolbal"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

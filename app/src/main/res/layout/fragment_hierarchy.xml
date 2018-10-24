@@ -2,16 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
     <include layout="@layout/common_toolbal"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl_hierarchy"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_hierarchy_list"
+            android:id="@+id/rv_hierarchy"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

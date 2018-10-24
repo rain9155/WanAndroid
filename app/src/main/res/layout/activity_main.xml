@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".view.MainActivity">
 
     <FrameLayout
@@ -22,9 +23,11 @@
         android:src="@drawable/ic_main_missile"
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginBottom="@dimen/dp_68"
+        android:clickable="true"
         app:pressedTranslationZ="@dimen/dp_10"
         app:elevation="@dimen/dp_10"
-        tools:ignore="RtlHardcoded" />
+        tools:ignore="RtlHardcoded"
+        android:focusable="true" />
     
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnv_btm"

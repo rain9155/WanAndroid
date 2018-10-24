@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="45dp"
+    android:height="45dp"
+    android:viewportHeight="60"
+    android:viewportWidth="60">
+
+    <group
+        android:name="group_ic_nav">
+
+        <path
+            android:name="path_1"
+            android:strokeColor="#ffffff"
+            android:strokeWidth="5"
+            android:pathData="
+            M 20 20 L 50 20
+            M 20 30 L 50 30
+            M 20 40 L 50 40"/>
+
+    </group>
+
+</vector>

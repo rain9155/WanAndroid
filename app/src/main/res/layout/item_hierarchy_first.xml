@@ -11,7 +11,7 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:selectableItemBackground"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/foreground"
     app:cardElevation="@dimen/dp_8"
     app:cardCornerRadius="@dimen/dp_8"
     app:cardUseCompatPadding="true"

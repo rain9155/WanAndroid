@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/srl_mine"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -8,7 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/background">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -35,18 +37,15 @@
                 android:id="@+id/btn_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mine_login"
+                android:text="@string/mineFragment_tvLogin"
                 android:textSize="@dimen/sp_18"
                 android:layout_marginTop="@dimen/dp_5"
-                android:background="@drawable/bg_btn"
+                android:background="@drawable/bg_mine_btn"
                 android:textColor="@color/primaryText"
-                android:backgroundTintMode="src_in"
-                android:backgroundTint="@color/translucence"
                 android:visibility="visible"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_face"
-                tools:targetApi="lollipop" />
+                app:layout_constraintTop_toBottomOf="@id/iv_face" />
 
             <TextView
                 android:id="@+id/tv_username"
@@ -67,26 +66,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <View
-                android:id="@+id/view_1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_15"
-                android:background="@color/divider"/>
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dp_5"
-                android:paddingBottom="@dimen/dp_5"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_10"
-                app:layout_constraintTop_toBottomOf="@id/view_1">
+                style="@style/MineFragmentConstaintStyle"
+                android:background="@color/foreground"
+                android:layout_marginTop="@dimen/dp_20"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/iv_collection"
-                    android:layout_width="@dimen/dp_35"
-                    android:layout_height="@dimen/dp_35"
+                    android:layout_width="@dimen/dp_28"
+                    android:layout_height="@dimen/dp_28"
                     android:src="@drawable/ic_mine_collection"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -94,21 +86,18 @@
                     tools:ignore="ContentDescription" />
 
                 <TextView
-                    android:id="@+id/tv_mine_collection"
+                    android:id="@+id/tv_collection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/mine_collect"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:textSize="@dimen/sp_18"
-                    android:textColor="@color/primaryText"
+                    android:text="@string/mineFragment_tvCollect"
+                    style="@style/MineFragmentTextStyle"
                     app:layout_constraintLeft_toRightOf="@id/iv_collection"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
                 <ImageView
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
+                    android:layout_width="@dimen/dp_28"
+                    android:layout_height="@dimen/dp_28"
                     android:src="@drawable/ic_mine_next"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -117,27 +106,20 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:id="@+id/view_2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_2"
-                android:background="@color/divider"
-                app:layout_constraintTop_toBottomOf="@id/cl_1"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dp_5"
-                android:paddingBottom="@dimen/dp_5"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_10"
-                app:layout_constraintTop_toBottomOf="@id/view_2">
+                style="@style/MineFragmentConstaintStyle"
+                android:background="@color/foreground"
+                android:layout_marginTop="@dimen/dp_2"
+                app:layout_constraintTop_toBottomOf="@id/cl_1">
 
                 <ImageView
                     android:id="@+id/iv_setting"
-                    android:layout_width="@dimen/dp_35"
-                    android:layout_height="@dimen/dp_35"
+                    android:layout_width="@dimen/dp_28"
+                    android:layout_height="@dimen/dp_28"
                     android:src="@drawable/ic_mine_setting"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -148,18 +130,15 @@
                     android:id="@+id/tv_setting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/mine_setting"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:textSize="@dimen/sp_18"
-                    android:textColor="@color/primaryText"
+                    android:text="@string/mineFragment_tvSetting"
+                    style="@style/MineFragmentTextStyle"
                     app:layout_constraintLeft_toRightOf="@id/iv_setting"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
+                    android:layout_width="@dimen/dp_28"
+                    android:layout_height="@dimen/dp_28"
                     android:src="@drawable/ic_mine_next"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -168,27 +147,19 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:id="@+id/view_3"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_15"
-                android:background="@color/divider"
-                app:layout_constraintTop_toBottomOf="@id/cl_2"/>
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dp_5"
-                android:paddingBottom="@dimen/dp_5"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_10"
-                app:layout_constraintTop_toBottomOf="@id/view_3">
+                style="@style/MineFragmentConstaintStyle"
+                android:background="@color/foreground"
+                android:layout_marginTop="@dimen/dp_20"
+                app:layout_constraintTop_toBottomOf="@id/cl_2">
 
                 <ImageView
                     android:id="@+id/iv_about_us"
-                    android:layout_width="@dimen/dp_35"
-                    android:layout_height="@dimen/dp_35"
+                    android:layout_width="@dimen/dp_28"
+                    android:layout_height="@dimen/dp_28"
                     android:src="@drawable/ic_mine_about_us"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -199,18 +170,15 @@
                     android:id="@+id/tv_about_us"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/mine_about_us"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:textSize="@dimen/sp_18"
-                    android:textColor="@color/primaryText"
+                    android:text="@string/mineFragment_tvAboutUs"
+                    style="@style/MineFragmentTextStyle"
                     app:layout_constraintLeft_toRightOf="@id/iv_about_us"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginStart="@dimen/dp_10" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
+                    android:layout_width="@dimen/dp_28"
+                    android:layout_height="@dimen/dp_28"
                     android:src="@drawable/ic_mine_next"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -219,27 +187,19 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:id="@+id/view_4"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_2"
-                android:background="@color/divider"
-                app:layout_constraintTop_toBottomOf="@id/cl_3"/>
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dp_5"
-                android:paddingBottom="@dimen/dp_5"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_10"
-                app:layout_constraintTop_toBottomOf="@id/view_4">
+                style="@style/MineFragmentConstaintStyle"
+                android:background="@color/foreground"
+                android:layout_marginTop="@dimen/dp_2"
+                app:layout_constraintTop_toBottomOf="@id/cl_3">
 
                 <ImageView
                     android:id="@+id/iv_logout"
-                    android:layout_width="@dimen/dp_35"
-                    android:layout_height="@dimen/dp_35"
+                    android:layout_width="@dimen/dp_28"
+                    android:layout_height="@dimen/dp_28"
                     android:src="@drawable/ic_mine_logout"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -250,14 +210,11 @@
                     android:id="@+id/tv_logout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/mine_logout"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:textSize="@dimen/sp_18"
-                    android:textColor="@color/primaryText"
+                    android:text="@string/mineFragment_tvLogout"
+                    style="@style/MineFragmentTextStyle"
                     app:layout_constraintLeft_toRightOf="@id/iv_logout"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginStart="@dimen/dp_10" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

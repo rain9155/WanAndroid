@@ -12,7 +12,7 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:selectableItemBackground"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/foreground"
     app:cardElevation="@dimen/dp_8"
     app:cardCornerRadius="@dimen/dp_8"
     app:cardUseCompatPadding="true"
@@ -98,7 +98,8 @@
             android:layout_marginLeft="@dimen/dp_5"
             app:barrierDirection="right"
             app:constraint_referenced_ids="iv_collection"
-            tools:ignore="UnknownId" />
+            tools:ignore="UnknownId"
+            android:layout_marginStart="@dimen/dp_5" />
 
         <ImageView
             android:id="@+id/iv_collection"
