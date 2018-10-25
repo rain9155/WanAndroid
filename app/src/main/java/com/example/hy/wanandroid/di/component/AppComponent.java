@@ -1,0 +1,19 @@
+package com.example.hy.wanandroid.di.component;
+
+import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.di.module.AppModule;
+import javax.inject.Singleton;
+import dagger.Component;
+
+/**
+ * App的component
+ * Created by 陈健宇 at 2018/10/26
+ */
+@Singleton
+@Component(modules = AppModule.class)
+public interface AppComponent {
+
+    void inject(App app);//注入App
+
+    App getApp();
+}

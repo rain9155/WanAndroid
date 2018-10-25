@@ -15,6 +15,8 @@ import com.example.hy.wanandroid.view.mine.MineFragment;
 import com.example.hy.wanandroid.view.project.ProjectFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jaeger.library.StatusBarUtil;
+
 import butterknife.BindView;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 import android.os.Handler;
@@ -86,6 +88,11 @@ public class MainActivity extends BaseActivity<MainContract.Presenter> implement
 
     }
 
+    @Override
+    protected void setStatusBarColor() {
+        StatusBarUtil.setTransparentForImageViewInFragment(this, null);
+    }
+
     /**
      * 显示floatingButton
      */
@@ -93,7 +100,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter> implement
     private void showFloatingButton(){
         if(fbtnUp.getVisibility() == View.INVISIBLE){
             fbtnUp.setVisibility(View.VISIBLE);
-            fbtnUp.animate().setDuration(300).setInterpolator(new BounceInterpolator()).translationY(
+            fbtnUp.animate().setDuration(500).setInterpolator(new BounceInterpolator()).translationY(
                     -TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 0, getResources().getDisplayMetrics())
             ).start();
         }

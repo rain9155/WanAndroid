@@ -1,5 +1,8 @@
 package com.example.hy.wanandroid.view.homepager;
 
+import android.annotation.SuppressLint;
+import android.view.View;
+
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
@@ -24,14 +27,18 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     RecyclerView rvArticles;
     @BindView(R.id.srl_home)
     SmartRefreshLayout srlHome;
+    @BindView(R.id.fake_status_bar)
+    View fakeStatusBar;
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_homepager;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void initView() {
+
         tlCommon.setTitle(R.string.menu_btm_nav_home);
     }
 

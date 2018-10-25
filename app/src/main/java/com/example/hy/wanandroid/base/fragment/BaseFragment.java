@@ -23,7 +23,6 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 public abstract class BaseFragment<T extends IPresenter> extends SwipeBackFragment
         implements IView {
 
-    @Inject
     protected T mPresenter;
     private Unbinder mUnbinder;
 

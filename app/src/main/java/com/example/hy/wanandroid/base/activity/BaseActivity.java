@@ -1,9 +1,12 @@
 package com.example.hy.wanandroid.base.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.IView;
+import com.jaeger.library.StatusBarUtil;
 
 import javax.inject.Inject;
 
@@ -26,12 +29,14 @@ public abstract class BaseActivity<T extends IPresenter> extends SwipeBackActivi
     protected abstract void initView();//初始化控件
     protected abstract void initData();//初始化数据
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         if(mPresenter != null) mPresenter.attachView(this);
         mUnbinder = ButterKnife.bind(this);
+        setStatusBarColor();
         initView();
         initData();
     }
@@ -46,6 +51,10 @@ public abstract class BaseActivity<T extends IPresenter> extends SwipeBackActivi
             mUnbinder.unbind();
         }
         super.onDestroy();
+    }
+
+    protected void setStatusBarColor(){
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
     }
 
     @Override

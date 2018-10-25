@@ -2,6 +2,8 @@ package com.example.hy.wanandroid.base.presenter;
 
 import com.example.hy.wanandroid.base.view.IView;
 
+import javax.inject.Inject;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 

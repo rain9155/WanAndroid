@@ -59,6 +59,7 @@ dependencies {
     implementation rootProject.ext.dependencies["fragmentationSwipeback"]
     implementation rootProject.ext.dependencies["banner"]
     implementation rootProject.ext.dependencies["circleImage"]
+    implementation rootProject.ext.dependencies["statusBarUtil"]
 
     //dagger
     implementation rootProject.ext.dependencies["dagger2"]

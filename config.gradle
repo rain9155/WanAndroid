@@ -11,6 +11,7 @@ ext {
             //network
             RetrofitVersion        : "2.4.0",
             RxandroidVersion       : "1.2.0",
+            RxJava2AdapterVersion : "1.0.0",
 
             //dagger2
             Dagger2Version           : "2.18",
@@ -28,6 +29,7 @@ ext {
             FragmentationVersion : '1.3.6',
             BannerVersion : '1.4.10',
             CircleImageVersion : '2.2.0',
+            StatusBarUtilVersion : '1.5.1',
 
             //test
             JunitVersion           : "4.12",
@@ -48,7 +50,7 @@ ext {
             //network
             "retrofit"              : "com.squareup.retrofit2:retrofit:${version.RetrofitVersion}",
             "retrofitGsonConvert"   : "com.squareup.retrofit2:converter-gson:${version.RetrofitVersion}",
-            "retrofitRxjava2Adapter": "com.squareup.retrofit2:adapter-rxjava:${version.RetrofitVersion}",
+            "retrofitRxjava2Adapter": "com.squareup.retrofit2:adapter-rxjava2:${version.RetrofitVersion}",
             "rxandroid"             : "io.reactivex:rxandroid:${version.RxandroidVersion}",
 
             //ui
@@ -61,7 +63,8 @@ ext {
             "fragmentation" : "me.yokeyword:fragmentation:${version.FragmentationVersion}",
             "fragmentationSwipeback" : "me.yokeyword:fragmentation-swipeback:${version.FragmentationVersion}",
             "banner" : "com.youth.banner:banner:${version.BannerVersion}",
-            circleImage : "de.hdodenhof:circleimageview:${version.CircleImageVersion}",
+            "circleImage" : "de.hdodenhof:circleimageview:${version.CircleImageVersion}",
+            "statusBarUtil" : "com.jaeger.statusbarutil:library:${version.StatusBarUtilVersion}",
 
             //dagger2
             "dagger2" : "com.google.dagger:dagger:${version.Dagger2Version}",
