@@ -9,6 +9,9 @@ import android.widget.FrameLayout;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.contract.MainContract;
+import com.example.hy.wanandroid.di.component.DaggerMainActivityComponent;
+import com.example.hy.wanandroid.di.component.MainActivityComponent;
+import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
@@ -21,7 +24,9 @@ import butterknife.BindView;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 import android.os.Handler;
 
-public class MainActivity extends BaseActivity<MainContract.Presenter> implements MainContract.View {
+import javax.inject.Inject;
+
+public class MainActivity extends BaseActivity implements MainContract.View {
 
     @BindView(R.id.fl_container)
     FrameLayout flContainer;
@@ -31,6 +36,10 @@ public class MainActivity extends BaseActivity<MainContract.Presenter> implement
     BottomNavigationView bnvBtm;
     private SwipeBackFragment[] mFragments;
     private int mPreFragmentPosition = 0;//上一个被选中的Fragment位置
+    private MainActivityComponent mMainActivityComponent;
+
+    @Inject
+    MainPresenter mPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -39,6 +48,12 @@ public class MainActivity extends BaseActivity<MainContract.Presenter> implement
 
     @Override
     protected void initView() {
+        mMainActivityComponent = DaggerMainActivityComponent.builder()
+                .appComponent(getAppComponent())
+                .build();
+        mMainActivityComponent.inject(this);
+
+        mPresenter.attachView(this);
 
         if(findFragment(HomeFragment.class) == null){
             mFragments = new SwipeBackFragment[4];
@@ -89,8 +104,21 @@ public class MainActivity extends BaseActivity<MainContract.Presenter> implement
     }
 
     @Override
+    protected void onDestroy() {
+        if(mPresenter != null){
+            mPresenter.detachView();
+            mPresenter = null;
+        }
+        super.onDestroy();
+    }
+
+    @Override
     protected void setStatusBarColor() {
         StatusBarUtil.setTransparentForImageViewInFragment(this, null);
+    }
+
+    public MainActivityComponent getMainActivityComponent(){
+        return mMainActivityComponent;
     }
 
     /**

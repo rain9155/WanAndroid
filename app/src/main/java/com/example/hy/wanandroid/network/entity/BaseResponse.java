@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.network.bean;
+package com.example.hy.wanandroid.network.entity;
 
 
 /**

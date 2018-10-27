@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.base.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,9 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
  * Fragment的基类，支持懒加载
  * Created by 陈健宇 at 2018/10/21
  */
-public abstract class BaseFragment<T extends IPresenter> extends SwipeBackFragment
+public abstract class BaseFragment extends SwipeBackFragment
         implements IView {
 
-    protected T mPresenter;
     private Unbinder mUnbinder;
 
     protected abstract int getLayoutId();//获取Fragment的布局Id
@@ -33,7 +33,6 @@ public abstract class BaseFragment<T extends IPresenter> extends SwipeBackFragme
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(mPresenter != null) this.mPresenter.attachView(this);
         View view = inflater.inflate(getLayoutId(), container, false);
         mUnbinder = ButterKnife.bind(this, view);
         initView();
@@ -48,10 +47,6 @@ public abstract class BaseFragment<T extends IPresenter> extends SwipeBackFragme
 
     @Override
     public void onDestroy() {
-        if(mPresenter != null){
-            mPresenter.detachView();
-            mPresenter = null;
-        }
         if(mUnbinder != null && mUnbinder != Unbinder.EMPTY){
             mUnbinder.unbind();
         }

@@ -13,7 +13,7 @@ import butterknife.BindView;
  * 项目tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class ProjectFragment extends BaseFragment<ProjectContract.Presenter> implements ProjectContract.View {
+public class ProjectFragment extends BaseFragment implements ProjectContract.View {
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;

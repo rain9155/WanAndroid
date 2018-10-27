@@ -4,6 +4,7 @@ import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.module.AppModule;
 import javax.inject.Singleton;
 import dagger.Component;
+import retrofit2.Retrofit;
 
 /**
  * App的component
@@ -16,4 +17,6 @@ public interface AppComponent {
     void inject(App app);//注入App
 
     App getApp();
+
+    Retrofit getRetrofit();
 }

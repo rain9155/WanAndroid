@@ -16,8 +16,8 @@ public class BasePresenter<T extends IView> implements IPresenter<T> {
     protected T mView;
     private CompositeDisposable mCompositeDisposable;
 
+    @Inject
     public BasePresenter() {
-        //这里还要绑定model
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.example.hy.wanandroid.network.api.homepager;
 
-import com.example.hy.wanandroid.network.bean.BaseResponse;
-import com.example.hy.wanandroid.network.bean.homepager.BannerData;
+import com.example.hy.wanandroid.network.entity.BaseResponse;
+import com.example.hy.wanandroid.network.entity.homepager.BannerData;
 
 import java.util.List;
 

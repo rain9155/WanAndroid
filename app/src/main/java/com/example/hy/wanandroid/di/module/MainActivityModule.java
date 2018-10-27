@@ -9,6 +9,4 @@ import dagger.Module;
 @Module
 public class MainActivityModule {
 
-
-
 }

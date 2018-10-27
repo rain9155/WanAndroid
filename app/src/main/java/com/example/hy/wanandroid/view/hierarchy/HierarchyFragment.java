@@ -13,7 +13,7 @@ import butterknife.BindView;
  * 体系tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class HierarchyFragment extends BaseFragment<HierarchyContract.Presenter> implements HierarchyContract.View {
+public class HierarchyFragment extends BaseFragment implements HierarchyContract.View {
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;

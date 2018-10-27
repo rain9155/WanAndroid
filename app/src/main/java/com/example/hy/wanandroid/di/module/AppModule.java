@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.di.module;
 
 import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.config.BaseUrl;
 import com.example.hy.wanandroid.network.api.homepager.HomeApis;
 
 import javax.inject.Singleton;
@@ -33,15 +34,10 @@ public class AppModule {
     @Singleton
     public Retrofit provideRetrofit(){
         return new Retrofit.Builder()
+                .baseUrl(BaseUrl.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-    }
-
-    @Provides
-    @Singleton
-    public HomeApis provideHomeApis(Retrofit retrofit){
-        return retrofit.create(HomeApis.class);
     }
 
 }

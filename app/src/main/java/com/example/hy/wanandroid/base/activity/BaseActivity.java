@@ -6,6 +6,8 @@ import android.os.Bundle;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.IView;
+import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.di.component.AppComponent;
 import com.jaeger.library.StatusBarUtil;
 
 import javax.inject.Inject;
@@ -18,11 +20,9 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
  * Activity的基类
  * Created by 陈健宇 at 2018/10/21
  */
-public abstract class BaseActivity<T extends IPresenter> extends SwipeBackActivity
+public abstract class BaseActivity extends SwipeBackActivity
         implements IView {
 
-    @Inject
-    protected T mPresenter;
     private Unbinder mUnbinder;
 
     protected abstract int getLayoutId();//获取Activity的布局Id
@@ -34,7 +34,6 @@ public abstract class BaseActivity<T extends IPresenter> extends SwipeBackActivi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        if(mPresenter != null) mPresenter.attachView(this);
         mUnbinder = ButterKnife.bind(this);
         setStatusBarColor();
         initView();
@@ -43,18 +42,21 @@ public abstract class BaseActivity<T extends IPresenter> extends SwipeBackActivi
 
     @Override
     protected void onDestroy() {
-        if(mPresenter != null){
-            mPresenter.detachView();
-            mPresenter = null;
-        }
         if(mUnbinder != null && mUnbinder != Unbinder.EMPTY){
             mUnbinder.unbind();
         }
         super.onDestroy();
     }
 
+    /**
+     * 设置状态栏颜色
+     */
     protected void setStatusBarColor(){
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
+    }
+
+    protected AppComponent getAppComponent(){
+        return ((App)getApplication()).getAppComponent();
     }
 
     @Override

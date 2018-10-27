@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.network.bean.homepager;
+package com.example.hy.wanandroid.network.entity.homepager;
 
 /**
  * 首页banner的数据

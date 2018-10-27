@@ -46,7 +46,10 @@ dependencies {
     implementation rootProject.ext.dependencies["retrofit"]
     implementation rootProject.ext.dependencies["retrofitGsonConvert"]
     implementation rootProject.ext.dependencies["retrofitRxjava2Adapter"]
-    implementation rootProject.ext.dependencies["rxandroid"]
+
+    //rxjava2
+    implementation rootProject.ext.dependencies["rxJava2"]
+    implementation rootProject.ext.dependencies["rxAndroid"]
 
     //ui
     implementation rootProject.ext.dependencies["baseAdapter"]
@@ -66,9 +69,6 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["dagger2Cpmplier"]
     implementation rootProject.ext.dependencies["bufferKinfe"]
     annotationProcessor rootProject.ext.dependencies["bufferKinfeCompiler"]
-
-    //rxjava2
-    implementation rootProject.ext.dependencies["raJava2"]
 
     testImplementation rootProject.ext.dependencies["junit"]
     androidTestImplementation rootProject.ext.dependencies["runner"]

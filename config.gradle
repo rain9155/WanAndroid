@@ -1,41 +1,40 @@
+version = [
+        //androidx
+        LibraryCompatVersion   : "1.0.0",
+        ConstraintLayoutVersion: "2.0.0-alpha2",
+        MarterialDesignVersion : "1.0.0",
+
+        //db
+        LitepalVersion         : "3.0.0",
+
+        //network
+        RetrofitVersion        : "2.4.0",
+
+        //rxJava2
+        Rxjava2Version : "2.2.2",
+        RxAndroidVersion : "2.1.0",
+
+        //dagger2
+        Dagger2Version           : "2.18",
+        BufferKinfeVersion          : "9.0.0-rc1",
+
+        //ui
+        BaseAdapterVersion     : "3.0.3",
+        SmartrefreshVersion    : "1.1.0-alpha-14",
+        AgentWebVersion         : "4.0.2",
+        Gilde                   : "4.8.0",
+        FlowLayout              : "1.1.2",
+        FragmentationVersion : '1.3.6',
+        BannerVersion : '1.4.10',
+        CircleImageVersion : '2.2.0',
+        StatusBarUtilVersion : '1.5.1',
+
+        //test
+        JunitVersion           : "4.12",
+        RunnerVersion          : "1.1.0-beta02",
+        EspressoVersion        : "3.1.0-beta02"
+]
 ext {
-    version = [
-            //androidx
-            LibraryCompatVersion   : "1.0.0",
-            ConstraintLayoutVersion: "2.0.0-alpha2",
-            MarterialDesignVersion : "1.0.0",
-
-            //db
-            LitepalVersion         : "3.0.0",
-
-            //network
-            RetrofitVersion        : "2.4.0",
-            RxandroidVersion       : "1.2.0",
-            RxJava2AdapterVersion : "1.0.0",
-
-            //dagger2
-            Dagger2Version           : "2.18",
-            BufferKinfeVersion          : "9.0.0-rc1",
-
-            //rxJava2
-            Rxjava2Version : "2.2.2",
-
-            //ui
-            BaseAdapterVersion     : "3.0.3",
-            SmartrefreshVersion    : "1.1.0-alpha-14",
-            AgentWebVersion         : "4.0.2",
-            Gilde                   : "4.8.0",
-            FlowLayout              : "1.1.2",
-            FragmentationVersion : '1.3.6',
-            BannerVersion : '1.4.10',
-            CircleImageVersion : '2.2.0',
-            StatusBarUtilVersion : '1.5.1',
-
-            //test
-            JunitVersion           : "4.12",
-            RunnerVersion          : "1.1.0-beta02",
-            EspressoVersion        : "3.1.0-beta02"
-    ]
 
     dependencies = [
 
@@ -51,7 +50,10 @@ ext {
             "retrofit"              : "com.squareup.retrofit2:retrofit:${version.RetrofitVersion}",
             "retrofitGsonConvert"   : "com.squareup.retrofit2:converter-gson:${version.RetrofitVersion}",
             "retrofitRxjava2Adapter": "com.squareup.retrofit2:adapter-rxjava2:${version.RetrofitVersion}",
-            "rxandroid"             : "io.reactivex:rxandroid:${version.RxandroidVersion}",
+
+            //rxJava2
+            "rxJava2" : "io.reactivex.rxjava2:rxjava:${version.Rxjava2Version}",
+            "rxAndroid" : "io.reactivex.rxjava2:rxandroid:${version.RxAndroidVersion}",
 
             //ui
             "baseAdapter"           : "com.zhy:base-rvadapter:${version.BaseAdapterVersion}",
@@ -72,9 +74,6 @@ ext {
             "bufferKinfe" : "com.jakewharton:butterknife:${version.BufferKinfeVersion}",
             "bufferKinfeCompiler" : "com.jakewharton:butterknife-compiler:${version.BufferKinfeVersion}",
 
-            //rxJava2
-            "raJava2" : "io.reactivex.rxjava2:rxjava:${version.Rxjava2Version}",
-            
             //test
             "junit"                 : "junit:junit:${version.JunitVersion}",
             "runner"                : "androidx.test:runner:${version.RunnerVersion}",
