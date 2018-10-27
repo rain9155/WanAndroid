@@ -7,6 +7,7 @@
     <color name="colorPrimaryLight">#B2EBF2</color>
     <color name="primaryText">#212121</color>
     <color name="secondaryText">#757575</color>
+    <color name="thirdText">#b9757575</color>
     <color name="foreground">#FFFFFF</color>
     <color name="background">#32ffffff</color>
     <color name="divier">#1ebdbdbd</color>

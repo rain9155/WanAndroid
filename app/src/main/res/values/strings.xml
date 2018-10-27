@@ -15,4 +15,13 @@
     <string name="mineFragment_tvAboutUs">关于我们</string>
     <string name="mineFragment_tvLogout">退出登陆</string>
 
+    //network error toast
+    <string name="error_nothing">获取不到数据</string>
+    <string name="error_timeout">网络连接超时</string>
+    <string name="error_unavailable">网络不可用</string>
+    <string name="error_unknown">未知错误</string>
+
+    //behaviour
+    <string name="behaviour_bottom_nav">com.example.hy.wanandroid.widget.BottomNavBehaviour</string>
+
 </resources>

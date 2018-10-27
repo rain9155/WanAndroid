@@ -4,12 +4,15 @@ import android.annotation.SuppressLint;
 import android.view.View;
 
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
 import com.example.hy.wanandroid.di.module.HomeFragmentModule;
+import com.example.hy.wanandroid.network.entity.homepager.Article;
 import com.example.hy.wanandroid.network.entity.homepager.BannerData;
 import com.example.hy.wanandroid.presenter.homepager.HomePresenter;
 import com.example.hy.wanandroid.utils.BannerImageLoader;
+import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.youth.banner.Banner;
@@ -22,6 +25,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
@@ -39,19 +43,26 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     SmartRefreshLayout srlHome;
     @BindView(R.id.fake_status_bar)
     View fakeStatusBar;
-    @BindView(R.id.banner)
-    Banner banner;
-
-    @Inject
-    @Named("bannerTitles")
-    List<String> bannerTitles;
-
-    @Inject
-    @Named("bannerImages")
-    List<String> bannerImages;
 
     @Inject
     HomePresenter mPresenter;
+    @Inject
+    @Named("bannerTitles")
+    List<String> bannerTitles;
+    @Inject
+    @Named("bannerImages")
+    List<String> bannerImages;
+    @Inject
+    List<Article> mArticles;
+    @Inject
+    LinearLayoutManager mLinearLayoutManager;
+    @Inject
+    ArticlesAdapter mArticlesAdapter;
+    @BindView(R.id.banner)
+    Banner banner;
+
+    private int pageNum = 0;//首页文章页数
+    private boolean isLoadMore = false;
 
     @Override
     protected int getLayoutId() {
@@ -66,23 +77,26 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         }
         mPresenter.attachView(this);
         tlCommon.setTitle(R.string.menu_btm_nav_home);
+        rvArticles.setLayoutManager(mLinearLayoutManager);
+        mArticlesAdapter.openLoadAnimation();
+        rvArticles.setAdapter(mArticlesAdapter);
+        srlHome.setOnLoadMoreListener(refreshLayout -> {
+            LogUtil.d(LogUtil.TAG_COMMON, "loadMore");
+            pageNum++;
+            mPresenter.loadArticles(pageNum);
+            isLoadMore = true;
+        });
+        srlHome.setOnRefreshListener(refreshLayout -> {
+            LogUtil.d(LogUtil.TAG_COMMON, "refresh");
+            mPresenter.loadArticles(0);
+            isLoadMore = false;
+        });
     }
 
     @Override
     protected void initData() {
-        mPresenter.loadHomePagerDatas();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        banner.startAutoPlay();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        banner.stopAutoPlay();
+        mPresenter.loadBannerDatas();
+        mPresenter.loadArticles(0);
     }
 
     @Override
@@ -101,12 +115,51 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 .setIndicatorGravity(BannerConfig.RIGHT)//设置指示器位置，右边
                 .setDelayTime(2000)//设置轮播事件间隔
                 .setOnBannerListener(position -> {
-                        //跳转到详情
+                    //跳转到详情
                 })//设置点击事件，下标从零开始
                 .start();
+    }
+
+    @Override
+    public void showArticles(List<Article> articleList) {
+        if (isLoadMore) {
+            mArticles.addAll(articleList);
+            srlHome.finishLoadMore();
+        } else {
+            if (mArticles != null && mArticles.size() != 0) mArticles.clear();
+            mArticles.addAll(articleList);
+            srlHome.finishRefresh();
+        }
+        mArticlesAdapter.notifyDataSetChanged();
     }
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (banner != null) {
+            banner.startAutoPlay();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (banner != null) {
+            banner.stopAutoPlay();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mPresenter != null) {
+            mPresenter.detachView();
+            mPresenter = null;
+        }
+        super.onDestroy();
+    }
+
 }

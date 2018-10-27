@@ -1,8 +1,11 @@
 package com.example.hy.wanandroid.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewPropertyAnimator;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.widget.FrameLayout;
@@ -140,10 +143,17 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @SuppressLint("RestrictedApi")
     private void hideFloatingButton(){
         if(fbtnUp.getVisibility() == View.VISIBLE){
-            fbtnUp.animate().setDuration(300).setInterpolator(new AccelerateDecelerateInterpolator()).translationY(
+            ViewPropertyAnimator animator = fbtnUp.animate().setDuration(300).setInterpolator(new AccelerateDecelerateInterpolator()).translationY(
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 400, getResources().getDisplayMetrics())
-            ).start();
-            new Handler().postDelayed(() -> fbtnUp.setVisibility(View.INVISIBLE),301);
+            );
+            animator.setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    fbtnUp.setVisibility(View.INVISIBLE);
+                }
+            });
+            animator.start();
+
         }
 
     }

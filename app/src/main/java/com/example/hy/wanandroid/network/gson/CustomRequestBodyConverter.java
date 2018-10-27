@@ -15,10 +15,10 @@ import okio.Buffer;
 import retrofit2.Converter;
 
 /**
- * 自定义Resquestbody解析器
+ * 自定义RequestBody解析器
  * Created by 陈健宇 at 2018/10/27
  */
-public class CustomResquestBodyConverter<T> implements Converter<T, RequestBody>{
+public class CustomRequestBodyConverter<T> implements Converter<T, RequestBody>{
 
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
     private static final Charset UTF_8 = Charset.forName("UTF-8");
@@ -26,7 +26,7 @@ public class CustomResquestBodyConverter<T> implements Converter<T, RequestBody>
     private final Gson gson;
     private final TypeAdapter<T> adapter;
 
-    public CustomResquestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
+    public CustomRequestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
         this.gson = gson;
         this.adapter = adapter;
     }

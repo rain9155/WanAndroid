@@ -6,16 +6,15 @@ import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
 import com.example.hy.wanandroid.model.homepager.HomeModel;
 import com.example.hy.wanandroid.network.entity.BaseResponse;
-import com.example.hy.wanandroid.network.entity.DefauleObserver;
+import com.example.hy.wanandroid.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.network.entity.homepager.Articles;
 import com.example.hy.wanandroid.network.entity.homepager.BannerData;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -31,10 +30,25 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
         this.mHomeModel = homeModel;
     }
 
-    @SuppressLint("CheckResult")
     @Override
-    public void loadHomePagerDatas() {
-
+    public void loadBannerDatas() {
+        addSubcriber(mHomeModel.getBannerDatas().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<BannerData>>>() {
+                    @Override
+                    public void onNext(BaseResponse<List<BannerData>> listBaseResponse) {
+                        mView.showBannerDatas(listBaseResponse.getData());
+                    }
+                }));
     }
 
+    @Override
+    public void loadArticles(int pageNum) {
+        addSubcriber(mHomeModel.getArticles(pageNum).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<Articles>>() {
+                    @Override
+                    public void onNext(BaseResponse<Articles> articlesBaseResponse) {
+                        mView.showArticles(articlesBaseResponse.getData().getDatas());
+                    }
+                }));
+    }
 }

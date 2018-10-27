@@ -7,6 +7,8 @@ package com.example.hy.wanandroid.utils;
 public class LogUtil {
 
     private static final boolean isDebug = true;
+    public static final String TAG_NET = "rain";
+    public static final String TAG_COMMON = "rain";
 
     // 下面是传入自定义tag的函数
     public static void i(String tag, String msg)
@@ -34,6 +36,6 @@ public class LogUtil {
     }
 
     private LogUtil() throws Exception {
-        throw new Exception("无法创建实例");
+        throw new AssertionError();
     }
 }

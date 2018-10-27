@@ -1,12 +1,14 @@
-package com.example.hy.wanandroid.network.api.homepager;
+package com.example.hy.wanandroid.network.api;
 
 import com.example.hy.wanandroid.network.entity.BaseResponse;
+import com.example.hy.wanandroid.network.entity.homepager.Articles;
 import com.example.hy.wanandroid.network.entity.homepager.BannerData;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 /**
  * 首页所有api
@@ -14,11 +16,17 @@ import retrofit2.http.GET;
  */
 public interface HomeApis {
 
-    /***
+    /**
      * 首页banner
      * http://www.wanandroid.com/banner/json
      */
     @GET("banner/json")
     Observable<BaseResponse<List<BannerData>>> getBannerDatas();
 
+    /**
+     * 首页文章列表
+     * http://www.wanandroid.com/article/list/1/json
+     */
+    @GET("article/list/{pageNum}/json")
+    Observable<BaseResponse<Articles>> getArticles(@Path("pageNum") int pageNum);
 }

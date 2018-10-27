@@ -7,37 +7,38 @@
     android:background="@color/background"
     tools:context=".view.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/fl_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/fl_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </FrameLayout>
+        </FrameLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fbtn_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:layout_gravity="bottom|right"
-        android:src="@drawable/ic_main_missile"
-        android:layout_marginRight="@dimen/dp_20"
-        android:layout_marginBottom="@dimen/dp_68"
-        android:clickable="true"
-        app:pressedTranslationZ="@dimen/dp_10"
-        app:elevation="@dimen/dp_10"
-        tools:ignore="RtlHardcoded"
-        android:focusable="true" />
-    
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bnv_btm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/white"
-        app:menu="@menu/btm_nav_menu"
-        app:elevation="@dimen/dp_5">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fbtn_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/ic_main_missile"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_68"
+            android:clickable="true"
+            app:pressedTranslationZ="@dimen/dp_10"
+            app:elevation="@dimen/dp_10"
+            tools:ignore="RtlHardcoded"
+            android:focusable="true" />
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bnv_btm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            app:layout_behavior="@string/behaviour_bottom_nav"
+            app:menu="@menu/btm_nav_menu"
+            app:elevation="@dimen/dp_5">
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

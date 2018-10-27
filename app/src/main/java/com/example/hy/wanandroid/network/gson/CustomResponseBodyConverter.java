@@ -1,20 +1,17 @@
 package com.example.hy.wanandroid.network.gson;
 
+import com.example.hy.wanandroid.network.entity.BaseResponse;
 import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
 import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
-
 import java.io.IOException;
-
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
 /**
+ * 自定义ResponseBody解析器
  * Created by 陈健宇 at 2018/10/27
  */
-public class CustomResponseBodyConverter<T> implements Converter<ResponseBody, T>{
+public class CustomResponseBodyConverter<T> implements Converter<ResponseBody, Object>{
 
     private final Gson gson;
     private final TypeAdapter<T> adapter;
@@ -24,14 +21,14 @@ public class CustomResponseBodyConverter<T> implements Converter<ResponseBody, T
         this.adapter = adapter;
     }
 
-    @Override public T convert(ResponseBody value) throws IOException {
-        JsonReader jsonReader = gson.newJsonReader(value.charStream());
+    @Override public Object convert(ResponseBody value) throws IOException {
         try {
-            T result = adapter.read(jsonReader);
-            if (jsonReader.peek() != JsonToken.END_DOCUMENT) {
-                throw new JsonIOException("JSON document was not fully consumed.");
+            BaseResponse baseResponse = (BaseResponse) adapter.fromJson(value.charStream());
+            if(baseResponse.getErrorCode() == 0){
+                return baseResponse;
+            }else {
+                throw new ApiException(baseResponse.getErrorCode(), baseResponse.getErrorMsg());
             }
-            return result;
         } finally {
             value.close();
         }

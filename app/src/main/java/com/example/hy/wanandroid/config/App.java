@@ -1,5 +1,6 @@
 package com.example.hy.wanandroid.config;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.hy.wanandroid.R;
@@ -17,6 +18,8 @@ import org.litepal.LitePalApplication;
  * Created by 陈健宇 at 2018/10/20
  */
 public class App extends LitePalApplication {
+
+    private static Context mContext;
 
     //static 代码段可以防止内存泄露
     static {
@@ -37,10 +40,14 @@ public class App extends LitePalApplication {
         super.onCreate();
         SQLiteDatabase db = LitePal.getDatabase();
         mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        mContext = getApplicationContext();
     }
 
     public AppComponent getAppComponent(){
         return mAppComponent;
     }
 
+    public static Context getContext(){
+        return mContext;
+    }
 }

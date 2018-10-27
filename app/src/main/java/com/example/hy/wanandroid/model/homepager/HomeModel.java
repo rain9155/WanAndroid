@@ -1,8 +1,9 @@
 package com.example.hy.wanandroid.model.homepager;
 
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
-import com.example.hy.wanandroid.network.api.homepager.HomeApis;
+import com.example.hy.wanandroid.network.api.HomeApis;
 import com.example.hy.wanandroid.network.entity.BaseResponse;
+import com.example.hy.wanandroid.network.entity.homepager.Articles;
 import com.example.hy.wanandroid.network.entity.homepager.BannerData;
 
 import java.util.List;
@@ -26,5 +27,10 @@ public class HomeModel implements HomeContract.Model {
     @Override
     public Observable<BaseResponse<List<BannerData>>> getBannerDatas() {
         return mHomeApis.getBannerDatas();
+    }
+
+    @Override
+    public Observable<BaseResponse<Articles>> getArticles(int pageNum) {
+        return mHomeApis.getArticles(pageNum);
     }
 }
