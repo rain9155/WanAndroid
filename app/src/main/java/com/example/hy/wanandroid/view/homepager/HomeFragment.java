@@ -12,6 +12,7 @@ import com.example.hy.wanandroid.network.entity.homepager.Article;
 import com.example.hy.wanandroid.network.entity.homepager.BannerData;
 import com.example.hy.wanandroid.presenter.homepager.HomePresenter;
 import com.example.hy.wanandroid.utils.BannerImageLoader;
+import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -43,6 +44,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     SmartRefreshLayout srlHome;
     @BindView(R.id.fake_status_bar)
     View fakeStatusBar;
+    @BindView(R.id.banner)
+    Banner banner;
 
     @Inject
     HomePresenter mPresenter;
@@ -58,8 +61,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     LinearLayoutManager mLinearLayoutManager;
     @Inject
     ArticlesAdapter mArticlesAdapter;
-    @BindView(R.id.banner)
-    Banner banner;
 
     private int pageNum = 0;//首页文章页数
     private boolean isLoadMore = false;
@@ -72,22 +73,20 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @SuppressLint("ResourceAsColor")
     @Override
     protected void initView() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getMainActivityComponent().getHomFragmentSubComponent(new HomeFragmentModule()).inject(this);
-        }
+        if(!(getActivity() instanceof MainActivity)) return;
+        ((MainActivity) getActivity()).getMainActivityComponent().getHomFragmentSubComponent(new HomeFragmentModule()).inject(this);
         mPresenter.attachView(this);
+
         tlCommon.setTitle(R.string.menu_btm_nav_home);
         rvArticles.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
         rvArticles.setAdapter(mArticlesAdapter);
         srlHome.setOnLoadMoreListener(refreshLayout -> {
-            LogUtil.d(LogUtil.TAG_COMMON, "loadMore");
             pageNum++;
             mPresenter.loadArticles(pageNum);
             isLoadMore = true;
         });
         srlHome.setOnRefreshListener(refreshLayout -> {
-            LogUtil.d(LogUtil.TAG_COMMON, "refresh");
             mPresenter.loadArticles(0);
             isLoadMore = false;
         });
@@ -126,7 +125,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             mArticles.addAll(articleList);
             srlHome.finishLoadMore();
         } else {
-            if (mArticles != null && mArticles.size() != 0) mArticles.clear();
+            if (CommonUtil.isEmptyList(articleList)) mArticles.clear();
             mArticles.addAll(articleList);
             srlHome.finishRefresh();
         }

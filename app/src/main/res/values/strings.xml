@@ -23,5 +23,6 @@
 
     //behaviour
     <string name="behaviour_bottom_nav">com.example.hy.wanandroid.widget.BottomNavBehaviour</string>
+    <string name="behaviour_fbtn">com.example.hy.wanandroid.widget.FbtnBehaviour</string>
 
 </resources>

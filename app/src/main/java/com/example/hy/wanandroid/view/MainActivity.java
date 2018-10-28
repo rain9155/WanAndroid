@@ -15,6 +15,7 @@ import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.di.component.DaggerMainActivityComponent;
 import com.example.hy.wanandroid.di.component.MainActivityComponent;
 import com.example.hy.wanandroid.presenter.MainPresenter;
+import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
@@ -37,6 +38,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     FloatingActionButton fbtnUp;
     @BindView(R.id.bnv_btm)
     BottomNavigationView bnvBtm;
+
     private SwipeBackFragment[] mFragments;
     private int mPreFragmentPosition = 0;//上一个被选中的Fragment位置
     private MainActivityComponent mMainActivityComponent;
@@ -131,9 +133,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private void showFloatingButton(){
         if(fbtnUp.getVisibility() == View.INVISIBLE){
             fbtnUp.setVisibility(View.VISIBLE);
-            fbtnUp.animate().setDuration(500).setInterpolator(new BounceInterpolator()).translationY(
-                    -TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 0, getResources().getDisplayMetrics())
-            ).start();
+            fbtnUp.animate().setDuration(500).setInterpolator(new BounceInterpolator()).translationY(0).start();
         }
     }
 
@@ -146,16 +146,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             ViewPropertyAnimator animator = fbtnUp.animate().setDuration(300).setInterpolator(new AccelerateDecelerateInterpolator()).translationY(
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 400, getResources().getDisplayMetrics())
             );
-            animator.setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationCancel(Animator animation) {
-                    fbtnUp.setVisibility(View.INVISIBLE);
-                }
-            });
+            new Handler().postDelayed(() -> fbtnUp.setVisibility(View.INVISIBLE), 301);
             animator.start();
-
         }
-
     }
 
 }

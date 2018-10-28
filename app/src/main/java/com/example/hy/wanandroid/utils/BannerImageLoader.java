@@ -4,6 +4,8 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.config.GlideApp;
 import com.youth.banner.loader.ImageLoader;
 
 /**
@@ -14,6 +16,10 @@ public class BannerImageLoader extends ImageLoader {
 
     @Override
     public void displayImage(Context context, Object path, ImageView imageView) {
-        Glide.with(context).load(path).into(imageView);
+        GlideApp.with(context)
+                .load(path)
+                .placeholder(R.drawable.placeholder_android)
+                .error(R.drawable.placeholder_android)
+                .into(imageView);
     }
 }

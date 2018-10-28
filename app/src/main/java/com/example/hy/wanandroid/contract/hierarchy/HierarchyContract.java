@@ -2,7 +2,12 @@ package com.example.hy.wanandroid.contract.hierarchy;
 
 import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.IView;
-import com.example.hy.wanandroid.contract.MainContract;
+import com.example.hy.wanandroid.network.entity.BaseResponse;
+import com.example.hy.wanandroid.network.entity.hierarchy.FirstHierarchy;
+
+import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * Created by 陈健宇 at 2018/10/23
@@ -10,15 +15,15 @@ import com.example.hy.wanandroid.contract.MainContract;
 public interface HierarchyContract {
 
     interface View extends IView {
-
+        void showFirstHierarchyList(List<FirstHierarchy> firstHierarchyList);
     }
 
     interface Presenter extends IPresenter<HierarchyContract.View> {
-
+        void loadFirstHierarchyList();
     }
 
     interface Model{
-
+        Observable<BaseResponse<List<FirstHierarchy>>> getFirstHierarchyList();
     }
 
 }

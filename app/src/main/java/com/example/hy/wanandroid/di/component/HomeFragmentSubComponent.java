@@ -8,9 +8,9 @@ import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import dagger.Subcomponent;
 
 /**
+ * HomeFragment的Component
  * Created by 陈健宇 at 2018/10/26
  */
-
 @PerFragment
 @Subcomponent(modules = HomeFragmentModule.class)
 public interface HomeFragmentSubComponent {

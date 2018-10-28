@@ -31,23 +31,23 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
             if(apiException.getErrorCode() == -1001){//token失效
 
             }else {//没有获取到数据
-                LogUtil.e(LogUtil.TAG_NET, "nothing：" + e.getMessage());
+                LogUtil.e(LogUtil.TAG_ERROR, "nothing：" + e.getMessage());
             }
         }else if (e instanceof UnknownHostException){//网络不可用
             ToastUtil.showToast(App.getContext(), "unavailable");
-            LogUtil.e(LogUtil.TAG_NET, "unavailable：" + e.getMessage());
+            LogUtil.e(LogUtil.TAG_ERROR, "unavailable：" + e.getMessage());
         }else if(e instanceof InterruptedException){//网络超时
             ToastUtil.showToast(App.getContext(), "timeout");
-            LogUtil.e(LogUtil.TAG_NET, "timeout：" + e.getMessage());
+            LogUtil.e(LogUtil.TAG_ERROR, "timeout：" + e.getMessage());
         }else if (e instanceof HttpException){//http错误
-            LogUtil.e(LogUtil.TAG_NET, "http错误：" + e.getMessage());
+            LogUtil.e(LogUtil.TAG_ERROR, "http错误：" + e.getMessage());
         }else if(e instanceof JsonParseException
                 || e instanceof JSONException
                 || e instanceof ParseException){//解析错误
-            LogUtil.e(LogUtil.TAG_NET, "解析错误：" + e.getMessage());
+            LogUtil.e(LogUtil.TAG_ERROR, "解析错误：" + e.getMessage());
         } else {//未知连接错误
             ToastUtil.showToast(App.getContext(), "unknown");
-            LogUtil.e(LogUtil.TAG_NET, "unknown：" + e.getMessage());
+            LogUtil.e(LogUtil.TAG_ERROR, "unknown：" + e.getMessage());
         }
     }
 

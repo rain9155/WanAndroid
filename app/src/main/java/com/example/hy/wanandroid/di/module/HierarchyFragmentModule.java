@@ -1,17 +1,17 @@
 package com.example.hy.wanandroid.di.module;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.adapter.ArticlesAdapter;
+import com.example.hy.wanandroid.adapter.FirstHierarchyListAdapter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerActivity;
 import com.example.hy.wanandroid.di.scope.PerFragment;
+import com.example.hy.wanandroid.network.api.HierarchyApis;
 import com.example.hy.wanandroid.network.api.HomeApis;
+import com.example.hy.wanandroid.network.entity.hierarchy.FirstHierarchy;
 import com.example.hy.wanandroid.network.entity.homepager.Article;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Named;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import dagger.Module;
@@ -19,42 +19,28 @@ import dagger.Provides;
 import retrofit2.Retrofit;
 
 /**
- * HomeFragment的Module
- * Created by 陈健宇 at 2018/10/26
+ * HierarchyFragment的Module
+ * Created by 陈健宇 at 2018/10/28
  */
 @Module
-public class HomeFragmentModule {
+public class HierarchyFragmentModule {
 
     @Provides
     @PerFragment
-    public HomeApis provideHomeApis(Retrofit retrofit){
-        return retrofit.create(HomeApis.class);
+    public HierarchyApis provideHomeApis(Retrofit retrofit){
+        return retrofit.create(HierarchyApis.class);
     }
 
     @Provides
     @PerFragment
-    @Named("bannerTitles")
-    List<String> provideBannerTitles(){
+    List<FirstHierarchy> provideFirstHierarchyList(){
         return new ArrayList<>();
     }
 
     @Provides
     @PerFragment
-    @Named("bannerImages")
-    List<String> provideBannerImages(){
-        return new ArrayList<>();
-    }
-
-    @Provides
-    @PerFragment
-    List<Article> provideArticles(){
-        return new ArrayList<>();
-    }
-
-    @Provides
-    @PerFragment
-    ArticlesAdapter provideArticlesAdapter(List<Article> articles){
-        return new ArticlesAdapter(R.layout.item_home_acticles, articles);
+    public FirstHierarchyListAdapter provideFirstHierarchyListAdapter(List<FirstHierarchy> firstHierarchyList){
+        return new FirstHierarchyListAdapter(R.layout.item_hierarchy_first, firstHierarchyList);
     }
 
     @Provides

@@ -10,7 +10,8 @@
         <FrameLayout
             android:id="@+id/fl_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         </FrameLayout>
 
@@ -24,6 +25,7 @@
             android:layout_marginRight="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_68"
             android:clickable="true"
+            app:layout_behavior="@string/behaviour_fbtn"
             app:pressedTranslationZ="@dimen/dp_10"
             app:elevation="@dimen/dp_10"
             tools:ignore="RtlHardcoded"
