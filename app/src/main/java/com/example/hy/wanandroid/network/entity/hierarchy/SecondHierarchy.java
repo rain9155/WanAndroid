@@ -1,22 +1,23 @@
-package com.example.hy.wanandroid.network.entity.homepager;
+package com.example.hy.wanandroid.network.entity.hierarchy;
+
+import com.example.hy.wanandroid.network.entity.homepager.Article;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 /**
- * 文章实体类
- * Created by 陈健宇 at 2018/10/27
+ * 第二级体系的实体类
+ * Created by 陈健宇 at 2018/10/29
  */
-public class Articles {
+public class SecondHierarchy {
 
     /**
      * curPage : 1
-     * datas : []
+     * datas:[]
+     * offset : 0
      * over : false
-     * pageCount : 281
+     * pageCount : 2
      * size : 20
-     * total : 5601
+     * total : 35
      */
 
     private int curPage;
@@ -83,3 +84,4 @@ public class Articles {
         this.datas = datas;
     }
 }
+

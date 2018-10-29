@@ -8,15 +8,18 @@ import com.example.hy.wanandroid.network.entity.hierarchy.FirstHierarchyChild;
 import com.example.hy.wanandroid.utils.CommonUtil;
 
 import java.util.List;
+
+import javax.inject.Inject;
+
 import androidx.annotation.Nullable;
 
 /**
  * 一级体系的adapter
  * Created by 陈健宇 at 2018/10/28
  */
-public class FirstHierarchyListAdapter extends BaseQuickAdapter<FirstHierarchy, BaseViewHolder>{
+public class FirstHierarchyAdapter extends BaseQuickAdapter<FirstHierarchy, BaseViewHolder>{
 
-    public FirstHierarchyListAdapter(int layoutResId, @Nullable List<FirstHierarchy> data) {
+    public FirstHierarchyAdapter(int layoutResId, @Nullable List<FirstHierarchy> data) {
         super(layoutResId, data);
     }
 

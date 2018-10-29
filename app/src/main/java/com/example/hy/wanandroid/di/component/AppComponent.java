@@ -2,6 +2,10 @@ package com.example.hy.wanandroid.di.component;
 
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.module.AppModule;
+import com.example.hy.wanandroid.network.api.HierarchyApis;
+import com.example.hy.wanandroid.network.api.HomeApis;
+import com.example.hy.wanandroid.network.api.ProjectApis;
+
 import javax.inject.Singleton;
 import dagger.Component;
 import retrofit2.Retrofit;
@@ -19,4 +23,7 @@ public interface AppComponent {
     App getApp();
 
     Retrofit getRetrofit();
+    HomeApis getHomeApis();
+    HierarchyApis getHierarchyApis();
+    ProjectApis getProjectApis();
 }

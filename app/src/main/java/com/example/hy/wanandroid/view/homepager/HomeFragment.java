@@ -7,13 +7,12 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
-import com.example.hy.wanandroid.di.module.HomeFragmentModule;
+import com.example.hy.wanandroid.di.module.fragment.HomeFragmentModule;
 import com.example.hy.wanandroid.network.entity.homepager.Article;
 import com.example.hy.wanandroid.network.entity.homepager.BannerData;
 import com.example.hy.wanandroid.presenter.homepager.HomePresenter;
 import com.example.hy.wanandroid.utils.BannerImageLoader;
 import com.example.hy.wanandroid.utils.CommonUtil;
-import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.youth.banner.Banner;
@@ -74,10 +73,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     protected void initView() {
         if(!(getActivity() instanceof MainActivity)) return;
-        ((MainActivity) getActivity()).getMainActivityComponent().getHomFragmentSubComponent(new HomeFragmentModule()).inject(this);
+        ((MainActivity) getActivity()).getComponent().getHomFragmentSubComponent(new HomeFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
         tlCommon.setTitle(R.string.menu_btm_nav_home);
+        tlCommon.setNavigationIcon(R.drawable.ic_navigation);
         rvArticles.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
         rvArticles.setAdapter(mArticlesAdapter);

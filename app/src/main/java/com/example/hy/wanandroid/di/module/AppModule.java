@@ -1,7 +1,11 @@
 package com.example.hy.wanandroid.di.module;
 
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.config.BaseUrl;
+import com.example.hy.wanandroid.config.Constant;
+import com.example.hy.wanandroid.di.scope.PerFragment;
+import com.example.hy.wanandroid.network.api.HierarchyApis;
+import com.example.hy.wanandroid.network.api.HomeApis;
+import com.example.hy.wanandroid.network.api.ProjectApis;
 import com.example.hy.wanandroid.network.gson.CustomGsonConverterFactory;
 
 import javax.inject.Singleton;
@@ -33,10 +37,28 @@ public class AppModule {
     @Singleton
     public Retrofit provideRetrofit(){
         return new Retrofit.Builder()
-                .baseUrl(BaseUrl.BASE_URL)
+                .baseUrl(Constant.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(CustomGsonConverterFactory.create())
                 .build();
+    }
+
+    @Provides
+    @Singleton
+    public HierarchyApis provideHierarchyApis(Retrofit retrofit){
+        return retrofit.create(HierarchyApis.class);
+    }
+
+    @Provides
+    @Singleton
+    public HomeApis provideHomeApis(Retrofit retrofit){
+        return retrofit.create(HomeApis.class);
+    }
+
+    @Provides
+    @Singleton
+    public ProjectApis provideProjectApis(Retrofit retrofit){
+        return retrofit.create(ProjectApis.class);
     }
 
 }

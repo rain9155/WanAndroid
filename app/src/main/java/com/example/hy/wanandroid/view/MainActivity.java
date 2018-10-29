@@ -1,7 +1,5 @@
 package com.example.hy.wanandroid.view;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.util.TypedValue;
 import android.view.View;
@@ -12,10 +10,10 @@ import android.widget.FrameLayout;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.contract.MainContract;
-import com.example.hy.wanandroid.di.component.DaggerMainActivityComponent;
-import com.example.hy.wanandroid.di.component.MainActivityComponent;
+import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityComponent;
+import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
+import com.example.hy.wanandroid.di.module.activity.MainActivityModule;
 import com.example.hy.wanandroid.presenter.MainPresenter;
-import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
@@ -25,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaeger.library.StatusBarUtil;
 
 import butterknife.BindView;
+import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 import android.os.Handler;
 
@@ -39,7 +38,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.bnv_btm)
     BottomNavigationView bnvBtm;
 
-    private SwipeBackFragment[] mFragments;
+    private SupportFragment[] mFragments;
     private int mPreFragmentPosition = 0;//上一个被选中的Fragment位置
     private MainActivityComponent mMainActivityComponent;
 
@@ -55,13 +54,14 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     protected void initView() {
         mMainActivityComponent = DaggerMainActivityComponent.builder()
                 .appComponent(getAppComponent())
+                .mainActivityModule(new MainActivityModule())
                 .build();
         mMainActivityComponent.inject(this);
 
         mPresenter.attachView(this);
 
         if(findFragment(HomeFragment.class) == null){
-            mFragments = new SwipeBackFragment[4];
+            mFragments = new SupportFragment[4];
             mFragments[0] = HomeFragment.newInstance();
             mFragments[1] = HierarchyFragment.newInstance();
             mFragments[2] = ProjectFragment.newInstance();
@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         StatusBarUtil.setTransparentForImageViewInFragment(this, null);
     }
 
-    public MainActivityComponent getMainActivityComponent(){
+    public MainActivityComponent getComponent(){
         return mMainActivityComponent;
     }
 

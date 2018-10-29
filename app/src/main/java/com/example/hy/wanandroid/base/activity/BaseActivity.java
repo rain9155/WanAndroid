@@ -14,13 +14,14 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 /**
  * Activity的基类
  * Created by 陈健宇 at 2018/10/21
  */
-public abstract class BaseActivity extends SwipeBackActivity
+public abstract class BaseActivity extends SupportActivity
         implements IView {
 
     private Unbinder mUnbinder;

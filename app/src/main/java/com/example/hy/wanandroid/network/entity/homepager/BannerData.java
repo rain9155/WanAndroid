@@ -1,5 +1,7 @@
 package com.example.hy.wanandroid.network.entity.homepager;
 
+import javax.inject.Inject;
+
 /**
  * 首页banner的数据
  * Created by 陈健宇 at 2018/10/25

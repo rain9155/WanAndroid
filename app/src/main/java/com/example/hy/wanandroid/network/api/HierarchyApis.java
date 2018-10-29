@@ -2,11 +2,15 @@ package com.example.hy.wanandroid.network.api;
 
 import com.example.hy.wanandroid.network.entity.BaseResponse;
 import com.example.hy.wanandroid.network.entity.hierarchy.FirstHierarchy;
+import com.example.hy.wanandroid.network.entity.hierarchy.SecondHierarchy;
+import com.example.hy.wanandroid.network.entity.homepager.Article;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * 体系的所有api
@@ -20,4 +24,12 @@ public interface HierarchyApis {
      */
     @GET("tree/json")
     Observable<BaseResponse<List<FirstHierarchy>>> getFirstHierarchyList();
+
+    /**
+     * 获取二级体系文章
+     * http://www.wanandroid.com/article/list/0/json?cid=60
+     */
+    @GET("article/list/{pageNum}/json")
+    Observable<BaseResponse<SecondHierarchy>> getSecondHierarchyList(@Path("pageNum") int pageNum,//页数
+                                                                    @Query("id") int id);//一级体系的id
 }

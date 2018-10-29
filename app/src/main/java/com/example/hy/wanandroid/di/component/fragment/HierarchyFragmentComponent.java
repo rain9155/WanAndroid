@@ -1,11 +1,8 @@
-package com.example.hy.wanandroid.di.component;
+package com.example.hy.wanandroid.di.component.fragment;
 
-import com.example.hy.wanandroid.di.module.HierarchyFragmentModule;
-import com.example.hy.wanandroid.di.module.HomeFragmentModule;
-import com.example.hy.wanandroid.di.scope.PerActivity;
+import com.example.hy.wanandroid.di.module.fragment.HierarchyFragmentModule;
 import com.example.hy.wanandroid.di.scope.PerFragment;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
-import com.example.hy.wanandroid.view.homepager.HomeFragment;
 
 import dagger.Subcomponent;
 
@@ -15,6 +12,7 @@ import dagger.Subcomponent;
  */
 @PerFragment
 @Subcomponent(modules = HierarchyFragmentModule.class)
-public interface HierarchyFragmentSubComponent {
+public interface HierarchyFragmentComponent {
+
     void inject(HierarchyFragment hierarchyFragment);
 }

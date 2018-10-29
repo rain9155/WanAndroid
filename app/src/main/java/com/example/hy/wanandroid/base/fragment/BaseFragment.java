@@ -15,13 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
  * Fragment的基类，支持懒加载
  * Created by 陈健宇 at 2018/10/21
  */
-public abstract class BaseFragment extends SwipeBackFragment
+public abstract class BaseFragment extends SupportFragment
         implements IView {
 
     private Unbinder mUnbinder;
@@ -36,7 +37,7 @@ public abstract class BaseFragment extends SwipeBackFragment
         View view = inflater.inflate(getLayoutId(), container, false);
         mUnbinder = ButterKnife.bind(this, view);
         initView();
-        return attachToSwipeBack(view);
+        return view;
     }
 
     @Override

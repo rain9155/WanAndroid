@@ -19,6 +19,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by 陈健宇 at 2018/10/23
  */
 public class MineFragment extends BaseFragment implements MineContract.View {
+
     @BindView(R.id.iv_face)
     CircleImageView ivFace;
     @BindView(R.id.btn_login)

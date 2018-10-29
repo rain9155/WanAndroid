@@ -2,6 +2,8 @@ package com.example.hy.wanandroid.network.entity.homepager;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * 文章实体类
  * Created by 陈健宇 at 2018/10/27

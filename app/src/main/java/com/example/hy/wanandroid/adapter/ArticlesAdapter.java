@@ -7,6 +7,8 @@ import com.example.hy.wanandroid.network.entity.homepager.Article;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import androidx.annotation.Nullable;
 
 /**

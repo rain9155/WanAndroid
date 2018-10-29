@@ -1,25 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<com.scwang.smartrefresh.layout.SmartRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/srl_hierarchy_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/common_toolbal"/>
-
-        <include layout="@layout/common_tablayout"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp_hierarchy_second"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_hierarchy_second_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </androidx.viewpager.widget.ViewPager>
+    </androidx.recyclerview.widget.RecyclerView>
 
-</LinearLayout>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

@@ -1,49 +1,24 @@
-package com.example.hy.wanandroid.di.module;
+package com.example.hy.wanandroid.di.module.fragment;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.di.scope.PerActivity;
 import com.example.hy.wanandroid.di.scope.PerFragment;
-import com.example.hy.wanandroid.network.api.HomeApis;
 import com.example.hy.wanandroid.network.entity.homepager.Article;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Named;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.Retrofit;
 
 /**
- * HomeFragment的Module
- * Created by 陈健宇 at 2018/10/26
+ * HierarchySecond的Fragment
+ * Created by 陈健宇 at 2018/10/29
  */
 @Module
-public class HomeFragmentModule {
-
-    @Provides
-    @PerFragment
-    public HomeApis provideHomeApis(Retrofit retrofit){
-        return retrofit.create(HomeApis.class);
-    }
-
-    @Provides
-    @PerFragment
-    @Named("bannerTitles")
-    List<String> provideBannerTitles(){
-        return new ArrayList<>();
-    }
-
-    @Provides
-    @PerFragment
-    @Named("bannerImages")
-    List<String> provideBannerImages(){
-        return new ArrayList<>();
-    }
+public class HierarchySecondFragmentModule {
 
     @Provides
     @PerFragment
@@ -62,4 +37,5 @@ public class HomeFragmentModule {
     LinearLayoutManager provideLinearLayoutManager(){
         return new LinearLayoutManager(App.getContext());
     }
+
 }
