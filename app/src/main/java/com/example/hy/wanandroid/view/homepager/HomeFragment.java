@@ -93,7 +93,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     }
 
     @Override
-    protected void initData() {
+    protected void loadData() {
         mPresenter.loadBannerDatas();
         mPresenter.loadArticles(0);
     }

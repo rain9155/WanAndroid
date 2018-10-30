@@ -1,25 +1,22 @@
 package com.example.hy.wanandroid.base.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.IView;
-
-import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
-import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
- * Fragment的基类，支持懒加载
+ * Fragment的基类
  * Created by 陈健宇 at 2018/10/21
  */
 public abstract class BaseFragment extends SupportFragment
@@ -27,23 +24,22 @@ public abstract class BaseFragment extends SupportFragment
 
     private Unbinder mUnbinder;
 
+    protected abstract void initView();//初始化控件
+    protected abstract void loadData();//加载数据
     protected abstract int getLayoutId();//获取Fragment的布局Id
-    protected abstract void initView();//初始化控件，如setAdapter（）
-    protected abstract void initData();//初始化数据，如为adapter设置数据
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
         mUnbinder = ButterKnife.bind(this, view);
-        initView();
         return view;
     }
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        initData();
+        loadData();
     }
 
     @Override

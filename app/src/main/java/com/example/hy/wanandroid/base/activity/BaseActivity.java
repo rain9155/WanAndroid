@@ -4,18 +4,14 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.jaeger.library.StatusBarUtil;
-
-import javax.inject.Inject;
-
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportActivity;
-import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 /**
  * Activity的基类
@@ -27,7 +23,7 @@ public abstract class BaseActivity extends SupportActivity
     private Unbinder mUnbinder;
 
     protected abstract int getLayoutId();//获取Activity的布局Id
-    protected abstract void initView();//初始化控件
+    protected abstract void initView(Bundle savedInstanceState);//初始化控件
     protected abstract void initData();//初始化数据
 
     @SuppressLint("ResourceAsColor")
@@ -37,7 +33,7 @@ public abstract class BaseActivity extends SupportActivity
         setContentView(getLayoutId());
         mUnbinder = ButterKnife.bind(this);
         setStatusBarColor();
-        initView();
+        initView(savedInstanceState);
         initData();
     }
 

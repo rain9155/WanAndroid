@@ -18,11 +18,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import me.yokeyword.fragmentation.SupportFragment;
-import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
  * Created by 陈健宇 at 2018/10/28
@@ -74,8 +73,9 @@ public class HierarchySecondFragment extends BaseFragment implements HierarchySe
     }
 
     @Override
-    protected void initData() {
+    protected void loadData() {
         mPresenter.loadArticles(0, mId);
+
     }
 
     @Override
@@ -96,7 +96,7 @@ public class HierarchySecondFragment extends BaseFragment implements HierarchySe
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if(bundle != null){
-            mId = bundle.getInt(Constant.KEY_PAGENUM, -1);
+            mId = bundle.getInt(Constant.KEY_HIERARCHY_PAGENUM, -1);
         }
     }
 
@@ -109,10 +109,10 @@ public class HierarchySecondFragment extends BaseFragment implements HierarchySe
         super.onDestroy();
     }
 
-    public static SupportFragment newInstance(int id){
+    public static Fragment newInstance(int id){
         Bundle bundle = new Bundle();
-        bundle.putInt(Constant.KEY_PAGENUM, id);
-        SupportFragment fragment = new HierarchySecondFragment();
+        bundle.putInt(Constant.KEY_HIERARCHY_PAGENUM, id);
+        Fragment fragment = new HierarchySecondFragment();
         fragment.setArguments(bundle);
         return fragment;
     }

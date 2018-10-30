@@ -1,20 +1,13 @@
 package com.example.hy.wanandroid.di.module.activity;
 
-import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.adapter.ArticlesAdapter;
-import com.example.hy.wanandroid.adapter.VpAdapter;
-import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.di.scope.Per2Activity;
-import com.example.hy.wanandroid.network.entity.homepager.Article;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.fragment.app.Fragment;
 import dagger.Module;
 import dagger.Provides;
-import me.yokeyword.fragmentation.SupportFragment;
-import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
  * HierarchySecondActivity的Module
@@ -24,7 +17,7 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 public class HierarchySecondActivityModule {
 
     @Provides
-    List<SupportFragment> provideSupportFragment(){
+    List<Fragment> provideSupportFragment(){
         return new ArrayList<>();
     }
 

@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * 第二级知识体系的Vp适配器
@@ -15,10 +14,10 @@ import me.yokeyword.fragmentation.SupportFragment;
  */
 public class VpAdapter extends FragmentPagerAdapter {
 
-    private List<SupportFragment> mFragments;
+    private List<Fragment> mFragments;
     private List<String> mTitles;
 
-    public VpAdapter(FragmentManager fm, List<SupportFragment> fragments, List<String> titles) {
+    public VpAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
         super(fm);
         mFragments = fragments;
         mTitles = titles;

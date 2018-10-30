@@ -1,11 +1,17 @@
 package com.example.hy.wanandroid.di.module.fragment;
 
+import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.adapter.ProjectsAdapter;
+import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.network.entity.homepager.Article;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import dagger.Module;
 import dagger.Provides;
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * ProjectFragment的Module
@@ -15,7 +21,7 @@ import me.yokeyword.fragmentation.SupportFragment;
 public class ProjectFragmentModule {
 
     @Provides
-    List<SupportFragment> provideSupportFragment(){
+    List<Fragment> provideSupportFragment(){
         return new ArrayList<>();
     }
 
@@ -27,6 +33,21 @@ public class ProjectFragmentModule {
     @Provides
     List<Integer> provideIds(){
         return new ArrayList<>();
+    }
+
+    @Provides
+    List<Article> provideArticles(){
+        return new ArrayList<>();
+    }
+
+    @Provides
+    LinearLayoutManager provideLinearLayoutManager(){
+        return new LinearLayoutManager(App.getContext());
+    }
+
+    @Provides
+    ProjectsAdapter provideProjectsAdapter(List<Article> articles){
+        return new ProjectsAdapter(R.layout.item_project_list, articles);
     }
 
 }

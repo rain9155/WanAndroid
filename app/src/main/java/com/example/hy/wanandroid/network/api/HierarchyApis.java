@@ -31,5 +31,5 @@ public interface HierarchyApis {
      */
     @GET("article/list/{pageNum}/json")
     Observable<BaseResponse<SecondHierarchy>> getSecondHierarchyList(@Path("pageNum") int pageNum,//页数
-                                                                    @Query("id") int id);//一级体系的id
+                                                                    @Query("cid") int id);//一级体系的id
 }

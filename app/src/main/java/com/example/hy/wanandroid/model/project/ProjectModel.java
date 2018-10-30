@@ -27,6 +27,6 @@ public class ProjectModel implements ProjectContract.Model {
 
     @Override
     public Observable<BaseResponse<List<Project>>> getProjectList() {
-        return mProjectApis.getProjects();
+        return mProjectApis.getProjectList();
     }
 }

@@ -64,7 +64,8 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     }
 
     @Override
-    protected void initData() {
+    protected void loadData() {
+
     }
 
     public static MineFragment newInstance() {

@@ -72,8 +72,9 @@ public class HierarchyFragment extends BaseFragment implements HierarchyContract
         });
         mListAdapter.setOnItemClickListener(((adapter, view, position) -> starHierarchyActivity(position) ));
     }
+
     @Override
-    protected void initData() {
+    protected void loadData() {
         mPresenter.loadFirstHierarchyList();
     }
 
@@ -94,7 +95,7 @@ public class HierarchyFragment extends BaseFragment implements HierarchyContract
                 listName.add(child.getName());
                 listId.add(String.valueOf(child.getId()));
             }
-            HierarchySecondActivity.startActivity(_mActivity, firstHierarchy.getName(), listId, listName);
+            HierarchySecondActivity.startActivity(mActivity, firstHierarchy.getName(), listId, listName);
         }
     }
 

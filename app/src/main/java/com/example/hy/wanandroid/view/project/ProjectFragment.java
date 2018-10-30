@@ -16,9 +16,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * 项目tab
@@ -40,7 +40,7 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
     @Inject
     List<Integer> mIds;
     @Inject
-    List<SupportFragment> mFragments;
+    List<Fragment> mFragments;
 
     private VpAdapter mVpAdapter;
 
@@ -56,19 +56,25 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
         mPresenter.attachView(this);
 
         tlCommon.setTitle(R.string.menu_btm_nav_project);
-        mVpAdapter = new VpAdapter(getChildFragmentManager(), mFragments, mTitles);
-        vpProject.setAdapter(mVpAdapter);
-        commonTablayout.setupWithViewPager(vpProject);
     }
 
     @Override
-    protected void initData() {
+    protected void loadData() {
         mPresenter.loadProjectList();
     }
 
     @Override
     public void showProjectList(List<Project> projectList) {
-
+        for(Project project : projectList){
+            mIds.add(project.getId());
+            mTitles.add(project.getName());
+        }
+        for(int i = 0; i < projectList.size(); i++){
+            mFragments.add(ProjectsFragment.newInstance(mIds.get(i)));
+        }
+        mVpAdapter = new VpAdapter(getChildFragmentManager(), mFragments, mTitles);
+        vpProject.setAdapter(mVpAdapter);
+        commonTablayout.setupWithViewPager(vpProject);
     }
 
     @Override
