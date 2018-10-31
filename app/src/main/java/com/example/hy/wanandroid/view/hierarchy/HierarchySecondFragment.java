@@ -75,7 +75,6 @@ public class HierarchySecondFragment extends BaseFragment implements HierarchySe
     @Override
     protected void loadData() {
         mPresenter.loadArticles(0, mId);
-
     }
 
     @Override

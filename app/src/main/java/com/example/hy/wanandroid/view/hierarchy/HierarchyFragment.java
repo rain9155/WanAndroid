@@ -10,6 +10,7 @@ import com.example.hy.wanandroid.network.entity.hierarchy.FirstHierarchyChild;
 import com.example.hy.wanandroid.presenter.hierarchy.HierarchyPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.MainActivity;
+import com.example.hy.wanandroid.view.navigation.NavigationActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class HierarchyFragment extends BaseFragment implements HierarchyContract
         mPresenter.attachView(this);
 
         tlCommon.setTitle(R.string.menu_btm_nav_hierarchy);
+        tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
         rvHierarchy.setLayoutManager(mLayoutManager);
         mListAdapter.openLoadAnimation();
         rvHierarchy.setAdapter(mListAdapter);
@@ -71,6 +73,7 @@ public class HierarchyFragment extends BaseFragment implements HierarchyContract
             isLoadMore = false;
         });
         mListAdapter.setOnItemClickListener(((adapter, view, position) -> starHierarchyActivity(position) ));
+
     }
 
     @Override
@@ -95,7 +98,7 @@ public class HierarchyFragment extends BaseFragment implements HierarchyContract
                 listName.add(child.getName());
                 listId.add(String.valueOf(child.getId()));
             }
-            HierarchySecondActivity.startActivity(mActivity, firstHierarchy.getName(), listId, listName);
+            HierarchySecondActivity.startActivity(_mActivity, firstHierarchy.getName(), listId, listName);
         }
     }
 

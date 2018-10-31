@@ -3,10 +3,7 @@ package com.example.hy.wanandroid.di.module.fragment;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.di.scope.Per2Activity;
-import com.example.hy.wanandroid.di.scope.PerActivity;
 import com.example.hy.wanandroid.di.scope.PerFragment;
-import com.example.hy.wanandroid.network.api.HomeApis;
 import com.example.hy.wanandroid.network.entity.homepager.Article;
 
 import java.util.ArrayList;
@@ -17,7 +14,6 @@ import javax.inject.Named;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.Retrofit;
 
 /**
  * HomeFragment的Module

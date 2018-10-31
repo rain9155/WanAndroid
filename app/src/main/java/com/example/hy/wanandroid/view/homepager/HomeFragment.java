@@ -14,6 +14,7 @@ import com.example.hy.wanandroid.presenter.homepager.HomePresenter;
 import com.example.hy.wanandroid.utils.BannerImageLoader;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.MainActivity;
+import com.example.hy.wanandroid.view.navigation.NavigationActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -78,6 +79,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
         tlCommon.setTitle(R.string.menu_btm_nav_home);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
+        tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
         rvArticles.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
         rvArticles.setAdapter(mArticlesAdapter);

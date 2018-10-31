@@ -4,9 +4,8 @@ import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.di.component.fragment.HierarchySecondFragmentComponent;
 import com.example.hy.wanandroid.di.module.activity.HierarchySecondActivityModule;
 import com.example.hy.wanandroid.di.module.fragment.HierarchySecondFragmentModule;
-import com.example.hy.wanandroid.di.scope.Per2Activity;
+import com.example.hy.wanandroid.di.scope.PerActivity;
 import com.example.hy.wanandroid.view.hierarchy.HierarchySecondActivity;
-import com.example.hy.wanandroid.view.hierarchy.HierarchySecondFragment;
 
 import dagger.Component;
 
@@ -14,7 +13,7 @@ import dagger.Component;
  * HierarchySecondActivity的Component
  * Created by 陈健宇 at 2018/10/29
  */
-@Per2Activity
+@PerActivity
 @Component(dependencies = AppComponent.class, modules = HierarchySecondActivityModule.class)
 public interface HierarchySecondActivityComponent {
     void inject(HierarchySecondActivity hierarchySecondActivity);

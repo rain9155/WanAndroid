@@ -5,6 +5,7 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.di.scope.PerFragment;
 import com.example.hy.wanandroid.network.api.HierarchyApis;
 import com.example.hy.wanandroid.network.api.HomeApis;
+import com.example.hy.wanandroid.network.api.NavigationApis;
 import com.example.hy.wanandroid.network.api.ProjectApis;
 import com.example.hy.wanandroid.network.gson.CustomGsonConverterFactory;
 
@@ -59,6 +60,12 @@ public class AppModule {
     @Singleton
     public ProjectApis provideProjectApis(Retrofit retrofit){
         return retrofit.create(ProjectApis.class);
+    }
+
+    @Provides
+    @Singleton
+    public NavigationApis provideNavigationApis(Retrofit retrofit){
+        return retrofit.create(NavigationApis.class);
     }
 
 }

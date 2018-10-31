@@ -16,6 +16,7 @@ import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityCompone
 import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.MainActivityModule;
 import com.example.hy.wanandroid.presenter.MainPresenter;
+import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
@@ -24,8 +25,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaeger.library.StatusBarUtil;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import android.os.Handler;
 
@@ -66,6 +65,12 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             mFragments[1] = HierarchyFragment.newInstance();
             mFragments[2] = ProjectFragment.newInstance();
             mFragments[3] = MineFragment.newInstance();
+            loadMultipleRootFragment(R.id.fl_container, 0, mFragments);
+        }else {
+            mFragments[0] = findFragment(HomeFragment.class);
+            mFragments[1] = findFragment(HierarchyFragment.class);
+            mFragments[2] = findFragment(ProjectFragment.class);
+            mFragments[3] = findFragment(MineFragment.class);
         }
         bnvBtm.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()){
@@ -143,5 +148,4 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             animator.start();
         }
     }
-
 }

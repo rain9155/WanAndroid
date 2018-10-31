@@ -9,6 +9,7 @@ import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
 import com.example.hy.wanandroid.network.entity.project.Project;
 import com.example.hy.wanandroid.presenter.project.ProjectPresenter;
 import com.example.hy.wanandroid.view.MainActivity;
+import com.example.hy.wanandroid.view.navigation.NavigationActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
@@ -56,6 +57,7 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
         mPresenter.attachView(this);
 
         tlCommon.setTitle(R.string.menu_btm_nav_project);
+        tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
     }
 
     @Override

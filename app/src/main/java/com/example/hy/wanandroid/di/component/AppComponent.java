@@ -4,6 +4,7 @@ import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.module.AppModule;
 import com.example.hy.wanandroid.network.api.HierarchyApis;
 import com.example.hy.wanandroid.network.api.HomeApis;
+import com.example.hy.wanandroid.network.api.NavigationApis;
 import com.example.hy.wanandroid.network.api.ProjectApis;
 
 import javax.inject.Singleton;
@@ -26,4 +27,5 @@ public interface AppComponent {
     HomeApis getHomeApis();
     HierarchyApis getHierarchyApis();
     ProjectApis getProjectApis();
+    NavigationApis getNavigationApis();
 }

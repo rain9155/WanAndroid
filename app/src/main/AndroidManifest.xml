@@ -24,7 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.hierarchy.HierarchySecondActivity"></activity>
+        <activity android:name=".view.hierarchy.HierarchySecondActivity" />
+        <activity android:name=".view.navigation.NavigationActivity" />
+        <activity android:name=".view.search.SearchActivity"></activity>
     </application>
 
 </manifest>
