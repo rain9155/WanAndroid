@@ -16,14 +16,15 @@ import io.reactivex.Observable;
 public interface NavigationContract {
 
     interface View extends IView{
-        void showTags(List<Tag> tagList);
+        void showTags(List<Tag> tagList);//显示tag标签
+        void showTagsName(List<String> tagsName);//显示tag标签名字
     }
 
     interface Presenter extends IPresenter<NavigationContract.View>{
-        void loadTags();
+        void loadTags();//加载tag标签
     }
 
     interface Model{
-        Observable<BaseResponse<List<Tag>>> getTags();
+        Observable<BaseResponse<List<Tag>>> getTags();//从网络获得tag标签数据
     }
 }

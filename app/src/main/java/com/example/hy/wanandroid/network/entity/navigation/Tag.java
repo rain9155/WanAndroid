@@ -18,7 +18,7 @@ public class Tag {
 
     private int cid;
     private String name;
-    private List<Article> tags;
+    private List<Article> articles;
 
     public int getCid() {
         return cid;
@@ -37,10 +37,10 @@ public class Tag {
     }
 
     public List<Article> getArticles() {
-        return tags;
+        return articles;
     }
 
     public void setArticles(List<Article> articles) {
-        this.tags = articles;
+        this.articles = articles;
     }
 }

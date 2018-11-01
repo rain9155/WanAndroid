@@ -7,7 +7,7 @@ package com.example.hy.wanandroid.utils;
 public class LogUtil {
 
     private static final boolean isDebug = true;
-    public static final String TAG_ERROR = "error";
+    public static final String TAG_ERROR = "netError";
     public static final String TAG_COMMON = "rain";
 
     // 下面是传入自定义tag的函数

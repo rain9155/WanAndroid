@@ -60,10 +60,10 @@ public class HierarchySecondActivity extends BaseActivity{
             commonTablayout.addTab(commonTablayout.newTab().setText(mTitles.get(i)));
             mFragments.add(HierarchySecondFragment.newInstance(mIds.get(i)));
         }
+        mPagerAdapter = new VpAdapter(getSupportFragmentManager(), mFragments, mTitles);
         vpHierarchySecond.setAdapter(mPagerAdapter);
         vpHierarchySecond.setOffscreenPageLimit(mTitles.size());
         commonTablayout.setupWithViewPager(vpHierarchySecond);
-        mPagerAdapter = new VpAdapter(getSupportFragmentManager(), mFragments, mTitles);
 
         tlCommon.setTitle(intent.getStringExtra(Constant.KEY_HIERARCHY_NAME));
         tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
@@ -72,7 +72,6 @@ public class HierarchySecondActivity extends BaseActivity{
 
     @Override
     protected void initData() {
-
     }
 
     public HierarchySecondActivityComponent getComponent() {

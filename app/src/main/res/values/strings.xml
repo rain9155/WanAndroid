@@ -2,6 +2,10 @@
 
     <string name="app_name">WanAndroid</string>
 
+    //other
+    <string name="navigationActivity_tl_title">导航</string>
+    <string name="searchActiity_tl_title">搜索</string>
+
     //menu
     <string name="menu_btm_nav_home">首页</string>
     <string name="menu_btm_nav_hierarchy">体系</string>

@@ -3,6 +3,7 @@ package com.example.hy.wanandroid.di.module.fragment;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ProjectsAdapter;
 import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.di.scope.PerFragment;
 import com.example.hy.wanandroid.network.entity.homepager.Article;
 
 import java.util.ArrayList;
@@ -21,21 +22,25 @@ import dagger.Provides;
 public class ProjectFragmentModule {
 
     @Provides
+    @PerFragment
     List<Fragment> provideSupportFragment(){
         return new ArrayList<>();
     }
 
     @Provides
+    @PerFragment
     List<String> provideTitles(){
         return new ArrayList<>();
     }
 
     @Provides
+    @PerFragment
     List<Integer> provideIds(){
         return new ArrayList<>();
     }
 
     @Provides
+    @PerFragment
     List<Article> provideArticles(){
         return new ArrayList<>();
     }

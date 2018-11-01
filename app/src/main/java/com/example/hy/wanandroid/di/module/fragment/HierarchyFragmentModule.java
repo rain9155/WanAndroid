@@ -33,7 +33,6 @@ public class HierarchyFragmentModule {
     }
 
     @Provides
-    @PerFragment
     LinearLayoutManager provideLinearLayoutManager(){
         return new LinearLayoutManager(App.getContext());
     }

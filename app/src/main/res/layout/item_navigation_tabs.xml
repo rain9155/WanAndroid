@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/background"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/dp_3"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto">
 
-    <com.zhy.view.flowlayout.FlowLayout
-        android:id="@+id/fl_tabs"
+    <TextView
+        android:id="@+id/tv_tag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dp_20">
+        android:layout_marginLeft="@dimen/dp_25"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/sp_18"
+        tools:text="常用网站"/>
 
-    </com.zhy.view.flowlayout.FlowLayout>
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/fl_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20"
+        zhy:max_select="0">
 
-</RelativeLayout>
+    </com.zhy.view.flowlayout.TagFlowLayout>
+
+</LinearLayout>

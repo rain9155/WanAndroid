@@ -59,6 +59,7 @@ public class HierarchyFragment extends BaseFragment implements HierarchyContract
         mPresenter.attachView(this);
 
         tlCommon.setTitle(R.string.menu_btm_nav_hierarchy);
+        tlCommon.setNavigationIcon(R.drawable.ic_navigation);
         tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
         rvHierarchy.setLayoutManager(mLayoutManager);
         mListAdapter.openLoadAnimation();

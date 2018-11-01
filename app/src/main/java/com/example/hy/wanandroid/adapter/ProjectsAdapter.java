@@ -33,7 +33,7 @@ public class ProjectsAdapter extends BaseQuickAdapter<Article, BaseViewHolder>{
 
             holder.setText(R.id.tv_title, item.getTitle())
                     .setText(R.id.tv_details, item.getDesc())
-                    .setText(R.id.tv_author, item.getAuthor())
+                    .setText(R.id.tv_author, "作者:" + item.getAuthor())
                     .setText(R.id.tv_publish_time, item.getNiceDate());
         }
     }

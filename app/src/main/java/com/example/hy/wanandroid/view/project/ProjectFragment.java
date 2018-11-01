@@ -57,6 +57,7 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
         mPresenter.attachView(this);
 
         tlCommon.setTitle(R.string.menu_btm_nav_project);
+        tlCommon.setNavigationIcon(R.drawable.ic_navigation);
         tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
     }
 

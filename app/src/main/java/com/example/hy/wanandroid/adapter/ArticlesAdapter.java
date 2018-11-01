@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
  */
 public class ArticlesAdapter extends BaseQuickAdapter<Article, BaseViewHolder> {
 
+
     public ArticlesAdapter(int layoutResId, @Nullable List<Article> data) {
         super(layoutResId, data);
     }

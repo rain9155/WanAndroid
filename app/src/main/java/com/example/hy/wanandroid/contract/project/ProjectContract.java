@@ -17,7 +17,7 @@ import io.reactivex.Observable;
 public interface ProjectContract {
 
     interface View extends IView {
-        void showProjectList(List<Project> projectList) ;
+        void showProjectList(List<Project> projectList);
     }
 
     interface Presenter extends IPresenter<ProjectContract.View> {

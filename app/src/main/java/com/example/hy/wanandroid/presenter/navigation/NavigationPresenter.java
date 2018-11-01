@@ -7,6 +7,7 @@ import com.example.hy.wanandroid.network.entity.BaseResponse;
 import com.example.hy.wanandroid.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.network.entity.navigation.Tag;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,6 +34,11 @@ public class NavigationPresenter extends BasePresenter<NavigationContract.View> 
                     @Override
                     public void onNext(BaseResponse<List<Tag>> listBaseResponse) {
                         mView.showTags(listBaseResponse.getData());
+                        List<String> tagsName = new ArrayList<>();
+                        for(Tag tag : listBaseResponse.getData()){
+                            tagsName.add(tag.getName());
+                        }
+                        mView.showTagsName(tagsName);
                     }
                 }));
     }

@@ -2,6 +2,8 @@ package com.example.hy.wanandroid.di.module.activity;
 
 
 
+import com.example.hy.wanandroid.di.scope.PerActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +24,13 @@ public class HierarchySecondActivityModule {
     }
 
     @Provides
+    @PerActivity
     List<String> provideTitles(){
         return new ArrayList<>();
     }
 
     @Provides
+    @PerActivity
     List<Integer> provideIds(){
         return new ArrayList<>();
     }

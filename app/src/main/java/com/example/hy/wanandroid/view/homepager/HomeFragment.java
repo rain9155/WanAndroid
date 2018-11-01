@@ -79,6 +79,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
         tlCommon.setTitle(R.string.menu_btm_nav_home);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
+        tlCommon.setNavigationIcon(R.drawable.ic_navigation);
         tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
         rvArticles.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
