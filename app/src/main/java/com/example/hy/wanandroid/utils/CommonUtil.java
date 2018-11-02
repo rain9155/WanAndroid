@@ -13,6 +13,6 @@ public class CommonUtil {
     }
 
     public static boolean isEmptyList(List<?> list){
-        return list != null && list.size() != 0;
+        return list == null || list.size() == 0;
     }
 }

@@ -1,14 +1,11 @@
 package com.example.hy.wanandroid.view.hierarchy;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import butterknife.BindView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
@@ -24,7 +21,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class HierarchySecondActivity extends BaseActivity{
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class HierarchySecondActivity extends BaseActivity {
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
@@ -32,6 +36,10 @@ public class HierarchySecondActivity extends BaseActivity{
     TabLayout commonTablayout;
     @BindView(R.id.vp_hierarchy_second)
     ViewPager vpHierarchySecond;
+    @BindView(R.id.tv_common_title)
+    TextView tvCommonTitle;
+    @BindView(R.id.iv_common_search)
+    ImageView ivCommonSearch;
 
     @Inject
     List<Fragment> mFragments;
@@ -54,9 +62,10 @@ public class HierarchySecondActivity extends BaseActivity{
         mComponent.inject(this);
 
         Intent intent = getIntent();
-        for(String s : intent.getStringArrayListExtra(Constant.KEY_HIERARCHY_ID)) mIds.add(Integer.valueOf(s));
+        for (String s : intent.getStringArrayListExtra(Constant.KEY_HIERARCHY_ID))
+            mIds.add(Integer.valueOf(s));
         mTitles = intent.getStringArrayListExtra(Constant.KEY_HIERARCHY_NAMES);
-        for(int i = 0; i < mTitles.size(); i++){
+        for (int i = 0; i < mTitles.size(); i++) {
             commonTablayout.addTab(commonTablayout.newTab().setText(mTitles.get(i)));
             mFragments.add(HierarchySecondFragment.newInstance(mIds.get(i)));
         }
@@ -65,7 +74,8 @@ public class HierarchySecondActivity extends BaseActivity{
         vpHierarchySecond.setOffscreenPageLimit(mTitles.size());
         commonTablayout.setupWithViewPager(vpHierarchySecond);
 
-        tlCommon.setTitle(intent.getStringExtra(Constant.KEY_HIERARCHY_NAME));
+        ivCommonSearch.setVisibility(View.INVISIBLE);
+        tvCommonTitle.setText(intent.getStringExtra(Constant.KEY_HIERARCHY_NAME));
         tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
         tlCommon.setNavigationOnClickListener(v -> finish());
     }
@@ -78,11 +88,18 @@ public class HierarchySecondActivity extends BaseActivity{
         return mComponent;
     }
 
-    public static void startActivity(Context context, String name, ArrayList<String> listId, ArrayList<String> listName){
+    public static void startActivity(Context context, String name, ArrayList<String> listId, ArrayList<String> listName) {
         Intent intent = new Intent(context, HierarchySecondActivity.class);
         intent.putStringArrayListExtra(Constant.KEY_HIERARCHY_ID, listId);
         intent.putStringArrayListExtra(Constant.KEY_HIERARCHY_NAMES, listName);
         intent.putExtra(Constant.KEY_HIERARCHY_NAME, name);
         context.startActivity(intent);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

@@ -21,7 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ProjectPresenter extends BasePresenter<ProjectContract.View> implements ProjectContract.Presenter{
 
 
-    private ProjectModel mProjectModel;
+    private ProjectContract.Model mProjectModel;
 
     @Inject
     public ProjectPresenter(ProjectModel projectModel) {

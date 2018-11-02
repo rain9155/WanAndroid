@@ -4,16 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.adapter.TagsAdapter;
-import com.example.hy.wanandroid.adapter.TagsNameAdapter;
+import com.example.hy.wanandroid.adapter.NavigationTagsAdapter;
+import com.example.hy.wanandroid.adapter.NavigationTagsNameAdapter;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.contract.navigation.NavigationContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerNavigationActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.NavigationActivityModule;
 import com.example.hy.wanandroid.network.entity.navigation.Tag;
 import com.example.hy.wanandroid.presenter.navigation.NavigationPresenter;
+import com.example.hy.wanandroid.view.search.SearchActivity;
 
 import java.util.List;
 
@@ -36,19 +39,23 @@ public class NavigationActivity extends BaseActivity implements NavigationContra
     RecyclerView rvNavigation;
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
+    @BindView(R.id.tv_common_title)
+    TextView tvCommonTitle;
+    @BindView(R.id.iv_common_search)
+    ImageView ivCommonSearch;
 
     @Inject
     NavigationPresenter mPresenter;
     @Inject
     LinearLayoutManager mLinearLayoutManager;
     @Inject
-    TagsAdapter mTagsAdapter;
+    NavigationTagsAdapter mNavigationTagsAdapter;
     @Inject
     List<String> mTagsName;
     @Inject
     List<Tag> mTags;
 
-    private TagsNameAdapter mTagsNameAdapter;
+    private NavigationTagsNameAdapter mNavigationTagsNameAdapter;
     private int index;//滑动停止时标签列表的下标
 
     @Override
@@ -61,13 +68,16 @@ public class NavigationActivity extends BaseActivity implements NavigationContra
         DaggerNavigationActivityComponent.builder().appComponent(getAppComponent()).navigationActivityModule(new NavigationActivityModule()).build().inject(this);
         mPresenter.attachView(this);
 
+        ivCommonSearch.setVisibility(View.INVISIBLE);
+        tvCommonTitle.setText(R.string.navigationActivity_tlTitle);
         tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
-        tlCommon.setTitle(R.string.navigationActivity_tl_title);
-        tlCommon.setNavigationOnClickListener(v -> finish() );
+        tlCommon.setNavigationOnClickListener(v -> finish());
+        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(this));
 
-        mTagsAdapter.openLoadAnimation();
+
+        mNavigationTagsAdapter.openLoadAnimation();
         rvNavigation.setLayoutManager(mLinearLayoutManager);
-        rvNavigation.setAdapter(mTagsAdapter);
+        rvNavigation.setAdapter(mNavigationTagsAdapter);
 
         vtlNavigation.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
@@ -85,7 +95,7 @@ public class NavigationActivity extends BaseActivity implements NavigationContra
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     index = mLinearLayoutManager.findFirstVisibleItemPosition();
                     vtlNavigation.setTabSelected(index);
                 }
@@ -112,14 +122,14 @@ public class NavigationActivity extends BaseActivity implements NavigationContra
     @Override
     public void showTags(List<Tag> tagList) {
         mTags.addAll(tagList);
-        mTagsAdapter.notifyDataSetChanged();
+        mNavigationTagsAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showTagsName(List<String> tagsName) {
         mTagsName.addAll(tagsName);
-        mTagsNameAdapter = new TagsNameAdapter(this, mTagsName);
-        vtlNavigation.setTabAdapter(mTagsNameAdapter);
+        mNavigationTagsNameAdapter = new NavigationTagsNameAdapter(this, mTagsName);
+        vtlNavigation.setTabAdapter(mNavigationTagsNameAdapter);
     }
 
     @Override
@@ -129,5 +139,12 @@ public class NavigationActivity extends BaseActivity implements NavigationContra
             mPresenter = null;
         }
         super.onDestroy();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

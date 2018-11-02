@@ -2,10 +2,13 @@ package com.example.hy.wanandroid.view.homepager;
 
 import android.annotation.SuppressLint;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
+import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
 import com.example.hy.wanandroid.di.module.fragment.HomeFragmentModule;
 import com.example.hy.wanandroid.network.entity.homepager.Article;
@@ -15,6 +18,7 @@ import com.example.hy.wanandroid.utils.BannerImageLoader;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
+import com.example.hy.wanandroid.view.search.SearchActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -46,6 +50,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     View fakeStatusBar;
     @BindView(R.id.banner)
     Banner banner;
+    @BindView(R.id.tv_common_title)
+    TextView tvCommonTitle;
+    @BindView(R.id.iv_common_search)
+    ImageView ivCommonSearch;
 
     @Inject
     HomePresenter mPresenter;
@@ -73,14 +81,17 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @SuppressLint("ResourceAsColor")
     @Override
     protected void initView() {
-        if(!(getActivity() instanceof MainActivity)) return;
+        if (!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getHomFragmentSubComponent(new HomeFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
-        tlCommon.setTitle(R.string.menu_btm_nav_home);
-        tlCommon.setNavigationIcon(R.drawable.ic_navigation);
+        ivCommonSearch.setVisibility(View.VISIBLE);
+        tvCommonTitle.setText(R.string.menu_btm_nav_home);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
         tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
+        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
+
+
         rvArticles.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
         rvArticles.setAdapter(mArticlesAdapter);
@@ -128,7 +139,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             mArticles.addAll(articleList);
             srlHome.finishLoadMore();
         } else {
-            if (CommonUtil.isEmptyList(articleList)) mArticles.clear();
+            if (!CommonUtil.isEmptyList(articleList)) mArticles.clear();
             mArticles.addAll(articleList);
             srlHome.finishRefresh();
         }

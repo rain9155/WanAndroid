@@ -9,12 +9,33 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <!--搜索界面的style-->
+    <style name="SearchActivityStyle" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <!--设置menu中item的图标颜色-->
+        <item name="android:textColorSecondary">@color/white</item>
+        <!--设置commit按钮和搜索按钮的图标-->
+        <item name="searchViewStyle">@style/SearchViewStyle</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/ic_search</item>
+        <item name="goIcon">@drawable/ic_search</item>
+        <item name="searchHintIcon">@null</item>
+    </style>
+
     <!-- 设置Toolbar标题字体的大小 -->
     <style name="CommonToolbarTitleSize" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">@dimen/sp_18</item>
         <item name="android:textColor">@color/foreground</item>
     </style>
 
+    <!--设置Toolbar标题与NavigationIcon的距离-->
+    <style name="CommonToolbarDistance" parent="Base.Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">@dimen/dp_0</item>
+        <item name="contentInsetStartWithNavigation">@dimen/dp_0</item>
+    </style>
+    
     <style name="MineFragmentTextStyle">
         <item name="android:layout_marginLeft">@dimen/dp_15</item>
         <item name="android:textSize">@dimen/sp_16</item>

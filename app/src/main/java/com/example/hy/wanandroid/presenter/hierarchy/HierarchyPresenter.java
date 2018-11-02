@@ -21,7 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 public class HierarchyPresenter extends BasePresenter<HierarchyContract.View> implements HierarchyContract.Presenter{
 
 
-    private HierarchyModel mHierarchyModel;
+    private HierarchyContract.Model mHierarchyModel;
 
     @Inject
     public HierarchyPresenter(HierarchyModel hierarchyModel) {

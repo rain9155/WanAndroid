@@ -23,7 +23,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class HomePresenter extends BasePresenter<HomeContract.View> implements HomeContract.Presenter{
 
-    private HomeModel mHomeModel;
+    private HomeContract.Model mHomeModel;
 
     @Inject
     public HomePresenter(HomeModel homeModel) {

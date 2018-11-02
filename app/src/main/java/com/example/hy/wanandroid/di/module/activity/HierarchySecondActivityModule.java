@@ -2,7 +2,9 @@ package com.example.hy.wanandroid.di.module.activity;
 
 
 
+import com.example.hy.wanandroid.contract.hierarchy.HierarchySecondContract;
 import com.example.hy.wanandroid.di.scope.PerActivity;
+import com.example.hy.wanandroid.presenter.hierarchy.HierarchySecondPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

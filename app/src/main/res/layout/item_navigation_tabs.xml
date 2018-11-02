@@ -18,7 +18,7 @@
         tools:text="常用网站"/>
 
     <com.zhy.view.flowlayout.TagFlowLayout
-        android:id="@+id/fl_tag"
+        android:id="@+id/tfl_tag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/dp_20"

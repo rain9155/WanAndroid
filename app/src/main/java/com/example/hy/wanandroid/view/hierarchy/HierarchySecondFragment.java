@@ -83,7 +83,7 @@ public class HierarchySecondFragment extends BaseFragment implements HierarchySe
             mArticleList.addAll(articleList);
             srlHierarchyList.finishLoadMore();
         }else {
-            if(CommonUtil.isEmptyList(articleList)) mArticleList.clear();
+            if(!CommonUtil.isEmptyList(articleList)) mArticleList.clear();
             mArticleList.addAll(articleList);
             srlHierarchyList.finishRefresh();
         }

@@ -1,15 +1,19 @@
 package com.example.hy.wanandroid.view.project;
 
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.contract.project.ProjectContract;
-import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityComponent;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
 import com.example.hy.wanandroid.network.entity.project.Project;
 import com.example.hy.wanandroid.presenter.project.ProjectPresenter;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
+import com.example.hy.wanandroid.view.search.SearchActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
@@ -33,6 +37,12 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
     TabLayout commonTablayout;
     @BindView(R.id.vp_project)
     ViewPager vpProject;
+    @BindView(R.id.fake_status_bar)
+    View fakeStatusBar;
+    @BindView(R.id.tv_common_title)
+    TextView tvCommonTitle;
+    @BindView(R.id.iv_common_search)
+    ImageView ivCommonSearch;
 
     @Inject
     ProjectPresenter mPresenter;
@@ -52,13 +62,15 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
 
     @Override
     protected void initView() {
-        if(!(getActivity() instanceof MainActivity)) return;
-        ((MainActivity)getActivity()).getComponent().getProjectFragmentComponent(new ProjectFragmentModule()).inject(this);
+        if (!(getActivity() instanceof MainActivity)) return;
+        ((MainActivity) getActivity()).getComponent().getProjectFragmentComponent(new ProjectFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
-        tlCommon.setTitle(R.string.menu_btm_nav_project);
+        ivCommonSearch.setVisibility(View.VISIBLE);
+        tvCommonTitle.setText(R.string.menu_btm_nav_project);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
         tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
+        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
     }
 
     @Override
@@ -68,11 +80,11 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
 
     @Override
     public void showProjectList(List<Project> projectList) {
-        for(Project project : projectList){
+        for (Project project : projectList) {
             mIds.add(project.getId());
             mTitles.add(project.getName());
         }
-        for(int i = 0; i < projectList.size(); i++){
+        for (int i = 0; i < projectList.size(); i++) {
             mFragments.add(ProjectsFragment.newInstance(mIds.get(i)));
         }
         mVpAdapter = new VpAdapter(getChildFragmentManager(), mFragments, mTitles);
@@ -82,7 +94,7 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
 
     @Override
     public void onDestroy() {
-        if(mPresenter != null){
+        if (mPresenter != null) {
             mPresenter.detachView();
             mPresenter = null;
         }

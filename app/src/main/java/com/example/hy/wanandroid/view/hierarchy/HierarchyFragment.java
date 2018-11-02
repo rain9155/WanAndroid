@@ -1,5 +1,9 @@
 package com.example.hy.wanandroid.view.hierarchy;
 
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.FirstHierarchyAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
@@ -11,6 +15,7 @@ import com.example.hy.wanandroid.presenter.hierarchy.HierarchyPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
+import com.example.hy.wanandroid.view.search.SearchActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -35,6 +40,12 @@ public class HierarchyFragment extends BaseFragment implements HierarchyContract
     RecyclerView rvHierarchy;
     @BindView(R.id.srl_hierarchy)
     SmartRefreshLayout srlHierarchy;
+    @BindView(R.id.fake_status_bar)
+    View fakeStatusBar;
+    @BindView(R.id.tv_common_title)
+    TextView tvCommonTitle;
+    @BindView(R.id.iv_common_search)
+    ImageView ivCommonSearch;
 
     @Inject
     HierarchyPresenter mPresenter;
@@ -54,13 +65,17 @@ public class HierarchyFragment extends BaseFragment implements HierarchyContract
 
     @Override
     protected void initView() {
-        if(!(getActivity() instanceof MainActivity)) return;
+        if (!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getHierarchyFragmentSubComponent(new HierarchyFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
-        tlCommon.setTitle(R.string.menu_btm_nav_hierarchy);
+        ivCommonSearch.setVisibility(View.VISIBLE);
+        tvCommonTitle.setText(R.string.menu_btm_nav_hierarchy);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
         tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
+        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
+        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
+
         rvHierarchy.setLayoutManager(mLayoutManager);
         mListAdapter.openLoadAnimation();
         rvHierarchy.setAdapter(mListAdapter);
@@ -73,7 +88,7 @@ public class HierarchyFragment extends BaseFragment implements HierarchyContract
             mPresenter.loadFirstHierarchyList();
             isLoadMore = false;
         });
-        mListAdapter.setOnItemClickListener(((adapter, view, position) -> starHierarchyActivity(position) ));
+        mListAdapter.setOnItemClickListener(((adapter, view, position) -> starHierarchyActivity(position)));
 
     }
 
@@ -84,18 +99,19 @@ public class HierarchyFragment extends BaseFragment implements HierarchyContract
 
     @Override
     public void showFirstHierarchyList(List<FirstHierarchy> firstHierarchyList) {
-        if (CommonUtil.isEmptyList(firstHierarchyList)) mFirstHierarchyList.clear();
+        if (!CommonUtil.isEmptyList(firstHierarchyList)) mFirstHierarchyList.clear();
         mFirstHierarchyList.addAll(firstHierarchyList);
         mListAdapter.notifyDataSetChanged();
-        if (isLoadMore) srlHierarchy.finishLoadMore(); else srlHierarchy.finishRefresh();
+        if (isLoadMore) srlHierarchy.finishLoadMore();
+        else srlHierarchy.finishRefresh();
     }
 
     private void starHierarchyActivity(int position) {
         FirstHierarchy firstHierarchy = mFirstHierarchyList.get(position);
-        if(firstHierarchy != null){
+        if (firstHierarchy != null) {
             ArrayList<String> listName = new ArrayList<>(firstHierarchy.getChildren().size());
             ArrayList<String> listId = new ArrayList<>(firstHierarchy.getChildren().size());
-            for(FirstHierarchyChild child : firstHierarchy.getChildren()){
+            for (FirstHierarchyChild child : firstHierarchy.getChildren()) {
                 listName.add(child.getName());
                 listId.add(String.valueOf(child.getId()));
             }
@@ -109,7 +125,7 @@ public class HierarchyFragment extends BaseFragment implements HierarchyContract
 
     @Override
     public void onDestroy() {
-        if(mPresenter != null){
+        if (mPresenter != null) {
             mPresenter.detachView();
             mPresenter = null;
         }

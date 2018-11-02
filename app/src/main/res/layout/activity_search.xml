@@ -1,9 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.search.SearchActivity">
+    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/common_toolbal" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background">
+
+        <TextView
+            android:id="@+id/tv_hot_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="热门搜索"
+            android:textColor="@color/primaryText"
+            android:textSize="@dimen/sp_18"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_20"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/tfl_tag"
+            android:background="@color/background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_20"
+            app:layout_constraintTop_toBottomOf="@id/tv_hot_search"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+        </com.zhy.view.flowlayout.TagFlowLayout>
+
+        <TextView
+            android:id="@+id/tv_search_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索历史"
+            android:textSize="@dimen/sp_18"
+            android:textColor="@color/primaryText"
+            app:layout_constraintTop_toBottomOf="@id/tfl_tag"
+            app:layout_constraintLeft_toLeftOf="@id/tv_hot_search" />
+
+        <TextView
+            android:id="@+id/tv_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清空"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/secondaryText"
+            android:layout_marginRight="@dimen/dp_20"
+            app:layout_constraintTop_toTopOf="@id/tv_search_history"
+            app:layout_constraintBottom_toBottomOf="@id/tv_search_history"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_search_history">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

@@ -17,7 +17,8 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.MainActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +27,10 @@
         </activity>
         <activity android:name=".view.hierarchy.HierarchySecondActivity" />
         <activity android:name=".view.navigation.NavigationActivity" />
-        <activity android:name=".view.search.SearchActivity"></activity>
+        <activity android:name=".view.search.SearchActivity"
+            android:theme="@style/SearchActivityStyle">
+
+        </activity>
     </application>
 
 </manifest>

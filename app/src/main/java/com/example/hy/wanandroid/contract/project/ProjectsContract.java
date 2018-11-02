@@ -12,6 +12,7 @@ import java.util.List;
 import io.reactivex.Observable;
 
 /**
+ * 项目列表的Contract
  * Created by 陈健宇 at 2018/10/29
  */
 public interface ProjectsContract {

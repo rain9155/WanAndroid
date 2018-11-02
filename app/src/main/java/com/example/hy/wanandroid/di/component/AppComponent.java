@@ -6,6 +6,7 @@ import com.example.hy.wanandroid.network.api.HierarchyApis;
 import com.example.hy.wanandroid.network.api.HomeApis;
 import com.example.hy.wanandroid.network.api.NavigationApis;
 import com.example.hy.wanandroid.network.api.ProjectApis;
+import com.example.hy.wanandroid.network.api.SearchApis;
 
 import javax.inject.Singleton;
 import dagger.Component;
@@ -28,4 +29,5 @@ public interface AppComponent {
     HierarchyApis getHierarchyApis();
     ProjectApis getProjectApis();
     NavigationApis getNavigationApis();
+    SearchApis getSearchApis();
 }

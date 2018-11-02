@@ -6,9 +6,35 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="@color/colorPrimary"
-    app:navigationIcon="@drawable/ic_navigation"
-    app:titleTextColor="@color/white"
-    app:title="首页">
+    app:navigationIcon="@drawable/ic_navigation">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_common_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_20"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            tools:text="首页"
+            android:layout_alignParentStart="true"
+            tools:ignore="RelativeOverlap" />
+
+        <ImageView
+            android:id="@+id/iv_common_search"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:src="@drawable/ic_search"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:contentDescription=""
+            tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
 
 </androidx.appcompat.widget.Toolbar>

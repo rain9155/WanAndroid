@@ -84,7 +84,7 @@ public class ProjectsFragment extends BaseFragment implements ProjectsContract.V
             mArticles.addAll(articleList);
             srlProjects.finishLoadMore();
         }else {
-            if(CommonUtil.isEmptyList(mArticles)) mArticles.clear();
+            if(!CommonUtil.isEmptyList(mArticles)) mArticles.clear();
             mArticles.addAll(articleList);
             srlProjects.finishRefresh();
         }

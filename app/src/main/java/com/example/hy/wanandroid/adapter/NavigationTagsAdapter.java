@@ -22,16 +22,16 @@ import androidx.annotation.Nullable;
  * 垂直标签每个子item的适配器
  * Created by 陈健宇 at 2018/11/1
  */
-public class TagsAdapter extends BaseQuickAdapter<Tag, BaseViewHolder> {
+public class NavigationTagsAdapter extends BaseQuickAdapter<Tag, BaseViewHolder> {
 
-    public TagsAdapter(int layoutResId, @Nullable List<Tag> data) {
+    public NavigationTagsAdapter(int layoutResId, @Nullable List<Tag> data) {
         super(layoutResId, data);
     }
 
     @Override
     protected void convert(BaseViewHolder holder, final Tag item) {
         holder.setText(R.id.tv_tag, item.getName());
-        final TagFlowLayout flowLayout = holder.getView(R.id.fl_tag);
+        final TagFlowLayout flowLayout = holder.getView(R.id.tfl_tag);
         flowLayout.setAdapter(new TagAdapter<Article>(item.getArticles()) {
             @Override
             public View getView(FlowLayout parent, int position, Article article) {

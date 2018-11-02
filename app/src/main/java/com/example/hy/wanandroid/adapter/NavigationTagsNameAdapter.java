@@ -14,12 +14,12 @@ import q.rorbin.verticaltablayout.widget.ITabView;
  * 垂直标签名字的适配器
  * Created by 陈健宇 at 2018/11/1
  */
-public class TagsNameAdapter implements TabAdapter {
+public class NavigationTagsNameAdapter implements TabAdapter {
 
     private List<String> mTagNames;
     private Context mContext;
 
-    public TagsNameAdapter(Context context, List<String> tabNames) {
+    public NavigationTagsNameAdapter(Context context, List<String> tabNames) {
         mTagNames = tabNames;
         mContext = context;
     }

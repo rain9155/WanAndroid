@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class NavigationPresenter extends BasePresenter<NavigationContract.View> implements NavigationContract.Presenter {
 
-    private NavigationModel mNavigationModel;
+    private NavigationContract.Model mNavigationModel;
 
     @Inject
     public NavigationPresenter(NavigationModel navigationModel) {

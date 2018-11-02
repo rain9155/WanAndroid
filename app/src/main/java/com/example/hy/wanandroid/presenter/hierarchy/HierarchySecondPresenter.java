@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class HierarchySecondPresenter extends BasePresenter<HierarchySecondContract.View> implements HierarchySecondContract.Presenter {
 
-    private HierarchySecondModel mHierarchySecondListModel;
+    private HierarchySecondContract.Model mHierarchySecondListModel;
 
     @Inject
     public HierarchySecondPresenter(HierarchySecondModel hierarchySecondListModel) {

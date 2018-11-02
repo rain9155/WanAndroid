@@ -7,6 +7,7 @@ import com.example.hy.wanandroid.network.api.HierarchyApis;
 import com.example.hy.wanandroid.network.api.HomeApis;
 import com.example.hy.wanandroid.network.api.NavigationApis;
 import com.example.hy.wanandroid.network.api.ProjectApis;
+import com.example.hy.wanandroid.network.api.SearchApis;
 import com.example.hy.wanandroid.network.gson.CustomGsonConverterFactory;
 
 import javax.inject.Singleton;
@@ -66,6 +67,12 @@ public class AppModule {
     @Singleton
     public NavigationApis provideNavigationApis(Retrofit retrofit){
         return retrofit.create(NavigationApis.class);
+    }
+
+    @Provides
+    @Singleton
+    public SearchApis provideSearchApis(Retrofit retrofit){
+        return retrofit.create(SearchApis.class);
     }
 
 }

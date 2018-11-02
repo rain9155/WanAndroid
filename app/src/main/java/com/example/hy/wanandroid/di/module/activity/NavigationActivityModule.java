@@ -1,8 +1,7 @@
 package com.example.hy.wanandroid.di.module.activity;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.adapter.TagsAdapter;
-import com.example.hy.wanandroid.adapter.TagsNameAdapter;
+import com.example.hy.wanandroid.adapter.NavigationTagsAdapter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerActivity;
 import com.example.hy.wanandroid.network.entity.navigation.Tag;
@@ -39,7 +38,7 @@ public class NavigationActivityModule {
     }
 
     @Provides
-    TagsAdapter provideTagsAdapter(List<Tag> tags){
-        return new TagsAdapter(R.layout.item_navigation_tabs, tags);
+    NavigationTagsAdapter provideTagsAdapter(List<Tag> tags){
+        return new NavigationTagsAdapter(R.layout.item_navigation_tabs, tags);
     }
 }

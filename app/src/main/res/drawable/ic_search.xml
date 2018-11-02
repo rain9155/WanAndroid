@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="45dp"
-    android:height="45dp"
+    android:width="60dp"
+    android:height="60dp"
     android:viewportWidth="60"
     android:viewportHeight="60">
 
     <path
         android:name="path_1"
         android:strokeColor="#FFFFFF"
-        android:strokeWidth="2"
+        android:strokeWidth="3"
         android:strokeLineCap="round"
         android:pathData="
-        M 30 30
-        A 6 6 0 1 1 31 29
-        L 40 35"/>
+        M 30 35
+        A 9 9 0 1 1 32 34
+        L 40 42"/>
 
 </vector>

@@ -3,8 +3,8 @@
     <string name="app_name">WanAndroid</string>
 
     //other
-    <string name="navigationActivity_tl_title">导航</string>
-    <string name="searchActiity_tl_title">搜索</string>
+    <string name="navigationActivity_tlTitle">导航</string>
+    <string name="searchActivity_hint">输入关键字搜索更多</string>
 
     //menu
     <string name="menu_btm_nav_home">首页</string>
