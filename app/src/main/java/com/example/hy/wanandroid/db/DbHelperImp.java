@@ -25,32 +25,27 @@ public class DbHelperImp implements DbHelper {
     public boolean addHistoryRecord(String record) {
         HistoryRecord historyRecord = new HistoryRecord();
         historyRecord.setRecord(record);
-        boolean is = historyRecord.save();
-        LogUtil.i(LogUtil.TAG_COMMON, String.valueOf(is));
         return historyRecord.save();
     }
 
     @Override
-    public void deleteOneHistoryRecord(String record) {
-        LitePal.deleteAll(HistoryRecord.class, "record = ?", record);
+    public int deleteOneHistoryRecord(String record) {
+        return  LitePal.deleteAll(HistoryRecord.class, "record = ?", record);
     }
 
     @Override
-    public void deleteAllHistoryRecord() {
-        LitePal.deleteAll(HistoryRecord.class);
+    public int deleteAllHistoryRecord() {
+       return LitePal.deleteAll(HistoryRecord.class);
     }
 
     @Override
     public boolean isExistHistoryRecord(String record) {
-        boolean is = CommonUtil.isEmptyList(LitePal.where("record = ?", record).find(HistoryRecord.class));
-        LogUtil.i(LogUtil.TAG_COMMON, "isExist:" + String.valueOf(is));
-        return is;
+        return !CommonUtil.isEmptyList(LitePal.where("record = ?", record).find(HistoryRecord.class));
     }
 
     @Override
     public List<String> getAllHistoryRecord() {
         List<HistoryRecord> historyRecords = LitePal.findAll(HistoryRecord.class);
-        LogUtil.i(LogUtil.TAG_COMMON, historyRecords.toString());
         if(CommonUtil.isEmptyList(historyRecords)) return null;
         List<String> histories = new ArrayList<>();
         for(HistoryRecord historyRecord : historyRecords) histories.add(historyRecord.getRecord());

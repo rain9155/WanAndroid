@@ -53,13 +53,13 @@ public class SearchModel implements SearchContract.Model {
     }
 
     @Override
-    public void deleteOneHistoryRecord(String record) {
-        mDbHelper.deleteOneHistoryRecord(record);
+    public int deleteOneHistoryRecord(String record) {
+        return mDbHelper.deleteOneHistoryRecord(record);
     }
 
     @Override
-    public void deleteAllHistoryRecord() {
-        mDbHelper.deleteAllHistoryRecord();
+    public int deleteAllHistoryRecord() {
+        return mDbHelper.deleteAllHistoryRecord();
     }
 
     @Override

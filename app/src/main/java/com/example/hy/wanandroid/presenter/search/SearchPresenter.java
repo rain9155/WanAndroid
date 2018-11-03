@@ -58,7 +58,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
     public void addHistoryRecord(String record) {
         if(!TextUtils.isEmpty(record.trim()) && !mSearchModel.isExistHistoryRecord(record))
             if(mSearchModel.addHistoryRecord(record))
-                mView.addOneHistory(record);
+                mView.addOneHistorySuccess(record);
     }
 
     @Override
@@ -74,11 +74,11 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
 
     @Override
     public void deleteOneHistoryRecord(String record) {
-        mSearchModel.deleteOneHistoryRecord(record);
+        if(1 == mSearchModel.deleteOneHistoryRecord(record)) mView.deleteOneHistorySuccess(record);
     }
 
     @Override
     public void deleteAllHistoryRecord() {
-        mSearchModel.deleteAllHistoryRecord();
+        if(mSearchModel.deleteAllHistoryRecord() > 0) mView.deleteAllHistoryRecordSuccess();
     }
 }

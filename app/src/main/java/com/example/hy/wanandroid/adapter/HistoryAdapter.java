@@ -21,7 +21,8 @@ public class HistoryAdapter extends BaseQuickAdapter<String, BaseViewHolder>{
     @Override
     protected void convert(BaseViewHolder holder, String item) {
         if(item != null)
-            holder.setText(R.id.tv_history, item);
+            holder.setText(R.id.tv_history, item)
+            .addOnClickListener(R.id.iv_clear);
     }
 
 }

@@ -16,12 +16,12 @@ public interface DbHelper {
     /**
      * 删除某一条历史记录
      */
-    void deleteOneHistoryRecord(String record);
+    int deleteOneHistoryRecord(String record);
 
     /**
      * 删除所有历史记录
      */
-    void deleteAllHistoryRecord();
+    int deleteAllHistoryRecord();
 
     /**
      * 查找某一条历史记录是否存在
@@ -32,5 +32,6 @@ public interface DbHelper {
      * 获得所有历史记录
      */
     List<String> getAllHistoryRecord();
+
 
 }

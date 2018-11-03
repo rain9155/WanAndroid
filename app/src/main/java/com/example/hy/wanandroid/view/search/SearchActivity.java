@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.adapter.FlowTagsAdapter;
@@ -21,12 +22,14 @@ import com.example.hy.wanandroid.network.entity.homepager.Article;
 import com.example.hy.wanandroid.network.entity.search.HotKey;
 import com.example.hy.wanandroid.presenter.search.SearchPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.utils.LogUtil;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -60,13 +63,15 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
     @Inject
     LinearLayoutManager mHistoriesManager, mSearchRequestManager;
     @Inject
+    ArticlesAdapter mSearchResquestAdapter;
+    @Inject
+    HistoryAdapter mHistoryAdapter;
+    @Inject
     List<Article> mSearchResquestList;
     @Inject
     List<String> mHistoryList;
     @Inject
-    ArticlesAdapter mSearchResquestAdapter;
-    @Inject
-    HistoryAdapter mHistoryAdapter;
+    List<HotKey> mHotKeyList;
 
     private SearchView mSearchView;
     private SearchView.SearchAutoComplete mSearchAutoComplete;
@@ -82,15 +87,22 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
         DaggerSearchActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
 
+        //标题栏
         setSupportActionBar(tlCommon);
         tlCommon.setTitle("");
         tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
         ivCommonSearch.setVisibility(View.INVISIBLE);
         tlCommon.setNavigationOnClickListener(v -> finish());
 
+        //历史记录
         mHistoryAdapter.openLoadAnimation();
         rvHistory.setLayoutManager(mHistoriesManager);
         rvHistory.setAdapter(mHistoryAdapter);
+        mHistoryAdapter.setOnItemClickListener((adapter, view, position) -> mSearchView.setQuery(mHistoryList.get(position), true));
+        mHistoryAdapter.setOnItemChildClickListener((adapter, view, position) -> mPresenter.deleteOneHistoryRecord(mHistoryList.get(position)));
+        tvClear.setOnClickListener(v -> mPresenter.deleteAllHistoryRecord());
+
+        //搜索结果
     }
 
     @Override
@@ -101,9 +113,11 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
 
     @Override
     public void showHotKey(List<HotKey> hotKeyList) {
+        mHotKeyList.addAll(hotKeyList);
         mFlowTagsAdapter = new FlowTagsAdapter(hotKeyList, tflTag);
         tflTag.setAdapter(mFlowTagsAdapter);
         tflTag.setOnTagClickListener((view, position, parent) -> {
+            mSearchView.setQuery(mHotKeyList.get(position).getName(), true);
             //搜索
             return false;
         });
@@ -121,9 +135,23 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
     }
 
     @Override
-    public void addOneHistory(String record) {
+    public void addOneHistorySuccess(String record) {
         mHistoryList.add(0, record);
         mHistoryAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void deleteOneHistorySuccess(String record) {
+        mHistoryList.remove(record);
+        mHistoryAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void deleteAllHistoryRecordSuccess() {
+        if(!CommonUtil.isEmptyList(mHistoryList)){
+            mHistoryList.clear();
+            mHistoryAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

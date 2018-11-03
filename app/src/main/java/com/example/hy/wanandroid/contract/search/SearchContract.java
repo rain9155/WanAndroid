@@ -22,14 +22,16 @@ public interface SearchContract {
         void showHotKey(List<HotKey> hotKeyList);
         void showSearchResquest(List<Article> searchRequestList);
         void showHistories(List<String> histories);
-        void addOneHistory(String record);
+        void addOneHistorySuccess(String record);
+        void deleteOneHistorySuccess(String record);
+        void deleteAllHistoryRecordSuccess();
     }
 
     interface Presenter extends IPresenter<View>{
         void loadHotkey();
         void loadSearchResquest(String key);
-        void addHistoryRecord(String record);
         void loadHistories();
+        void addHistoryRecord(String record);
         void deleteOneHistoryRecord(String record);
         void deleteAllHistoryRecord();
     }
@@ -39,8 +41,8 @@ public interface SearchContract {
         Observable<BaseResponse<List<HotKey>>> getHotKey();
         boolean addHistoryRecord(String record);
         List<String> getHistories();
-        void deleteOneHistoryRecord(String record);
-        void deleteAllHistoryRecord();
+        int deleteOneHistoryRecord(String record);
+        int deleteAllHistoryRecord();
         boolean isExistHistoryRecord(String record);
     }
 

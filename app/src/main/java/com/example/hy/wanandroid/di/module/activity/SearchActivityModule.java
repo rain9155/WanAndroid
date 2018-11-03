@@ -13,6 +13,9 @@ import com.example.hy.wanandroid.network.entity.search.HotKey;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import dagger.Module;
 import dagger.Provides;
@@ -33,6 +36,12 @@ public class SearchActivityModule {
     @Provides
     @PerActivity
     List<String>  provideHistories(){
+        return new ArrayList<>();
+    }
+
+    @Provides
+    @PerActivity
+    List<HotKey>  provideHotKeyList(){
         return new ArrayList<>();
     }
 
