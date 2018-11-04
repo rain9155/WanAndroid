@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_loading"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <me.itangqi.waveloadingview.WaveLoadingView
+        android:id="@+id/wlv_loading"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_150"
+        android:layout_centerInParent="true"
+        app:wlv_borderColor="@color/colorPrimary"
+        app:wlv_waveColor="@color/colorPrimary"
+        app:wlv_borderWidth="2dp"
+        app:wlv_progressValue="50"
+        app:wlv_shapeType="circle"
+        app:wlv_titleCenterStrokeColor="@color/colorPrimary"
+        app:wlv_titleCenterStrokeWidth="3dp"
+        app:wlv_titleCenter="@string/loading"
+        app:wlv_titleCenterColor="@android:color/white"
+        app:wlv_titleCenterSize="18sp"
+        app:wlv_waveAmplitude="50" />
+
+</RelativeLayout>

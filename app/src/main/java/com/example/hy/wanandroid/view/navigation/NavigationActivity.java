@@ -11,6 +11,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.NavigationTagsAdapter;
 import com.example.hy.wanandroid.adapter.NavigationTagsNameAdapter;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
 import com.example.hy.wanandroid.contract.navigation.NavigationContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerNavigationActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.NavigationActivityModule;
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
 import q.rorbin.verticaltablayout.VerticalTabLayout;
 import q.rorbin.verticaltablayout.widget.TabView;
 
-public class NavigationActivity extends BaseActivity implements NavigationContract.View {
+public class NavigationActivity extends BaseLoadActivity implements NavigationContract.View {
 
     @BindView(R.id.vtl_navigation)
     VerticalTabLayout vtlNavigation;
@@ -65,6 +66,7 @@ public class NavigationActivity extends BaseActivity implements NavigationContra
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
         DaggerNavigationActivityComponent.builder().appComponent(getAppComponent()).navigationActivityModule(new NavigationActivityModule()).build().inject(this);
         mPresenter.attachView(this);
 
@@ -74,11 +76,12 @@ public class NavigationActivity extends BaseActivity implements NavigationContra
         tlCommon.setNavigationOnClickListener(v -> finish());
         ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(this));
 
-
+        //子标签栏
         mNavigationTagsAdapter.openLoadAnimation();
         rvNavigation.setLayoutManager(mLinearLayoutManager);
         rvNavigation.setAdapter(mNavigationTagsAdapter);
 
+        //垂直标签栏
         vtlNavigation.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
@@ -130,6 +133,12 @@ public class NavigationActivity extends BaseActivity implements NavigationContra
         mTagsName.addAll(tagsName);
         mNavigationTagsNameAdapter = new NavigationTagsNameAdapter(this, mTagsName);
         vtlNavigation.setTabAdapter(mNavigationTagsNameAdapter);
+    }
+
+    @Override
+    public void reLoad() {
+        super.reLoad();
+        mPresenter.loadTags();
     }
 
     @Override

@@ -31,9 +31,10 @@ public class ProjectPresenter extends BasePresenter<ProjectContract.View> implem
     @Override
     public void loadProjectList() {
         addSubcriber(mProjectModel.getProjectList().subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<Project>>>() {
+        .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<Project>>>(mView ) {
                     @Override
                     public void onNext(BaseResponse<List<Project>> listBaseResponse) {
+                        super.onNext(listBaseResponse);
                         mView.showProjectList(listBaseResponse.getData());
                     }
                 }));

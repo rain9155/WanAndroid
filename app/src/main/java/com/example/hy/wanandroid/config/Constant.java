@@ -8,12 +8,21 @@ public class Constant {
     //Url
     public final static String BASE_URL = "http://www.wanandroid.com/";
 
-    //Fragment Key
+    //HierarchyFragment
     public static final String KEY_HIERARCHY_PAGENUM = "hierarchyPageNum";
     public static final String KEY_PROJECT_ID = "projectId";
 
-    //Activity Key
+    //HierarchyActivity
     public static final String KEY_HIERARCHY_ID = "hierarchyId";
     public static final String KEY_HIERARCHY_NAMES = "hierarchyNames";
     public static final String KEY_HIERARCHY_NAME = "hierarchyName";
+
+    //MainActivity
+    public static final long WAIT_TIME = 2000L; // 再点一次退出程序时间设置
+    public static long TOUCH_TIME = 0;//第一次按下返回键的时间
+
+    //BaseLoadState
+    public static final int NORMAL_STATE = 0;
+    public static final int LOADING_STATE = 1;
+    public static final int ERROR_STATE = 2;
 }

@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
+import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.contract.project.ProjectContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
 import com.example.hy.wanandroid.network.entity.project.Project;
@@ -29,13 +30,13 @@ import butterknife.BindView;
  * 项目tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class ProjectFragment extends BaseFragment implements ProjectContract.View {
+public class ProjectFragment extends BaseLoadFragment implements ProjectContract.View {
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
     @BindView(R.id.common_tablayout)
     TabLayout commonTablayout;
-    @BindView(R.id.vp_project)
+    @BindView(R.id.normal_view)
     ViewPager vpProject;
     @BindView(R.id.fake_status_bar)
     View fakeStatusBar;
@@ -75,6 +76,7 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
 
     @Override
     protected void loadData() {
+        super.loadData();
         mPresenter.loadProjectList();
     }
 
@@ -90,6 +92,12 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.Vie
         mVpAdapter = new VpAdapter(getChildFragmentManager(), mFragments, mTitles);
         vpProject.setAdapter(mVpAdapter);
         commonTablayout.setupWithViewPager(vpProject);
+    }
+
+    @Override
+    public void reLoad() {
+        super.reLoad();
+        mPresenter.loadProjectList();
     }
 
     @Override

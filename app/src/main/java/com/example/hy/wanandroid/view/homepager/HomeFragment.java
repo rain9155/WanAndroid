@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
+import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
 import com.example.hy.wanandroid.di.module.fragment.HomeFragmentModule;
@@ -38,13 +39,13 @@ import butterknife.BindView;
  * 首页tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class HomeFragment extends BaseFragment implements HomeContract.View {
+public class HomeFragment extends BaseLoadFragment implements HomeContract.View {
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
     @BindView(R.id.rv_articles)
     RecyclerView rvArticles;
-    @BindView(R.id.srl_home)
+    @BindView(R.id.normal_view)
     SmartRefreshLayout srlHome;
     @BindView(R.id.fake_status_bar)
     View fakeStatusBar;
@@ -91,7 +92,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
         ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
 
-
+        //首页文章
         rvArticles.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
         rvArticles.setAdapter(mArticlesAdapter);
@@ -102,12 +103,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         });
         srlHome.setOnRefreshListener(refreshLayout -> {
             mPresenter.loadArticles(0);
+            mPresenter.loadBannerDatas();
             isLoadMore = false;
         });
     }
 
     @Override
     protected void loadData() {
+        super.loadData();
         mPresenter.loadBannerDatas();
         mPresenter.loadArticles(0);
     }
@@ -148,6 +151,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
+    }
+
+    @Override
+    public void reLoad() {
+        super.reLoad();
+        mPresenter.loadBannerDatas();
+        mPresenter.loadArticles(0);
     }
 
     @Override

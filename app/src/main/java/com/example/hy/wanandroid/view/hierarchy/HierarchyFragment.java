@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.FirstHierarchyAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
+import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchyContract;
 import com.example.hy.wanandroid.di.module.fragment.HierarchyFragmentModule;
 import com.example.hy.wanandroid.network.entity.hierarchy.FirstHierarchy;
@@ -32,20 +33,20 @@ import butterknife.BindView;
  * 体系tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class HierarchyFragment extends BaseFragment implements HierarchyContract.View {
+public class HierarchyFragment extends BaseLoadFragment implements HierarchyContract.View {
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
     @BindView(R.id.rv_hierarchy)
     RecyclerView rvHierarchy;
-    @BindView(R.id.srl_hierarchy)
-    SmartRefreshLayout srlHierarchy;
     @BindView(R.id.fake_status_bar)
     View fakeStatusBar;
     @BindView(R.id.tv_common_title)
     TextView tvCommonTitle;
     @BindView(R.id.iv_common_search)
     ImageView ivCommonSearch;
+    @BindView(R.id.normal_view)
+    SmartRefreshLayout srlHierarchy;
 
     @Inject
     HierarchyPresenter mPresenter;
@@ -94,6 +95,7 @@ public class HierarchyFragment extends BaseFragment implements HierarchyContract
 
     @Override
     protected void loadData() {
+        super.loadData();
         mPresenter.loadFirstHierarchyList();
     }
 
@@ -104,6 +106,12 @@ public class HierarchyFragment extends BaseFragment implements HierarchyContract
         mListAdapter.notifyDataSetChanged();
         if (isLoadMore) srlHierarchy.finishLoadMore();
         else srlHierarchy.finishRefresh();
+    }
+
+    @Override
+    public void reLoad() {
+        super.reLoad();
+        mPresenter.loadFirstHierarchyList();
     }
 
     private void starHierarchyActivity(int position) {

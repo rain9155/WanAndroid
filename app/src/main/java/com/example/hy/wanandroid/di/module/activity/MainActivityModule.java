@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.di.module.activity;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
+import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerActivity;
 import com.example.hy.wanandroid.di.scope.PerFragment;
@@ -20,5 +21,11 @@ import dagger.Provides;
  */
 @Module
 public class MainActivityModule {
+
+    @Provides
+    @PerActivity
+    BaseFragment[] provideFragments(){
+        return new BaseFragment[4];
+    }
 
 }

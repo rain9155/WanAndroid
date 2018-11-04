@@ -30,6 +30,7 @@ version = [
         FragmentationVersion : '1.3.6',
         VerticalTabLayoutVersion : '1.2.5',
         YViewPagerDemoVersion : '0.4',
+        WaveLoadingVersion : '0.3.5',
 
         //test
         JunitVersion           : "4.12",
@@ -69,6 +70,7 @@ ext {
             "statusBarUtil" : "com.jaeger.statusbarutil:library:${version.StatusBarUtilVersion}",
             "fragmentation" : "me.yokeyword:fragmentation:${version.FragmentationVersion}",
             "verticalTablayout" : "q.rorbin:VerticalTabLayout:${version.VerticalTabLayoutVersion}",
+            "waveLoading" : "me.itangqi.waveloadingview:library:${version.WaveLoadingVersion}",
 
             //dagger2
             "dagger2" : "com.google.dagger:dagger:${version.Dagger2Version}",

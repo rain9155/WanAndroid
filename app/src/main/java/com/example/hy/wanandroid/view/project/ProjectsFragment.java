@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ProjectsAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
+import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
@@ -28,11 +29,11 @@ import butterknife.BindView;
  * 项目详情列表Fragment
  * Created by 陈健宇 at 2018/10/29
  */
-public class ProjectsFragment extends BaseFragment implements ProjectsContract.View {
+public class ProjectsFragment extends BaseLoadFragment implements ProjectsContract.View {
 
-    @BindView(R.id.rv_project_list)
+    @BindView(R.id.rv_projects)
     RecyclerView rvProjectList;
-    @BindView(R.id.srl_projects)
+    @BindView(R.id.normal_view)
     SmartRefreshLayout srlProjects;
 
     @Inject
@@ -59,6 +60,7 @@ public class ProjectsFragment extends BaseFragment implements ProjectsContract.V
         ((MainActivity) getActivity()).getComponent().getProjectFragmentComponent(new ProjectFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
+        //项目列表
         rvProjectList.setLayoutManager(mLinearLayoutManager);
         mProjectsAdapter.openLoadAnimation();
         rvProjectList.setAdapter(mProjectsAdapter);
@@ -75,6 +77,7 @@ public class ProjectsFragment extends BaseFragment implements ProjectsContract.V
 
     @Override
     protected void loadData() {
+        super.loadData();
         mPresenter.loadProjects(0, mId);
     }
 
@@ -89,6 +92,12 @@ public class ProjectsFragment extends BaseFragment implements ProjectsContract.V
             srlProjects.finishRefresh();
         }
         mProjectsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void reLoad() {
+        super.reLoad();
+        mPresenter.loadProjects(0, mId);
     }
 
     @Override

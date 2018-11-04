@@ -1,5 +1,6 @@
 package com.example.hy.wanandroid.presenter.search;
 
+import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
@@ -35,10 +36,18 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
     @Override
     public void loadHotkey() {
         addSubcriber(mSearchModel.getHotKey().subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<HotKey>>>() {
+                    .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<HotKey>>>(mView, false) {
                     @Override
                     public void onNext(BaseResponse<List<HotKey>> listBaseResponse) {
-                        mView.showHotKey(listBaseResponse.getData());
+                        super.onNext(listBaseResponse);
+                        if(CommonUtil.isEmptyList(listBaseResponse.getData())) mView.showHotHintLayout();
+                        else  mView.showHotKey(listBaseResponse.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mView.showHotHintLayout();
                     }
                 }));
     }
@@ -57,8 +66,11 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
     @Override
     public void addHistoryRecord(String record) {
         if(!TextUtils.isEmpty(record.trim()) && !mSearchModel.isExistHistoryRecord(record))
-            if(mSearchModel.addHistoryRecord(record))
+            if(mSearchModel.addHistoryRecord(record)){
                 mView.addOneHistorySuccess(record);
+                mView.hideHistoryHintLayout();
+            }
+
     }
 
     @Override
@@ -68,7 +80,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
             Collections.reverse(histories);
             mView.showHistories(histories);
         }else {
-
+            mView.showHistoryHintLayout();
         }
     }
 
@@ -79,6 +91,9 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
 
     @Override
     public void deleteAllHistoryRecord() {
-        if(mSearchModel.deleteAllHistoryRecord() > 0) mView.deleteAllHistoryRecordSuccess();
+        if(mSearchModel.deleteAllHistoryRecord() > 0){
+            mView.deleteAllHistoryRecordSuccess();
+            mView.showHistoryHintLayout();
+        }
     }
 }

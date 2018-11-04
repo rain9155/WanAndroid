@@ -1,5 +1,7 @@
 package com.example.hy.wanandroid.db;
 
+import android.database.Cursor;
+
 import com.example.hy.wanandroid.db.bean.HistoryRecord;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.utils.LogUtil;

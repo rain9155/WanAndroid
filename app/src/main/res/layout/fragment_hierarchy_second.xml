@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/srl_hierarchy_list"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background">
+    android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_hierarchy_second_list"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+
+        android:id="@+id/normal_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/background">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_hierarchy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</RelativeLayout>
+
+

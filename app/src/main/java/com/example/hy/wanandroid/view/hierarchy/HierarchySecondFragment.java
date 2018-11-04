@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
+import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchySecondContract;
 import com.example.hy.wanandroid.di.module.fragment.HierarchySecondFragmentModule;
@@ -26,11 +27,11 @@ import butterknife.BindView;
 /**
  * Created by 陈健宇 at 2018/10/28
  */
-public class HierarchySecondFragment extends BaseFragment implements HierarchySecondContract.View {
+public class HierarchySecondFragment extends BaseLoadFragment implements HierarchySecondContract.View {
 
-    @BindView(R.id.rv_hierarchy_second_list)
+    @BindView(R.id.rv_hierarchy)
     RecyclerView rvHierarchySecondList;
-    @BindView(R.id.srl_hierarchy_list)
+    @BindView(R.id.normal_view)
     SmartRefreshLayout srlHierarchyList;
 
     @Inject
@@ -74,6 +75,7 @@ public class HierarchySecondFragment extends BaseFragment implements HierarchySe
 
     @Override
     protected void loadData() {
+        super.loadData();
         mPresenter.loadArticles(0, mId);
     }
 
@@ -88,6 +90,12 @@ public class HierarchySecondFragment extends BaseFragment implements HierarchySe
             srlHierarchyList.finishRefresh();
         }
         mArticlesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void reLoad() {
+        super.reLoad();
+        mPresenter.loadArticles(0, mId);
     }
 
     @Override

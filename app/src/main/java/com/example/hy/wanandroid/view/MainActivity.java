@@ -11,12 +11,14 @@ import android.widget.FrameLayout;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
+import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityComponent;
 import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.MainActivityModule;
 import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.utils.LogUtil;
+import com.example.hy.wanandroid.utils.ToastUtil;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
@@ -39,12 +41,13 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.bnv_btm)
     BottomNavigationView bnvBtm;
 
-    private BaseFragment[] mFragments;
     private int mPreFragmentPosition = 0;//上一个被选中的Fragment位置
     private MainActivityComponent mMainActivityComponent;
 
     @Inject
     MainPresenter mPresenter;
+    @Inject
+    BaseFragment[] mFragments;
 
     @Override
     protected int getLayoutId() {
@@ -104,6 +107,16 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        if(System.currentTimeMillis() - Constant.TOUCH_TIME < Constant.WAIT_TIME){
+            finish();
+        }else {
+            Constant.TOUCH_TIME = System.currentTimeMillis();
+            ToastUtil.showToast(this, getResources().getString(R.string.mainActivity_back));
+        }
     }
 
     @Override

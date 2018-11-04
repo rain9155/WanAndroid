@@ -31,9 +31,10 @@ public class HierarchyPresenter extends BasePresenter<HierarchyContract.View> im
     @Override
     public void loadFirstHierarchyList() {
         addSubcriber(mHierarchyModel.getFirstHierarchyList().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<FirstHierarchy>>>() {
+                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<FirstHierarchy>>>(mView) {
                     @Override
                     public void onNext(BaseResponse<List<FirstHierarchy>> listBaseResponse) {
+                        super.onNext(listBaseResponse);
                         mView.showFirstHierarchyList(listBaseResponse.getData());
                     }
                 }));

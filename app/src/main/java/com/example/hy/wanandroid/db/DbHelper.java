@@ -1,5 +1,7 @@
 package com.example.hy.wanandroid.db;
 
+import android.database.Cursor;
+
 import java.util.List;
 
 /**
@@ -32,6 +34,4 @@ public interface DbHelper {
      * 获得所有历史记录
      */
     List<String> getAllHistoryRecord();
-
-
 }

@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hy.wanandroid.base.view.IView;
+import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.utils.SnackUtil;
+import com.example.hy.wanandroid.utils.ToastUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -71,12 +74,17 @@ public abstract class BaseFragment extends SupportFragment
     }
 
     @Override
-    public void showToast() {
-
+    public void showToast(String toast) {
+        ToastUtil.showToast(_mActivity, toast);
     }
 
     @Override
-    public void showSnackBar() {
+    public void showSnackBar(String toast) {
+        SnackUtil.showSnackBar(_mActivity, toast);
+    }
+
+    @Override
+    public void showNormalView() {
 
     }
 }

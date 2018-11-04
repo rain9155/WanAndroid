@@ -7,29 +7,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.adapter.FlowTagsAdapter;
 import com.example.hy.wanandroid.adapter.HistoryAdapter;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSearchActivityComponent;
 import com.example.hy.wanandroid.network.entity.homepager.Article;
 import com.example.hy.wanandroid.network.entity.search.HotKey;
 import com.example.hy.wanandroid.presenter.search.SearchPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
-import com.example.hy.wanandroid.utils.LogUtil;
-import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -39,7 +35,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SearchActivity extends BaseActivity implements SearchContract.View {
+public class SearchActivity extends BaseLoadActivity implements SearchContract.View {
 
     @BindView(R.id.tv_common_title)
     TextView tvCommonTitle;
@@ -57,6 +53,10 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
     TextView tvClear;
     @BindView(R.id.rv_history)
     RecyclerView rvHistory;
+    @BindView(R.id.tv_hot_hint)
+    TextView tvHotHint;
+    @BindView(R.id.tv_history_hint)
+    TextView tvHistoryHint;
 
     @Inject
     SearchPresenter mPresenter;
@@ -73,6 +73,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
     @Inject
     List<HotKey> mHotKeyList;
 
+
     private SearchView mSearchView;
     private SearchView.SearchAutoComplete mSearchAutoComplete;
     private FlowTagsAdapter mFlowTagsAdapter;
@@ -84,6 +85,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
         DaggerSearchActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
 
@@ -138,20 +140,37 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
     public void addOneHistorySuccess(String record) {
         mHistoryList.add(0, record);
         mHistoryAdapter.notifyDataSetChanged();
+        tvHistoryHint.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void deleteOneHistorySuccess(String record) {
         mHistoryList.remove(record);
         mHistoryAdapter.notifyDataSetChanged();
+        if (CommonUtil.isEmptyList(mHistoryList)) tvHistoryHint.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void deleteAllHistoryRecordSuccess() {
-        if(!CommonUtil.isEmptyList(mHistoryList)){
+        if (!CommonUtil.isEmptyList(mHistoryList)) {
             mHistoryList.clear();
             mHistoryAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void showHistoryHintLayout() {
+        tvHistoryHint.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideHistoryHintLayout() {
+        tvHistoryHint.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showHotHintLayout() {
+        tvHotHint.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -30,9 +30,10 @@ public class NavigationPresenter extends BasePresenter<NavigationContract.View> 
     @Override
     public void loadTags() {
         addSubcriber(mNavigationModel.getTags().subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<Tag>>>() {
+                    .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<Tag>>>(mView) {
                     @Override
                     public void onNext(BaseResponse<List<Tag>> listBaseResponse) {
+                        super.onNext(listBaseResponse);
                         mView.showTags(listBaseResponse.getData());
                         List<String> tagsName = new ArrayList<>();
                         for(Tag tag : listBaseResponse.getData()){

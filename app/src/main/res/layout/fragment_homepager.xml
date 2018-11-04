@@ -13,33 +13,38 @@
 
     <include layout="@layout/common_toolbal"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/srl_home"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/normal_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.youth.banner.Banner
-                android:id="@+id/banner"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_180">
+                android:layout_height="match_parent">
 
-            </com.youth.banner.Banner>
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_180">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_articles"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                </com.youth.banner.Banner>
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_articles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        </LinearLayout>
+                </androidx.recyclerview.widget.RecyclerView>
 
+            </LinearLayout>
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

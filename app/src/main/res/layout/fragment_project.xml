@@ -23,12 +23,17 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp_project"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-    </androidx.viewpager.widget.ViewPager>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/normal_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.viewpager.widget.ViewPager>
+
+    </RelativeLayout>
 
 </LinearLayout>

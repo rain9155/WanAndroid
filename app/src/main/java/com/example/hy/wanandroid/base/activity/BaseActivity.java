@@ -7,6 +7,8 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.component.AppComponent;
+import com.example.hy.wanandroid.utils.SnackUtil;
+import com.example.hy.wanandroid.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
@@ -77,12 +79,17 @@ public abstract class BaseActivity extends SupportActivity
     }
 
     @Override
-    public void showToast() {
-
+    public void showToast(String toast) {
+        ToastUtil.showToast(this, toast);
     }
 
     @Override
-    public void showSnackBar() {
+    public void showSnackBar(String toast) {
+        SnackUtil.showSnackBar(this, toast);
+    }
+
+    @Override
+    public void showNormalView() {
 
     }
 }

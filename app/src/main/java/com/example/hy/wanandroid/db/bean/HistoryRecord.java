@@ -9,6 +9,7 @@ import org.litepal.crud.LitePalSupport;
 public class HistoryRecord extends LitePalSupport{
 
     private String record;
+    private int id;
 
     public String getRecord() {
         return record;
@@ -16,5 +17,13 @@ public class HistoryRecord extends LitePalSupport{
 
     public void setRecord(String record) {
         this.record = record;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

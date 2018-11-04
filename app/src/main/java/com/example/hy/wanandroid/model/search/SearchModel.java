@@ -1,5 +1,6 @@
 package com.example.hy.wanandroid.model.search;
 
+import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.example.hy.wanandroid.contract.search.SearchContract;
@@ -66,4 +67,5 @@ public class SearchModel implements SearchContract.Model {
     public boolean isExistHistoryRecord(String record) {
         return mDbHelper.isExistHistoryRecord(record);
     }
+
 }

@@ -33,9 +33,10 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     @Override
     public void loadBannerDatas() {
         addSubcriber(mHomeModel.getBannerDatas().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<BannerData>>>() {
+                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<BannerData>>>(mView) {
                     @Override
                     public void onNext(BaseResponse<List<BannerData>> listBaseResponse) {
+                        super.onNext(listBaseResponse);
                         mView.showBannerDatas(listBaseResponse.getData());
                     }
                 }));
@@ -44,9 +45,10 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     @Override
     public void loadArticles(int pageNum) {
         addSubcriber(mHomeModel.getArticles(pageNum).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<Articles>>() {
+                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<Articles>>(mView) {
                     @Override
                     public void onNext(BaseResponse<Articles> articlesBaseResponse) {
+                        super.onNext(articlesBaseResponse);
                         mView.showArticles(articlesBaseResponse.getData().getDatas());
                     }
                 }));

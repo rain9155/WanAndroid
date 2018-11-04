@@ -13,18 +13,24 @@
 
     <include layout="@layout/common_toolbal"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/srl_hierarchy"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_hierarchy"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/normal_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_hierarchy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

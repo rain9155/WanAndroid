@@ -30,9 +30,10 @@ public class HierarchySecondPresenter extends BasePresenter<HierarchySecondContr
     @Override
     public void loadArticles(int pageNum, int id) {
         addSubcriber(mHierarchySecondListModel.getArticles(pageNum, id).subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<SecondHierarchy>>() {
+        .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<SecondHierarchy>>(mView) {
                     @Override
                     public void onNext(BaseResponse<SecondHierarchy> secondHierarchyBaseResponse) {
+                        super.onNext(secondHierarchyBaseResponse);
                         mView.showArticles(secondHierarchyBaseResponse.getData().getDatas());
                     }
                 }));

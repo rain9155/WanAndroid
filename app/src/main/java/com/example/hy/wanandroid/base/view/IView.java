@@ -18,10 +18,12 @@ public interface IView {
     //显示加载中布局
     void showLoading();
 
+    void showNormalView();
+
     //显示Toast
-    void showToast();
+    void showToast(String toast);
 
     //显示SnackBar
-    void showSnackBar();
+    void showSnackBar(String toast);
 
 }
