@@ -6,6 +6,7 @@ import com.example.hy.wanandroid.model.project.ProjectsModel;
 import com.example.hy.wanandroid.network.entity.BaseResponse;
 import com.example.hy.wanandroid.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.network.entity.homepager.Articles;
+import com.example.hy.wanandroid.utils.RxUtils;
 
 import javax.inject.Inject;
 
@@ -28,13 +29,31 @@ public class ProjectsPresenter extends BasePresenter<ProjectsContract.View> impl
 
     @Override
     public void loadProjects(int pageNum, int id) {
-        addSubcriber(mProjectsModel.getProjects(pageNum, id).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<Articles>>(mView) {
+        addSubcriber(
+                mProjectsModel.getProjects(pageNum, id)
+                .compose(RxUtils.switchSchedulers())
+                .compose(RxUtils.handleRequest2())
+                .subscribeWith(new DefaultObserver<Articles>(mView) {
                     @Override
-                    public void onNext(BaseResponse<Articles> articlesBaseResponse) {
-                        super.onNext(articlesBaseResponse);
-                        mView.showProjects(articlesBaseResponse.getData().getDatas());
+                    public void onNext(Articles articles) {
+                        super.onNext(articles);
+                        mView.showProjects(articles.getDatas());
                     }
                 }));
+    }
+
+    @Override
+    public void loadMoreProjects(int pageNum, int id) {
+        addSubcriber(
+                mProjectsModel.getProjects(pageNum, id)
+                        .compose(RxUtils.switchSchedulers())
+                        .compose(RxUtils.handleRequest2())
+                        .subscribeWith(new DefaultObserver<Articles>(mView, false, false) {
+                            @Override
+                            public void onNext(Articles articles) {
+                                super.onNext(articles);
+                                mView.showMoreProjects(articles.getDatas());
+                            }
+                        }));
     }
 }

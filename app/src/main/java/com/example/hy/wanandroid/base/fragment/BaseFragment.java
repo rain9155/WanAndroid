@@ -87,4 +87,9 @@ public abstract class BaseFragment extends SupportFragment
     public void showNormalView() {
 
     }
+
+    @Override
+    public void unableRefresh() {
+
+    }
 }

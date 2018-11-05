@@ -8,11 +8,45 @@
 
     <include layout="@layout/common_toolbal" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/normal_view"
+    <RelativeLayout
+        android:id="@+id/rl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background">
+        android:visibility="gone">
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/normal_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_search_request"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <TextView
+            android:id="@+id/tv_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:text="@string/searchActivity_no_data"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/dp_20"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_history_hot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/tv_hot_search"
@@ -39,7 +73,6 @@
             app:layout_constraintRight_toRightOf="parent">
 
         </com.zhy.view.flowlayout.TagFlowLayout>
-
 
         <TextView
             android:id="@+id/tv_hot_hint"
@@ -104,5 +137,6 @@
             app:layout_constraintTop_toBottomOf="@id/rv_history"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </LinearLayout>

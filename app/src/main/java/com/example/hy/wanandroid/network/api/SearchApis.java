@@ -12,6 +12,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * 搜索tab中所有的api
@@ -23,9 +24,10 @@ public interface SearchApis {
      * 搜索
      * http://www.wanandroid.com/article/query/0/json
      */
-    @POST("article/query/0/json")
+    @POST("article/query/{pageNum}/json")
     @FormUrlEncoded
-    Observable<BaseResponse<Articles>> getSearchRequest(@Field("k") String key//关键字
+    Observable<BaseResponse<Articles>> getSearchRequest(@Field("k") String key,//关键字
+                                                        @Path("pageNum") int pageNum//页数
     );
 
 

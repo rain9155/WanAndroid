@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.FirstHierarchyAdapter;
-import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchyContract;
 import com.example.hy.wanandroid.di.module.fragment.HierarchyFragmentModule;
@@ -82,11 +81,11 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
         rvHierarchy.setAdapter(mListAdapter);
         rvHierarchy.setHasFixedSize(true);
         srlHierarchy.setOnLoadMoreListener(refreshLayout -> {
-            mPresenter.loadFirstHierarchyList();
+            mPresenter.loadMoreFirstHierarchyList();
             isLoadMore = true;
         });
         srlHierarchy.setOnRefreshListener(refreshLayout -> {
-            mPresenter.loadFirstHierarchyList();
+            mPresenter.loadMoreFirstHierarchyList();
             isLoadMore = false;
         });
         mListAdapter.setOnItemClickListener(((adapter, view, position) -> starHierarchyActivity(position)));
@@ -101,6 +100,12 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
 
     @Override
     public void showFirstHierarchyList(List<FirstHierarchy> firstHierarchyList) {
+        mFirstHierarchyList.addAll(firstHierarchyList);
+        mListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showMoreFirstHierarchyList(List<FirstHierarchy> firstHierarchyList) {
         if (!CommonUtil.isEmptyList(firstHierarchyList)) mFirstHierarchyList.clear();
         mFirstHierarchyList.addAll(firstHierarchyList);
         mListAdapter.notifyDataSetChanged();
@@ -109,11 +114,20 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
     }
 
     @Override
+    public void unableRefresh() {
+        if (isLoadMore) srlHierarchy.finishLoadMore(); else srlHierarchy.finishRefresh();
+    }
+
+    @Override
     public void reLoad() {
         super.reLoad();
         mPresenter.loadFirstHierarchyList();
     }
 
+    /**
+     * 启动HierarchyActivity
+     * @param position 一级分类id
+     */
     private void starHierarchyActivity(int position) {
         FirstHierarchy firstHierarchy = mFirstHierarchyList.get(position);
         if (firstHierarchy != null) {

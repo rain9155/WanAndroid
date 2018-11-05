@@ -26,4 +26,7 @@ public interface IView {
     //显示SnackBar
     void showSnackBar(String toast);
 
+    //禁止加载
+    void unableRefresh();
+
 }

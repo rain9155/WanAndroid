@@ -12,6 +12,7 @@ import com.example.hy.wanandroid.network.entity.homepager.Article;
 import com.example.hy.wanandroid.network.entity.homepager.Articles;
 import com.example.hy.wanandroid.network.entity.search.HotKey;
 import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.utils.RxUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,13 +36,16 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
 
     @Override
     public void loadHotkey() {
-        addSubcriber(mSearchModel.getHotKey().subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<HotKey>>>(mView, false) {
+        addSubcriber(
+                mSearchModel.getHotKey()
+                .compose(RxUtils.switchSchedulers())
+                .compose(RxUtils.handleRequest2())
+                .subscribeWith(new DefaultObserver<List<HotKey>>(mView, false, false) {
                     @Override
-                    public void onNext(BaseResponse<List<HotKey>> listBaseResponse) {
-                        super.onNext(listBaseResponse);
-                        if(CommonUtil.isEmptyList(listBaseResponse.getData())) mView.showHotHintLayout();
-                        else  mView.showHotKey(listBaseResponse.getData());
+                    public void onNext(List<HotKey> hotKeys) {
+                        super.onNext(hotKeys);
+                        if(CommonUtil.isEmptyList(hotKeys)) mView.showHotHintLayout();
+                        else  mView.showHotKey(hotKeys);
                     }
 
                     @Override
@@ -49,28 +53,56 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
                         super.onError(e);
                         mView.showHotHintLayout();
                     }
-                }));
+                })
+        );
     }
 
     @Override
-    public void loadSearchResquest(String key) {
-        addSubcriber(mSearchModel.getSearchResquest(key).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<Articles>>() {
+    public void loadSearchResquest(String key, int pageNum) {
+        if(TextUtils.isEmpty(key.trim())) return;
+        addSubcriber(
+                mSearchModel.getSearchResquest(key, pageNum)
+                .compose(RxUtils.switchSchedulers())
+                .compose(RxUtils.handleRequest2())
+                .subscribeWith(new DefaultObserver<Articles>(mView) {
                     @Override
-                    public void onNext(BaseResponse<Articles> listBaseResponse) {
-                        mView.showSearchResquest(listBaseResponse.getData().getDatas());
+                    public void onNext(Articles articles) {
+                        super.onNext(articles);
+                        if(articles.getDatas().size() != 0){
+                            mView.showSearchResquest(articles.getDatas());
+                        }else {
+                            mView.showEmptyLayout();
+                        }
+                        mView.hideHistoryHotLayout();
+                        mView.showSearchRequestLayout();
                     }
-                }));
+                })
+        );
+    }
+
+    @Override
+    public void loadSearchMoreResquest(String key, int pageNum) {
+        if(TextUtils.isEmpty(key.trim())) return;
+        addSubcriber(
+                mSearchModel.getSearchResquest(key, pageNum)
+                        .compose(RxUtils.switchSchedulers())
+                        .compose(RxUtils.handleRequest2())
+                        .subscribeWith(new DefaultObserver<Articles>(mView, false, false) {
+                            @Override
+                            public void onNext(Articles articles) {
+                                super.onNext(articles);
+                                mView.showSearchMoreResquest(articles.getDatas());
+                            }
+                        })
+        );
     }
 
     @Override
     public void addHistoryRecord(String record) {
-        if(!TextUtils.isEmpty(record.trim()) && !mSearchModel.isExistHistoryRecord(record))
-            if(mSearchModel.addHistoryRecord(record)){
-                mView.addOneHistorySuccess(record);
-                mView.hideHistoryHintLayout();
-            }
-
+        if(TextUtils.isEmpty(record.trim()) || mSearchModel.isExistHistoryRecord(record)) return;
+        if(!mSearchModel.addHistoryRecord(record)) return;
+        mView.addOneHistorySuccess(record);
+        mView.hideHistoryHintLayout();
     }
 
     @Override
@@ -95,5 +127,13 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
             mView.deleteAllHistoryRecordSuccess();
             mView.showHistoryHintLayout();
         }
+    }
+
+    @Override
+    public void clearAllSearchKey(String key) {
+        if(!TextUtils.isEmpty(key.trim())) return;
+        mView.hideSearchRequestLayout();
+        mView.showHistoryHotLayout();
+        mView.hideEmptyLayout();
     }
 }

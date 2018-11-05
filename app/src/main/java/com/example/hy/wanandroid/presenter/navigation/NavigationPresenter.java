@@ -6,6 +6,7 @@ import com.example.hy.wanandroid.model.navigation.NavigationModel;
 import com.example.hy.wanandroid.network.entity.BaseResponse;
 import com.example.hy.wanandroid.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.network.entity.navigation.Tag;
+import com.example.hy.wanandroid.utils.RxUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +30,17 @@ public class NavigationPresenter extends BasePresenter<NavigationContract.View> 
 
     @Override
     public void loadTags() {
-        addSubcriber(mNavigationModel.getTags().subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<Tag>>>(mView) {
+        addSubcriber(
+                mNavigationModel.getTags()
+                .compose(RxUtils.switchSchedulers())
+                .compose(RxUtils.handleRequest2())
+                .subscribeWith(new DefaultObserver<List<Tag>>(mView) {
                     @Override
-                    public void onNext(BaseResponse<List<Tag>> listBaseResponse) {
-                        super.onNext(listBaseResponse);
-                        mView.showTags(listBaseResponse.getData());
+                    public void onNext(List<Tag> tags) {
+                        super.onNext(tags);
+                        mView.showTags(tags);
                         List<String> tagsName = new ArrayList<>();
-                        for(Tag tag : listBaseResponse.getData()){
+                        for(Tag tag : tags){
                             tagsName.add(tag.getName());
                         }
                         mView.showTagsName(tagsName);

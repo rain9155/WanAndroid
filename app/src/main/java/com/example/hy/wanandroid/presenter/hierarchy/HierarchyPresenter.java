@@ -6,6 +6,7 @@ import com.example.hy.wanandroid.model.hierarchy.HierarchyModel;
 import com.example.hy.wanandroid.network.entity.BaseResponse;
 import com.example.hy.wanandroid.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.network.entity.hierarchy.FirstHierarchy;
+import com.example.hy.wanandroid.utils.RxUtils;
 
 import java.util.List;
 
@@ -30,13 +31,31 @@ public class HierarchyPresenter extends BasePresenter<HierarchyContract.View> im
 
     @Override
     public void loadFirstHierarchyList() {
-        addSubcriber(mHierarchyModel.getFirstHierarchyList().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<FirstHierarchy>>>(mView) {
+        addSubcriber(
+                mHierarchyModel.getFirstHierarchyList()
+                .compose(RxUtils.switchSchedulers())
+                .compose(RxUtils.handleRequest2())
+                .subscribeWith(new DefaultObserver<List<FirstHierarchy>>(mView) {
                     @Override
-                    public void onNext(BaseResponse<List<FirstHierarchy>> listBaseResponse) {
-                        super.onNext(listBaseResponse);
-                        mView.showFirstHierarchyList(listBaseResponse.getData());
+                    public void onNext(List<FirstHierarchy> firstHierarchies) {
+                        super.onNext(firstHierarchies);
+                        mView.showFirstHierarchyList(firstHierarchies);
                     }
                 }));
+    }
+
+    @Override
+    public void loadMoreFirstHierarchyList() {
+        addSubcriber(
+                mHierarchyModel.getFirstHierarchyList()
+                        .compose(RxUtils.switchSchedulers())
+                        .compose(RxUtils.handleRequest2())
+                        .subscribeWith(new DefaultObserver<List<FirstHierarchy>>(mView, false, false) {
+                            @Override
+                            public void onNext(List<FirstHierarchy> firstHierarchies) {
+                                super.onNext(firstHierarchies);
+                                mView.showMoreFirstHierarchyList(firstHierarchies);
+                            }
+                        }));
     }
 }

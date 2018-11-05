@@ -9,6 +9,7 @@ import com.example.hy.wanandroid.network.entity.BaseResponse;
 import com.example.hy.wanandroid.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.network.entity.homepager.Articles;
 import com.example.hy.wanandroid.network.entity.homepager.BannerData;
+import com.example.hy.wanandroid.utils.RxUtils;
 
 import java.util.List;
 
@@ -32,25 +33,47 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
     @Override
     public void loadBannerDatas() {
-        addSubcriber(mHomeModel.getBannerDatas().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<BannerData>>>(mView) {
+        addSubcriber(
+                mHomeModel.getBannerDatas()
+                .compose(RxUtils.switchSchedulers())
+                .compose(RxUtils.handleRequest2())
+                .subscribeWith(new DefaultObserver<List<BannerData>>(mView, false, false) {
                     @Override
-                    public void onNext(BaseResponse<List<BannerData>> listBaseResponse) {
-                        super.onNext(listBaseResponse);
-                        mView.showBannerDatas(listBaseResponse.getData());
+                    public void onNext(List<BannerData> bannerData) {
+                        super.onNext(bannerData);
+                        mView.showBannerDatas(bannerData);
+                    }
+                })
+        );
+    }
+
+    @Override
+    public void loadArticles(int pageNum) {
+        addSubcriber(
+                mHomeModel.getArticles(pageNum)
+                .compose(RxUtils.switchSchedulers())
+                .compose(RxUtils.handleRequest2())
+                .subscribeWith(new DefaultObserver<Articles>(mView) {
+                    @Override
+                    public void onNext(Articles articles) {
+                        super.onNext(articles);
+                        mView.showArticles(articles.getDatas());
                     }
                 }));
     }
 
     @Override
-    public void loadArticles(int pageNum) {
-        addSubcriber(mHomeModel.getArticles(pageNum).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<Articles>>(mView) {
-                    @Override
-                    public void onNext(BaseResponse<Articles> articlesBaseResponse) {
-                        super.onNext(articlesBaseResponse);
-                        mView.showArticles(articlesBaseResponse.getData().getDatas());
-                    }
-                }));
+    public void loadMoreArticles(int pageNum) {
+        addSubcriber(
+                mHomeModel.getArticles(pageNum)
+                        .compose(RxUtils.switchSchedulers())
+                        .compose(RxUtils.handleRequest2())
+                        .subscribeWith(new DefaultObserver<Articles>(mView, false, false) {
+                            @Override
+                            public void onNext(Articles articles) {
+                                super.onNext(articles);
+                                mView.showMoreArticles(articles.getDatas());
+                            }
+                        }));
     }
 }

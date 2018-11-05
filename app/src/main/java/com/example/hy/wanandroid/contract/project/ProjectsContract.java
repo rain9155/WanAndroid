@@ -18,14 +18,16 @@ import io.reactivex.Observable;
 public interface ProjectsContract {
 
     interface View extends IView {
-        void showProjects(List<Article> articleList);
+        void showProjects(List<Article> articleList);//展示项目列表
+        void showMoreProjects(List<Article> articleList);//展示更多项目列表
     }
 
     interface Presenter extends IPresenter<ProjectsContract.View> {
-        void loadProjects(int pageNum, int id);
+        void loadProjects(int pageNum, int id);//加载项目列表
+        void loadMoreProjects(int pageNum, int id);//加载更多项目列表
     }
 
     interface Model{
-        Observable<BaseResponse<Articles>> getProjects(int pageNum, int id);
+        Observable<BaseResponse<Articles>> getProjects(int pageNum, int id);//获得项目列表
     }
 }

@@ -92,4 +92,9 @@ public abstract class BaseActivity extends SupportActivity
     public void showNormalView() {
 
     }
+
+    @Override
+    public void unableRefresh() {
+
+    }
 }

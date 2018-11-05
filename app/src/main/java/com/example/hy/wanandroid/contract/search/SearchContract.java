@@ -22,7 +22,6 @@ public interface SearchContract {
 
     interface View extends IView{
         void showHotKey(List<HotKey> hotKeyList);//显示搜索热词
-        void showSearchResquest(List<Article> searchRequestList);//显示搜索请求
         void showHistories(List<String> histories);//显示搜索历史
         void addOneHistorySuccess(String record);//添加一条搜索历史成功
         void deleteOneHistorySuccess(String record);//删除一条搜索历史成功
@@ -30,19 +29,29 @@ public interface SearchContract {
         void showHistoryHintLayout();//显示搜索提示布局
         void hideHistoryHintLayout();//隐藏搜索提示布局
         void showHotHintLayout();//显示热词提示布局
+        void showSearchResquest(List<Article> searchRequestList);//显示搜索请求
+        void showSearchMoreResquest(List<Article> searchRequestList);//显示更多搜索请求
+        void showHistoryHotLayout();//显示搜索热词布局
+        void hideHistoryHotLayout();//隐藏搜索热词布局
+        void showSearchRequestLayout();//显示搜索热词布局
+        void hideSearchRequestLayout();//隐藏搜索热词布局
+        void showEmptyLayout();
+        void hideEmptyLayout();
     }
 
     interface Presenter extends IPresenter<View>{
         void loadHotkey();//加载搜索热词
-        void loadSearchResquest(String key);//加载搜索请求
+        void loadSearchResquest(String key, int pageNum);//加载搜索请求
+        void loadSearchMoreResquest(String key, int pageNum);//加载更多搜索请求
         void loadHistories();//加载搜索历史
         void addHistoryRecord(String record);//添加搜索历史
         void deleteOneHistoryRecord(String record);//删除一条搜索历史
         void deleteAllHistoryRecord();//删除所有搜索历史
+        void clearAllSearchKey(String key);//清空了所有的搜索
     }
 
     interface Model{
-        Observable<BaseResponse<Articles>> getSearchResquest(String key);//获得搜索结果
+        Observable<BaseResponse<Articles>> getSearchResquest(String key, int pageNum);//获得搜索结果
         Observable<BaseResponse<List<HotKey>>> getHotKey();//获得搜索热词
         boolean addHistoryRecord(String record);//添加搜索历史是否成功
         List<String> getHistories();//获得搜索历史

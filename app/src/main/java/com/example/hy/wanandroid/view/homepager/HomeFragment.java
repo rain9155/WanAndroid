@@ -98,11 +98,11 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         rvArticles.setAdapter(mArticlesAdapter);
         srlHome.setOnLoadMoreListener(refreshLayout -> {
             pageNum++;
-            mPresenter.loadArticles(pageNum);
+            mPresenter.loadMoreArticles(pageNum);
             isLoadMore = true;
         });
         srlHome.setOnRefreshListener(refreshLayout -> {
-            mPresenter.loadArticles(0);
+            mPresenter.loadMoreArticles(0);
             mPresenter.loadBannerDatas();
             isLoadMore = false;
         });
@@ -138,15 +138,25 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
 
     @Override
     public void showArticles(List<Article> articleList) {
+        mArticles.addAll(articleList);
+        mArticlesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showMoreArticles(List<Article> articleList) {
         if (isLoadMore) {
-            mArticles.addAll(articleList);
             srlHome.finishLoadMore();
         } else {
             if (!CommonUtil.isEmptyList(articleList)) mArticles.clear();
-            mArticles.addAll(articleList);
             srlHome.finishRefresh();
         }
+        mArticles.addAll(articleList);
         mArticlesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void unableRefresh() {
+        if(isLoadMore) srlHome.finishLoadMore(); else srlHome.finishRefresh();
     }
 
     public static HomeFragment newInstance() {

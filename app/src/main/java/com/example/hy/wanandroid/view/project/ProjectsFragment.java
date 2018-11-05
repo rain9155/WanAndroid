@@ -66,11 +66,11 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
         rvProjectList.setAdapter(mProjectsAdapter);
         srlProjects.setOnLoadMoreListener(refreshLayout -> {
            mPageNum++;
-           mPresenter.loadProjects(mPageNum, mId);
+           mPresenter.loadMoreProjects(mPageNum, mId);
            isLoadMore = true;
         });
         srlProjects.setOnRefreshListener(refreshLayout -> {
-            mPresenter.loadProjects(0, mId);
+            mPresenter.loadMoreProjects(0, mId);
             isLoadMore = false;
         });
     }
@@ -83,6 +83,12 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
 
     @Override
     public void showProjects(List<Article> articleList) {
+        mArticles.addAll(articleList);
+        mProjectsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showMoreProjects(List<Article> articleList) {
         if(isLoadMore){
             mArticles.addAll(articleList);
             srlProjects.finishLoadMore();
@@ -98,6 +104,11 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
     public void reLoad() {
         super.reLoad();
         mPresenter.loadProjects(0, mId);
+    }
+
+    @Override
+    public void unableRefresh() {
+        if(isLoadMore) srlProjects.finishLoadMore(); else srlProjects.finishRefresh();
     }
 
     @Override

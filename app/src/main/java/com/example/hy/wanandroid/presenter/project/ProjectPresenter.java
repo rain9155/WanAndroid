@@ -6,6 +6,7 @@ import com.example.hy.wanandroid.model.project.ProjectModel;
 import com.example.hy.wanandroid.network.entity.BaseResponse;
 import com.example.hy.wanandroid.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.network.entity.project.Project;
+import com.example.hy.wanandroid.utils.RxUtils;
 
 import java.util.List;
 
@@ -30,12 +31,15 @@ public class ProjectPresenter extends BasePresenter<ProjectContract.View> implem
 
     @Override
     public void loadProjectList() {
-        addSubcriber(mProjectModel.getProjectList().subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<List<Project>>>(mView ) {
+        addSubcriber(
+                mProjectModel.getProjectList()
+                .compose(RxUtils.switchSchedulers())
+                .compose(RxUtils.handleRequest2())
+                .subscribeWith(new DefaultObserver<List<Project>>(mView ) {
                     @Override
-                    public void onNext(BaseResponse<List<Project>> listBaseResponse) {
-                        super.onNext(listBaseResponse);
-                        mView.showProjectList(listBaseResponse.getData());
+                    public void onNext(List<Project> projects) {
+                        super.onNext(projects);
+                        mView.showProjectList(projects);
                     }
                 }));
     }

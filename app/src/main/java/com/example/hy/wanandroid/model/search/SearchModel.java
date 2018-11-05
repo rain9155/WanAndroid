@@ -34,8 +34,8 @@ public class SearchModel implements SearchContract.Model {
     }
 
     @Override
-    public Observable<BaseResponse<Articles>> getSearchResquest(String key) {
-        return mSearchApis.getSearchRequest(key);
+    public Observable<BaseResponse<Articles>> getSearchResquest(String key, int pageNum) {
+        return mSearchApis.getSearchRequest(key, pageNum);
     }
 
     @Override

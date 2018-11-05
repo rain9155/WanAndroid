@@ -7,13 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.adapter.FlowTagsAdapter;
 import com.example.hy.wanandroid.adapter.HistoryAdapter;
-import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSearchActivityComponent;
@@ -21,6 +21,7 @@ import com.example.hy.wanandroid.network.entity.homepager.Article;
 import com.example.hy.wanandroid.network.entity.search.HotKey;
 import com.example.hy.wanandroid.presenter.search.SearchPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.List;
@@ -29,6 +30,7 @@ import javax.inject.Inject;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,6 +59,16 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     TextView tvHotHint;
     @BindView(R.id.tv_history_hint)
     TextView tvHistoryHint;
+    @BindView(R.id.cl_history_hot)
+    ConstraintLayout clHistoryHot;
+    @BindView(R.id.rv_search_request)
+    RecyclerView rvSearchRequest;
+    @BindView(R.id.normal_view)
+    SmartRefreshLayout normalView;
+    @BindView(R.id.tv_no_data)
+    TextView tvNoData;
+    @BindView(R.id.rl_container)
+    RelativeLayout rlContainer;
 
     @Inject
     SearchPresenter mPresenter;
@@ -73,10 +85,11 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     @Inject
     List<HotKey> mHotKeyList;
 
-
     private SearchView mSearchView;
     private SearchView.SearchAutoComplete mSearchAutoComplete;
     private FlowTagsAdapter mFlowTagsAdapter;
+    private boolean isLoadMore = false;
+    private int mPageNum = 0;
 
     @Override
     protected int getLayoutId() {
@@ -85,7 +98,9 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+
         super.initView(savedInstanceState);
+
         DaggerSearchActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
 
@@ -94,7 +109,14 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
         tlCommon.setTitle("");
         tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
         ivCommonSearch.setVisibility(View.INVISIBLE);
-        tlCommon.setNavigationOnClickListener(v -> finish());
+        tlCommon.setNavigationOnClickListener(v -> {
+            if(clHistoryHot.getVisibility() == View.INVISIBLE){
+                hideSearchRequestLayout();
+                showHistoryHotLayout();
+            }else {
+                finish();
+            }
+        });
 
         //历史记录
         mHistoryAdapter.openLoadAnimation();
@@ -105,6 +127,20 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
         tvClear.setOnClickListener(v -> mPresenter.deleteAllHistoryRecord());
 
         //搜索结果
+        mSearchResquestAdapter.openLoadAnimation();
+        rvSearchRequest.setLayoutManager(mSearchRequestManager);
+        rvSearchRequest.setAdapter(mSearchResquestAdapter);
+        normalView.setOnRefreshListener(refreshLayout -> {
+            isLoadMore = false;
+            mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), 0);
+        });
+        normalView.setOnLoadMoreListener(refreshLayout -> {
+            isLoadMore = true;
+            mPageNum++;
+            mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), mPageNum);
+        });
+        normalView.setEnableLoadMore(false);
+        normalView.setEnableRefresh(false);
     }
 
     @Override
@@ -121,13 +157,63 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
         tflTag.setOnTagClickListener((view, position, parent) -> {
             mSearchView.setQuery(mHotKeyList.get(position).getName(), true);
             //搜索
+            mPresenter.loadSearchResquest(mHotKeyList.get(position).getName(), 0);
             return false;
         });
     }
 
     @Override
     public void showSearchResquest(List<Article> searchRequestList) {
+        if(!CommonUtil.isEmptyList(mSearchResquestList)) mSearchResquestList.clear();
+        mSearchResquestList.addAll(searchRequestList);
+        mSearchResquestAdapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void showSearchMoreResquest(List<Article> searchRequestList) {
+        if (isLoadMore) {
+            normalView.finishLoadMore();
+        } else {
+            normalView.finishRefresh();
+            if (!CommonUtil.isEmptyList(mSearchResquestList)) mSearchResquestList.clear();
+        }
+        mSearchResquestList.addAll(searchRequestList);
+        mSearchResquestAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showHistoryHotLayout() {
+        clHistoryHot.setVisibility(View.VISIBLE);
+        normalView.setEnableLoadMore(false);
+        normalView.setEnableRefresh(false);
+    }
+
+    @Override
+    public void hideHistoryHotLayout() {
+        clHistoryHot.setVisibility(View.INVISIBLE);
+        normalView.setEnableLoadMore(true);
+        normalView.setEnableRefresh(true);
+    }
+
+    @Override
+    public void showSearchRequestLayout() {
+        rlContainer.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideSearchRequestLayout() {
+        if(!CommonUtil.isEmptyList(mSearchResquestList)) mSearchResquestList.clear();
+        rlContainer.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showEmptyLayout() {
+        tvNoData.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyLayout() {
+        tvNoData.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -174,6 +260,30 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     }
 
     @Override
+    public void reLoad() {
+        super.reLoad();
+        mPresenter.loadSearchResquest(mSearchView.getQuery().toString(), 0);
+        mPresenter.loadHotkey();
+    }
+
+    @Override
+    public void showLoading() {
+        showSearchRequestLayout();
+        super.showLoading();
+    }
+
+    @Override
+    public void showErrorView() {
+        showSearchRequestLayout();
+        super.showErrorView();
+    }
+
+    @Override
+    public void unableRefresh() {
+        if(isLoadMore) normalView.finishLoadMore(); else normalView.finishRefresh();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.tl_search_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.item_search);
@@ -190,17 +300,29 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
             @Override
             public boolean onQueryTextSubmit(String query) {
                 mPresenter.addHistoryRecord(query);
+                mPresenter.loadSearchResquest(query, 0);
+                isLoadMore = false;
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                mPresenter.clearAllSearchKey(newText);
                 return false;
             }
         });
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public void onBackPressedSupport() {
+        if(clHistoryHot.getVisibility() == View.INVISIBLE){
+            hideSearchRequestLayout();
+            showHistoryHotLayout();
+        }else {
+            finish();
+        }
+    }
 
     @Override
     protected void onDestroy() {

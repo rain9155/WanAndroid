@@ -5,7 +5,6 @@
     //other
     <string name="mainActivity_back">再按一次退出WanAndroid</string>
     <string name="loading">loading</string>
-    <string name="loading_error">出错啦！点击空白处刷新</string>
 
     //menu
     <string name="menu_btm_nav_home">首页</string>
@@ -21,6 +20,7 @@
     <string name="searchActivity_hint">输入关键字搜索更多</string>
     <string name="searchActivity_hint2">暂无搜索历史</string>
     <string name="searchActivity_hint3">暂无热词</string>
+    <string name="searchActivity_no_data">暂无数据</string>
 
     //mine
     <string name="mineFragment_tvLogin">登陆</string>
@@ -29,11 +29,12 @@
     <string name="mineFragment_tvAboutUs">关于我们</string>
     <string name="mineFragment_tvLogout">退出登陆</string>
 
-    //network error toast
+    //error
     <string name="error_nothing">获取不到数据</string>
     <string name="error_timeout">网络连接超时</string>
     <string name="error_unavailable">网络不可用</string>
     <string name="error_unknown">未知错误</string>
+    <string name="loading_error">出错啦！点击空白处刷新</string>
 
     //behaviour
     <string name="behaviour_bottom_nav">com.example.hy.wanandroid.widget.BottomNavBehaviour</string>

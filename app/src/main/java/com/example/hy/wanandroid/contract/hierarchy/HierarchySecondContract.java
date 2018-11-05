@@ -18,10 +18,13 @@ public interface HierarchySecondContract {
 
     interface View extends IView {
         void showArticles(List<Article> articleList);
+        void showMoreArticles(List<Article> articleList);
+        void unableRefresh();//禁止加载
     }
 
     interface Presenter extends IPresenter<HierarchySecondContract.View> {
         void loadArticles(int pageNum, int id);
+        void loadMoreArticles(int pageNum, int id);
     }
 
     interface Model{

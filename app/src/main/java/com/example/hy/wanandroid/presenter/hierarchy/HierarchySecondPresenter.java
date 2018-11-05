@@ -7,6 +7,7 @@ import com.example.hy.wanandroid.network.entity.BaseResponse;
 import com.example.hy.wanandroid.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.network.entity.hierarchy.SecondHierarchy;
 import com.example.hy.wanandroid.network.entity.homepager.Article;
+import com.example.hy.wanandroid.utils.RxUtils;
 
 import java.util.List;
 
@@ -29,14 +30,32 @@ public class HierarchySecondPresenter extends BasePresenter<HierarchySecondContr
 
     @Override
     public void loadArticles(int pageNum, int id) {
-        addSubcriber(mHierarchySecondListModel.getArticles(pageNum, id).subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DefaultObserver<BaseResponse<SecondHierarchy>>(mView) {
+        addSubcriber(
+                mHierarchySecondListModel.getArticles(pageNum, id)
+                .compose(RxUtils.switchSchedulers())
+                .compose(RxUtils.handleRequest2())
+                .subscribeWith(new DefaultObserver<SecondHierarchy>(mView) {
                     @Override
-                    public void onNext(BaseResponse<SecondHierarchy> secondHierarchyBaseResponse) {
-                        super.onNext(secondHierarchyBaseResponse);
-                        mView.showArticles(secondHierarchyBaseResponse.getData().getDatas());
+                    public void onNext(SecondHierarchy secondHierarchy) {
+                        super.onNext(secondHierarchy);
+                        mView.showArticles(secondHierarchy.getDatas());
                     }
                 }));
+    }
+
+    @Override
+    public void loadMoreArticles(int pageNum, int id) {
+        addSubcriber(
+                mHierarchySecondListModel.getArticles(pageNum, id)
+                        .compose(RxUtils.switchSchedulers())
+                        .compose(RxUtils.handleRequest2())
+                        .subscribeWith(new DefaultObserver<SecondHierarchy>(mView, false, false) {
+                            @Override
+                            public void onNext(SecondHierarchy secondHierarchy) {
+                                super.onNext(secondHierarchy);
+                                mView.showMoreArticles(secondHierarchy.getDatas());
+                            }
+                        }));
     }
 
 }

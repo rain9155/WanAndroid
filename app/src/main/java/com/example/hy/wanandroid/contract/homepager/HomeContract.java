@@ -19,11 +19,13 @@ public interface HomeContract {
     interface View extends IView {
         void showBannerDatas(List<BannerData> bannerDataList);//展示banner数据
         void showArticles(List<Article> articleList);//展示首页文章数据
+        void showMoreArticles(List<Article> articleList);//加载更多文章数据
     }
 
     interface Presenter extends IPresenter<HomeContract.View> {
         void loadBannerDatas();//加载首页banner数据
         void loadArticles(int pageNum);//加载首页文章数据
+        void loadMoreArticles(int pageNum);//加载更多首页文章数据
     }
 
     interface Model{

@@ -1,5 +1,7 @@
 package com.example.hy.wanandroid.adapter;
 
+import android.text.Html;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
@@ -25,7 +27,7 @@ public class ArticlesAdapter extends BaseQuickAdapter<Article, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder holder, Article article) {
         if(article != null)
-        holder.setText(R.id.tv_title, article.getTitle())
+        holder.setText(R.id.tv_title, Html.fromHtml(article.getTitle()))
                 .setText(R.id.tv_author, "作者:" + article.getAuthor())
                 .setText(R.id.tv_classify, "分类:" + article.getChapterName())
                 .setText(R.id.tv_publish_time, article.getNiceDate());

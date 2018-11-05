@@ -63,12 +63,12 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
         rvHierarchySecondList.setLayoutManager(mLinearLayoutManager);
         rvHierarchySecondList.setAdapter(mArticlesAdapter);
         srlHierarchyList.setOnRefreshListener(refreshLayout -> {
-            mPresenter.loadArticles(0, mId);
+            mPresenter.loadMoreArticles(0, mId);
             isLoadMore = false;
         });
         srlHierarchyList.setOnLoadMoreListener(refreshLayout -> {
             mPageNum++;
-            mPresenter.loadArticles(mPageNum, mId);
+            mPresenter.loadMoreArticles(mPageNum, mId);
             isLoadMore = true;
         });
     }
@@ -81,14 +81,19 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
 
     @Override
     public void showArticles(List<Article> articleList) {
+        mArticleList.addAll(articleList);
+        mArticlesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showMoreArticles(List<Article> articleList) {
         if(isLoadMore){
-            mArticleList.addAll(articleList);
             srlHierarchyList.finishLoadMore();
         }else {
             if(!CommonUtil.isEmptyList(articleList)) mArticleList.clear();
-            mArticleList.addAll(articleList);
             srlHierarchyList.finishRefresh();
         }
+        mArticleList.addAll(articleList);
         mArticlesAdapter.notifyDataSetChanged();
     }
 
@@ -96,6 +101,11 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
     public void reLoad() {
         super.reLoad();
         mPresenter.loadArticles(0, mId);
+    }
+
+    @Override
+    public void unableRefresh() {
+        if (isLoadMore) srlHierarchyList.finishLoadMore(); else srlHierarchyList.finishRefresh();
     }
 
     @Override
