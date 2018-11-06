@@ -64,7 +64,7 @@ dependencies {
     implementation rootProject.ext.dependencies["fragmentation"]
     implementation rootProject.ext.dependencies["verticalTablayout"]
     implementation rootProject.ext.dependencies["waveLoading"]
-
+    implementation rootProject.ext.dependencies["rxRelay"]
 
     //dagger
     implementation rootProject.ext.dependencies["dagger2"]

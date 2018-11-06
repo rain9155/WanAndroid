@@ -95,6 +95,7 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
     @Override
     protected void loadData() {
         super.loadData();
+        mPresenter.subscribleEvent();
         mPresenter.loadFirstHierarchyList();
     }
 
@@ -111,6 +112,11 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
         mListAdapter.notifyDataSetChanged();
         if (isLoadMore) srlHierarchy.finishLoadMore();
         else srlHierarchy.finishRefresh();
+    }
+
+    @Override
+    public void topping() {
+        if(rvHierarchy != null) rvHierarchy.smoothScrollToPosition(0);
     }
 
     @Override

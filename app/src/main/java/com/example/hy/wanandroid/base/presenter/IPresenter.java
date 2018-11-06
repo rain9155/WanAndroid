@@ -19,7 +19,10 @@ public interface IPresenter<T extends IView>{
     //解除View
     void detachView();
 
-    //订阅事件
+    //订阅事件，管理事件生命周期
     void addSubcriber(Disposable disposable);
+
+    //订阅事件
+    void subscribleEvent();
 
 }

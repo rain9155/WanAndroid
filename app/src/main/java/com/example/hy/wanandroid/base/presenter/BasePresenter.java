@@ -45,4 +45,9 @@ public class BasePresenter<T extends IView> implements IPresenter<T> {
         }
         mCompositeDisposable.add(disposable);
     }
+
+    @Override
+    public void subscribleEvent() {
+
+    }
 }

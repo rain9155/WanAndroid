@@ -4,11 +4,13 @@ import android.annotation.SuppressLint;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
+import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.homepager.HomeModel;
 import com.example.hy.wanandroid.network.entity.BaseResponse;
 import com.example.hy.wanandroid.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.network.entity.homepager.Articles;
 import com.example.hy.wanandroid.network.entity.homepager.BannerData;
+import com.example.hy.wanandroid.utils.RxBus;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 import java.util.List;
@@ -29,6 +31,15 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     @Inject
     public HomePresenter(HomeModel homeModel) {
         this.mHomeModel = homeModel;
+    }
+
+    @Override
+    public void subscribleEvent() {
+        super.subscribleEvent();
+        addSubcriber(
+                RxBus.getInstance().toObservable(ToppingEvent.class)
+                        .subscribe(toppingEvent -> mView.topping())
+        );
     }
 
     @Override

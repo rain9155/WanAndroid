@@ -13,6 +13,7 @@ version = [
         //rxJava2
         Rxjava2Version : "2.2.2",
         RxAndroidVersion : "2.1.0",
+        RxRelayVersion : "2.1.0",
 
         //dagger2
         Dagger2Version           : "2.18",
@@ -57,6 +58,7 @@ ext {
             //rxJava2
             "rxJava2" : "io.reactivex.rxjava2:rxjava:${version.Rxjava2Version}",
             "rxAndroid" : "io.reactivex.rxjava2:rxandroid:${version.RxAndroidVersion}",
+            "rxRelay" : "com.jakewharton.rxrelay2:rxrelay:${version.RxRelayVersion}",
 
             //ui
             "baseAdapter"           : "com.github.CymChad:BaseRecyclerViewAdapterHelper:${version.BaseAdapterVersion}",

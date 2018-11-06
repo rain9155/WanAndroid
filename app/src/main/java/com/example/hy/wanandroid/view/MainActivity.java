@@ -1,5 +1,6 @@
 package com.example.hy.wanandroid.view;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -16,8 +17,10 @@ import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityComponent;
 import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.MainActivityModule;
+import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.utils.LogUtil;
+import com.example.hy.wanandroid.utils.RxBus;
 import com.example.hy.wanandroid.utils.ToastUtil;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
@@ -27,6 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaeger.library.StatusBarUtil;
 
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import butterknife.BindView;
 import android.os.Handler;
 
@@ -43,6 +47,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     private int mPreFragmentPosition = 0;//上一个被选中的Fragment位置
     private MainActivityComponent mMainActivityComponent;
+    private ObjectAnimator mShowAnimator;
 
     @Inject
     MainPresenter mPresenter;
@@ -75,6 +80,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             mFragments[2] = findFragment(ProjectFragment.class);
             mFragments[3] = findFragment(MineFragment.class);
         }
+
         bnvBtm.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()){
                 case R.id.item_home:
@@ -101,6 +107,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                     break;
             }
             return true;
+        });
+
+        fbtnUp.setOnClickListener(v -> {
+            RxBus.getInstance().post(new ToppingEvent());
+            show(bnvBtm);
         });
     }
 
@@ -159,6 +170,20 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             );
             new Handler().postDelayed(() -> fbtnUp.setVisibility(View.INVISIBLE), 301);
             animator.start();
+        }
+    }
+
+    /**
+     * 底部导航栏显示
+     */
+    private void show(View child) {
+        if(mShowAnimator == null){
+            mShowAnimator = ObjectAnimator.ofFloat(child, "translationY", child.getHeight(), 0)
+                    .setDuration(200);
+            mShowAnimator.setInterpolator(new FastOutSlowInInterpolator());
+        }
+        if(!mShowAnimator.isRunning() && child.getTranslationY() >= child.getHeight()){
+            mShowAnimator.start();
         }
     }
 }

@@ -20,6 +20,7 @@ public interface HomeContract {
         void showBannerDatas(List<BannerData> bannerDataList);//展示banner数据
         void showArticles(List<Article> articleList);//展示首页文章数据
         void showMoreArticles(List<Article> articleList);//加载更多文章数据
+        void topping();//置顶
     }
 
     interface Presenter extends IPresenter<HomeContract.View> {

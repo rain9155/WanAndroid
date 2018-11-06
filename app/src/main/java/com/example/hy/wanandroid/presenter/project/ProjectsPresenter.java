@@ -2,10 +2,12 @@ package com.example.hy.wanandroid.presenter.project;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
+import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.project.ProjectsModel;
 import com.example.hy.wanandroid.network.entity.BaseResponse;
 import com.example.hy.wanandroid.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.network.entity.homepager.Articles;
+import com.example.hy.wanandroid.utils.RxBus;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 import javax.inject.Inject;
@@ -25,6 +27,15 @@ public class ProjectsPresenter extends BasePresenter<ProjectsContract.View> impl
     @Inject
     public ProjectsPresenter(ProjectsModel projectsModel) {
         mProjectsModel = projectsModel;
+    }
+
+    @Override
+    public void subscribleEvent() {
+        super.subscribleEvent();
+        addSubcriber(
+                RxBus.getInstance().toObservable(ToppingEvent.class)
+                .subscribe(toppingEvent -> mView.topping())
+        );
     }
 
     @Override

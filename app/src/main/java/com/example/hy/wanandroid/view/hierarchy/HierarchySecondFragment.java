@@ -76,6 +76,7 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
     @Override
     protected void loadData() {
         super.loadData();
+        mPresenter.subscribleEvent();
         mPresenter.loadArticles(0, mId);
     }
 
@@ -95,6 +96,11 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
         }
         mArticleList.addAll(articleList);
         mArticlesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void topping() {
+        if(rvHierarchySecondList != null) rvHierarchySecondList.smoothScrollToPosition(0);
     }
 
     @Override

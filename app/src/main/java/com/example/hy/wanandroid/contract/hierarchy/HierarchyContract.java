@@ -17,6 +17,7 @@ public interface HierarchyContract {
     interface View extends IView {
         void showFirstHierarchyList(List<FirstHierarchy> firstHierarchyList);
         void showMoreFirstHierarchyList(List<FirstHierarchy> firstHierarchyList);
+        void topping();//置顶
     }
 
     interface Presenter extends IPresenter<HierarchyContract.View> {

@@ -1,5 +1,6 @@
 package com.example.hy.wanandroid.view.homepager;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.ImageView;
@@ -111,6 +112,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
     @Override
     protected void loadData() {
         super.loadData();
+        mPresenter.subscribleEvent();
         mPresenter.loadBannerDatas();
         mPresenter.loadArticles(0);
     }
@@ -152,6 +154,11 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         }
         mArticles.addAll(articleList);
         mArticlesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void topping() {
+        if(rvArticles != null) rvArticles.smoothScrollToPosition(0);
     }
 
     @Override

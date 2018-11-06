@@ -20,6 +20,7 @@ public interface ProjectsContract {
     interface View extends IView {
         void showProjects(List<Article> articleList);//展示项目列表
         void showMoreProjects(List<Article> articleList);//展示更多项目列表
+        void topping();//置顶
     }
 
     interface Presenter extends IPresenter<ProjectsContract.View> {

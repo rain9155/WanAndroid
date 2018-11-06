@@ -78,6 +78,7 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
     @Override
     protected void loadData() {
         super.loadData();
+        mPresenter.subscribleEvent();
         mPresenter.loadProjects(0, mId);
     }
 
@@ -98,6 +99,11 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
             srlProjects.finishRefresh();
         }
         mProjectsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void topping() {
+        if(rvProjectList != null) rvProjectList.smoothScrollToPosition(0);
     }
 
     @Override

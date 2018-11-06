@@ -2,10 +2,13 @@ package com.example.hy.wanandroid.presenter.hierarchy;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchyContract;
+import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.hierarchy.HierarchyModel;
 import com.example.hy.wanandroid.network.entity.BaseResponse;
 import com.example.hy.wanandroid.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.network.entity.hierarchy.FirstHierarchy;
+import com.example.hy.wanandroid.utils.LogUtil;
+import com.example.hy.wanandroid.utils.RxBus;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 import java.util.List;
@@ -13,6 +16,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -57,5 +62,13 @@ public class HierarchyPresenter extends BasePresenter<HierarchyContract.View> im
                                 mView.showMoreFirstHierarchyList(firstHierarchies);
                             }
                         }));
+    }
+
+    @Override
+    public void subscribleEvent() {
+        addSubcriber(
+                RxBus.getInstance().toObservable(ToppingEvent.class)
+                        .subscribe(toppingEvent -> mView.topping())
+        );
     }
 }
