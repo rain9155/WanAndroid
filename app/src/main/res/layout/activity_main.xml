@@ -39,7 +39,7 @@
             android:layout_gravity="bottom"
             android:background="@color/white"
             app:layout_behavior="@string/behaviour_bottom_nav"
-            app:menu="@menu/btm_nav_menu"
+            app:menu="@menu/home_btm_menu"
             app:elevation="@dimen/dp_5">
 
         </com.google.android.material.bottomnavigation.BottomNavigationView>

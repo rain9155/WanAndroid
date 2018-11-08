@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".config.App"
@@ -17,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.MainActivity"
+        <activity
+            android:name=".view.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,10 +31,11 @@
         </activity>
         <activity android:name=".view.hierarchy.HierarchySecondActivity" />
         <activity android:name=".view.navigation.NavigationActivity" />
-        <activity android:name=".view.search.SearchActivity"
-            android:theme="@style/SearchActivityStyle">
+        <activity
+            android:name=".view.search.SearchActivity"
+            android:theme="@style/SearchActivityStyle"/>
 
-        </activity>
+        <activity android:name=".view.homepager.ArticleActivity"/>
     </application>
 
 </manifest>

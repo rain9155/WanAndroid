@@ -1,6 +1,5 @@
 package com.example.hy.wanandroid.view.homepager;
 
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.ImageView;
@@ -87,8 +86,9 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         ((MainActivity) getActivity()).getComponent().getHomFragmentSubComponent(new HomeFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
+        //标题栏
         ivCommonSearch.setVisibility(View.VISIBLE);
-        tvCommonTitle.setText(R.string.menu_btm_nav_home);
+        tvCommonTitle.setText(R.string.homeFragment_home);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
         tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
         ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
@@ -97,6 +97,10 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         rvArticles.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
         rvArticles.setAdapter(mArticlesAdapter);
+        mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Article article = mArticles.get(position);
+            ArticleActivity.startActivity(_mActivity, article.getLink(), article.getTitle(), article.isCollect());
+        });
         srlHome.setOnLoadMoreListener(refreshLayout -> {
             pageNum++;
             mPresenter.loadMoreArticles(pageNum);

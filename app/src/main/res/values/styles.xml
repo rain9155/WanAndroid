@@ -9,6 +9,14 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <!--菜单风格-->
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!--toolbar弹出菜单的风格-->
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
+        <item name="overlapAnchor">false</item>
+    </style>
+
     <!--搜索界面的style-->
     <style name="SearchActivityStyle" parent="AppTheme">
         <item name="windowNoTitle">true</item>

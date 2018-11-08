@@ -35,7 +35,6 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class SearchActivity extends BaseLoadActivity implements SearchContract.View {
 
@@ -285,7 +284,7 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.tl_search_menu, menu);
+        getMenuInflater().inflate(R.menu.search_tl_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.item_search);
         //得到SearchView
         mSearchView = (SearchView) MenuItemCompat.getActionView(menuItem);

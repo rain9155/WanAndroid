@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group>
+
+        <item
+            android:id="@+id/item_share"
+            android:title="@string/articleActivity_share"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/item_collection"
+            android:title="@string/articleActivity_collection"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/item_browser"
+            android:title="@string/articleActivity_browser"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/item_copy"
+            android:title="@string/articleActivity_copy"
+            app:showAsAction="never"/>
+
+    </group>
+
+</menu>

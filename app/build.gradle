@@ -56,6 +56,8 @@ dependencies {
     implementation rootProject.ext.dependencies["smartrefresh"]
     implementation rootProject.ext.dependencies["agentWeb"]
     implementation rootProject.ext.dependencies["gilde"]
+    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     annotationProcessor rootProject.ext.dependencies["gildeCpmplier"]
     implementation rootProject.ext.dependencies["flowLayout"]
     implementation rootProject.ext.dependencies["banner"]

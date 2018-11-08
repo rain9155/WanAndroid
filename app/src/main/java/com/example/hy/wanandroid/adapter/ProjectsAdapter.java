@@ -1,5 +1,6 @@
 package com.example.hy.wanandroid.adapter;
 
+import android.text.Html;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -31,7 +32,7 @@ public class ProjectsAdapter extends BaseQuickAdapter<Article, BaseViewHolder>{
                     .placeholder(R.drawable.placeholder_android)
                     .into((ImageView) holder.getView(R.id.iv_image));
 
-            holder.setText(R.id.tv_title, item.getTitle())
+            holder.setText(R.id.tv_title, Html.fromHtml(item.getTitle()))
                     .setText(R.id.tv_details, item.getDesc())
                     .setText(R.id.tv_author, "作者:" + item.getAuthor())
                     .setText(R.id.tv_publish_time, item.getNiceDate());

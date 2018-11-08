@@ -4,25 +4,25 @@
 
     <item
         android:id="@+id/item_home"
-        android:title="@string/menu_btm_nav_home"
+        android:title="@string/homeFragment_home"
         android:icon="@drawable/ic_main_home"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/item_hierarchy"
-        android:title="@string/menu_btm_nav_hierarchy"
+        android:title="@string/homeFragment_hierarchy"
         android:icon="@drawable/ic_main_hierarchy"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/item_project"
-        android:title="@string/menu_btm_nav_project"
+        android:title="@string/homeFragment_project"
         android:icon="@drawable/ic_main_project"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/item_mine"
-        android:title="@string/menu_btm_nav_mine"
+        android:title="@string/homeFragment_mine"
         android:icon="@drawable/ic_main_mine"
         app:showAsAction="ifRoom"/>
 

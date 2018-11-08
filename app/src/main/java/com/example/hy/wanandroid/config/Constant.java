@@ -21,6 +21,11 @@ public class Constant {
     public static final long WAIT_TIME = 2000L; // 再点一次退出程序时间设置
     public static long TOUCH_TIME = 0;//第一次按下返回键的时间
 
+    //ArticleActivity
+    public static final String KEY_ARTICLE_ADDRESS = "articleAddress";
+    public static final String KEY_ARTICLE_TITLE = "articleTitle";
+    public static final String KEY_ARTICLE_ISCOLLECTION = "articleIsCollection";
+
     //BaseLoadState
     public static final int NORMAL_STATE = 0;
     public static final int LOADING_STATE = 1;

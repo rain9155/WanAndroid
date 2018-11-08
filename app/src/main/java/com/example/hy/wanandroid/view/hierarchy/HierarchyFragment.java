@@ -70,7 +70,7 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
         mPresenter.attachView(this);
 
         ivCommonSearch.setVisibility(View.VISIBLE);
-        tvCommonTitle.setText(R.string.menu_btm_nav_hierarchy);
+        tvCommonTitle.setText(R.string.homeFragment_hierarchy);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
         tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
         ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));

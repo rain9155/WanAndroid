@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/item_search"
-        android:title="@string/menu_toolbar_search"
-        android:icon="@drawable/ic_arrow_left"
+        android:title="@string/searchActivity_search"
+        android:icon="@drawable/ic_search"
         android:orderInCategory="100"
         app:showAsAction="always"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>

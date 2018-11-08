@@ -68,7 +68,7 @@ public class ProjectFragment extends BaseLoadFragment implements ProjectContract
         mPresenter.attachView(this);
 
         ivCommonSearch.setVisibility(View.VISIBLE);
-        tvCommonTitle.setText(R.string.menu_btm_nav_project);
+        tvCommonTitle.setText(R.string.homeFragment_project);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
         tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
         ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
