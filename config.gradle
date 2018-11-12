@@ -32,6 +32,7 @@ version = [
         VerticalTabLayoutVersion : '1.2.5',
         YViewPagerDemoVersion : '0.4',
         WaveLoadingVersion : '0.3.5',
+        TwinklingRefreshLayoutVersion : '1.0.7',
 
         //test
         JunitVersion           : "4.12",
@@ -73,6 +74,7 @@ ext {
             "fragmentation" : "me.yokeyword:fragmentation:${version.FragmentationVersion}",
             "verticalTablayout" : "q.rorbin:VerticalTabLayout:${version.VerticalTabLayoutVersion}",
             "waveLoading" : "me.itangqi.waveloadingview:library:${version.WaveLoadingVersion}",
+            "twinklingRefreshLayout" : "com.lcodecorex:tkrefreshlayout:${version.TwinklingRefreshLayoutVersion}",
 
             //dagger2
             "dagger2" : "com.google.dagger:dagger:${version.Dagger2Version}",

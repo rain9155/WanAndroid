@@ -1,10 +1,13 @@
 package com.example.hy.wanandroid.widget;
 
 import android.app.Activity;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import com.example.hy.wanandroid.R;
 import com.just.agentweb.IWebLayout;
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,17 +18,26 @@ import androidx.annotation.Nullable;
 public class WebLayout implements IWebLayout {
 
     private Activity mActivity;
+    private final TwinklingRefreshLayout mTwinklingRefreshLayout;
     private WebView mWebView = null;
+
+    public WebLayout(Activity activity ) {
+        this.mActivity = activity;
+        mTwinklingRefreshLayout = (TwinklingRefreshLayout) LayoutInflater.from(activity).inflate(R.layout.web_layout, null, false);
+        mTwinklingRefreshLayout.setPureScrollModeOn();
+        mWebView = mTwinklingRefreshLayout.findViewById(R.id.webView);
+
+    }
 
     @NonNull
     @Override
     public ViewGroup getLayout() {
-        return null;
+        return mTwinklingRefreshLayout;
     }
 
     @Nullable
     @Override
     public WebView getWebView() {
-        return null;
+        return mWebView;
     }
 }

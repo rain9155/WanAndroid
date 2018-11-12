@@ -27,6 +27,7 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
 import com.example.hy.wanandroid.presenter.homepager.ArticlePresenter;
 import com.example.hy.wanandroid.utils.ToastUtil;
+import com.example.hy.wanandroid.widget.WebLayout;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
 import com.just.agentweb.IWebLayout;
@@ -84,6 +85,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
                 .setAgentWebParent(flContainer, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator(getResources().getColor(R.color.colorPrimary))
                 .setMainFrameErrorView(R.layout.error_view, -1)
+                .setWebLayout(new WebLayout(this))
                 .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK)
                 .createAgentWeb()
                 .ready()
@@ -94,10 +96,9 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
         WebSettings settings = webView.getSettings();
         setSettings(settings);
 
-        //得到AgentWeb 最底层的控件
+        //得到AgentWeb最底层的控件
         FrameLayout frameLayout = mAgentWeb.getWebCreator().getWebParentLayout();
         addBgChild(frameLayout);
-        webView.setOverScrollMode(WebView.OVER_SCROLL_ALWAYS);
     }
 
 
@@ -224,7 +225,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
      */
     protected void addBgChild(FrameLayout frameLayout) {
         TextView textView = new TextView(frameLayout.getContext());
-        textView.setText("技术由 AgentWeb 提供");
+        textView.setText(R.string.articleActivity_support);
         textView.setTextSize(16);
         textView.setTextColor(Color.parseColor("#727779"));
         frameLayout.setBackgroundColor(Color.parseColor("#272b2d"));
