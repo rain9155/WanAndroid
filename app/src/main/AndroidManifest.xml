@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
@@ -33,9 +33,12 @@
         <activity android:name=".view.navigation.NavigationActivity" />
         <activity
             android:name=".view.search.SearchActivity"
-            android:theme="@style/SearchActivityStyle"/>
-
-        <activity android:name=".view.homepager.ArticleActivity"/>
+            android:theme="@style/SearchActivityStyle" />
+        <activity android:name=".view.homepager.ArticleActivity" />
+        <activity
+            android:name=".view.mine.LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity android:name=".view.mine.RegisterActivity"></activity>
     </application>
 
 </manifest>

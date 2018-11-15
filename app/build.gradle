@@ -68,6 +68,7 @@ dependencies {
     implementation rootProject.ext.dependencies["waveLoading"]
     implementation rootProject.ext.dependencies["rxRelay"]
     implementation rootProject.ext.dependencies["twinklingRefreshLayout"]
+    implementation rootProject.ext.dependencies["multiWaveHeader"]
 
     //dagger
     implementation rootProject.ext.dependencies["dagger2"]

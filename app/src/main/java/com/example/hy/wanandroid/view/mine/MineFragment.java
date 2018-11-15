@@ -60,15 +60,16 @@ public class MineFragment extends BaseFragment implements MineContract.View {
 
     @Override
     protected void initView() {
+
         srlMine.setEnableLoadMore(false);//禁止加载更多
+
+        btnLogin.setOnClickListener(v -> LoginActivity.startActivity(_mActivity));
     }
 
     @Override
-    protected void loadData() {
+    protected void loadData() {}
 
-    }
-
-    public static MineFragment newInstance() {
+    public static MineFragment newInstance(){
         return new MineFragment();
     }
 

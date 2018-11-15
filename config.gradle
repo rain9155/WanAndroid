@@ -1,8 +1,9 @@
 version = [
+
         //androidx
-        LibraryCompatVersion   : "1.0.0",
-        ConstraintLayoutVersion: "2.0.0-alpha2",
-        MarterialDesignVersion : "1.0.0",
+        LibraryCompatVersion   : "1.0.0-alpha1",
+        ConstraintLayoutVersion: "1.1.2",
+        MarterialDesignVersion : "1.0.0-alpha1",
 
         //db
         LitepalVersion         : "3.0.0",
@@ -33,11 +34,13 @@ version = [
         YViewPagerDemoVersion : '0.4',
         WaveLoadingVersion : '0.3.5',
         TwinklingRefreshLayoutVersion : '1.0.7',
+        MultiWaveHeaderVersion : '1.0.0-alpha-1',
 
         //test
         JunitVersion           : "4.12",
         RunnerVersion          : "1.1.0-beta02",
         EspressoVersion        : "3.1.0-beta02"
+
 ]
 ext {
 
@@ -75,6 +78,7 @@ ext {
             "verticalTablayout" : "q.rorbin:VerticalTabLayout:${version.VerticalTabLayoutVersion}",
             "waveLoading" : "me.itangqi.waveloadingview:library:${version.WaveLoadingVersion}",
             "twinklingRefreshLayout" : "com.lcodecorex:tkrefreshlayout:${version.TwinklingRefreshLayoutVersion}",
+            "multiWaveHeader" : "com.scwang.wave:MultiWaveHeader:${version.MultiWaveHeaderVersion}",
 
             //dagger2
             "dagger2" : "com.google.dagger:dagger:${version.Dagger2Version}",
@@ -86,5 +90,6 @@ ext {
             "junit"                 : "junit:junit:${version.JunitVersion}",
             "runner"                : "androidx.test:runner:${version.RunnerVersion}",
             "espresso"              : "androidx.test.espresso:espresso-core:${version.EspressoVersion}"
+
     ]
 }

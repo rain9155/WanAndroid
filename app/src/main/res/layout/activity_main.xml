@@ -23,12 +23,13 @@
             android:background="@color/colorAccent"
             android:layout_gravity="bottom|right"
             android:src="@drawable/ic_main_missile"
-            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_68"
             android:clickable="true"
             app:layout_behavior="@string/behaviour_fbtn"
             app:pressedTranslationZ="@dimen/dp_10"
             app:elevation="@dimen/dp_10"
+            app:rippleColor="@color/colorPrimary"
             tools:ignore="RtlHardcoded"
             android:focusable="true" />
 

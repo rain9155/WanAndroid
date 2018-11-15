@@ -51,5 +51,29 @@
     //behaviour
     <string name="behaviour_bottom_nav">com.example.hy.wanandroid.widget.BottomNavBehaviour</string>
     <string name="behaviour_fbtn">com.example.hy.wanandroid.widget.FbtnBehaviour</string>
+    <string name="title_activity_login">Sign in</string>
+
+
+    //login
+    <string name="loginActivity_account">用户名</string>
+    <string name="loginActivity_password">密码</string>
+    <string name="loginActivity_sign_in">登陆</string>
+    <string name="loginActivity_register">没有账号?注册</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="loginActivity_error_account_empty">用户名不能为空</string>
+    <string name="loginActivity_error_password_empty">密码不能为空</string>
+
+    //register
+    <string name="registerActivity_account">用户名</string>
+    <string name="registerActivity_password">输入密码</string>
+    <string name="registerActivity_password_again">再次输入密码</string>
+    <string name="registerActivity_register">注册</string>
+    <string name="registerActivity_sign_in">已有账号?登陆</string>
+    <string name="registerActivity_error_account_empty">用户名不能为空</string>
+    <string name="registerActivity_error_password_empty">密码不能为空</string>
+    <string name="registerActivity_error_account_invalid">用户名长度必须大于6</string>
+    <string name="registerActivity_error_password_invalid">密码长度必须大于6</string>
+    <string name="registerActivity_error_passwordAgain_invalid">两次输入的密码不一致</string>
+
 
 </resources>
