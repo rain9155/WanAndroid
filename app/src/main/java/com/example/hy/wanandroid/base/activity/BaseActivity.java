@@ -97,4 +97,9 @@ public abstract class BaseActivity extends SupportActivity
     public void unableRefresh() {
 
     }
+
+    @Override
+    public void showDialog() {
+
+    }
 }

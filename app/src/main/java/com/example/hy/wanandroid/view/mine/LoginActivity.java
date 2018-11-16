@@ -28,10 +28,15 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.contract.mine.LoginContract;
+import com.example.hy.wanandroid.di.component.activity.DaggerLoginActivityComponent;
+import com.example.hy.wanandroid.presenter.mine.LoginPresenter;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
@@ -41,7 +46,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends BaseActivity{
+public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @BindView(R.id.login_progress)
     ProgressBar loginProgress;
@@ -64,6 +69,11 @@ public class LoginActivity extends BaseActivity{
     @BindView(R.id.cl_login)
     ConstraintLayout clLogin;
 
+    @Inject
+    LoginPresenter mPresenter;
+
+    private View focusView = null;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_login;
@@ -71,10 +81,18 @@ public class LoginActivity extends BaseActivity{
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        DaggerLoginActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+        mPresenter.attachView(this);
 
         ivBack.setOnClickListener(v -> finish());
         tvRegister.setOnClickListener(v -> RegisterActivity.startActivity(this));
-        btnLogin.setOnClickListener(v -> attemptLogin());
+        btnLogin.setOnClickListener(v -> {
+            // Reset errors.
+            tlAccount.setError(null);
+            tlPassword.setError(null);
+            // Store values at the time of the login attempt.
+            mPresenter.login(atAccount.getText().toString().trim(), etPassword.getText().toString().trim());
+        });
 
     }
 
@@ -83,54 +101,25 @@ public class LoginActivity extends BaseActivity{
 
     }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
-    private void attemptLogin() {
+    @Override
+    public void showLoading() {
+        /**
+         * Shows the progress UI and hides the login form.
+         */
 
-        // Reset errors.
-        tlAccount.setError(null);
-        tlPassword.setError(null);
-
-        // Store values at the time of the login attempt.
-        String account = atAccount.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
-
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(account)) {
-            tlAccount.setError(getString(R.string.loginActivity_error_account_empty));
-            focusView = tlAccount;
-            cancel = true;
-        }
-
-        // Check for a valid password, if the user entered one.
-        if (TextUtils.isEmpty(password)) {
-            tlPassword.setError(getString(R.string.loginActivity_error_password_empty));
-            focusView = tlPassword;
-            cancel = true;
-        }
-
-        // There was an error; don't attempt login and focus the first
-        // form field with an error.
-        if (cancel) {
-            focusView.requestFocus();
-            return;
-        }
-
-        // Show a progress spinner, and kick off a background task to
-        // perform the user login attempt.
-        showProgress(true);
-        //login
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
+    @Override
+    public void showNormalView() {
+        super.showNormalView();
+    }
+
+    @Override
+    public void showErrorView() {
+        super.showErrorView();
+    }
+
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
@@ -156,9 +145,38 @@ public class LoginActivity extends BaseActivity{
         });
     }
 
+
+    @Override
+    protected void onDestroy() {
+        if(mPresenter != null){
+            mPresenter.detachView();
+            mPresenter = null;
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void setAccountErrorView(String error) {
+        focusView = tlAccount;
+        tlAccount.setError(error);
+    }
+
+    @Override
+    public void setPasswordErrorView(String error) {
+        focusView = tlPassword;
+        tlPassword.setError(error);
+    }
+
+    @Override
+    public void requestFocus(boolean cancel) {
+        if(focusView == null || !cancel) return;
+        focusView.requestFocus();
+    }
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
     }
+
 }
 

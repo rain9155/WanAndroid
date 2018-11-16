@@ -20,6 +20,9 @@ public interface IView {
 
     void showNormalView();
 
+    //显示dialog
+    void showDialog();
+
     //显示Toast
     void showToast(String toast);
 

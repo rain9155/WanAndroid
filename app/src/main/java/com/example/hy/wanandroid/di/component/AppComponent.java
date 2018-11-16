@@ -4,6 +4,7 @@ import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.module.AppModule;
 import com.example.hy.wanandroid.network.api.HierarchyApis;
 import com.example.hy.wanandroid.network.api.HomeApis;
+import com.example.hy.wanandroid.network.api.MineApis;
 import com.example.hy.wanandroid.network.api.NavigationApis;
 import com.example.hy.wanandroid.network.api.ProjectApis;
 import com.example.hy.wanandroid.network.api.SearchApis;
@@ -30,4 +31,5 @@ public interface AppComponent {
     ProjectApis getProjectApis();
     NavigationApis getNavigationApis();
     SearchApis getSearchApis();
+    MineApis getMineApis();
 }

@@ -92,4 +92,9 @@ public abstract class BaseFragment extends SupportFragment
     public void unableRefresh() {
 
     }
+
+    @Override
+    public void showDialog() {
+
+    }
 }

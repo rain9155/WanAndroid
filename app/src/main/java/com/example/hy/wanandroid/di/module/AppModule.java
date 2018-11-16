@@ -5,6 +5,7 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.di.scope.PerFragment;
 import com.example.hy.wanandroid.network.api.HierarchyApis;
 import com.example.hy.wanandroid.network.api.HomeApis;
+import com.example.hy.wanandroid.network.api.MineApis;
 import com.example.hy.wanandroid.network.api.NavigationApis;
 import com.example.hy.wanandroid.network.api.ProjectApis;
 import com.example.hy.wanandroid.network.api.SearchApis;
@@ -73,6 +74,12 @@ public class AppModule {
     @Singleton
     public SearchApis provideSearchApis(Retrofit retrofit){
         return retrofit.create(SearchApis.class);
+    }
+
+    @Provides
+    @Singleton
+    public MineApis provideMineApis(Retrofit retrofit){
+        return retrofit.create(MineApis.class);
     }
 
 }
