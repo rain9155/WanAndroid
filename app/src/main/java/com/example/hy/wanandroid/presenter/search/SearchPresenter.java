@@ -6,11 +6,11 @@ import android.text.TextUtils;
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.model.search.SearchModel;
-import com.example.hy.wanandroid.network.entity.BaseResponse;
-import com.example.hy.wanandroid.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.network.entity.homepager.Article;
-import com.example.hy.wanandroid.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.network.entity.search.HotKey;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.core.network.entity.homepager.Article;
+import com.example.hy.wanandroid.core.network.entity.homepager.Articles;
+import com.example.hy.wanandroid.core.network.entity.search.HotKey;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.utils.RxUtils;
 

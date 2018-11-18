@@ -26,12 +26,11 @@ import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
 import com.example.hy.wanandroid.presenter.homepager.ArticlePresenter;
-import com.example.hy.wanandroid.utils.ToastUtil;
-import com.example.hy.wanandroid.widget.WebLayout;
+import com.example.hy.wanandroid.widget.layout.WebLayout;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
-import com.just.agentweb.IWebLayout;
 
+import androidx.annotation.IntRange;
 import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 
@@ -41,6 +40,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     private String mAddress;
     private String mTitle;
     private boolean isCollection;
+    private boolean isHideCollection;
     private ArticleContract.Presenter mPresenter;
 
     @BindView(R.id.tv_common_title)
@@ -66,8 +66,9 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
         Intent intent = getIntent();
         if(intent != null){
             mAddress = intent.getStringExtra(Constant.KEY_ARTICLE_ADDRESS);
-            mTitle = intent.getStringExtra(Constant.KEY_ARTICLE_TITLE);
+            mTitle = intent.getStringExtra(Constant.KEY_ARTICLE_FLAG);
             isCollection = intent.getBooleanExtra(Constant.KEY_ARTICLE_ISCOLLECTION, false);
+            isHideCollection = intent.getBooleanExtra(Constant.KEY_ARTICLE_FLAG, false);
         }
 
         //标题栏
@@ -105,6 +106,8 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.article_tl_menu, menu);
+        if(isHideCollection) menu.findItem(R.id.item_collection).setVisible(false);
+        if(isCollection) menu.findItem(R.id.item_collection).setTitle(getString(R.string.articleActivity_cancel_collection));
         return true;
     }
 
@@ -240,11 +243,12 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
      * 启动活动
      * @param address html地址
      */
-    public static void startActivity(Context context, String address, String title, boolean isCollection){
+    public static void startActivity(Context context, String address, String title, boolean isCollection, boolean isHideCollection){
         Intent intent = new Intent(context, ArticleActivity.class);
         intent.putExtra(Constant.KEY_ARTICLE_ADDRESS, address);
         intent.putExtra(Constant.KEY_ARTICLE_TITLE, title);
         intent.putExtra(Constant.KEY_ARTICLE_ISCOLLECTION, isCollection);
+        intent.putExtra(Constant.KEY_ARTICLE_FLAG, isHideCollection);
         context.startActivity(intent);
     }
 }

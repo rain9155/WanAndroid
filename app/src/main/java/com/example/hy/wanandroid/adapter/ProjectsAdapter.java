@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.config.GlideApp;
-import com.example.hy.wanandroid.network.entity.homepager.Article;
+import com.example.hy.wanandroid.core.network.entity.homepager.Article;
 
 import java.util.List;
 

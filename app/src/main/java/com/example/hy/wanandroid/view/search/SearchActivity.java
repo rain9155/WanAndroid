@@ -17,10 +17,11 @@ import com.example.hy.wanandroid.adapter.HistoryAdapter;
 import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSearchActivityComponent;
-import com.example.hy.wanandroid.network.entity.homepager.Article;
-import com.example.hy.wanandroid.network.entity.search.HotKey;
+import com.example.hy.wanandroid.core.network.entity.homepager.Article;
+import com.example.hy.wanandroid.core.network.entity.search.HotKey;
 import com.example.hy.wanandroid.presenter.search.SearchPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
@@ -137,6 +138,10 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
             isLoadMore = true;
             mPageNum++;
             mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), mPageNum);
+        });
+        mSearchResquestAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Article article = mSearchResquestList.get(position);
+            ArticleActivity.startActivity(SearchActivity.this, article.getLink(), article.getTitle(), article.isCollect(), false);
         });
         normalView.setEnableLoadMore(false);
         normalView.setEnableRefresh(false);

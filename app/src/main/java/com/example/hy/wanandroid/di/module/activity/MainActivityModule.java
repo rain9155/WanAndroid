@@ -6,7 +6,7 @@ import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerActivity;
 import com.example.hy.wanandroid.di.scope.PerFragment;
-import com.example.hy.wanandroid.network.entity.homepager.Article;
+import com.example.hy.wanandroid.core.network.entity.homepager.Article;
 
 import java.util.ArrayList;
 import java.util.List;

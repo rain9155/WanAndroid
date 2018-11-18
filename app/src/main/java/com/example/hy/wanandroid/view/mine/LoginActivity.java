@@ -28,9 +28,13 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.LoginContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerLoginActivityComponent;
+import com.example.hy.wanandroid.di.module.activity.LoginActivityModule;
 import com.example.hy.wanandroid.presenter.mine.LoginPresenter;
+import com.example.hy.wanandroid.utils.KeyBoardUtil;
+import com.example.hy.wanandroid.widget.dialog.LoadingDialog;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -48,8 +52,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class LoginActivity extends BaseActivity implements LoginContract.View {
 
-    @BindView(R.id.login_progress)
-    ProgressBar loginProgress;
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.iv_face)
@@ -71,6 +73,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Inject
     LoginPresenter mPresenter;
+    @Inject
+    LoadingDialog mLoadingDialog;
 
     private View focusView = null;
 
@@ -81,7 +85,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        DaggerLoginActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+        DaggerLoginActivityComponent.builder().appComponent(getAppComponent()).loginActivityModule(new LoginActivityModule()).build().inject(this);
         mPresenter.attachView(this);
 
         ivBack.setOnClickListener(v -> finish());
@@ -91,6 +95,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             tlAccount.setError(null);
             tlPassword.setError(null);
             // Store values at the time of the login attempt.
+            KeyBoardUtil.closeKeyBoard(this, atAccount);
+            KeyBoardUtil.closeKeyBoard(this, etPassword);
             mPresenter.login(atAccount.getText().toString().trim(), etPassword.getText().toString().trim());
         });
 
@@ -103,48 +109,18 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void showLoading() {
-        /**
-         * Shows the progress UI and hides the login form.
-         */
-
+        mLoadingDialog.show(getSupportFragmentManager(), "tag");
     }
 
     @Override
     public void showNormalView() {
-        super.showNormalView();
+        mLoadingDialog.dismiss();
     }
 
     @Override
     public void showErrorView() {
-        super.showErrorView();
+        mLoadingDialog.dismiss();
     }
-
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-        clLogin.setVisibility(show ? View.GONE : View.VISIBLE);
-        clLogin.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                clLogin.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-
-        loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
-        loginProgress.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
-    }
-
 
     @Override
     protected void onDestroy() {
@@ -171,6 +147,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void requestFocus(boolean cancel) {
         if(focusView == null || !cancel) return;
         focusView.requestFocus();
+    }
+
+    @Override
+    public void loginSuccess(){
+        showToast(getString(R.string.loginActivity_success));
+        finish();
     }
 
     public static void startActivity(Context context) {

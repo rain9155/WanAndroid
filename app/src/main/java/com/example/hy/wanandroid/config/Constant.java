@@ -5,6 +5,7 @@ package com.example.hy.wanandroid.config;
  * Created by 陈健宇 at 2018/10/26
  */
 public class Constant {
+
     //Url
     public final static String BASE_URL = "http://www.wanandroid.com/";
 
@@ -23,6 +24,7 @@ public class Constant {
 
     //ArticleActivity
     public static final String KEY_ARTICLE_ADDRESS = "articleAddress";
+    public static final String KEY_ARTICLE_FLAG = "articleFlag";
     public static final String KEY_ARTICLE_TITLE = "articleTitle";
     public static final String KEY_ARTICLE_ISCOLLECTION = "articleIsCollection";
 
@@ -30,4 +32,5 @@ public class Constant {
     public static final int NORMAL_STATE = 0;
     public static final int LOADING_STATE = 1;
     public static final int ERROR_STATE = 2;
+
 }

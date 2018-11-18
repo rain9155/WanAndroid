@@ -51,7 +51,7 @@
                 android:id="@+id/tv_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/primaryText"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sp_18"
                 android:layout_marginTop="@dimen/dp_5"
                 android:visibility="invisible"
@@ -188,7 +188,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_4"
+                android:id="@+id/cl_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/MineFragmentConstaintStyle"

@@ -12,8 +12,8 @@ import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
 import com.example.hy.wanandroid.di.module.fragment.HomeFragmentModule;
-import com.example.hy.wanandroid.network.entity.homepager.Article;
-import com.example.hy.wanandroid.network.entity.homepager.BannerData;
+import com.example.hy.wanandroid.core.network.entity.homepager.Article;
+import com.example.hy.wanandroid.core.network.entity.homepager.BannerData;
 import com.example.hy.wanandroid.presenter.homepager.HomePresenter;
 import com.example.hy.wanandroid.utils.BannerImageLoader;
 import com.example.hy.wanandroid.utils.CommonUtil;
@@ -65,6 +65,9 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
     @Named("bannerImages")
     List<String> bannerImages;
     @Inject
+    @Named("bannerAddress")
+    List<String> bannerAddress;
+    @Inject
     List<Article> mArticles;
     @Inject
     LinearLayoutManager mLinearLayoutManager;
@@ -99,7 +102,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         rvArticles.setAdapter(mArticlesAdapter);
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {
             Article article = mArticles.get(position);
-            ArticleActivity.startActivity(_mActivity, article.getLink(), article.getTitle(), article.isCollect());
+            ArticleActivity.startActivity(_mActivity, article.getLink(), article.getTitle(), article.isCollect(), false);
         });
         srlHome.setOnLoadMoreListener(refreshLayout -> {
             pageNum++;
@@ -127,6 +130,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         for (BannerData bannerData : bannerDataList) {
             bannerTitles.add(bannerData.getTitle());
             bannerImages.add(bannerData.getImagePath());
+            bannerAddress.add(bannerData.getUrl());
         }
         //设置banner
         banner.setImageLoader(new BannerImageLoader())
@@ -138,6 +142,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
                 .setDelayTime(2000)//设置轮播事件间隔
                 .setOnBannerListener(position -> {
                     //跳转到详情
+                    ArticleActivity.startActivity(_mActivity, bannerAddress.get(position), bannerTitles.get(position), false, true);
                 })//设置点击事件，下标从零开始
                 .start();
     }

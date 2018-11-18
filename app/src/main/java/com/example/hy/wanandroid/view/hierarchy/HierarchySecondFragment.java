@@ -9,9 +9,10 @@ import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchySecondContract;
 import com.example.hy.wanandroid.di.module.fragment.HierarchySecondFragmentModule;
-import com.example.hy.wanandroid.network.entity.homepager.Article;
+import com.example.hy.wanandroid.core.network.entity.homepager.Article;
 import com.example.hy.wanandroid.presenter.hierarchy.HierarchySecondPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -70,6 +71,10 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
             mPageNum++;
             mPresenter.loadMoreArticles(mPageNum, mId);
             isLoadMore = true;
+        });
+        mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Article article = mArticleList.get(position);
+            ArticleActivity.startActivity(_mActivity, article.getLink(), article.getTitle(), article.isCollect(), false);
         });
     }
 

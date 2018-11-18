@@ -4,17 +4,12 @@ import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.project.ProjectsModel;
-import com.example.hy.wanandroid.network.entity.BaseResponse;
-import com.example.hy.wanandroid.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.utils.RxBus;
+import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.core.network.entity.homepager.Articles;
+import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 import javax.inject.Inject;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 详细项目分类的Presenter

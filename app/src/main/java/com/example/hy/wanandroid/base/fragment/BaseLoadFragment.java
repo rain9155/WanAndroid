@@ -1,5 +1,7 @@
 package com.example.hy.wanandroid.base.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -22,6 +24,8 @@ public abstract class BaseLoadFragment extends BaseFragment {
     private View mErrorView;
     private View mLoadingView;
     private ViewGroup mNormalView;
+    private View mShowView;
+    private View mHideView;
     private ImageView mIvReload;
     private ObjectAnimator mReloadAnimator;
     private int mCurrentState = NORMAL_STATE;
@@ -29,6 +33,7 @@ public abstract class BaseLoadFragment extends BaseFragment {
     @Override
     protected void loadData() {
         if(getView() == null) return;
+
         mNormalView = getView().findViewById(R.id.normal_view);
         if(mNormalView == null) throw new IllegalStateException("The subclass of BaseLoadFragment must contain a View it's id is named normal_view");
         if(!(mNormalView.getParent() instanceof ViewGroup)) throw new IllegalStateException("mNormalView's ParentView should be a ViewGroup");
@@ -52,7 +57,7 @@ public abstract class BaseLoadFragment extends BaseFragment {
         if(mCurrentState == LOADING_STATE) return;
         hideCurrentViewByState();
         mCurrentState = LOADING_STATE;
-        mLoadingView.setVisibility(View.VISIBLE);
+        showCurrentViewByState();
     }
 
     @Override
@@ -61,7 +66,7 @@ public abstract class BaseLoadFragment extends BaseFragment {
         if(mCurrentState == ERROR_STATE) return;
         hideCurrentViewByState();
         mCurrentState = ERROR_STATE;
-        mErrorView.setVisibility(View.VISIBLE);
+        showCurrentViewByState();
     }
 
     @Override
@@ -69,7 +74,7 @@ public abstract class BaseLoadFragment extends BaseFragment {
         if(mCurrentState == NORMAL_STATE) return;
         hideCurrentViewByState();
         mCurrentState = NORMAL_STATE;
-        mNormalView.setVisibility(View.VISIBLE);
+        showCurrentViewByState();
     }
 
     @Override
@@ -98,23 +103,55 @@ public abstract class BaseLoadFragment extends BaseFragment {
     }
 
     /**
-     * 隐藏当前布局根据mCurrentState
+     * 显示当前布局根据mCurrentState
      */
-    private void hideCurrentViewByState() {
+    private void showCurrentViewByState() {
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
         switch (mCurrentState) {
             case NORMAL_STATE:
-                if(mReloadAnimator != null) mReloadAnimator.cancel();
-                mNormalView.setVisibility(View.INVISIBLE);
+                mShowView = mNormalView;
                 break;
             case LOADING_STATE:
-                if(mReloadAnimator != null) mReloadAnimator.cancel();
-                mLoadingView.setVisibility(View.INVISIBLE);
+                mShowView = mLoadingView;
                 break;
             case ERROR_STATE:
-                mErrorView.setVisibility(View.INVISIBLE);
+                mShowView = mErrorView;
             default:
                 break;
         }
+        mShowView.setVisibility(View.VISIBLE);
+        mShowView.animate().alpha(1).setDuration(shortAnimTime).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mShowView.setVisibility(View.VISIBLE);
+            }
+        }).start();
+    }
+
+
+    /**
+     * 隐藏当前布局根据mCurrentState
+     */
+    private void hideCurrentViewByState() {
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        switch (mCurrentState) {
+            case NORMAL_STATE:
+                mHideView = mNormalView;
+                break;
+            case LOADING_STATE:
+                mHideView = mLoadingView;
+                break;
+            case ERROR_STATE:
+                mHideView = mErrorView;
+            default:
+                break;
+        }
+        mHideView.animate().alpha(0).setDuration(shortAnimTime).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mHideView.setVisibility(View.INVISIBLE);
+            }
+        }).start();
     }
 
 }

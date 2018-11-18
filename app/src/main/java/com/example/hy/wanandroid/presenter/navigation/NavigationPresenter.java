@@ -3,9 +3,9 @@ package com.example.hy.wanandroid.presenter.navigation;
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.navigation.NavigationContract;
 import com.example.hy.wanandroid.model.navigation.NavigationModel;
-import com.example.hy.wanandroid.network.entity.BaseResponse;
-import com.example.hy.wanandroid.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.network.entity.navigation.Tag;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.core.network.entity.navigation.Tag;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 import java.util.ArrayList;

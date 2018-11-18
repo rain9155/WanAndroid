@@ -1,9 +1,9 @@
 package com.example.hy.wanandroid.model.navigation;
 
 import com.example.hy.wanandroid.contract.navigation.NavigationContract;
-import com.example.hy.wanandroid.network.api.NavigationApis;
-import com.example.hy.wanandroid.network.entity.BaseResponse;
-import com.example.hy.wanandroid.network.entity.navigation.Tag;
+import com.example.hy.wanandroid.core.network.api.NavigationApis;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.navigation.Tag;
 
 import java.util.List;
 

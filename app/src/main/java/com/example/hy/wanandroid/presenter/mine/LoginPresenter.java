@@ -5,10 +5,13 @@ import android.text.TextUtils;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.LoginContract;
+import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.model.mine.LoginModel;
-import com.example.hy.wanandroid.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.network.entity.mine.Login;
+import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.core.network.entity.mine.Login;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 import javax.inject.Inject;
@@ -27,6 +30,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
 
     @Override
     public void login(String account, String password) {
+
         // Check for a valid email address.
         boolean cancel = false;
         if (TextUtils.isEmpty(account)) {
@@ -53,6 +57,13 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                     @Override
                     public void onNext(Login login) {
                         super.onNext(login);
+                        User user = User.getInstance();
+                        user.setLoginStatus(true);
+                        user.setPassword(password);
+                        user.setUsername(account);
+                        user.save();
+                        RxBus.getInstance().post(new LoginEvent(true));
+                        mView.loginSuccess();
                     }
                 })
         );

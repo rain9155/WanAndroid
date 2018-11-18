@@ -1,16 +1,12 @@
 package com.example.hy.wanandroid.model.search;
 
-import android.database.Cursor;
-import android.text.TextUtils;
-
 import com.example.hy.wanandroid.contract.search.SearchContract;
-import com.example.hy.wanandroid.db.DbHelper;
-import com.example.hy.wanandroid.db.DbHelperImp;
-import com.example.hy.wanandroid.network.api.SearchApis;
-import com.example.hy.wanandroid.network.entity.BaseResponse;
-import com.example.hy.wanandroid.network.entity.homepager.Article;
-import com.example.hy.wanandroid.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.network.entity.search.HotKey;
+import com.example.hy.wanandroid.core.db.DbHelper;
+import com.example.hy.wanandroid.core.db.DbHelperImp;
+import com.example.hy.wanandroid.core.network.api.SearchApis;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.homepager.Articles;
+import com.example.hy.wanandroid.core.network.entity.search.HotKey;
 
 import java.util.List;
 

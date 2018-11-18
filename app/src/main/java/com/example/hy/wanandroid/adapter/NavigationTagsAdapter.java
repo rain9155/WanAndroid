@@ -7,8 +7,9 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.network.entity.homepager.Article;
-import com.example.hy.wanandroid.network.entity.navigation.Tag;
+import com.example.hy.wanandroid.core.network.entity.homepager.Article;
+import com.example.hy.wanandroid.core.network.entity.navigation.Tag;
+import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -43,7 +44,8 @@ public class NavigationTagsAdapter extends BaseQuickAdapter<Tag, BaseViewHolder>
         });
         flowLayout.setOnTagClickListener((v, position, parent) -> {
             //跳转到详情页
-            String link = item.getArticles().get(position).getLink();
+            Article article = item.getArticles().get(position);
+            ArticleActivity.startActivity(parent.getContext(), article.getLink(), article.getTitle(), article.isCollect(), false);
             return true;
         });
     }

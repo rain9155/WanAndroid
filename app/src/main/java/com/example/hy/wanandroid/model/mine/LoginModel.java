@@ -1,9 +1,9 @@
 package com.example.hy.wanandroid.model.mine;
 
 import com.example.hy.wanandroid.contract.mine.LoginContract;
-import com.example.hy.wanandroid.network.api.MineApis;
-import com.example.hy.wanandroid.network.entity.BaseResponse;
-import com.example.hy.wanandroid.network.entity.mine.Login;
+import com.example.hy.wanandroid.core.network.api.MineApis;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.mine.Login;
 
 import javax.inject.Inject;
 

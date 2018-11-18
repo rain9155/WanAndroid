@@ -1,5 +1,7 @@
 package com.example.hy.wanandroid.base.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -41,6 +43,7 @@ public abstract  class BaseLoadActivity extends BaseActivity {
 
         mErrorView.setOnClickListener(v -> reLoad());
 
+        //初始化View状态
         mNormalView.setVisibility(View.VISIBLE);
         mErrorView.setVisibility(View.INVISIBLE);
         mLoadingView.setVisibility(View.INVISIBLE);
@@ -51,7 +54,7 @@ public abstract  class BaseLoadActivity extends BaseActivity {
         if(mCurrentState == LOADING_STATE) return;
         hideCurrentViewByState();
         mCurrentState = LOADING_STATE;
-        mLoadingView.setVisibility(View.VISIBLE);
+        showCurrentViewByState();
     }
 
     @Override
@@ -60,7 +63,7 @@ public abstract  class BaseLoadActivity extends BaseActivity {
         if(mCurrentState == ERROR_STATE) return;
         hideCurrentViewByState();
         mCurrentState = ERROR_STATE;
-        mErrorView.setVisibility(View.VISIBLE);
+        showCurrentViewByState();
     }
 
     @Override
@@ -68,7 +71,7 @@ public abstract  class BaseLoadActivity extends BaseActivity {
         if(mCurrentState == NORMAL_STATE) return;
         hideCurrentViewByState();
         mCurrentState = NORMAL_STATE;
-        mNormalView.setVisibility(View.VISIBLE);
+        showCurrentViewByState();
     }
 
     @Override
@@ -96,20 +99,60 @@ public abstract  class BaseLoadActivity extends BaseActivity {
     }
 
     /**
-     * 隐藏当前布局根据mCurrentState
+     * 显示当前布局根据mCurrentState
      */
-    private void hideCurrentViewByState() {
+    private void showCurrentViewByState() {
+        View showView = null;
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
         switch (mCurrentState) {
             case NORMAL_STATE:
-                mNormalView.setVisibility(View.INVISIBLE);
+                showView = mNormalView;
                 break;
             case LOADING_STATE:
-                mLoadingView.setVisibility(View.INVISIBLE);
+                showView = mLoadingView;
                 break;
             case ERROR_STATE:
-                mErrorView.setVisibility(View.INVISIBLE);
+                showView = mErrorView;
             default:
                 break;
         }
+        if(showView == null) return;
+        View finalShowView = showView;
+        finalShowView.setVisibility(View.VISIBLE);
+        finalShowView.animate().alpha(1).setDuration(shortAnimTime).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                finalShowView.setVisibility(View.VISIBLE);
+            }
+        }).start();
+    }
+
+
+    /**
+     * 隐藏当前布局根据mCurrentState
+     */
+    private void hideCurrentViewByState() {
+        View hideView = null;
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        switch (mCurrentState) {
+            case NORMAL_STATE:
+                hideView = mNormalView;
+                break;
+            case LOADING_STATE:
+                hideView = mLoadingView;
+                break;
+            case ERROR_STATE:
+                hideView = mErrorView;
+            default:
+                break;
+        }
+        if(hideView == null) return;
+        View finalHideView = hideView;
+        hideView.animate().alpha(0).setDuration(shortAnimTime).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+               finalHideView.setVisibility(View.INVISIBLE);
+            }
+        }).start();
     }
 }

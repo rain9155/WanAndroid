@@ -3,9 +3,9 @@ package com.example.hy.wanandroid.presenter.project;
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.project.ProjectContract;
 import com.example.hy.wanandroid.model.project.ProjectModel;
-import com.example.hy.wanandroid.network.entity.BaseResponse;
-import com.example.hy.wanandroid.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.network.entity.project.Project;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.core.network.entity.project.Project;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 import java.util.List;

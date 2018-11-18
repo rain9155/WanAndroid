@@ -1,7 +1,7 @@
 package com.example.hy.wanandroid.utils;
 
-import com.example.hy.wanandroid.network.entity.BaseResponse;
-import com.example.hy.wanandroid.network.gson.ApiException;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.gson.ApiException;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;

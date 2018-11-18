@@ -9,10 +9,11 @@ import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
-import com.example.hy.wanandroid.network.entity.homepager.Article;
+import com.example.hy.wanandroid.core.network.entity.homepager.Article;
 import com.example.hy.wanandroid.presenter.project.ProjectsPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.MainActivity;
+import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -72,6 +73,10 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
         srlProjects.setOnRefreshListener(refreshLayout -> {
             mPresenter.loadMoreProjects(0, mId);
             isLoadMore = false;
+        });
+        mProjectsAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Article article = mArticles.get(position);
+            ArticleActivity.startActivity(_mActivity, article.getLink(), article.getTitle(), article.isCollect(), false);
         });
     }
 

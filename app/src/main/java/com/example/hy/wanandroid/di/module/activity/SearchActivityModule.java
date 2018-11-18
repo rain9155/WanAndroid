@@ -6,9 +6,9 @@ import com.example.hy.wanandroid.adapter.FlowTagsAdapter;
 import com.example.hy.wanandroid.adapter.HistoryAdapter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerActivity;
-import com.example.hy.wanandroid.network.entity.homepager.Article;
-import com.example.hy.wanandroid.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.network.entity.search.HotKey;
+import com.example.hy.wanandroid.core.network.entity.homepager.Article;
+import com.example.hy.wanandroid.core.network.entity.homepager.Articles;
+import com.example.hy.wanandroid.core.network.entity.search.HotKey;
 
 import java.util.ArrayList;
 import java.util.List;

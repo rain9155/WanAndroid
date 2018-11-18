@@ -4,7 +4,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerFragment;
-import com.example.hy.wanandroid.network.entity.homepager.Article;
+import com.example.hy.wanandroid.core.network.entity.homepager.Article;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,14 @@ public class HomeFragmentModule {
     @PerFragment
     @Named("bannerImages")
     List<String> provideBannerImages(){
+        return new ArrayList<>();
+    }
+
+
+    @Provides
+    @PerFragment
+    @Named("bannerAddress")
+    List<String> provideBannerAddress(){
         return new ArrayList<>();
     }
 

@@ -1,9 +1,9 @@
 package com.example.hy.wanandroid.model.project;
 
 import com.example.hy.wanandroid.contract.project.ProjectContract;
-import com.example.hy.wanandroid.network.api.ProjectApis;
-import com.example.hy.wanandroid.network.entity.BaseResponse;
-import com.example.hy.wanandroid.network.entity.project.Project;
+import com.example.hy.wanandroid.core.network.api.ProjectApis;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.project.Project;
 
 import java.util.List;
 

@@ -7,8 +7,15 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
+import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
+import com.example.hy.wanandroid.di.module.fragment.MineFragmentModule;
+import com.example.hy.wanandroid.presenter.mine.MinePresenter;
+import com.example.hy.wanandroid.view.MainActivity;
+import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import javax.inject.Inject;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
@@ -48,10 +55,15 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     ImageView ivLogout;
     @BindView(R.id.tv_logout)
     TextView tvLogout;
-    @BindView(R.id.cl_4)
-    ConstraintLayout cl4;
+    @BindView(R.id.cl_logout)
+    ConstraintLayout clLogout;
     @BindView(R.id.srl_mine)
     SmartRefreshLayout srlMine;
+
+    @Inject
+    MinePresenter mPresenter;
+    @Inject
+    LogoutDialog mLogoutDialog;
 
     @Override
     protected int getLayoutId() {
@@ -60,17 +72,51 @@ public class MineFragment extends BaseFragment implements MineContract.View {
 
     @Override
     protected void initView() {
+        if (!(getActivity() instanceof MainActivity)) return;
+        ((MainActivity) getActivity()).getComponent().getMineFragmentComponent(new MineFragmentModule()).inject(this);
+        mPresenter.attachView(this);
 
         srlMine.setEnableLoadMore(false);//禁止加载更多
-
         btnLogin.setOnClickListener(v -> LoginActivity.startActivity(_mActivity));
+        clLogout.setOnClickListener(v -> mLogoutDialog.show(getFragmentManager(), "tag2"));
+
+        if(User.getInstance().isLoginStatus()){
+           showLoginView();
+        }else {
+           showLogoutView();
+        }
     }
 
     @Override
-    protected void loadData() {}
+    protected void loadData(){
+        mPresenter.subscribleEvent();
+    }
+
+    @Override
+    public void onDestroy() {
+        if(mPresenter != null){
+            mPresenter.detachView();
+            mPresenter = null;
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void showLoginView() {
+        btnLogin.setVisibility(View.GONE);
+        tvUsername.setVisibility(View.VISIBLE);
+        clLogout.setVisibility(View.VISIBLE);
+        tvUsername.setText(User.getInstance().getUsername());
+    }
+
+    @Override
+    public void showLogoutView() {
+        clLogout.setVisibility(View.INVISIBLE);
+        btnLogin.setVisibility(View.VISIBLE);
+        tvUsername.setVisibility(View.INVISIBLE);
+    }
 
     public static MineFragment newInstance(){
         return new MineFragment();
     }
-
 }

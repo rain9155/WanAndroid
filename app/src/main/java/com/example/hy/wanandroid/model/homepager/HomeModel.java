@@ -1,10 +1,10 @@
 package com.example.hy.wanandroid.model.homepager;
 
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
-import com.example.hy.wanandroid.network.api.HomeApis;
-import com.example.hy.wanandroid.network.entity.BaseResponse;
-import com.example.hy.wanandroid.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.network.entity.homepager.BannerData;
+import com.example.hy.wanandroid.core.network.api.HomeApis;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.homepager.Articles;
+import com.example.hy.wanandroid.core.network.entity.homepager.BannerData;
 
 import java.util.List;
 

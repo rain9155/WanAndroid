@@ -2,12 +2,12 @@ package com.example.hy.wanandroid.di.component;
 
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.module.AppModule;
-import com.example.hy.wanandroid.network.api.HierarchyApis;
-import com.example.hy.wanandroid.network.api.HomeApis;
-import com.example.hy.wanandroid.network.api.MineApis;
-import com.example.hy.wanandroid.network.api.NavigationApis;
-import com.example.hy.wanandroid.network.api.ProjectApis;
-import com.example.hy.wanandroid.network.api.SearchApis;
+import com.example.hy.wanandroid.core.network.api.HierarchyApis;
+import com.example.hy.wanandroid.core.network.api.HomeApis;
+import com.example.hy.wanandroid.core.network.api.MineApis;
+import com.example.hy.wanandroid.core.network.api.NavigationApis;
+import com.example.hy.wanandroid.core.network.api.ProjectApis;
+import com.example.hy.wanandroid.core.network.api.SearchApis;
 
 import javax.inject.Singleton;
 import dagger.Component;

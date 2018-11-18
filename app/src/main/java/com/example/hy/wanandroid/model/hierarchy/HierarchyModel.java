@@ -1,9 +1,9 @@
 package com.example.hy.wanandroid.model.hierarchy;
 
 import com.example.hy.wanandroid.contract.hierarchy.HierarchyContract;
-import com.example.hy.wanandroid.network.api.HierarchyApis;
-import com.example.hy.wanandroid.network.entity.BaseResponse;
-import com.example.hy.wanandroid.network.entity.hierarchy.FirstHierarchy;
+import com.example.hy.wanandroid.core.network.api.HierarchyApis;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.hierarchy.FirstHierarchy;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">WanAndroid</string>
 
@@ -13,25 +13,14 @@
     <string name="homeFragment_mine">我的</string>
     <string name="articleActivity_support">网页由WanAndroid网站提供\n
                                             \t\t www.wanandroid.com</string>
-
-    //article
     <string name="articleActivity_share">分享</string>
-    <string name="articleActivity_collection">收藏</string>
+    <string name="articleActivity_collection" tools:ignore="ExtraTranslation">收藏</string>
     <string name="articleActivity_copy">复制链接</string>
     <string name="articleActivity_browser">用系统浏览器打开</string>
     <string name="articleActivity_share_text">来自WanAndroid的分享:</string>
     <string name="articleActivity_browser_error">该链接无法使用浏览器打开</string>
     <string name="articleActivity_copy_success">复制成功</string>
-
-    //navigation
-    <string name="navigationActivity_tlTitle">导航</string>
-
-    //search
-    <string name="searchActivity_hint">输入关键字搜索更多</string>
-    <string name="searchActivity_hint2">暂无搜索历史</string>
-    <string name="searchActivity_hint3">暂无热词</string>
-    <string name="searchActivity_no_data">暂无数据</string>
-    <string name="searchActivity_search">搜索</string>
+    <string name="articleActivity_cancel_collection">取消收藏</string>
 
     //mine
     <string name="mineFragment_tvLogin">登陆</string>
@@ -39,22 +28,10 @@
     <string name="mineFragment_tvSetting">设置</string>
     <string name="mineFragment_tvAboutUs">关于我们</string>
     <string name="mineFragment_tvLogout">退出登陆</string>
-
-    //error
-    <string name="error_nothing">获取不到数据</string>
-    <string name="error_timeout">网络连接超时</string>
-    <string name="error_unavailable">网络不可用</string>
-    <string name="error_unknown">未知错误</string>
-    <string name="loading_error">出错啦！点击空白处刷新</string>
-
-
-    //behaviour
-    <string name="behaviour_bottom_nav">com.example.hy.wanandroid.widget.BottomNavBehaviour</string>
-    <string name="behaviour_fbtn">com.example.hy.wanandroid.widget.FbtnBehaviour</string>
-    <string name="title_activity_login">Sign in</string>
-
-
-    //login
+    <string name="mineFragment_confirm_logout">确认退出登陆？</string>
+    <string name="mineFragment_logout_toast">提示</string>
+    <string name="mineFragment_logout_cancel">取消</string>
+    <string name="mineFragment_logout_confirm">确认</string>
     <string name="loginActivity_account">用户名</string>
     <string name="loginActivity_password">密码</string>
     <string name="loginActivity_sign_in">登陆</string>
@@ -62,8 +39,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="loginActivity_error_account_empty">用户名不能为空</string>
     <string name="loginActivity_error_password_empty">密码不能为空</string>
-
-    //register
+    <string name="loginActivity_success">登陆成功</string>
     <string name="registerActivity_account">用户名</string>
     <string name="registerActivity_password">输入密码</string>
     <string name="registerActivity_password_again">再次输入密码</string>
@@ -75,5 +51,27 @@
     <string name="registerActivity_error_password_invalid">密码长度必须大于6</string>
     <string name="registerActivity_error_passwordAgain_invalid">两次输入的密码不一致</string>
 
+    //navigation
+    <string name="navigationActivity_tlTitle">导航</string>
+
+    //search
+    <string name="searchActivity_hint">输入关键字搜索更多</string>
+    <string name="searchActivity_hint2">暂无搜索历史</string>
+    <string name="searchActivity_hint3">暂无热词</string>
+    <string name="searchActivity_no_data">暂无数据</string>
+    <string name="searchActivity_search">搜索</string>
+
+
+    //error
+    <string name="error_nothing">获取不到数据</string>
+    <string name="error_timeout">网络连接超时</string>
+    <string name="error_unavailable">网络不可用</string>
+    <string name="error_unknown">未知错误</string>
+    <string name="loading_error">出错啦！点击空白处刷新</string>
+
+    //behaviour
+    <string name="behaviour_bottom_nav">com.example.hy.wanandroid.widget.behaviour.BottomNavBehaviour</string>
+    <string name="behaviour_fbtn">com.example.hy.wanandroid.widget.behaviour.FbtnBehaviour</string>
+    <string name="title_activity_login">Sign in</string>
 
 </resources>

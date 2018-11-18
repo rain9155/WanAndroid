@@ -15,7 +15,7 @@ import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
 import com.example.hy.wanandroid.contract.navigation.NavigationContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerNavigationActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.NavigationActivityModule;
-import com.example.hy.wanandroid.network.entity.navigation.Tag;
+import com.example.hy.wanandroid.core.network.entity.navigation.Tag;
 import com.example.hy.wanandroid.presenter.navigation.NavigationPresenter;
 import com.example.hy.wanandroid.view.search.SearchActivity;
 
@@ -76,7 +76,7 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
         tlCommon.setNavigationOnClickListener(v -> finish());
         ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(this));
 
-        //子标签栏
+        //垂直子标签栏
         mNavigationTagsAdapter.openLoadAnimation();
         rvNavigation.setLayoutManager(mLinearLayoutManager);
         rvNavigation.setAdapter(mNavigationTagsAdapter);
@@ -150,10 +150,4 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
         super.onDestroy();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

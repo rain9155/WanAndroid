@@ -2,18 +2,23 @@ package com.example.hy.wanandroid.di.module;
 
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
+import com.example.hy.wanandroid.core.network.interceptor.ReadCookiesInterceptor;
+import com.example.hy.wanandroid.core.network.interceptor.WriteCookiesInterceptor;
 import com.example.hy.wanandroid.di.scope.PerFragment;
-import com.example.hy.wanandroid.network.api.HierarchyApis;
-import com.example.hy.wanandroid.network.api.HomeApis;
-import com.example.hy.wanandroid.network.api.MineApis;
-import com.example.hy.wanandroid.network.api.NavigationApis;
-import com.example.hy.wanandroid.network.api.ProjectApis;
-import com.example.hy.wanandroid.network.api.SearchApis;
-import com.example.hy.wanandroid.network.gson.CustomGsonConverterFactory;
+import com.example.hy.wanandroid.core.network.api.HierarchyApis;
+import com.example.hy.wanandroid.core.network.api.HomeApis;
+import com.example.hy.wanandroid.core.network.api.MineApis;
+import com.example.hy.wanandroid.core.network.api.NavigationApis;
+import com.example.hy.wanandroid.core.network.api.ProjectApis;
+import com.example.hy.wanandroid.core.network.api.SearchApis;
+import com.example.hy.wanandroid.core.network.gson.CustomGsonConverterFactory;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -32,15 +37,38 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public App provideApp(){
+    App provideApp(){
         return mApp;
     }
 
     @Provides
     @Singleton
-    public Retrofit provideRetrofit(){
+    OkHttpClient.Builder provideOkHttpClientBuilder(){
+        return new OkHttpClient.Builder();
+    }
+
+    @Provides
+    @Singleton
+    OkHttpClient provideOkHttpClient(OkHttpClient.Builder builder){
+        //错误重连
+        builder.retryOnConnectionFailure(true);
+        //设置超时
+        builder.connectTimeout(10, TimeUnit.SECONDS);
+        builder.readTimeout(20, TimeUnit.SECONDS);
+        builder.writeTimeout(20, TimeUnit.SECONDS);
+        //cookie认证
+        builder.addInterceptor(new ReadCookiesInterceptor(App.getContext()));
+        builder.addInterceptor(new WriteCookiesInterceptor(App.getContext()));
+        return builder.build();
+    }
+
+
+    @Provides
+    @Singleton
+     Retrofit provideRetrofit(OkHttpClient okHttpClient){
         return new Retrofit.Builder()
                 .baseUrl(Constant.BASE_URL)
+                .client(okHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(CustomGsonConverterFactory.create())
                 .build();
@@ -48,37 +76,37 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public HierarchyApis provideHierarchyApis(Retrofit retrofit){
+     HierarchyApis provideHierarchyApis(Retrofit retrofit){
         return retrofit.create(HierarchyApis.class);
     }
 
     @Provides
     @Singleton
-    public HomeApis provideHomeApis(Retrofit retrofit){
+     HomeApis provideHomeApis(Retrofit retrofit){
         return retrofit.create(HomeApis.class);
     }
 
     @Provides
     @Singleton
-    public ProjectApis provideProjectApis(Retrofit retrofit){
+    ProjectApis provideProjectApis(Retrofit retrofit){
         return retrofit.create(ProjectApis.class);
     }
 
     @Provides
     @Singleton
-    public NavigationApis provideNavigationApis(Retrofit retrofit){
+     NavigationApis provideNavigationApis(Retrofit retrofit){
         return retrofit.create(NavigationApis.class);
     }
 
     @Provides
     @Singleton
-    public SearchApis provideSearchApis(Retrofit retrofit){
+     SearchApis provideSearchApis(Retrofit retrofit){
         return retrofit.create(SearchApis.class);
     }
 
     @Provides
     @Singleton
-    public MineApis provideMineApis(Retrofit retrofit){
+     MineApis provideMineApis(Retrofit retrofit){
         return retrofit.create(MineApis.class);
     }
 

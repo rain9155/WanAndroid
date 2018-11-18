@@ -15,7 +15,7 @@ import com.example.hy.wanandroid.di.component.activity.DaggerHierarchySecondActi
 import com.example.hy.wanandroid.di.component.activity.HierarchySecondActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.HierarchySecondActivityModule;
 import com.example.hy.wanandroid.event.ToppingEvent;
-import com.example.hy.wanandroid.utils.RxBus;
+import com.example.hy.wanandroid.config.RxBus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 

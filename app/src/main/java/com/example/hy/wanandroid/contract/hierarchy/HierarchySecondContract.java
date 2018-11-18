@@ -2,9 +2,9 @@ package com.example.hy.wanandroid.contract.hierarchy;
 
 import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.IView;
-import com.example.hy.wanandroid.network.entity.BaseResponse;
-import com.example.hy.wanandroid.network.entity.hierarchy.SecondHierarchy;
-import com.example.hy.wanandroid.network.entity.homepager.Article;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.hierarchy.SecondHierarchy;
+import com.example.hy.wanandroid.core.network.entity.homepager.Article;
 
 import java.util.List;
 
