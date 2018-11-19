@@ -18,13 +18,20 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.contract.mine.RegisterContract;
+import com.example.hy.wanandroid.di.component.activity.DaggerRegisterActivityComponent;
+import com.example.hy.wanandroid.presenter.mine.RegisterPresenter;
+import com.example.hy.wanandroid.widget.dialog.LoadingDialog;
+import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
 import com.google.android.material.textfield.TextInputLayout;
+
+import javax.inject.Inject;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends BaseActivity implements RegisterContract.View {
 
     @BindView(R.id.iv_face)
     CircleImageView ivFace;
@@ -51,6 +58,13 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.btn_register)
     Button btnRegister;
 
+    @Inject
+    RegisterPresenter mPresenter;
+    @Inject
+    LoadingDialog mLoadingDialog;
+
+    private View focusView = null;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_register;
@@ -59,9 +73,21 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
 
+        DaggerRegisterActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+        mPresenter.attachView(this);
+
         tvLogin.setOnClickListener(v -> finish());
         ivBack.setOnClickListener(v -> finish());
-        btnRegister.setOnClickListener(v -> attemptRegister());
+        btnRegister.setOnClickListener(v -> {
+            tlAccount.setError(null);
+            tlPasswordAgain.setError(null);
+            tlPasswordAgain.setError(null);
+            mPresenter.register(
+                    atAccount.getText().toString().trim(),
+                    etPassword.getText().toString().trim(),
+                    etPasswordAgain.getText().toString().trim()
+            );
+        });
 
     }
 
@@ -70,110 +96,62 @@ public class RegisterActivity extends BaseActivity {
 
     }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
-    private void attemptRegister() {
-        // Reset errors.
-        tlAccount.setError(null);
-        tlPassword.setError(null);
-        tlPasswordAgain.setError(null);
-
-        // Store values at the time of the login attempt.
-        String account = atAccount.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
-        String passwordAgain = etPasswordAgain.getText().toString().trim();
-
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(account)) {
-            tlAccount.setError(getString(R.string.registerActivity_error_account_empty));
-            focusView = tlAccount;
-            cancel = true;
-        }else if(!isAccountValid(account)){
-            tlAccount.setError(getString(R.string.registerActivity_error_account_invalid));
-            focusView = tlAccount;
-            cancel = true;
+    @Override
+    protected void onDestroy() {
+        if(mPresenter != null){
+            mPresenter.detachView();
+            mPresenter = null;
         }
-
-        // Check for a valid password, if the user entered one.
-        if (TextUtils.isEmpty(password)) {
-            tlPassword.setError(getString(R.string.loginActivity_error_password_empty));
-            focusView = tlPassword;
-            cancel = true;
-        }else if(!isPasswordValid(password)){
-            tlPassword.setError(getString(R.string.registerActivity_error_password_invalid));
-            focusView = tlPassword;
-            cancel = true;
-        }else if(TextUtils.isEmpty(passwordAgain)){
-            tlPasswordAgain.setError(getString(R.string.loginActivity_error_password_empty));
-            focusView = tlPasswordAgain;
-            cancel = true;
-        }else if(!isPasswordValid(passwordAgain)){
-            tlPasswordAgain.setError(getString(R.string.registerActivity_error_password_invalid));
-            focusView = tlPasswordAgain;
-            cancel = true;
-        }else if(password.compareTo(passwordAgain) != 0){
-            tlPassword.setError(getString(R.string.registerActivity_error_passwordAgain_invalid));
-            tlPasswordAgain.setError(getString(R.string.registerActivity_error_passwordAgain_invalid));
-            focusView = tlPassword;
-            cancel = true;
-        }
-
-        // There was an error; don't attempt login and focus the first
-        // form field with an error.
-        if (cancel) {
-            focusView.requestFocus();
-            return;
-        }
-
-        // Show a progress spinner, and kick off a background task to
-        // perform the user login attempt.
-        showProgress(true);
-        //login
+        super.onDestroy();
     }
 
-    private boolean isAccountValid(String account) {
-        return account.length() > 6;
+    @Override
+    public void setAccountErrorView(String error) {
+        focusView = tlAccount;
+        tlAccount.setError(error);
     }
 
-    private boolean isPasswordValid(String password) {
-        return password.length() > 6;
+    @Override
+    public void setPasswordErrorView(String error) {
+        focusView = tlPassword;
+        tlPassword.setError(error);
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
+    @Override
+    public void setRePasswordErrorView(String error) {
+        focusView = tlPasswordAgain;
+        tlPasswordAgain.setError(error);
+    }
 
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-        clRegister.setVisibility(show ? View.GONE : View.VISIBLE);
-        clRegister.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                clRegister.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
+    @Override
+    public void requestFocus(boolean cancel) {
+        if(!cancel || focusView == null) return;
+        focusView.requestFocus();
+    }
 
-        loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
-        loginProgress.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
+    @Override
+    public void registerSuccess() {
+        showToast(getString(R.string.registerActivity_register_success));
+        finish();
+    }
+
+    @Override
+    public void showErrorView() {
+        mLoadingDialog.dismiss();
+    }
+
+    @Override
+    public void showNormalView() {
+        mLoadingDialog.dismiss();
+    }
+
+    @Override
+    public void showLoading() {
+        mLoadingDialog.show(getSupportFragmentManager(), "tag3");
     }
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, RegisterActivity.class);
         context.startActivity(intent);
     }
-
 }

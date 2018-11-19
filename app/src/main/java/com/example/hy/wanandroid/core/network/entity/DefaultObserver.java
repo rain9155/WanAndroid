@@ -1,21 +1,15 @@
 package com.example.hy.wanandroid.core.network.entity;
 
 import android.net.ParseException;
-import android.view.View;
 
-import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.IView;
-import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.core.network.gson.ApiException;
 import com.example.hy.wanandroid.utils.LogUtil;
-import com.example.hy.wanandroid.utils.ToastUtil;
 import com.google.gson.JsonParseException;
 
 import org.json.JSONException;
 
-import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.List;
 
 import io.reactivex.observers.ResourceObserver;
 import retrofit2.HttpException;
@@ -64,9 +58,9 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
             ApiException apiException = (ApiException)e;
             if(apiException.getErrorCode() == -1001){//token失效
                 //TODO
-            }else {//没有获取到数据
-                LogUtil.e(TAG_ERROR, "nothing：" + apiException.getErrorMessage());
-                emptyError(apiException.getErrorMessage());
+            }else {//其他
+                LogUtil.e(TAG_ERROR, "other：" + apiException.getErrorMessage());
+                otherError(apiException.getErrorMessage());
             }
         }else{
             if(e instanceof UnknownHostException){
@@ -134,7 +128,7 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
     /**
      * 空数据异常
      */
-    protected void emptyError(String error) {
+    protected void otherError(String error) {
         mView.showToast(error);
         mView.unableRefresh();
         if (isShowErrorView) mView.showErrorView();

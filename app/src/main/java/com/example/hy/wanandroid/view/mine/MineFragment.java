@@ -11,6 +11,7 @@ import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.di.module.fragment.MineFragmentModule;
 import com.example.hy.wanandroid.presenter.mine.MinePresenter;
+import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -49,8 +50,8 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     ImageView ivAboutUs;
     @BindView(R.id.tv_about_us)
     TextView tvAboutUs;
-    @BindView(R.id.cl_3)
-    ConstraintLayout cl3;
+    @BindView(R.id.cl_about_us)
+    ConstraintLayout clAboutus;
     @BindView(R.id.iv_logout)
     ImageView ivLogout;
     @BindView(R.id.tv_logout)
@@ -76,15 +77,19 @@ public class MineFragment extends BaseFragment implements MineContract.View {
         ((MainActivity) getActivity()).getComponent().getMineFragmentComponent(new MineFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
-        srlMine.setEnableLoadMore(false);//禁止加载更多
-        btnLogin.setOnClickListener(v -> LoginActivity.startActivity(_mActivity));
-        clLogout.setOnClickListener(v -> mLogoutDialog.show(getFragmentManager(), "tag2"));
-
         if(User.getInstance().isLoginStatus()){
-           showLoginView();
+            showLoginView();
         }else {
-           showLogoutView();
+            showLogoutView();
         }
+
+        clAboutus.setOnClickListener(v -> AboutUsActivity.startActivity(_mActivity));
+
+        btnLogin.setOnClickListener(v -> LoginActivity.startActivity(_mActivity));
+        clLogout.setOnClickListener(v -> {
+            assert getFragmentManager() != null;
+            mLogoutDialog.show(getFragmentManager(), "tag2");
+        });
     }
 
     @Override
@@ -103,17 +108,17 @@ public class MineFragment extends BaseFragment implements MineContract.View {
 
     @Override
     public void showLoginView() {
-        btnLogin.setVisibility(View.GONE);
-        tvUsername.setVisibility(View.VISIBLE);
-        clLogout.setVisibility(View.VISIBLE);
+        AnimUtil.hideByAlpha(btnLogin);
+        AnimUtil.showByAlpha(tvUsername);
+        AnimUtil.showByAlpha(clLogout);
         tvUsername.setText(User.getInstance().getUsername());
     }
 
     @Override
     public void showLogoutView() {
-        clLogout.setVisibility(View.INVISIBLE);
-        btnLogin.setVisibility(View.VISIBLE);
-        tvUsername.setVisibility(View.INVISIBLE);
+        AnimUtil.hideByAlpha(clLogout);
+        AnimUtil.hideByAlpha(tvUsername);
+        AnimUtil.showByAlpha(btnLogin);
     }
 
     public static MineFragment newInstance(){

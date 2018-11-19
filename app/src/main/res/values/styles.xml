@@ -13,7 +13,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <!--toolbar弹出菜单的风格-->
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="overlapAnchor">false</item>
     </style>
 
@@ -43,7 +43,7 @@
         <item name="contentInsetStart">@dimen/dp_0</item>
         <item name="contentInsetStartWithNavigation">@dimen/dp_0</item>
     </style>
-    
+
     <style name="MineFragmentTextStyle">
         <item name="android:layout_marginLeft">@dimen/dp_15</item>
         <item name="android:textSize">@dimen/sp_16</item>

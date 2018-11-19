@@ -11,6 +11,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.utils.AnimUtil;
 
 import static com.example.hy.wanandroid.config.Constant.ERROR_STATE;
 import static com.example.hy.wanandroid.config.Constant.LOADING_STATE;
@@ -106,7 +107,6 @@ public abstract class BaseLoadFragment extends BaseFragment {
      * 显示当前布局根据mCurrentState
      */
     private void showCurrentViewByState() {
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
         switch (mCurrentState) {
             case NORMAL_STATE:
                 mShowView = mNormalView;
@@ -119,13 +119,7 @@ public abstract class BaseLoadFragment extends BaseFragment {
             default:
                 break;
         }
-        mShowView.setVisibility(View.VISIBLE);
-        mShowView.animate().alpha(1).setDuration(shortAnimTime).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mShowView.setVisibility(View.VISIBLE);
-            }
-        }).start();
+        AnimUtil.showByAlpha(mShowView);
     }
 
 
@@ -133,7 +127,6 @@ public abstract class BaseLoadFragment extends BaseFragment {
      * 隐藏当前布局根据mCurrentState
      */
     private void hideCurrentViewByState() {
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
         switch (mCurrentState) {
             case NORMAL_STATE:
                 mHideView = mNormalView;
@@ -146,12 +139,7 @@ public abstract class BaseLoadFragment extends BaseFragment {
             default:
                 break;
         }
-        mHideView.animate().alpha(0).setDuration(shortAnimTime).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mHideView.setVisibility(View.INVISIBLE);
-            }
-        }).start();
+        AnimUtil.hideByAlpha(mHideView);
     }
 
 }

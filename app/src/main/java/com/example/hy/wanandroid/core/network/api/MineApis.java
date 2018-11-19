@@ -32,4 +32,15 @@ public interface MineApis {
      */
     @GET("user/logout/json")
     Observable<BaseResponse<Login>> getLogoutRequest();
+
+    /**
+     * 注册
+     * http://www.wanandroid.com/user/register
+     */
+    @POST("user/register")
+    @FormUrlEncoded
+    Observable<BaseResponse<Login>> getRegisterRequest(@Field("username") String username,//用户名
+                                                       @Field("password") String password,//输入密码
+                                                       @Field("repassword") String rePassword//再次输入密码
+    );
 }

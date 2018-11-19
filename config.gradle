@@ -67,6 +67,7 @@ ext {
             //ui
             "baseAdapter"           : "com.github.CymChad:BaseRecyclerViewAdapterHelper:${version.BaseAdapterVersion}",
             "smartrefresh"          : "com.scwang.smartrefresh:SmartRefreshLayout:${version.SmartrefreshVersion}",
+            "smartrefreshHeader" : "com.scwang.smartrefresh:SmartRefreshHeader:${version.SmartrefreshVersion}",
             "agentWeb" : "com.just.agentweb:agentweb:${version.AgentWebVersion}",
             "gilde" : "com.github.bumptech.glide:glide:${version.Gilde}",
             "gildeCpmplier" : "com.github.bumptech.glide:compiler:${version.Gilde}",

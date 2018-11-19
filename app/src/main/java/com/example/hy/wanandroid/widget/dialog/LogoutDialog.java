@@ -4,10 +4,15 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.config.RxBus;
@@ -27,11 +32,18 @@ public class LogoutDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         @SuppressLint("InflateParams")
+        TextView content = new TextView(getContext());
+        content.setText(R.string.mineFragment_confirm_logout);
+        content.setTextColor(getResources().getColor(R.color.primaryText));
+        content.setTextSize(16);
+        content.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        content.setPadding(80, 60, 10, 10);
+        content.setGravity(Gravity.LEFT);
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setCancelable(false)
                 .setIcon(R.drawable.ic_toast)
                 .setTitle(R.string.mineFragment_logout_toast)
-                .setMessage(R.string.mineFragment_confirm_logout)
+                .setView(content)//设置内容部分
                 .setNegativeButton(R.string.mineFragment_logout_cancel, (dialog1, which) -> this.dismiss())
                 .setPositiveButton(R.string.mineFragment_logout_confirm, (dialog1, which) -> {
                     this.dismiss();

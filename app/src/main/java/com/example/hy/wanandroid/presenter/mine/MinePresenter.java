@@ -4,6 +4,7 @@ import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
 import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.core.network.entity.mine.Login;
 import com.example.hy.wanandroid.event.LoginEvent;
@@ -48,11 +49,11 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
         addSubcriber(
                 mModel.getLogoutRequest()
                 .compose(RxUtils.switchSchedulers())
-                .compose(RxUtils.handleRequest2())
-                .subscribeWith(new DefaultObserver<Login>(mView, false, false){
+                .subscribeWith(new DefaultObserver<BaseResponse<Login>>(mView, false, false){
                     @Override
-                    public void onNext(Login login) {
-                        super.onNext(login);
+                    public void onNext(BaseResponse<Login> baseResponse) {
+                        super.onNext(baseResponse);
+                        if (baseResponse.getData() != null) return;
                         User.getInstance().reset();
                         mView.showLogoutView();
                     }

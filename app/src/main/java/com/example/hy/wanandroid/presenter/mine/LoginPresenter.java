@@ -21,11 +21,11 @@ import javax.inject.Inject;
  */
 public class LoginPresenter extends BasePresenter<LoginContract.View> implements LoginContract.Presenter {
 
-    private LoginModel mLoginModel;
+    private LoginContract.Model mModel;
 
     @Inject
     public LoginPresenter(LoginModel loginModel) {
-        this.mLoginModel = loginModel;
+        this.mModel = loginModel;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
         }
 
         addSubcriber(
-                mLoginModel.getLoginRequest(account, password)
+                mModel.getLoginRequest(account, password)
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
                 .subscribeWith(new DefaultObserver<Login>(mView) {

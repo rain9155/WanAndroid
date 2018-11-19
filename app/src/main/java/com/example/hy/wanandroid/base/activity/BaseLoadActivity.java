@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.utils.AnimUtil;
+
 import static com.example.hy.wanandroid.config.Constant.ERROR_STATE;
 import static com.example.hy.wanandroid.config.Constant.LOADING_STATE;
 import static com.example.hy.wanandroid.config.Constant.NORMAL_STATE;
@@ -103,7 +105,6 @@ public abstract  class BaseLoadActivity extends BaseActivity {
      */
     private void showCurrentViewByState() {
         View showView = null;
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
         switch (mCurrentState) {
             case NORMAL_STATE:
                 showView = mNormalView;
@@ -117,14 +118,7 @@ public abstract  class BaseLoadActivity extends BaseActivity {
                 break;
         }
         if(showView == null) return;
-        View finalShowView = showView;
-        finalShowView.setVisibility(View.VISIBLE);
-        finalShowView.animate().alpha(1).setDuration(shortAnimTime).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                finalShowView.setVisibility(View.VISIBLE);
-            }
-        }).start();
+        AnimUtil.showByAlpha(showView);
     }
 
 
@@ -133,7 +127,6 @@ public abstract  class BaseLoadActivity extends BaseActivity {
      */
     private void hideCurrentViewByState() {
         View hideView = null;
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
         switch (mCurrentState) {
             case NORMAL_STATE:
                 hideView = mNormalView;
@@ -147,12 +140,6 @@ public abstract  class BaseLoadActivity extends BaseActivity {
                 break;
         }
         if(hideView == null) return;
-        View finalHideView = hideView;
-        hideView.animate().alpha(0).setDuration(shortAnimTime).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-               finalHideView.setVisibility(View.INVISIBLE);
-            }
-        }).start();
+        AnimUtil.hideByAlpha(hideView);
     }
 }

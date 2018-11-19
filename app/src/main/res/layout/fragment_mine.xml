@@ -4,6 +4,7 @@
     android:id="@+id/srl_mine"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:srlEnableLoadMore="false"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -148,7 +149,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_3"
+                android:id="@+id/cl_about_us"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/MineFragmentConstaintStyle"
@@ -194,7 +195,7 @@
                 style="@style/MineFragmentConstaintStyle"
                 android:background="@color/foreground"
                 android:layout_marginTop="@dimen/dp_2"
-                app:layout_constraintTop_toBottomOf="@id/cl_3">
+                app:layout_constraintTop_toBottomOf="@id/cl_about_us">
 
                 <ImageView
                     android:id="@+id/iv_logout"

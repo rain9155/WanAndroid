@@ -38,7 +38,11 @@
         <activity
             android:name=".view.mine.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".view.mine.RegisterActivity"></activity>
+        <activity android:name=".view.mine.RegisterActivity" />
+        <activity
+            android:name=".view.mine.AboutUsActivity"
+            android:label="@string/title_activity_about_us"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
