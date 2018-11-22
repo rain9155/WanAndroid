@@ -1,36 +1,19 @@
 package com.example.hy.wanandroid.view.mine;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.app.LoaderManager.LoaderCallbacks;
+import android.app.Activity;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
-import com.example.hy.wanandroid.config.User;
+import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.LoginContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerLoginActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.LoginActivityModule;
@@ -39,14 +22,10 @@ import com.example.hy.wanandroid.utils.KeyBoardUtil;
 import com.example.hy.wanandroid.widget.dialog.LoadingDialog;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -79,6 +58,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     LoadingDialog mLoadingDialog;
 
     private View focusView = null;
+    private static boolean isNeedResult = false;
 
     @Override
     protected int getLayoutId() {
@@ -154,13 +134,20 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void loginSuccess(){
         showToast(getString(R.string.loginActivity_success));
+        if (isNeedResult) setResult(RESULT_OK);
         finish();
     }
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
+        isNeedResult = false;
     }
 
+    public static void startActivityForResult(Activity activity, int request) {
+        Intent intent = new Intent(activity, LoginActivity.class);
+        activity.startActivityForResult(intent, request);
+        isNeedResult = true;
+    }
 }
 

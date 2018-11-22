@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.view.homepager;
 
 import android.annotation.SuppressLint;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,8 +50,6 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
     SmartRefreshLayout srlHome;
     @BindView(R.id.fake_status_bar)
     View fakeStatusBar;
-    @BindView(R.id.banner)
-    Banner banner;
     @BindView(R.id.tv_common_title)
     TextView tvCommonTitle;
     @BindView(R.id.iv_common_search)
@@ -76,6 +75,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
 
     private int pageNum = 0;//首页文章页数
     private boolean isLoadMore = false;
+    private Banner banner;
 
     @Override
     protected int getLayoutId() {
@@ -97,8 +97,11 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
 
         //首页文章
+        View bannerLayout = LayoutInflater.from(_mActivity).inflate(R.layout.banner_layout, null);
+        banner = bannerLayout.findViewById(R.id.banner);
         rvArticles.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
+        mArticlesAdapter.addHeaderView(bannerLayout);
         rvArticles.setAdapter(mArticlesAdapter);
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {
             Article article = mArticles.get(position);
@@ -158,7 +161,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         if (isLoadMore) {
             srlHome.finishLoadMore();
         } else {
-            if (!CommonUtil.isEmptyList(articleList)) mArticles.clear();
+            if (!CommonUtil.isEmptyList(mArticles)) mArticles.clear();
             srlHome.finishRefresh();
         }
         mArticles.addAll(articleList);
@@ -173,10 +176,6 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
     @Override
     public void unableRefresh() {
         if(isLoadMore) srlHome.finishLoadMore(); else srlHome.finishRefresh();
-    }
-
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
     }
 
     @Override
@@ -209,6 +208,10 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
             mPresenter = null;
         }
         super.onDestroy();
+    }
+
+    public static HomeFragment newInstance() {
+        return new HomeFragment();
     }
 
 }

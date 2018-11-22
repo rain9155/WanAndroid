@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".view.mine.AboutUsActivity">
 
     <com.scwang.smartrefresh.header.flyrefresh.MountainSceneView
         android:id="@+id/mountain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:msvViewportHeight="@dimen/dp_280"
+        app:msvViewportHeight="@dimen/dp_180"
         app:msvPrimaryColor="@color/colorPrimary"/>
 
     <com.google.android.material.appbar.AppBarLayout
@@ -20,18 +19,15 @@
         android:layout_height="@dimen/app_bar_height"
         android:background="@color/transparency"
         android:clipChildren="false"
-        android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
             app:contentScrim="@color/transparency"
-            app:statusBarScrim="@color/transparency"
-            app:title="@string/aboutActivity_about_us"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:statusBarScrim="@color/transparency"
             app:toolbarId="@+id/toolbar">
 
             <androidx.appcompat.widget.Toolbar
@@ -40,13 +36,15 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/ic_arrow_left"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="@string/aboutActivity_about_us" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlHeaderMaxDragRate="1.5"
@@ -58,13 +56,29 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.scwang.smartrefresh.header.FlyRefreshHeader
-            android:id="@+id/flyRefresh"
+            android:id="@+id/flyRefreshHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <include
-            android:id="@+id/about_us"
-            layout="@layout/content_about_us" />
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/dp_25"
+            android:background="@color/white"
+            tools:context=".view.mine.AboutUsActivity"
+            tools:showIn="@layout/activity_about_us">
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:textColor="@color/primaryText"
+                tools:text="@string/aboutActivity_about_us_text" />
+
+        </androidx.core.widget.NestedScrollView>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
@@ -74,9 +88,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_16"
         app:fabSize="normal"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:elevation="0dp"  />
+        app:layout_anchor="@id/scroll_view"
+        app:layout_anchorGravity="top|right"
+        app:elevation="@dimen/dp_0" />
 
     <com.scwang.smartrefresh.header.flyrefresh.FlyView
         android:id="@+id/flyView"

@@ -28,9 +28,11 @@ public class Constant {
     public static final String KEY_ARTICLE_TITLE = "articleTitle";
     public static final String KEY_ARTICLE_ISCOLLECTION = "articleIsCollection";
 
+    //CollectionActivity
+    public static final int REQUEST_COLLECTION_COLLECTION = 0;
+
     //BaseLoadState
     public static final int NORMAL_STATE = 0;
     public static final int LOADING_STATE = 1;
     public static final int ERROR_STATE = 2;
-
 }

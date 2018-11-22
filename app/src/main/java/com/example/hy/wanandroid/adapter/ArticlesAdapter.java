@@ -26,7 +26,7 @@ public class ArticlesAdapter extends BaseQuickAdapter<Article, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder holder, Article article) {
-        if(article != null)
+        if(article == null) return;
         holder.setText(R.id.tv_title, Html.fromHtml(article.getTitle()))
                 .setText(R.id.tv_author, "作者:" + article.getAuthor())
                 .setText(R.id.tv_classify, "分类:" + article.getChapterName())

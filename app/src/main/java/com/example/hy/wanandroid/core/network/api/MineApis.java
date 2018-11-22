@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.core.network.api;
 
 import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.mine.CollectionRequest;
 import com.example.hy.wanandroid.core.network.entity.mine.Login;
 
 import io.reactivex.Observable;
@@ -8,6 +9,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * 我的模块所api
@@ -43,4 +45,11 @@ public interface MineApis {
                                                        @Field("password") String password,//输入密码
                                                        @Field("repassword") String rePassword//再次输入密码
     );
+
+    /**
+     * 获得收藏结果
+     * http://www.wanandroid.com/lg/collect/list/0/json
+     */
+    @GET("lg/collect/list/{pageNum}/json")
+    Observable<BaseResponse<CollectionRequest>> getCollectionRequest(@Path("pageNum") int pageNum);
 }

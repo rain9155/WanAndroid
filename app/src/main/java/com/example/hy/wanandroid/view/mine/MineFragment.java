@@ -1,6 +1,5 @@
 package com.example.hy.wanandroid.view.mine;
 
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,14 +37,10 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     ImageView ivCollection;
     @BindView(R.id.tv_collection)
     TextView tvCollection;
-    @BindView(R.id.cl_1)
-    ConstraintLayout cl1;
     @BindView(R.id.iv_setting)
     ImageView ivSetting;
     @BindView(R.id.tv_setting)
     TextView tvSetting;
-    @BindView(R.id.cl_2)
-    ConstraintLayout cl2;
     @BindView(R.id.iv_about_us)
     ImageView ivAboutUs;
     @BindView(R.id.tv_about_us)
@@ -60,6 +55,10 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     ConstraintLayout clLogout;
     @BindView(R.id.srl_mine)
     SmartRefreshLayout srlMine;
+    @BindView(R.id.cl_collection)
+    ConstraintLayout clCollection;
+    @BindView(R.id.cl_settings)
+    ConstraintLayout clSettings;
 
     @Inject
     MinePresenter mPresenter;
@@ -77,15 +76,16 @@ public class MineFragment extends BaseFragment implements MineContract.View {
         ((MainActivity) getActivity()).getComponent().getMineFragmentComponent(new MineFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
-        if(User.getInstance().isLoginStatus()){
+        if (User.getInstance().isLoginStatus()) {
             showLoginView();
-        }else {
+        } else {
             showLogoutView();
         }
 
-        clAboutus.setOnClickListener(v -> AboutUsActivity.startActivity(_mActivity));
-
         btnLogin.setOnClickListener(v -> LoginActivity.startActivity(_mActivity));
+
+        clCollection.setOnClickListener(v -> CollectionActivity.startActivity(_mActivity));
+        clAboutus.setOnClickListener(v -> AboutUsActivity.startActivity(_mActivity));
         clLogout.setOnClickListener(v -> {
             assert getFragmentManager() != null;
             mLogoutDialog.show(getFragmentManager(), "tag2");
@@ -93,13 +93,13 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     }
 
     @Override
-    protected void loadData(){
+    protected void loadData() {
         mPresenter.subscribleEvent();
     }
 
     @Override
     public void onDestroy() {
-        if(mPresenter != null){
+        if (mPresenter != null) {
             mPresenter.detachView();
             mPresenter = null;
         }
@@ -121,7 +121,7 @@ public class MineFragment extends BaseFragment implements MineContract.View {
         AnimUtil.showByAlpha(btnLogin);
     }
 
-    public static MineFragment newInstance(){
+    public static MineFragment newInstance() {
         return new MineFragment();
     }
 }
