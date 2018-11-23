@@ -17,6 +17,7 @@ import com.example.hy.wanandroid.core.network.entity.mine.Collection;
 import com.example.hy.wanandroid.di.component.activity.DaggerCollectionActivityComponent;
 import com.example.hy.wanandroid.presenter.mine.CollectionPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -64,7 +65,7 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
 
-        if(!User.getInstance().isLoginStatus()) LoginActivity.startActivityForResult(this, Constant.REQUEST_COLLECTION_COLLECTION);
+        if(!User.getInstance().isLoginStatus()) LoginActivity.startActivityForResult(this, Constant.REQUEST_SHOW_COLLECTIONS);
 
         DaggerCollectionActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
@@ -80,6 +81,10 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
         rvCollections.setLayoutManager(mLinearLayoutManager);
         rvCollections.setAdapter(mCollectionsAdapter);
         mCollectionsAdapter.setEmptyView(R.layout.empty_view, normalView);
+        mCollectionsAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Collection collection = mCollections.get(position);
+            ArticleActivity.startActivity(CollectionActivity.this, collection.getLink(), collection.getTitle(), collection.getId(), true, false);
+        });
         normalView.setOnRefreshListener(refreshLayout -> {
             isLoadMore = false;
             mPresenter.loadMoreCollections(0);
@@ -98,10 +103,7 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode != RESULT_OK) return;
-        if(Constant.REQUEST_COLLECTION_COLLECTION == requestCode){
-            mPresenter.loadCollections(0);
-        }
+        if(resultCode == RESULT_OK && Constant.REQUEST_SHOW_COLLECTIONS == requestCode) mPresenter.loadCollections(0);
     }
 
     @Override

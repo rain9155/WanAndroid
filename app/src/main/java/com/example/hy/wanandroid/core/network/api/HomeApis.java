@@ -3,11 +3,13 @@ package com.example.hy.wanandroid.core.network.api;
 import com.example.hy.wanandroid.core.network.entity.BaseResponse;
 import com.example.hy.wanandroid.core.network.entity.homepager.Articles;
 import com.example.hy.wanandroid.core.network.entity.homepager.BannerData;
+import com.example.hy.wanandroid.core.network.entity.mine.Collection;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -29,4 +31,18 @@ public interface HomeApis {
      */
     @GET("article/list/{pageNum}/json")
     Observable<BaseResponse<Articles>> getArticles(@Path("pageNum") int pageNum);
+
+    /**
+     * 收藏文章
+     * http://www.wanandroid.com/lg/collect/7562/json
+     */
+    @POST("lg/collect/{id}/json")
+    Observable<BaseResponse<Collection>> getCollectRequest(@Path("id") int id);
+
+    /**
+     * 取消收藏
+     * http://www.wanandroid.com/lg/uncollect_originId/2333/json
+     */
+    @POST("lg/uncollect_originId/{id}/json")
+    Observable<BaseResponse<Collection>> getUnCollectRequest(@Path("id") int id);
 }

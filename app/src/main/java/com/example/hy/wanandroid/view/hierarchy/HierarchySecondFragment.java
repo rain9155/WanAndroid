@@ -74,7 +74,7 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
         });
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {
             Article article = mArticleList.get(position);
-            ArticleActivity.startActivity(_mActivity, article.getLink(), article.getTitle(), article.isCollect(), false);
+            ArticleActivity.startActivity(_mActivity, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false);
         });
     }
 

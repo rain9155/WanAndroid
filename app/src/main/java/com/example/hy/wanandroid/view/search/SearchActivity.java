@@ -141,7 +141,7 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
         });
         mSearchResquestAdapter.setOnItemClickListener((adapter, view, position) -> {
             Article article = mSearchResquestList.get(position);
-            ArticleActivity.startActivity(SearchActivity.this, article.getLink(), article.getTitle(), article.isCollect(), false);
+            ArticleActivity.startActivity(SearchActivity.this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false);
         });
         normalView.setEnableLoadMore(false);
         normalView.setEnableRefresh(false);

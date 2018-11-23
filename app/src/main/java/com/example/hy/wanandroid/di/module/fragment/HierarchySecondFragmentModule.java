@@ -29,7 +29,7 @@ public class HierarchySecondFragmentModule {
     @Provides
     @PerFragment
     ArticlesAdapter provideArticlesAdapter(List<Article> articles){
-        return new ArticlesAdapter(R.layout.item_home_acticles, articles);
+        return new ArticlesAdapter(R.layout.item_home_acticles, articles, App.getContext());
     }
 
     @Provides

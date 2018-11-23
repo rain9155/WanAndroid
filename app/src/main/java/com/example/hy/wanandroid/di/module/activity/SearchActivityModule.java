@@ -53,9 +53,8 @@ public class SearchActivityModule {
 
     @Provides
     ArticlesAdapter provideLinearArticlesAdapter(List<Article> articles){
-        return new ArticlesAdapter(R.layout.item_home_acticles, articles);
+        return new ArticlesAdapter(R.layout.item_home_acticles, articles, App.getContext());
     }
-
 
     @Provides
     HistoryAdapter provideHistoryAdapter(List<String> histories){

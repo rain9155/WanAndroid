@@ -1,8 +1,10 @@
 package com.example.hy.wanandroid.utils;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 
+import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.config.App;
 
 import java.io.Closeable;
@@ -15,6 +17,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import okhttp3.Cookie;
 
 /**
@@ -46,6 +50,21 @@ public class CommonUtil {
             cachePath = context.getCacheDir().getPath();//获得内部存储空间的缓存路径
         }
         return cachePath + File.separator + name;
+    }
+
+    /**
+     * drawable着色
+     */
+    public static Drawable getTintDrawable(Context context, int originalDrawable, int color){
+        Drawable drawable = ContextCompat.getDrawable(context,originalDrawable);
+        assert drawable != null;
+        Drawable.ConstantState state = drawable.getConstantState();
+        //使用tint就必须调用该方法对Drawable进行一次包装
+        Drawable tintDrawable = DrawableCompat.wrap(state == null ? drawable : state.newDrawable()).mutate();
+        tintDrawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        //设置tint
+        DrawableCompat.setTint(drawable, ContextCompat.getColor(context, color));
+        return tintDrawable;
     }
 
     /**

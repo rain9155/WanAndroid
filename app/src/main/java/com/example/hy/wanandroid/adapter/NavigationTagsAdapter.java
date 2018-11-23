@@ -45,7 +45,7 @@ public class NavigationTagsAdapter extends BaseQuickAdapter<Tag, BaseViewHolder>
         flowLayout.setOnTagClickListener((v, position, parent) -> {
             //跳转到详情页
             Article article = item.getArticles().get(position);
-            ArticleActivity.startActivity(parent.getContext(), article.getLink(), article.getTitle(), article.isCollect(), false);
+            ArticleActivity.startActivity(parent.getContext(), article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false);
             return true;
         });
     }

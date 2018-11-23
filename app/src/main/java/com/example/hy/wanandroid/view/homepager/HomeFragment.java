@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.view.homepager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
+import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
 import com.example.hy.wanandroid.di.module.fragment.HomeFragmentModule;
 import com.example.hy.wanandroid.core.network.entity.homepager.Article;
@@ -19,6 +21,7 @@ import com.example.hy.wanandroid.presenter.homepager.HomePresenter;
 import com.example.hy.wanandroid.utils.BannerImageLoader;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.MainActivity;
+import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
 import com.example.hy.wanandroid.view.search.SearchActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -75,6 +78,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
 
     private int pageNum = 0;//首页文章页数
     private boolean isLoadMore = false;
+    private int mCollectPosition = -1;//点击收藏的位置
     private Banner banner;
 
     @Override
@@ -101,11 +105,23 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         banner = bannerLayout.findViewById(R.id.banner);
         rvArticles.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
+        mArticlesAdapter.isFirstOnly(false);
         mArticlesAdapter.addHeaderView(bannerLayout);
         rvArticles.setAdapter(mArticlesAdapter);
-        mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {
+        mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+            mCollectPosition = position;
             Article article = mArticles.get(position);
-            ArticleActivity.startActivity(_mActivity, article.getLink(), article.getTitle(), article.isCollect(), false);
+            ArticleActivity.startActivityForResult(_mActivity, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
+        });
+        mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
+            mCollectPosition = position;
+            if(!User.getInstance().isLoginStatus()){
+                LoginActivity.startActivityForResult(_mActivity, Constant.REQUEST_COLLECT_ARTICLE);
+                return;
+            }
+            Article article = mArticles.get(position);
+            if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
+            else mPresenter.collectArticle(article.getId());
         });
         srlHome.setOnLoadMoreListener(refreshLayout -> {
             pageNum++;
@@ -145,7 +161,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
                 .setDelayTime(2000)//设置轮播事件间隔
                 .setOnBannerListener(position -> {
                     //跳转到详情
-                    ArticleActivity.startActivity(_mActivity, bannerAddress.get(position), bannerTitles.get(position), false, true);
+                    ArticleActivity.startActivity(_mActivity, bannerAddress.get(position), bannerTitles.get(position), -1, false, true);
                 })//设置点击事件，下标从零开始
                 .start();
     }
@@ -174,6 +190,18 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
     }
 
     @Override
+    public void collectArticleSuccess() {
+        mArticles.get(mCollectPosition).setCollect(true);
+        mArticlesAdapter.notifyItemChanged(mCollectPosition + mArticlesAdapter.getHeaderLayoutCount());
+    }
+
+    @Override
+    public void unCollectArticleSuccess() {
+        mArticles.get(mCollectPosition).setCollect(false);
+        mArticlesAdapter.notifyItemChanged(mCollectPosition + mArticlesAdapter.getHeaderLayoutCount());
+    }
+
+    @Override
     public void unableRefresh() {
         if(isLoadMore) srlHome.finishLoadMore(); else srlHome.finishRefresh();
     }
@@ -183,6 +211,27 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         super.reLoad();
         mPresenter.loadBannerDatas();
         mPresenter.loadArticles(0);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != RESULT_OK) return;
+        Article article = mArticles.get(mCollectPosition);
+        switch (requestCode){
+            case Constant.REQUEST_COLLECT_ARTICLE:
+                if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
+                else mPresenter.collectArticle(article.getId());
+                break;
+            case Constant.REQUEST_REFRESH_ARTICLE:
+                boolean isCollect = data.getBooleanExtra(Constant.KEY_DATA_RETURN, false);
+                if(article.isCollect() != isCollect){
+                    article.setCollect(isCollect);
+                    mArticlesAdapter.notifyItemChanged(mCollectPosition + mArticlesAdapter.getHeaderLayoutCount());
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -213,5 +262,4 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
-
 }

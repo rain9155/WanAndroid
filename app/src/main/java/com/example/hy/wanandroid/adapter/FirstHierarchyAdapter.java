@@ -25,14 +25,13 @@ public class FirstHierarchyAdapter extends BaseQuickAdapter<FirstHierarchy, Base
 
     @Override
     protected void convert(BaseViewHolder helper, FirstHierarchy item) {
+        if(item == null) return;
         String secondLeverText = "";
-        if(item != null){
-            if(!CommonUtil.isEmptyList(item.getChildren()))
+        if(!CommonUtil.isEmptyList(item.getChildren()))
                 for (FirstHierarchyChild child : item.getChildren()){
                     secondLeverText += child.getName() + "  ";
                 }
             helper.setText(R.id.tv_first_lever, item.getName())
                     .setText(R.id.tv_second_lever, secondLeverText);
-        }
     }
 }

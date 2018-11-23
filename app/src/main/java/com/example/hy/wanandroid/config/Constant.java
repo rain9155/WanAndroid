@@ -27,9 +27,16 @@ public class Constant {
     public static final String KEY_ARTICLE_FLAG = "articleFlag";
     public static final String KEY_ARTICLE_TITLE = "articleTitle";
     public static final String KEY_ARTICLE_ISCOLLECTION = "articleIsCollection";
+    public static final String KEY_ARTICLE_ID = "articleId";
+    public static final String KEY_DATA_RETURN = "dataReturn";
+
 
     //CollectionActivity
-    public static final int REQUEST_COLLECTION_COLLECTION = 0;
+    public static final int REQUEST_SHOW_COLLECTIONS = 0;
+
+    //HomeFragment
+    public static final int REQUEST_COLLECT_ARTICLE = 1;
+    public static final int REQUEST_REFRESH_ARTICLE = 2;
 
     //BaseLoadState
     public static final int NORMAL_STATE = 0;

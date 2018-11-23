@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.view.homepager;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -24,11 +25,17 @@ import android.widget.TextView;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.config.Constant;
+import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
+import com.example.hy.wanandroid.core.network.entity.homepager.Article;
+import com.example.hy.wanandroid.di.component.activity.DaggerArticleActivityComponent;
 import com.example.hy.wanandroid.presenter.homepager.ArticlePresenter;
+import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.widget.layout.WebLayout;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
+
+import javax.inject.Inject;
 
 import androidx.annotation.IntRange;
 import androidx.appcompat.widget.Toolbar;
@@ -41,7 +48,8 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     private String mTitle;
     private boolean isCollection;
     private boolean isHideCollection;
-    private ArticleContract.Presenter mPresenter;
+    private int mArticleId;
+    private MenuItem mCollectionItem;
 
     @BindView(R.id.tv_common_title)
     TextView tvCommonTitle;
@@ -52,6 +60,9 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     @BindView(R.id.fl_container)
     FrameLayout flContainer;
 
+    @Inject
+    ArticlePresenter mPresenter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_article;
@@ -59,8 +70,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-
-        mPresenter = new ArticlePresenter();
+        DaggerArticleActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
 
         Intent intent = getIntent();
@@ -69,6 +79,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
             mTitle = intent.getStringExtra(Constant.KEY_ARTICLE_FLAG);
             isCollection = intent.getBooleanExtra(Constant.KEY_ARTICLE_ISCOLLECTION, false);
             isHideCollection = intent.getBooleanExtra(Constant.KEY_ARTICLE_FLAG, false);
+            mArticleId = intent.getIntExtra(Constant.KEY_ARTICLE_ID, -1);
         }
 
         //标题栏
@@ -76,7 +87,12 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
         tlCommon.setTitle("");
         tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
         ivCommonSearch.setVisibility(View.INVISIBLE);
-        tlCommon.setNavigationOnClickListener(v -> finish());
+        tlCommon.setNavigationOnClickListener(v -> {
+            Intent intent2 = new Intent();
+            intent2.putExtra(Constant.KEY_DATA_RETURN, isCollection);
+            setResult(RESULT_OK);
+            finish();
+        });
     }
 
     @Override
@@ -106,8 +122,9 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.article_tl_menu, menu);
-        if(isHideCollection) menu.findItem(R.id.item_collection).setVisible(false);
-        if(isCollection) menu.findItem(R.id.item_collection).setTitle(getString(R.string.articleActivity_cancel_collection));
+        mCollectionItem = menu.findItem(R.id.item_collection);
+        if(isHideCollection) mCollectionItem.setVisible(false);
+        if(isCollection) mCollectionItem.setTitle(getString(R.string.articleActivity_cancel_collection));
         return true;
     }
 
@@ -118,6 +135,8 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
                 shareText();
                 break;
             case R.id.item_collection:
+                if(mArticleId == -1) return true;
+                collection();
                 break;
             case R.id.item_browser:
                 openBrowser();
@@ -132,7 +151,18 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK && requestCode == Constant.REQUEST_COLLECT_ARTICLE){
+            if(isCollection) mPresenter.unCollectArticle(mArticleId);
+            else mPresenter.collectArticle(mArticleId);
+        }
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Intent intent = new Intent();
+        intent.putExtra(Constant.KEY_DATA_RETURN, isCollection);
+        setResult(RESULT_OK);
         return mAgentWeb.handleKeyEvent(keyCode, event) || super.onKeyDown(keyCode, event);
     }
 
@@ -159,9 +189,34 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
         super.onDestroy();
     }
 
-//    protected IWebLayout getWebLayout() {
-//        return new WebLayout(getActivity());
-//    }
+    @Override
+    public void collectArticleSuccess() {
+        mCollectionItem.setTitle(R.string.articleActivity_cancel_collection);
+        isCollection = true;
+        showToast(getString(R.string.articleActivity_collection_success));
+    }
+
+    @Override
+    public void unCollectArticleSuccess() {
+        mCollectionItem.setTitle(R.string.articleActivity_collection);
+        isCollection = false;
+        showToast(getString(R.string.articleActivity_uncollection_success));
+    }
+
+    /**
+     * 收藏事件
+     */
+    private void collection() {
+        if(!User.getInstance().isLoginStatus()){
+            LoginActivity.startActivityForResult(this, Constant.REQUEST_COLLECT_ARTICLE);
+            return;
+        }
+        if (isCollection) {
+            mPresenter.unCollectArticle(mArticleId);
+        }else {
+            mPresenter.collectArticle(mArticleId);
+        }
+    }
 
     /**
      * 复制字符串
@@ -243,13 +298,28 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
      * 启动活动
      * @param address html地址
      */
-    public static void startActivity(Context context, String address, String title, boolean isCollection, boolean isHideCollection){
+    public static void startActivity(Context context, String address, String title, int id, boolean isCollection, boolean isHideCollection){
         Intent intent = new Intent(context, ArticleActivity.class);
         intent.putExtra(Constant.KEY_ARTICLE_ADDRESS, address);
         intent.putExtra(Constant.KEY_ARTICLE_TITLE, title);
         intent.putExtra(Constant.KEY_ARTICLE_ISCOLLECTION, isCollection);
         intent.putExtra(Constant.KEY_ARTICLE_FLAG, isHideCollection);
+        intent.putExtra(Constant.KEY_ARTICLE_ID, id);
         context.startActivity(intent);
+    }
+
+    /**
+     * 启动活动
+     * @param address html地址
+     */
+    public static void startActivityForResult(Activity activity, String address, String title, int id, boolean isCollection, boolean isHideCollection, int request){
+        Intent intent = new Intent(activity, ArticleActivity.class);
+        intent.putExtra(Constant.KEY_ARTICLE_ADDRESS, address);
+        intent.putExtra(Constant.KEY_ARTICLE_TITLE, title);
+        intent.putExtra(Constant.KEY_ARTICLE_ISCOLLECTION, isCollection);
+        intent.putExtra(Constant.KEY_ARTICLE_FLAG, isHideCollection);
+        intent.putExtra(Constant.KEY_ARTICLE_ID, id);
+        activity.startActivityForResult(intent, request);
     }
 }
 

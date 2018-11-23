@@ -2,6 +2,8 @@ package com.example.hy.wanandroid.presenter.homepager;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.mine.Collection;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.homepager.HomeModel;
 import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
@@ -80,5 +82,35 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                                 mView.showMoreArticles(articles.getDatas());
                             }
                         }));
+    }
+
+    @Override
+    public void collectArticle(int id) {
+        addSubcriber(
+                mHomeModel.getCollectRequest(id)
+                .compose(RxUtils.switchSchedulers())
+                .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
+                    @Override
+                    public void onNext(BaseResponse<Collection> baseResponse) {
+                        super.onNext(baseResponse);
+                        mView.collectArticleSuccess();
+                    }
+                })
+        );
+    }
+
+    @Override
+    public void unCollectArticle(int id) {
+        addSubcriber(
+                mHomeModel.getUnCollectRequest(id)
+                        .compose(RxUtils.switchSchedulers())
+                        .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
+                            @Override
+                            public void onNext(BaseResponse<Collection> baseResponse) {
+                                super.onNext(baseResponse);
+                                mView.unCollectArticleSuccess();
+                            }
+                        })
+        );
     }
 }

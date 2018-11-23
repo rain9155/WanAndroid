@@ -76,7 +76,7 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
         });
         mProjectsAdapter.setOnItemClickListener((adapter, view, position) -> {
             Article article = mArticles.get(position);
-            ArticleActivity.startActivity(_mActivity, article.getLink(), article.getTitle(), article.isCollect(), false);
+            ArticleActivity.startActivity(_mActivity, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false);
         });
     }
 

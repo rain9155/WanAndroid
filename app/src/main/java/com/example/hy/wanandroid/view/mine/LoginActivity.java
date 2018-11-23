@@ -139,15 +139,15 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     public static void startActivity(Context context) {
+        isNeedResult = false;
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
-        isNeedResult = false;
     }
 
     public static void startActivityForResult(Activity activity, int request) {
+        isNeedResult = true;
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivityForResult(intent, request);
-        isNeedResult = true;
     }
 }
 
