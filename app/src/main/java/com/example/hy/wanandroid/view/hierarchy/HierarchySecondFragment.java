@@ -1,5 +1,6 @@
 package com.example.hy.wanandroid.view.hierarchy;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.hy.wanandroid.R;
@@ -7,12 +8,14 @@ import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
+import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchySecondContract;
 import com.example.hy.wanandroid.di.module.fragment.HierarchySecondFragmentModule;
 import com.example.hy.wanandroid.core.network.entity.homepager.Article;
 import com.example.hy.wanandroid.presenter.hierarchy.HierarchySecondPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
+import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -47,6 +50,7 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
     private int mPageNum = 0;
     private int mId = -1;
     private boolean isLoadMore = false;
+    private int mArticlePosition = -1;//点击的位置
 
     @Override
     protected int getLayoutId() {
@@ -72,9 +76,17 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
             mPresenter.loadMoreArticles(mPageNum, mId);
             isLoadMore = true;
         });
-        mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {
+        mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+            mArticlePosition = position;
             Article article = mArticleList.get(position);
-            ArticleActivity.startActivity(_mActivity, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false);
+            ArticleActivity.startActicityForResultByFragment(_mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
+        });
+        mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
+            mArticlePosition = position;
+            if(!User.getInstance().isLoginStatus()) LoginActivity.startActivityForResultByFragment(_mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
+            Article article = mArticleList.get(position);
+            if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
+            else mPresenter.collectArticle(article.getId());
         });
     }
 
@@ -109,6 +121,20 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
     }
 
     @Override
+    public void collectArticleSuccess() {
+        showToast(getString(R.string.common_collection_success));
+        mArticleList.get(mArticlePosition).setCollect(true);
+        mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
+    }
+
+    @Override
+    public void unCollectArticleSuccess() {
+        showToast(getString(R.string.common_uncollection_success));
+        mArticleList.get(mArticlePosition).setCollect(false);
+        mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
+    }
+
+    @Override
     public void reLoad() {
         super.reLoad();
         mPresenter.loadArticles(0, mId);
@@ -118,6 +144,28 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
     public void unableRefresh() {
         if (isLoadMore) srlHierarchyList.finishLoadMore(); else srlHierarchyList.finishRefresh();
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != RESULT_OK) return;
+        Article article = mArticleList.get(mArticlePosition);
+        switch (requestCode){
+            case Constant.REQUEST_COLLECT_ARTICLE:
+                if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
+                else mPresenter.collectArticle(article.getId());
+                break;
+            case Constant.REQUEST_REFRESH_ARTICLE:
+                boolean isCollect = data.getBooleanExtra(Constant.KEY_DATA_RETURN, false);
+                if(article.isCollect() != isCollect){
+                    article.setCollect(isCollect);
+                    mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

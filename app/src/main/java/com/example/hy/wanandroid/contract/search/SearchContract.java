@@ -7,6 +7,7 @@ import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.core.network.entity.BaseResponse;
 import com.example.hy.wanandroid.core.network.entity.homepager.Article;
 import com.example.hy.wanandroid.core.network.entity.homepager.Articles;
+import com.example.hy.wanandroid.core.network.entity.mine.Collection;
 import com.example.hy.wanandroid.core.network.entity.search.HotKey;
 
 import java.util.List;
@@ -37,6 +38,8 @@ public interface SearchContract {
         void hideSearchRequestLayout();//隐藏搜索热词布局
         void showEmptyLayout();
         void hideEmptyLayout();
+        void collectArticleSuccess();//收藏文章成功
+        void unCollectArticleSuccess();//取消收藏成功
     }
 
     interface Presenter extends IPresenter<View>{
@@ -48,6 +51,8 @@ public interface SearchContract {
         void deleteOneHistoryRecord(String record);//删除一条搜索历史
         void deleteAllHistoryRecord();//删除所有搜索历史
         void clearAllSearchKey(String key);//清空了所有的搜索
+        void collectArticle(int id);//收藏文章
+        void unCollectArticle(int id);//取消收藏
     }
 
     interface Model{
@@ -58,6 +63,8 @@ public interface SearchContract {
         int deleteOneHistoryRecord(String record);//删除一条搜索历史
         int deleteAllHistoryRecord();//删除所有搜索历史
         boolean isExistHistoryRecord(String record);//判断搜索历史是否存在
+        Observable<BaseResponse<Collection>> getCollectRequest(int id);//获得收藏结果
+        Observable<BaseResponse<Collection>> getUnCollectRequest(int id);//获得取消收藏结果
     }
 
 }

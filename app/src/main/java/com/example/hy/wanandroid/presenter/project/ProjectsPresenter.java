@@ -2,6 +2,8 @@ package com.example.hy.wanandroid.presenter.project;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.mine.Collection;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.project.ProjectsModel;
 import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
@@ -61,5 +63,35 @@ public class ProjectsPresenter extends BasePresenter<ProjectsContract.View> impl
                                 mView.showMoreProjects(articles.getDatas());
                             }
                         }));
+    }
+
+    @Override
+    public void collectArticle(int id) {
+        addSubcriber(
+                mProjectsModel.getCollectRequest(id)
+                        .compose(RxUtils.switchSchedulers())
+                        .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
+                            @Override
+                            public void onNext(BaseResponse<Collection> baseResponse) {
+                                super.onNext(baseResponse);
+                                mView.collectArticleSuccess();
+                            }
+                        })
+        );
+    }
+
+    @Override
+    public void unCollectArticle(int id) {
+        addSubcriber(
+                mProjectsModel.getUnCollectRequest(id)
+                        .compose(RxUtils.switchSchedulers())
+                        .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
+                            @Override
+                            public void onNext(BaseResponse<Collection> baseResponse) {
+                                super.onNext(baseResponse);
+                                mView.unCollectArticleSuccess();
+                            }
+                        })
+        );
     }
 }

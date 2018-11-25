@@ -27,7 +27,6 @@ import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
-import com.example.hy.wanandroid.core.network.entity.homepager.Article;
 import com.example.hy.wanandroid.di.component.activity.DaggerArticleActivityComponent;
 import com.example.hy.wanandroid.presenter.homepager.ArticlePresenter;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
@@ -39,6 +38,7 @@ import javax.inject.Inject;
 
 import androidx.annotation.IntRange;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 
 public class ArticleActivity extends BaseActivity implements ArticleContract.View {
@@ -90,7 +90,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
         tlCommon.setNavigationOnClickListener(v -> {
             Intent intent2 = new Intent();
             intent2.putExtra(Constant.KEY_DATA_RETURN, isCollection);
-            setResult(RESULT_OK);
+            setResult(RESULT_OK, intent2);
             finish();
         });
     }
@@ -160,10 +160,16 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return mAgentWeb.handleKeyEvent(keyCode, event) || super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public void onBackPressedSupport() {
         Intent intent = new Intent();
         intent.putExtra(Constant.KEY_DATA_RETURN, isCollection);
-        setResult(RESULT_OK);
-        return mAgentWeb.handleKeyEvent(keyCode, event) || super.onKeyDown(keyCode, event);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
@@ -193,14 +199,14 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     public void collectArticleSuccess() {
         mCollectionItem.setTitle(R.string.articleActivity_cancel_collection);
         isCollection = true;
-        showToast(getString(R.string.articleActivity_collection_success));
+        showToast(getString(R.string.common_collection_success));
     }
 
     @Override
     public void unCollectArticleSuccess() {
         mCollectionItem.setTitle(R.string.articleActivity_collection);
         isCollection = false;
-        showToast(getString(R.string.articleActivity_uncollection_success));
+        showToast(getString(R.string.common_uncollection_success));
     }
 
     /**
@@ -309,7 +315,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     }
 
     /**
-     * 启动活动
+     * 启动活动，使用Activity中的startActivityForResult（）
      * @param address html地址
      */
     public static void startActivityForResult(Activity activity, String address, String title, int id, boolean isCollection, boolean isHideCollection, int request){
@@ -320,6 +326,19 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
         intent.putExtra(Constant.KEY_ARTICLE_FLAG, isHideCollection);
         intent.putExtra(Constant.KEY_ARTICLE_ID, id);
         activity.startActivityForResult(intent, request);
+    }
+
+    /**
+     * 启动活动，使用Fragment中的startActivityForResult（）
+     */
+    public static void startActicityForResultByFragment(Activity activity, Fragment fragment, String address, String title, int id, boolean isCollection, boolean isHideCollection, int request){
+        Intent intent = new Intent(activity, ArticleActivity.class);
+        intent.putExtra(Constant.KEY_ARTICLE_ADDRESS, address);
+        intent.putExtra(Constant.KEY_ARTICLE_TITLE, title);
+        intent.putExtra(Constant.KEY_ARTICLE_ISCOLLECTION, isCollection);
+        intent.putExtra(Constant.KEY_ARTICLE_FLAG, isHideCollection);
+        intent.putExtra(Constant.KEY_ARTICLE_ID, id);
+        fragment.startActivityForResult(intent, request);
     }
 }
 

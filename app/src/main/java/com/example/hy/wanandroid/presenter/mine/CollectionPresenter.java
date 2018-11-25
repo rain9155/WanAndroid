@@ -2,7 +2,9 @@ package com.example.hy.wanandroid.presenter.mine;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
 import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.core.network.entity.mine.Collection;
 import com.example.hy.wanandroid.core.network.entity.mine.CollectionRequest;
 import com.example.hy.wanandroid.model.mine.CollectionModel;
 import com.example.hy.wanandroid.utils.RxUtils;
@@ -51,6 +53,21 @@ public class CollectionPresenter extends BasePresenter<CollectionContract.View> 
                             public void onNext(CollectionRequest collectionRequest) {
                                 super.onNext(collectionRequest);
                                 mView.showMoreCollections(collectionRequest.getDatas());
+                            }
+                        })
+        );
+    }
+
+    @Override
+    public void unCollectArticle(int id, int originalId) {
+        addSubcriber(
+                mModel.getUnCollectRequest(id, originalId)
+                        .compose(RxUtils.switchSchedulers())
+                        .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
+                            @Override
+                            public void onNext(BaseResponse<Collection> baseResponse) {
+                                super.onNext(baseResponse);
+                                mView.unCollectArticleSuccess();
                             }
                         })
         );

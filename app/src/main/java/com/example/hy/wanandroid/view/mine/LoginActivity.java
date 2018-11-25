@@ -25,6 +25,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import javax.inject.Inject;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -70,7 +71,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         DaggerLoginActivityComponent.builder().appComponent(getAppComponent()).loginActivityModule(new LoginActivityModule()).build().inject(this);
         mPresenter.attachView(this);
 
-        ivBack.setOnClickListener(v -> finish());
+        ivBack.setOnClickListener(v -> {
+            setResult(RESULT_CANCELED);
+            finish();
+        });
         tvRegister.setOnClickListener(v -> RegisterActivity.startActivity(this));
         btnLogin.setOnClickListener(v -> {
             // Reset errors.
@@ -90,6 +94,21 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     @Override
+    public void onBackPressedSupport() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(mPresenter != null){
+            mPresenter.detachView();
+            mPresenter = null;
+        }
+        super.onDestroy();
+    }
+
+    @Override
     public void showLoading() {
         mLoadingDialog.show(getSupportFragmentManager(), "tag");
     }
@@ -102,15 +121,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void showErrorView() {
         mLoadingDialog.dismiss();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if(mPresenter != null){
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
     }
 
     @Override
@@ -148,6 +158,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         isNeedResult = true;
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivityForResult(intent, request);
+    }
+
+    public static void startActivityForResultByFragment(Activity activity, Fragment fragment, int request) {
+        isNeedResult = true;
+        Intent intent = new Intent(activity, LoginActivity.class);
+        fragment.startActivityForResult(intent, request);
     }
 }
 

@@ -15,6 +15,8 @@ import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.adapter.FlowTagsAdapter;
 import com.example.hy.wanandroid.adapter.HistoryAdapter;
 import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
+import com.example.hy.wanandroid.config.Constant;
+import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSearchActivityComponent;
 import com.example.hy.wanandroid.core.network.entity.homepager.Article;
@@ -22,6 +24,7 @@ import com.example.hy.wanandroid.core.network.entity.search.HotKey;
 import com.example.hy.wanandroid.presenter.search.SearchPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
+import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
@@ -90,6 +93,7 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     private FlowTagsAdapter mFlowTagsAdapter;
     private boolean isLoadMore = false;
     private int mPageNum = 0;
+    private int mArticlePosition = -1;//点击的位置
 
     @Override
     protected int getLayoutId() {
@@ -139,9 +143,17 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
             mPageNum++;
             mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), mPageNum);
         });
-        mSearchResquestAdapter.setOnItemClickListener((adapter, view, position) -> {
+        mSearchResquestAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+            mArticlePosition = position;
             Article article = mSearchResquestList.get(position);
-            ArticleActivity.startActivity(SearchActivity.this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false);
+            ArticleActivity.startActivityForResult(SearchActivity.this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
+        });
+        mSearchResquestAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
+            mArticlePosition = position;
+            if(!User.getInstance().isLoginStatus()) LoginActivity.startActivityForResult(this, Constant.REQUEST_COLLECT_ARTICLE);
+            Article article = mSearchResquestList.get(position);
+            if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
+            else mPresenter.collectArticle(article.getId());
         });
         normalView.setEnableLoadMore(false);
         normalView.setEnableRefresh(false);
@@ -264,6 +276,20 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     }
 
     @Override
+    public void collectArticleSuccess() {
+        showToast(getString(R.string.common_collection_success));
+        mSearchResquestList.get(mArticlePosition).setCollect(true);
+        mSearchResquestAdapter.notifyItemChanged(mArticlePosition + mSearchResquestAdapter.getHeaderLayoutCount());
+    }
+
+    @Override
+    public void unCollectArticleSuccess() {
+        showToast(getString(R.string.common_uncollection_success));
+        mSearchResquestList.get(mArticlePosition).setCollect(false);
+        mSearchResquestAdapter.notifyItemChanged(mArticlePosition + mSearchResquestAdapter.getHeaderLayoutCount());
+    }
+
+    @Override
     public void reLoad() {
         super.reLoad();
         mPresenter.loadSearchResquest(mSearchView.getQuery().toString(), 0);
@@ -285,6 +311,27 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     @Override
     public void unableRefresh() {
         if(isLoadMore) normalView.finishLoadMore(); else normalView.finishRefresh();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != RESULT_OK) return;
+        Article article = mSearchResquestList.get(mArticlePosition);
+        switch (requestCode){
+            case Constant.REQUEST_COLLECT_ARTICLE:
+                if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
+                else mPresenter.collectArticle(article.getId());
+                break;
+            case Constant.REQUEST_REFRESH_ARTICLE:
+                boolean isCollect = data.getBooleanExtra(Constant.KEY_DATA_RETURN, false);
+                if(article.isCollect() != isCollect){
+                    article.setCollect(isCollect);
+                    mSearchResquestAdapter.notifyItemChanged(mArticlePosition + mSearchResquestAdapter.getHeaderLayoutCount());
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

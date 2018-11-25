@@ -1,18 +1,21 @@
 package com.example.hy.wanandroid.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.core.network.entity.homepager.Article;
 import com.example.hy.wanandroid.utils.CommonUtil;
 
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 /**
  * 文章列表adapter
@@ -20,11 +23,8 @@ import androidx.annotation.Nullable;
  */
 public class ArticlesAdapter extends BaseQuickAdapter<Article, BaseViewHolder> {
 
-    private Drawable mTintCollectionDrawable;
-
     public ArticlesAdapter(int layoutResId, @Nullable List<Article> data, Context context) {
         super(layoutResId, data);
-        mTintCollectionDrawable = CommonUtil.getTintDrawable(context, R.drawable.ic_home_collection, R.color.colorCollected);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ArticlesAdapter extends BaseQuickAdapter<Article, BaseViewHolder> {
                 .setText(R.id.tv_publish_time, article.getNiceDate())
                 .addOnClickListener(R.id.iv_collection);
 
-        if(article.isCollect()) holder.setImageDrawable(R.id.iv_collection, mTintCollectionDrawable);
+        if(article.isCollect()) holder.setImageDrawable(R.id.iv_collection, CommonUtil.getTintDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_home_collection), ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.colorCollected))));
         else holder.setImageResource(R.id.iv_collection, R.drawable.ic_home_collection);
     }
 }

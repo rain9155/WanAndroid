@@ -2,6 +2,8 @@ package com.example.hy.wanandroid.presenter.hierarchy;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchySecondContract;
+import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.mine.Collection;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.hierarchy.HierarchySecondModel;
 import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
@@ -60,6 +62,36 @@ public class HierarchySecondPresenter extends BasePresenter<HierarchySecondContr
                                 mView.showMoreArticles(secondHierarchy.getDatas());
                             }
                         }));
+    }
+
+    @Override
+    public void collectArticle(int id) {
+        addSubcriber(
+                mHierarchySecondListModel.getCollectRequest(id)
+                        .compose(RxUtils.switchSchedulers())
+                        .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
+                            @Override
+                            public void onNext(BaseResponse<Collection> baseResponse) {
+                                super.onNext(baseResponse);
+                                mView.collectArticleSuccess();
+                            }
+                        })
+        );
+    }
+
+    @Override
+    public void unCollectArticle(int id) {
+        addSubcriber(
+                mHierarchySecondListModel.getUnCollectRequest(id)
+                        .compose(RxUtils.switchSchedulers())
+                        .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
+                            @Override
+                            public void onNext(BaseResponse<Collection> baseResponse) {
+                                super.onNext(baseResponse);
+                                mView.unCollectArticleSuccess();
+                            }
+                        })
+        );
     }
 
 }

@@ -3,9 +3,11 @@ package com.example.hy.wanandroid.model.search;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.core.db.DbHelper;
 import com.example.hy.wanandroid.core.db.DbHelperImp;
+import com.example.hy.wanandroid.core.network.api.HomeApis;
 import com.example.hy.wanandroid.core.network.api.SearchApis;
 import com.example.hy.wanandroid.core.network.entity.BaseResponse;
 import com.example.hy.wanandroid.core.network.entity.homepager.Articles;
+import com.example.hy.wanandroid.core.network.entity.mine.Collection;
 import com.example.hy.wanandroid.core.network.entity.search.HotKey;
 
 import java.util.List;
@@ -22,11 +24,13 @@ public class SearchModel implements SearchContract.Model {
 
     private SearchApis mSearchApis;
     private DbHelper mDbHelper;
+    private HomeApis mHomeApis;
 
     @Inject
-    public SearchModel(SearchApis searchApis, DbHelperImp dbHelperImp) {
+    public SearchModel(SearchApis searchApis, HomeApis homeApis, DbHelperImp dbHelperImp) {
         mSearchApis = searchApis;
         mDbHelper = dbHelperImp;
+        mHomeApis = homeApis;
     }
 
     @Override
@@ -62,6 +66,16 @@ public class SearchModel implements SearchContract.Model {
     @Override
     public boolean isExistHistoryRecord(String record) {
         return mDbHelper.isExistHistoryRecord(record);
+    }
+
+    @Override
+    public Observable<BaseResponse<Collection>> getCollectRequest(int id) {
+        return mHomeApis.getCollectRequest(id);
+    }
+
+    @Override
+    public Observable<BaseResponse<Collection>> getUnCollectRequest(int id) {
+        return mHomeApis.getUnCollectRequest(id);
     }
 
 }

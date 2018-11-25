@@ -6,6 +6,10 @@
     <string name="mainActivity_back">再按一次退出WanAndroid</string>
     <string name="loading">loading</string>
 
+    //common
+    <string name="common_collection_success">收藏成功</string>
+    <string name="common_uncollection_success">已取消收藏</string>
+
     //home
     <string name="homeFragment_home">首页</string>
     <string name="homeFragment_hierarchy">体系</string>
@@ -21,8 +25,6 @@
     <string name="articleActivity_browser_error">该链接无法使用浏览器打开</string>
     <string name="articleActivity_copy_success">复制成功</string>
     <string name="articleActivity_cancel_collection">取消收藏</string>
-    <string name="articleActivity_collection_success">收藏成功</string>
-    <string name="articleActivity_uncollection_success">取消收藏成功</string>
 
     //mine
     <string name="mineFragment_tvLogin">登陆</string>

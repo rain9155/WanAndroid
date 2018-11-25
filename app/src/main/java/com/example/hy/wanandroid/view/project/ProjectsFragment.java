@@ -1,5 +1,6 @@
 package com.example.hy.wanandroid.view.project;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.hy.wanandroid.R;
@@ -7,6 +8,7 @@ import com.example.hy.wanandroid.adapter.ProjectsAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
+import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
 import com.example.hy.wanandroid.core.network.entity.homepager.Article;
@@ -14,6 +16,7 @@ import com.example.hy.wanandroid.presenter.project.ProjectsPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
+import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -49,6 +52,7 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
     private int mPageNum = 0;
     private int mId;
     private boolean isLoadMore = false;
+    private int mArticlePosition = -1;//点击的位置
 
     @Override
     protected int getLayoutId() {
@@ -74,9 +78,17 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
             mPresenter.loadMoreProjects(0, mId);
             isLoadMore = false;
         });
-        mProjectsAdapter.setOnItemClickListener((adapter, view, position) -> {
+        mProjectsAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+            mArticlePosition = position;
             Article article = mArticles.get(position);
-            ArticleActivity.startActivity(_mActivity, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false);
+            ArticleActivity.startActicityForResultByFragment(_mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
+        });
+        mProjectsAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
+            mArticlePosition = position;
+            if(!User.getInstance().isLoginStatus()) LoginActivity.startActivityForResultByFragment(_mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
+            Article article = mArticles.get(position);
+            if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
+            else mPresenter.collectArticle(article.getId());
         });
     }
 
@@ -112,6 +124,19 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
     }
 
     @Override
+    public void collectArticleSuccess() {
+        showToast(getString(R.string.common_collection_success));
+        mArticles.get(mArticlePosition).setCollect(true);
+        mProjectsAdapter.notifyItemChanged(mArticlePosition + mProjectsAdapter.getHeaderLayoutCount());
+    }
+
+    @Override
+    public void unCollectArticleSuccess() {
+        showToast(getString(R.string.common_uncollection_success));
+        mArticles.get(mArticlePosition).setCollect(false);
+        mProjectsAdapter.notifyItemChanged(mArticlePosition + mProjectsAdapter.getHeaderLayoutCount());
+    }
+    @Override
     public void reLoad() {
         super.reLoad();
         mPresenter.loadProjects(0, mId);
@@ -120,6 +145,27 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
     @Override
     public void unableRefresh() {
         if(isLoadMore) srlProjects.finishLoadMore(); else srlProjects.finishRefresh();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != RESULT_OK) return;
+        Article article = mArticles.get(mArticlePosition);
+        switch (requestCode){
+            case Constant.REQUEST_COLLECT_ARTICLE:
+                if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
+                else mPresenter.collectArticle(article.getId());
+                break;
+            case Constant.REQUEST_REFRESH_ARTICLE:
+                boolean isCollect = data.getBooleanExtra(Constant.KEY_DATA_RETURN, false);
+                if(article.isCollect() != isCollect){
+                    article.setCollect(isCollect);
+                    mProjectsAdapter.notifyItemChanged(mArticlePosition + mProjectsAdapter.getHeaderLayoutCount());
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

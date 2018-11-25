@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
-import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
@@ -78,7 +77,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
 
     private int pageNum = 0;//首页文章页数
     private boolean isLoadMore = false;
-    private int mCollectPosition = -1;//点击收藏的位置
+    private int mArticlePosition = -1;//点击的位置
     private Banner banner;
 
     @Override
@@ -105,20 +104,16 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         banner = bannerLayout.findViewById(R.id.banner);
         rvArticles.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
-        mArticlesAdapter.isFirstOnly(false);
         mArticlesAdapter.addHeaderView(bannerLayout);
         rvArticles.setAdapter(mArticlesAdapter);
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
-            mCollectPosition = position;
+            mArticlePosition = position;
             Article article = mArticles.get(position);
-            ArticleActivity.startActivityForResult(_mActivity, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
+            ArticleActivity.startActicityForResultByFragment(_mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
-            mCollectPosition = position;
-            if(!User.getInstance().isLoginStatus()){
-                LoginActivity.startActivityForResult(_mActivity, Constant.REQUEST_COLLECT_ARTICLE);
-                return;
-            }
+            mArticlePosition = position;
+            if(!User.getInstance().isLoginStatus()) LoginActivity.startActivityForResultByFragment(_mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
             Article article = mArticles.get(position);
             if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
             else mPresenter.collectArticle(article.getId());
@@ -191,14 +186,16 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
 
     @Override
     public void collectArticleSuccess() {
-        mArticles.get(mCollectPosition).setCollect(true);
-        mArticlesAdapter.notifyItemChanged(mCollectPosition + mArticlesAdapter.getHeaderLayoutCount());
+        showToast(getString(R.string.common_collection_success));
+        mArticles.get(mArticlePosition).setCollect(true);
+        mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
     }
 
     @Override
     public void unCollectArticleSuccess() {
-        mArticles.get(mCollectPosition).setCollect(false);
-        mArticlesAdapter.notifyItemChanged(mCollectPosition + mArticlesAdapter.getHeaderLayoutCount());
+        showToast(getString(R.string.common_uncollection_success));
+        mArticles.get(mArticlePosition).setCollect(false);
+        mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
     }
 
     @Override
@@ -216,7 +213,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode != RESULT_OK) return;
-        Article article = mArticles.get(mCollectPosition);
+        Article article = mArticles.get(mArticlePosition);
         switch (requestCode){
             case Constant.REQUEST_COLLECT_ARTICLE:
                 if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
@@ -226,7 +223,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
                 boolean isCollect = data.getBooleanExtra(Constant.KEY_DATA_RETURN, false);
                 if(article.isCollect() != isCollect){
                     article.setCollect(isCollect);
-                    mArticlesAdapter.notifyItemChanged(mCollectPosition + mArticlesAdapter.getHeaderLayoutCount());
+                    mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
                 }
                 break;
             default:

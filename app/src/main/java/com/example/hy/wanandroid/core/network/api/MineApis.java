@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.core.network.api;
 
 import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.mine.Collection;
 import com.example.hy.wanandroid.core.network.entity.mine.CollectionRequest;
 import com.example.hy.wanandroid.core.network.entity.mine.Login;
 
@@ -52,4 +53,15 @@ public interface MineApis {
      */
     @GET("lg/collect/list/{pageNum}/json")
     Observable<BaseResponse<CollectionRequest>> getCollectionRequest(@Path("pageNum") int pageNum);
+
+    /**
+     * 获得取消收藏结果
+     * http://www.wanandroid.com/lg/uncollect/2805/json
+     * @return
+     */
+    @POST("lg/uncollect/{id}/json")
+    @FormUrlEncoded
+    Observable<BaseResponse<Collection>> getUnCollectionRequest(@Path("id") int id,//收藏在我的收藏列表的id
+                                                                @Field("originId") int originId//收藏在原始文章列表的id
+    );
 }

@@ -29,6 +29,16 @@
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:textColor="@color/secondaryText"
+            android:text="@string/collectionActivity_empty_collection"
+            android:textSize="@dimen/sp_18" />
+
     </RelativeLayout>
 
 </LinearLayout>

@@ -19,15 +19,18 @@ public interface CollectionContract {
     interface View extends IView{
         void showCollections(List<Collection> collections);
         void showMoreCollections(List<Collection> collections);
+        void showEmptyLayout();
+        void unCollectArticleSuccess();//取消收藏成功
     }
 
     interface Presenter extends IPresenter<View>{
         void loadCollections(int pageNum);
         void loadMoreCollections(int pageNum);
-
+        void unCollectArticle(int id, int original);//取消收藏
     }
 
     interface Model{
         Observable<BaseResponse<CollectionRequest>> getCollectionRequest(int pageNum);//获得收藏结果
+        Observable<BaseResponse<Collection>> getUnCollectRequest(int id, int originalId);//获得取消收藏结果
     }
 }

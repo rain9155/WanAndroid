@@ -3,6 +3,7 @@ package com.example.hy.wanandroid.model.mine;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
 import com.example.hy.wanandroid.core.network.api.MineApis;
 import com.example.hy.wanandroid.core.network.entity.BaseResponse;
+import com.example.hy.wanandroid.core.network.entity.mine.Collection;
 import com.example.hy.wanandroid.core.network.entity.mine.CollectionRequest;
 
 import javax.inject.Inject;
@@ -26,5 +27,10 @@ public class CollectionModel implements CollectionContract.Model {
     @Override
     public Observable<BaseResponse<CollectionRequest>> getCollectionRequest(int pageNum) {
         return mMineApis.getCollectionRequest(pageNum);
+    }
+
+    @Override
+    public Observable<BaseResponse<Collection>> getUnCollectRequest(int id, int originalId) {
+        return mMineApis.getUnCollectionRequest(id, originalId);
     }
 }

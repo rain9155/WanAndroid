@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.search.SearchContract;
+import com.example.hy.wanandroid.core.network.entity.mine.Collection;
 import com.example.hy.wanandroid.model.search.SearchModel;
 import com.example.hy.wanandroid.core.network.entity.BaseResponse;
 import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
@@ -135,5 +136,35 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
         mView.hideSearchRequestLayout();
         mView.showHistoryHotLayout();
         mView.hideEmptyLayout();
+    }
+
+    @Override
+    public void collectArticle(int id) {
+        addSubcriber(
+                mSearchModel.getCollectRequest(id)
+                        .compose(RxUtils.switchSchedulers())
+                        .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
+                            @Override
+                            public void onNext(BaseResponse<Collection> baseResponse) {
+                                super.onNext(baseResponse);
+                                mView.collectArticleSuccess();
+                            }
+                        })
+        );
+    }
+
+    @Override
+    public void unCollectArticle(int id) {
+        addSubcriber(
+                mSearchModel.getUnCollectRequest(id)
+                        .compose(RxUtils.switchSchedulers())
+                        .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
+                            @Override
+                            public void onNext(BaseResponse<Collection> baseResponse) {
+                                super.onNext(baseResponse);
+                                mView.unCollectArticleSuccess();
+                            }
+                        })
+        );
     }
 }

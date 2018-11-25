@@ -1,15 +1,18 @@
 package com.example.hy.wanandroid.adapter;
 
+import android.content.res.ColorStateList;
 import android.text.Html;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.core.network.entity.mine.Collection;
+import com.example.hy.wanandroid.utils.CommonUtil;
 
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 /**
  * 收藏的Adapter
@@ -27,6 +30,8 @@ public class CollectionsAdapter extends BaseQuickAdapter<Collection, BaseViewHol
         holder.setText(R.id.tv_title, Html.fromHtml(collection.getTitle()))
                 .setText(R.id.tv_author, "作者:" + collection.getAuthor())
                 .setText(R.id.tv_classify, "分类:" + collection.getChapterName())
-                .setText(R.id.tv_publish_time, collection.getNiceDate());
+                .setText(R.id.tv_publish_time, collection.getNiceDate())
+                .setImageDrawable(R.id.iv_collection, CommonUtil.getTintDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_home_collection), ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.colorCollected))))
+                .addOnClickListener(R.id.iv_collection);
     }
 }

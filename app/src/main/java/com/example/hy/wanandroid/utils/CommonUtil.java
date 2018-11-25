@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.utils;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 
@@ -55,15 +56,13 @@ public class CommonUtil {
     /**
      * drawable着色
      */
-    public static Drawable getTintDrawable(Context context, int originalDrawable, int color){
-        Drawable drawable = ContextCompat.getDrawable(context,originalDrawable);
-        assert drawable != null;
-        Drawable.ConstantState state = drawable.getConstantState();
+    public static Drawable getTintDrawable(Drawable originalDrawable, ColorStateList colors){
+        Drawable.ConstantState state = originalDrawable.getConstantState();
         //使用tint就必须调用该方法对Drawable进行一次包装
-        Drawable tintDrawable = DrawableCompat.wrap(state == null ? drawable : state.newDrawable()).mutate();
-        tintDrawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        Drawable tintDrawable = DrawableCompat.wrap(state == null ? originalDrawable : state.newDrawable()).mutate();
+        tintDrawable.setBounds(0, 0, originalDrawable.getIntrinsicWidth(), originalDrawable.getIntrinsicHeight());
         //设置tint
-        DrawableCompat.setTint(drawable, ContextCompat.getColor(context, color));
+        DrawableCompat.setTintList(tintDrawable, colors);
         return tintDrawable;
     }
 
