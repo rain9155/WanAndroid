@@ -1,9 +1,9 @@
 package com.example.hy.wanandroid.contract.mine;
 
 import com.example.hy.wanandroid.base.presenter.IPresenter;
-import com.example.hy.wanandroid.base.view.IView;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.mine.Login;
+import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.mine.Login;
 
 import io.reactivex.Observable;
 
@@ -13,7 +13,7 @@ import io.reactivex.Observable;
  */
 public interface LoginContract {
 
-    interface View extends IView{
+    interface View extends BaseView {
 
         void setAccountErrorView(String error);//设置用户名错误提示
         void setPasswordErrorView(String error);//设置密码错误提示

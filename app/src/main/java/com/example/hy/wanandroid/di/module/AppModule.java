@@ -2,16 +2,16 @@ package com.example.hy.wanandroid.di.module;
 
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
-import com.example.hy.wanandroid.core.network.interceptor.ReadCookiesInterceptor;
-import com.example.hy.wanandroid.core.network.interceptor.WriteCookiesInterceptor;
+import com.example.hy.wanandroid.model.network.interceptor.ReadCookiesInterceptor;
+import com.example.hy.wanandroid.model.network.interceptor.WriteCookiesInterceptor;
 import com.example.hy.wanandroid.di.scope.PerFragment;
-import com.example.hy.wanandroid.core.network.api.HierarchyApis;
-import com.example.hy.wanandroid.core.network.api.HomeApis;
-import com.example.hy.wanandroid.core.network.api.MineApis;
-import com.example.hy.wanandroid.core.network.api.NavigationApis;
-import com.example.hy.wanandroid.core.network.api.ProjectApis;
-import com.example.hy.wanandroid.core.network.api.SearchApis;
-import com.example.hy.wanandroid.core.network.gson.CustomGsonConverterFactory;
+import com.example.hy.wanandroid.model.network.api.HierarchyApis;
+import com.example.hy.wanandroid.model.network.api.HomeApis;
+import com.example.hy.wanandroid.model.network.api.MineApis;
+import com.example.hy.wanandroid.model.network.api.NavigationApis;
+import com.example.hy.wanandroid.model.network.api.ProjectApis;
+import com.example.hy.wanandroid.model.network.api.SearchApis;
+import com.example.hy.wanandroid.model.network.gson.CustomGsonConverterFactory;
 
 import java.util.concurrent.TimeUnit;
 

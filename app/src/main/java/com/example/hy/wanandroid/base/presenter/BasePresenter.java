@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.base.presenter;
 
-import com.example.hy.wanandroid.base.view.IView;
+import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.model.DataModel;
 
 import javax.inject.Inject;
 
@@ -11,13 +12,15 @@ import io.reactivex.disposables.Disposable;
  * Presenter的基类
  * Created by 陈健宇 at 2018/10/21
  */
-public class BasePresenter<T extends IView> implements IPresenter<T> {
+public class BasePresenter<T extends BaseView> implements IPresenter<T> {
 
     protected T mView;
+    protected DataModel mModel;
     private CompositeDisposable mCompositeDisposable;
 
     @Inject
-    public BasePresenter() {
+    public BasePresenter(DataModel dataModel) {
+        mModel = dataModel;
     }
 
     @Override
@@ -49,5 +52,20 @@ public class BasePresenter<T extends IView> implements IPresenter<T> {
     @Override
     public void subscribleEvent() {
 
+    }
+
+    @Override
+    public boolean getNoImageState() {
+        return mModel.getNoImageState();
+    }
+
+    @Override
+    public boolean getAutoCacheState() {
+        return mModel.getAutoCacheState();
+    }
+
+    @Override
+    public boolean getNightModeState() {
+        return mModel.getNightModeState();
     }
 }

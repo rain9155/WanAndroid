@@ -14,6 +14,8 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 /**
  * Created by 陈健宇 at 2018/10/20
  */
@@ -31,6 +33,7 @@ public class App extends LitePalApplication {
         //设置全局的Footer构建器
         SmartRefreshLayout.setDefaultRefreshFooterCreator(((context, layout) ->
                 new ClassicsFooter(context).setDrawableSize(20))); //经典Footer
+
     }
 
     private AppComponent mAppComponent;

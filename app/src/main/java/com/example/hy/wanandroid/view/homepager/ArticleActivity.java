@@ -29,6 +29,7 @@ import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerArticleActivityComponent;
 import com.example.hy.wanandroid.presenter.homepager.ArticlePresenter;
+import com.example.hy.wanandroid.utils.ShareUtil;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.widget.layout.WebLayout;
 import com.just.agentweb.AgentWeb;
@@ -69,14 +70,14 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     }
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
+    protected void initView() {
         DaggerArticleActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
 
         Intent intent = getIntent();
         if(intent != null){
             mAddress = intent.getStringExtra(Constant.KEY_ARTICLE_ADDRESS);
-            mTitle = intent.getStringExtra(Constant.KEY_ARTICLE_FLAG);
+            mTitle = intent.getStringExtra(Constant.KEY_ARTICLE_TITLE);
             isCollection = intent.getBooleanExtra(Constant.KEY_ARTICLE_ISCOLLECTION, false);
             isHideCollection = intent.getBooleanExtra(Constant.KEY_ARTICLE_FLAG, false);
             mArticleId = intent.getIntExtra(Constant.KEY_ARTICLE_ID, -1);
@@ -160,16 +161,13 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0){
+            Intent intent = new Intent();
+            intent.putExtra(Constant.KEY_DATA_RETURN, isCollection);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
         return mAgentWeb.handleKeyEvent(keyCode, event) || super.onKeyDown(keyCode, event);
-    }
-
-
-    @Override
-    public void onBackPressedSupport() {
-        Intent intent = new Intent();
-        intent.putExtra(Constant.KEY_DATA_RETURN, isCollection);
-        setResult(RESULT_OK, intent);
-        finish();
     }
 
     @Override
@@ -239,15 +237,14 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
      * 分享
      */
     private void shareText() {
-        if(!TextUtils.isEmpty(mTitle) && !TextUtils.isEmpty(mAddress)){
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.putExtra(
-                    Intent.EXTRA_TEXT,
-                    getString(R.string.articleActivity_share_text) + "\n" + mTitle + "\n" + mAddress
+        if(!TextUtils.isEmpty(mTitle) && !TextUtils.isEmpty(mAddress))
+            ShareUtil.shareText(
+                    this,
+                    getString(R.string.articleActivity_share_text) + "\n" + mTitle + "\n" + mAddress,
+                    getString(R.string.articleActivity_share_to)
             );
-            intent.setType("text/plain");
-            startActivity(intent);
-        }
+        else
+            showToast(getString(R.string.articleActivity_share_fail));
     }
 
     /**
@@ -269,6 +266,19 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
      */
     @SuppressLint("SetJavaScriptEnabled")
     private void setSettings(WebSettings settings) {
+
+        if (mPresenter.getNoImageState()){
+            settings.setBlockNetworkImage(true);
+        }else {
+            settings.setBlockNetworkImage(false);
+        }
+
+        if(mPresenter.getAutoCacheState()){
+
+        }else {
+
+        }
+
         //支持缩放
         settings.setJavaScriptEnabled(true);
         settings.setSupportZoom(true);

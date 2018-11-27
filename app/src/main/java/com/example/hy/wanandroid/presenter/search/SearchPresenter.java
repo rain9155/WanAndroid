@@ -5,13 +5,13 @@ import android.text.TextUtils;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.search.SearchContract;
-import com.example.hy.wanandroid.core.network.entity.mine.Collection;
-import com.example.hy.wanandroid.model.search.SearchModel;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.core.network.entity.homepager.Article;
-import com.example.hy.wanandroid.core.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.core.network.entity.search.HotKey;
+import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.model.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.homepager.Articles;
+import com.example.hy.wanandroid.model.network.entity.search.HotKey;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.utils.RxUtils;
 
@@ -28,17 +28,16 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class SearchPresenter extends BasePresenter<SearchContract.View> implements SearchContract.Presenter {
 
-    private SearchContract.Model mSearchModel;
 
     @Inject
-    public SearchPresenter(SearchModel searchModel) {
-        mSearchModel = searchModel;
+    public SearchPresenter(DataModel dataModel) {
+        super(dataModel);
     }
 
     @Override
     public void loadHotkey() {
         addSubcriber(
-                mSearchModel.getHotKey()
+                mModel.getHotKey()
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
                 .subscribeWith(new DefaultObserver<List<HotKey>>(mView, false, false) {
@@ -62,7 +61,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
     public void loadSearchResquest(String key, int pageNum) {
         if(TextUtils.isEmpty(key.trim())) return;
         addSubcriber(
-                mSearchModel.getSearchResquest(key, pageNum)
+                mModel.getSearchResquest(key, pageNum)
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
                 .subscribeWith(new DefaultObserver<Articles>(mView) {
@@ -85,7 +84,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
     public void loadSearchMoreResquest(String key, int pageNum) {
         if(TextUtils.isEmpty(key.trim())) return;
         addSubcriber(
-                mSearchModel.getSearchResquest(key, pageNum)
+                mModel.getSearchResquest(key, pageNum)
                         .compose(RxUtils.switchSchedulers())
                         .compose(RxUtils.handleRequest2())
                         .subscribeWith(new DefaultObserver<Articles>(mView, false, false) {
@@ -100,15 +99,15 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
 
     @Override
     public void addHistoryRecord(String record) {
-        if(TextUtils.isEmpty(record.trim()) || mSearchModel.isExistHistoryRecord(record)) return;
-        if(!mSearchModel.addHistoryRecord(record)) return;
+        if(TextUtils.isEmpty(record.trim()) || mModel.isExistHistoryRecord(record)) return;
+        if(!mModel.addHistoryRecord(record)) return;
         mView.addOneHistorySuccess(record);
         mView.hideHistoryHintLayout();
     }
 
     @Override
     public void loadHistories() {
-        List<String> histories = mSearchModel.getHistories();
+        List<String> histories = mModel.getAllHistoryRecord();
         if(!CommonUtil.isEmptyList(histories)){
             Collections.reverse(histories);
             mView.showHistories(histories);
@@ -119,12 +118,12 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
 
     @Override
     public void deleteOneHistoryRecord(String record) {
-        if(1 == mSearchModel.deleteOneHistoryRecord(record)) mView.deleteOneHistorySuccess(record);
+        if(1 == mModel.deleteOneHistoryRecord(record)) mView.deleteOneHistorySuccess(record);
     }
 
     @Override
     public void deleteAllHistoryRecord() {
-        if(mSearchModel.deleteAllHistoryRecord() > 0){
+        if(mModel.deleteAllHistoryRecord() > 0){
             mView.deleteAllHistoryRecordSuccess();
             mView.showHistoryHintLayout();
         }
@@ -141,7 +140,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
     @Override
     public void collectArticle(int id) {
         addSubcriber(
-                mSearchModel.getCollectRequest(id)
+                mModel.getCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
                             @Override
@@ -156,7 +155,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
     @Override
     public void unCollectArticle(int id) {
         addSubcriber(
-                mSearchModel.getUnCollectRequest(id)
+                mModel.getUnCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
                             @Override

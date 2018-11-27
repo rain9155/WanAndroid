@@ -19,8 +19,8 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSearchActivityComponent;
-import com.example.hy.wanandroid.core.network.entity.homepager.Article;
-import com.example.hy.wanandroid.core.network.entity.search.HotKey;
+import com.example.hy.wanandroid.model.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.search.HotKey;
 import com.example.hy.wanandroid.presenter.search.SearchPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
@@ -101,9 +101,8 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     }
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
-
-        super.initView(savedInstanceState);
+    protected void initView() {
+        super.initView();
 
         DaggerSearchActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);

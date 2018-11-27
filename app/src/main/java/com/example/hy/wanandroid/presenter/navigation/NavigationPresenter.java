@@ -2,10 +2,9 @@ package com.example.hy.wanandroid.presenter.navigation;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.navigation.NavigationContract;
-import com.example.hy.wanandroid.model.navigation.NavigationModel;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.core.network.entity.navigation.Tag;
+import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.entity.navigation.Tag;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 import java.util.ArrayList;
@@ -21,17 +20,15 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class NavigationPresenter extends BasePresenter<NavigationContract.View> implements NavigationContract.Presenter {
 
-    private NavigationContract.Model mNavigationModel;
-
     @Inject
-    public NavigationPresenter(NavigationModel navigationModel) {
-        mNavigationModel = navigationModel;
+    public NavigationPresenter(DataModel dataModel) {
+        super(dataModel);
     }
 
     @Override
     public void loadTags() {
         addSubcriber(
-                mNavigationModel.getTags()
+                mModel.getTags()
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
                 .subscribeWith(new DefaultObserver<List<Tag>>(mView) {

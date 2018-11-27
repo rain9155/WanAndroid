@@ -3,8 +3,8 @@ package com.example.hy.wanandroid.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.core.network.entity.hierarchy.FirstHierarchy;
-import com.example.hy.wanandroid.core.network.entity.hierarchy.FirstHierarchyChild;
+import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchy;
+import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchyChild;
 import com.example.hy.wanandroid.utils.CommonUtil;
 
 import java.util.List;

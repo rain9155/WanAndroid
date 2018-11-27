@@ -56,7 +56,7 @@ public class AboutUsActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
+    protected void initView() {
 
         toolbar.setNavigationOnClickListener(v -> finish());
 

@@ -2,12 +2,13 @@ package com.example.hy.wanandroid.presenter.hierarchy;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchySecondContract;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.mine.Collection;
+import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.event.ToppingEvent;
-import com.example.hy.wanandroid.model.hierarchy.HierarchySecondModel;
-import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.core.network.entity.hierarchy.SecondHierarchy;
+import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.entity.hierarchy.SecondHierarchy;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utils.RxUtils;
 
@@ -18,11 +19,9 @@ import javax.inject.Inject;
  */
 public class HierarchySecondPresenter extends BasePresenter<HierarchySecondContract.View> implements HierarchySecondContract.Presenter {
 
-    private HierarchySecondContract.Model mHierarchySecondListModel;
-
     @Inject
-    public HierarchySecondPresenter(HierarchySecondModel hierarchySecondListModel) {
-        mHierarchySecondListModel = hierarchySecondListModel;
+    public HierarchySecondPresenter(DataModel dataModel) {
+        super(dataModel);
     }
 
     @Override
@@ -32,12 +31,17 @@ public class HierarchySecondPresenter extends BasePresenter<HierarchySecondContr
                 RxBus.getInstance().toObservable(ToppingEvent.class)
                 .subscribe(toppingEvent -> mView.topping())
         );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(CollectionEvent.class)
+                        .subscribe(collectionEvent -> mView.refreshCollections(collectionEvent.getIds()))
+        );
     }
 
     @Override
     public void loadArticles(int pageNum, int id) {
         addSubcriber(
-                mHierarchySecondListModel.getArticles(pageNum, id)
+                mModel.getArticles(pageNum, id)
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
                 .subscribeWith(new DefaultObserver<SecondHierarchy>(mView) {
@@ -52,7 +56,7 @@ public class HierarchySecondPresenter extends BasePresenter<HierarchySecondContr
     @Override
     public void loadMoreArticles(int pageNum, int id) {
         addSubcriber(
-                mHierarchySecondListModel.getArticles(pageNum, id)
+                mModel.getArticles(pageNum, id)
                         .compose(RxUtils.switchSchedulers())
                         .compose(RxUtils.handleRequest2())
                         .subscribeWith(new DefaultObserver<SecondHierarchy>(mView, false, false) {
@@ -67,7 +71,7 @@ public class HierarchySecondPresenter extends BasePresenter<HierarchySecondContr
     @Override
     public void collectArticle(int id) {
         addSubcriber(
-                mHierarchySecondListModel.getCollectRequest(id)
+                mModel.getCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
                             @Override
@@ -82,7 +86,7 @@ public class HierarchySecondPresenter extends BasePresenter<HierarchySecondContr
     @Override
     public void unCollectArticle(int id) {
         addSubcriber(
-                mHierarchySecondListModel.getUnCollectRequest(id)
+                mModel.getUnCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
                             @Override

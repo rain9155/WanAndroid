@@ -11,7 +11,7 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchySecondContract;
 import com.example.hy.wanandroid.di.module.fragment.HierarchySecondFragmentModule;
-import com.example.hy.wanandroid.core.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.homepager.Article;
 import com.example.hy.wanandroid.presenter.hierarchy.HierarchySecondPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
@@ -132,6 +132,19 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
         showToast(getString(R.string.common_uncollection_success));
         mArticleList.get(mArticlePosition).setCollect(false);
         mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
+    }
+
+    @Override
+    public void refreshCollections(List<Integer> ids) {
+        for(int i = 0; i < ids.size(); i++){
+            for(int j = 0; j < mArticleList.size(); j++){
+                if(mArticleList.get(j).getId() == ids.get(i)){
+                    mArticleList.get(j).setCollect(false);
+                    mArticlesAdapter.notifyItemChanged(j + mArticlesAdapter.getHeaderLayoutCount());
+                    break;
+                }
+            }
+        }
     }
 
     @Override

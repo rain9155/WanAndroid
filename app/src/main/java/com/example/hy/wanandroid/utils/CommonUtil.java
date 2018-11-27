@@ -39,7 +39,6 @@ public class CommonUtil {
         return list == null || list.size() == 0;
     }
 
-
     /**
      * 获得缓存路径
      */

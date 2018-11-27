@@ -4,13 +4,15 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.view.IView;
+import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.utils.SnackUtil;
 import com.example.hy.wanandroid.utils.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportActivity;
@@ -20,12 +22,12 @@ import me.yokeyword.fragmentation.SupportActivity;
  * Created by 陈健宇 at 2018/10/21
  */
 public abstract class BaseActivity extends SupportActivity
-        implements IView {
+        implements BaseView {
 
     private Unbinder mUnbinder;
 
     protected abstract int getLayoutId();//获取Activity的布局Id
-    protected abstract void initView(Bundle savedInstanceState);//初始化控件
+    protected abstract void initView();//初始化控件
     protected abstract void initData();//初始化数据
 
     @SuppressLint("ResourceAsColor")
@@ -35,7 +37,7 @@ public abstract class BaseActivity extends SupportActivity
         setContentView(getLayoutId());
         mUnbinder = ButterKnife.bind(this);
         setStatusBarColor();
-        initView(savedInstanceState);
+        initView();
         initData();
     }
 
@@ -76,6 +78,16 @@ public abstract class BaseActivity extends SupportActivity
     @Override
     public void showLoading() {
 
+    }
+
+    @Override
+    public void userNightNode(boolean isNight) {
+        if(isNight){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+        recreate();
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ProjectsAdapter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerFragment;
-import com.example.hy.wanandroid.core.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.homepager.Article;
 
 import java.util.ArrayList;
 import java.util.List;

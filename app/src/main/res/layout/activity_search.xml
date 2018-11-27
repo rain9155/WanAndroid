@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
     <include layout="@layout/common_toolbal" />
 
@@ -115,7 +116,6 @@
             android:id="@+id/rv_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/background"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_search_history">

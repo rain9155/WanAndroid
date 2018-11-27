@@ -9,6 +9,16 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="SwitchTrack" parent="Theme.AppCompat.Light">
+        <!--开启时的颜色-->
+        <item name="colorControlActivated">@color/colorTrackOpen</item>
+        <!--关闭时颜色-->
+        <item name="colorSwitchThumbNormal">@color/colorTrackClose</item>
+        <!--关闭时的轨迹颜色-->
+        <item name="android:colorForeground">@color/colorTrackClose</item>
+
+    </style>
+
     <!--菜单风格-->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

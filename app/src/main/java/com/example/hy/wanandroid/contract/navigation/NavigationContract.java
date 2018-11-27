@@ -1,9 +1,9 @@
 package com.example.hy.wanandroid.contract.navigation;
 
 import com.example.hy.wanandroid.base.presenter.IPresenter;
-import com.example.hy.wanandroid.base.view.IView;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.navigation.Tag;
+import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.navigation.Tag;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import io.reactivex.Observable;
  */
 public interface NavigationContract {
 
-    interface View extends IView{
+    interface View extends BaseView {
         void showTags(List<Tag> tagList);//显示tag标签
         void showTagsName(List<String> tagsName);//显示tag标签名字
     }

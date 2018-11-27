@@ -14,8 +14,8 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
 import com.example.hy.wanandroid.di.module.fragment.HomeFragmentModule;
-import com.example.hy.wanandroid.core.network.entity.homepager.Article;
-import com.example.hy.wanandroid.core.network.entity.homepager.BannerData;
+import com.example.hy.wanandroid.model.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.homepager.BannerData;
 import com.example.hy.wanandroid.presenter.homepager.HomePresenter;
 import com.example.hy.wanandroid.utils.BannerImageLoader;
 import com.example.hy.wanandroid.utils.CommonUtil;
@@ -196,6 +196,19 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         showToast(getString(R.string.common_uncollection_success));
         mArticles.get(mArticlePosition).setCollect(false);
         mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
+    }
+
+    @Override
+    public void refreshCollections(List<Integer> ids) {
+       for(int i = 0; i < ids.size(); i++){
+          for(int j = 0; j < mArticles.size(); j++){
+              if(mArticles.get(j).getId() == ids.get(i)){
+                  mArticles.get(j).setCollect(false);
+                  mArticlesAdapter.notifyItemChanged(j + mArticlesAdapter.getHeaderLayoutCount());
+                  break;
+              }
+          }
+       }
     }
 
     @Override

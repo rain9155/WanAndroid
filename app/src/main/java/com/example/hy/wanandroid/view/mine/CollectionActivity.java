@@ -14,7 +14,7 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
-import com.example.hy.wanandroid.core.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.network.entity.mine.Collection;
 import com.example.hy.wanandroid.di.component.activity.DaggerCollectionActivityComponent;
 import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.presenter.mine.CollectionPresenter;
@@ -46,6 +46,8 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     RecyclerView rvCollections;
     @BindView(R.id.normal_view)
     SmartRefreshLayout normalView;
+    @BindView(R.id.tv_empty)
+    TextView tvEmpty;
 
     @Inject
     CollectionPresenter mPresenter;
@@ -55,8 +57,8 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     List<Collection> mCollections;
     @Inject
     CollectionsAdapter mCollectionsAdapter;
-    @BindView(R.id.tv_empty)
-    TextView tvEmpty;
+    @Inject
+    List<Integer> mIds;
 
     private int pageNum = 0;//首页文章页数
     private boolean isLoadMore = false;
@@ -68,8 +70,8 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     }
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
+    protected void initView( ) {
+        super.initView();
 
         if (!User.getInstance().isLoginStatus())
             LoginActivity.startActivityForResult(this, Constant.REQUEST_SHOW_COLLECTIONS);
@@ -81,7 +83,10 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
         ivCommonSearch.setVisibility(View.INVISIBLE);
         tvCommonTitle.setText(R.string.mineFragment_tvCollect);
         tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
-        tlCommon.setNavigationOnClickListener(v -> finish());
+        tlCommon.setNavigationOnClickListener(v -> {
+            if(!CommonUtil.isEmptyList(mIds)) RxBus.getInstance().post(new CollectionEvent(mIds));
+            finish();
+        });
 
         //collections
         mCollectionsAdapter.openLoadAnimation();
@@ -119,6 +124,12 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
             finish();
         if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_SHOW_COLLECTIONS)
             mPresenter.loadCollections(0);
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        if(!CommonUtil.isEmptyList(mIds)) RxBus.getInstance().post(new CollectionEvent(mIds));
+        finish();
     }
 
     @Override
@@ -164,9 +175,9 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     @Override
     public void unCollectArticleSuccess() {
         showToast(getString(R.string.common_uncollection_success));
+        mIds.add(mCollections.get(mCollectionPosition).getOriginId());
         mCollections.remove(mCollectionPosition);
         mCollectionsAdapter.notifyItemRemoved(mCollectionPosition + mCollectionsAdapter.getHeaderLayoutCount());
-        RxBus.getInstance().post(new CollectionEvent(mCollections.get(mCollectionPosition).getOriginId()));
         if(CommonUtil.isEmptyList(mCollections)) showEmptyLayout();
     }
 

@@ -7,10 +7,10 @@ import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.RegisterContract;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.core.network.entity.mine.Login;
-import com.example.hy.wanandroid.model.mine.RegisterModel;
+import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.entity.mine.Login;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 import javax.inject.Inject;
@@ -21,11 +21,9 @@ import javax.inject.Inject;
  */
 public class RegisterPresenter extends BasePresenter<RegisterContract.View> implements RegisterContract.Presenter {
 
-    private RegisterContract.Model mModel;
-
     @Inject
-    public RegisterPresenter(RegisterModel registerModel) {
-        mModel = registerModel;
+    public RegisterPresenter(DataModel dataModel) {
+        super(dataModel);
     }
 
     @Override

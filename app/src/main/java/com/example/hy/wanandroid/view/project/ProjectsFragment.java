@@ -11,7 +11,7 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
-import com.example.hy.wanandroid.core.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.homepager.Article;
 import com.example.hy.wanandroid.presenter.project.ProjectsPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.MainActivity;
@@ -100,54 +100,6 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
     }
 
     @Override
-    public void showProjects(List<Article> articleList) {
-        mArticles.addAll(articleList);
-        mProjectsAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showMoreProjects(List<Article> articleList) {
-        if(isLoadMore){
-            mArticles.addAll(articleList);
-            srlProjects.finishLoadMore();
-        }else {
-            if(!CommonUtil.isEmptyList(mArticles)) mArticles.clear();
-            mArticles.addAll(articleList);
-            srlProjects.finishRefresh();
-        }
-        mProjectsAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void topping() {
-        if(rvProjectList != null) rvProjectList.smoothScrollToPosition(0);
-    }
-
-    @Override
-    public void collectArticleSuccess() {
-        showToast(getString(R.string.common_collection_success));
-        mArticles.get(mArticlePosition).setCollect(true);
-        mProjectsAdapter.notifyItemChanged(mArticlePosition + mProjectsAdapter.getHeaderLayoutCount());
-    }
-
-    @Override
-    public void unCollectArticleSuccess() {
-        showToast(getString(R.string.common_uncollection_success));
-        mArticles.get(mArticlePosition).setCollect(false);
-        mProjectsAdapter.notifyItemChanged(mArticlePosition + mProjectsAdapter.getHeaderLayoutCount());
-    }
-    @Override
-    public void reLoad() {
-        super.reLoad();
-        mPresenter.loadProjects(0, mId);
-    }
-
-    @Override
-    public void unableRefresh() {
-        if(isLoadMore) srlProjects.finishLoadMore(); else srlProjects.finishRefresh();
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode != RESULT_OK) return;
         Article article = mArticles.get(mArticlePosition);
@@ -184,6 +136,69 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
             mPresenter = null;
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void showProjects(List<Article> articleList) {
+        mArticles.addAll(articleList);
+        mProjectsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showMoreProjects(List<Article> articleList) {
+        if(isLoadMore){
+            mArticles.addAll(articleList);
+            srlProjects.finishLoadMore();
+        }else {
+            if(!CommonUtil.isEmptyList(mArticles)) mArticles.clear();
+            mArticles.addAll(articleList);
+            srlProjects.finishRefresh();
+        }
+        mProjectsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void topping() {
+        if(rvProjectList != null) rvProjectList.smoothScrollToPosition(0);
+    }
+
+    @Override
+    public void collectArticleSuccess() {
+        showToast(getString(R.string.common_collection_success));
+        mArticles.get(mArticlePosition).setCollect(true);
+        mProjectsAdapter.notifyItemChanged(mArticlePosition + mProjectsAdapter.getHeaderLayoutCount());
+    }
+
+    @Override
+    public void unCollectArticleSuccess() {
+        showToast(getString(R.string.common_uncollection_success));
+        mArticles.get(mArticlePosition).setCollect(false);
+        mProjectsAdapter.notifyItemChanged(mArticlePosition + mProjectsAdapter.getHeaderLayoutCount());
+    }
+
+    @Override
+    public void refreshCollections(List<Integer> ids) {
+        for(int i = 0; i < ids.size(); i++){
+            for(int j = 0; j < mArticles.size(); j++){
+                if(mArticles.get(j).getId() == ids.get(i)){
+                    mArticles.get(j).setCollect(false);
+                    mProjectsAdapter.notifyItemChanged(j + mProjectsAdapter.getHeaderLayoutCount());
+                    break;
+                }
+            }
+        }
+    }
+
+
+    @Override
+    public void reLoad() {
+        super.reLoad();
+        mPresenter.loadProjects(0, mId);
+    }
+
+    @Override
+    public void unableRefresh() {
+        if(isLoadMore) srlProjects.finishLoadMore(); else srlProjects.finishRefresh();
     }
 
     public static Fragment newInstance(int id){

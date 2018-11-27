@@ -71,7 +71,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     }
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
+    protected void initView( ) {
 
         DaggerRegisterActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);

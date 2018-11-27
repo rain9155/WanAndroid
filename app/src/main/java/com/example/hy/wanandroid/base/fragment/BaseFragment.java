@@ -1,14 +1,11 @@
 package com.example.hy.wanandroid.base.fragment;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.hy.wanandroid.base.view.IView;
-import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.utils.SnackUtil;
 import com.example.hy.wanandroid.utils.ToastUtil;
 
@@ -23,7 +20,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  * Created by 陈健宇 at 2018/10/21
  */
 public abstract class BaseFragment extends SupportFragment
-        implements IView {
+        implements BaseView {
 
     private Unbinder mUnbinder;
 
@@ -95,6 +92,11 @@ public abstract class BaseFragment extends SupportFragment
 
     @Override
     public void showDialog() {
+
+    }
+
+    @Override
+    public void userNightNode(boolean isNight) {
 
     }
 }

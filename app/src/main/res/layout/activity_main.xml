@@ -38,7 +38,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/white"
+            android:background="@color/colorNavBtmBackground"
+            app:itemBackground="@color/colorNavBtmBackground"
+            app:itemIconTint="@drawable/nav_btm_color"
+            app:itemTextColor="@drawable/nav_btm_color"
             app:layout_behavior="@string/behaviour_bottom_nav"
             app:menu="@menu/home_btm_menu"
             app:elevation="@dimen/dp_5">

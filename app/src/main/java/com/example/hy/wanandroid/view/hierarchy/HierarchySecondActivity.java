@@ -63,7 +63,7 @@ public class HierarchySecondActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView(Bundle bundle) {
+    protected void initView() {
         mComponent = DaggerHierarchySecondActivityComponent.builder().appComponent(getAppComponent()).hierarchySecondActivityModule(new HierarchySecondActivityModule()).build();
         mComponent.inject(this);
 

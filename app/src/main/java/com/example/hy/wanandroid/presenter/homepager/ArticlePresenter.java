@@ -2,11 +2,10 @@ package com.example.hy.wanandroid.presenter.homepager;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.core.network.entity.mine.Collection;
-import com.example.hy.wanandroid.model.homepager.ArticleModel;
-import com.example.hy.wanandroid.model.homepager.HomeModel;
+import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.entity.mine.Collection;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 import javax.inject.Inject;
@@ -17,11 +16,10 @@ import javax.inject.Inject;
  */
 public class ArticlePresenter extends BasePresenter<ArticleContract.View> implements ArticleContract.Presenter {
 
-    private ArticleContract.Model mModel;
 
     @Inject
-    public ArticlePresenter(ArticleModel articleModel) {
-        mModel = articleModel;
+    public ArticlePresenter(DataModel dataModel) {
+        super(dataModel);
     }
 
     @Override

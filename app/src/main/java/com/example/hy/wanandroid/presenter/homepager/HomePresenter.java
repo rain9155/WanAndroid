@@ -2,13 +2,14 @@ package com.example.hy.wanandroid.presenter.homepager;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.mine.Collection;
+import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.event.ToppingEvent;
-import com.example.hy.wanandroid.model.homepager.HomeModel;
-import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.core.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.core.network.entity.homepager.BannerData;
+import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.entity.homepager.Articles;
+import com.example.hy.wanandroid.model.network.entity.homepager.BannerData;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utils.RxUtils;
 
@@ -22,26 +23,29 @@ import javax.inject.Inject;
  */
 public class HomePresenter extends BasePresenter<HomeContract.View> implements HomeContract.Presenter{
 
-    private HomeContract.Model mHomeModel;
 
     @Inject
-    public HomePresenter(HomeModel homeModel) {
-        this.mHomeModel = homeModel;
+    public HomePresenter(DataModel dataModel) {
+        super(dataModel);
     }
 
     @Override
     public void subscribleEvent() {
-        super.subscribleEvent();
         addSubcriber(
                 RxBus.getInstance().toObservable(ToppingEvent.class)
                         .subscribe(toppingEvent -> mView.topping())
+        );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(CollectionEvent.class)
+                .subscribe(collectionEvent -> mView.refreshCollections(collectionEvent.getIds()))
         );
     }
 
     @Override
     public void loadBannerDatas() {
         addSubcriber(
-                mHomeModel.getBannerDatas()
+                mModel.getBannerDatas()
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
                 .subscribeWith(new DefaultObserver<List<BannerData>>(mView, false, false) {
@@ -57,7 +61,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     @Override
     public void loadArticles(int pageNum) {
         addSubcriber(
-                mHomeModel.getArticles(pageNum)
+                mModel.getArticles(pageNum)
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
                 .subscribeWith(new DefaultObserver<Articles>(mView) {
@@ -72,7 +76,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     @Override
     public void loadMoreArticles(int pageNum) {
         addSubcriber(
-                mHomeModel.getArticles(pageNum)
+                mModel.getArticles(pageNum)
                         .compose(RxUtils.switchSchedulers())
                         .compose(RxUtils.handleRequest2())
                         .subscribeWith(new DefaultObserver<Articles>(mView, false, false) {
@@ -87,7 +91,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     @Override
     public void collectArticle(int id) {
         addSubcriber(
-                mHomeModel.getCollectRequest(id)
+                mModel.getCollectRequest(id)
                 .compose(RxUtils.switchSchedulers())
                 .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
                     @Override
@@ -102,7 +106,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     @Override
     public void unCollectArticle(int id) {
         addSubcriber(
-                mHomeModel.getUnCollectRequest(id)
+                mModel.getUnCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
                             @Override

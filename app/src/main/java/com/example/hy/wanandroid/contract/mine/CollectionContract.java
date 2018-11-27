@@ -1,10 +1,10 @@
 package com.example.hy.wanandroid.contract.mine;
 
 import com.example.hy.wanandroid.base.presenter.IPresenter;
-import com.example.hy.wanandroid.base.view.IView;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.mine.Collection;
-import com.example.hy.wanandroid.core.network.entity.mine.CollectionRequest;
+import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.network.entity.mine.CollectionRequest;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import io.reactivex.Observable;
  */
 public interface CollectionContract {
 
-    interface View extends IView{
+    interface View extends BaseView {
         void showCollections(List<Collection> collections);
         void showMoreCollections(List<Collection> collections);
         void showEmptyLayout();

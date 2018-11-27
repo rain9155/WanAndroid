@@ -4,17 +4,14 @@ import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.core.network.entity.mine.Login;
+import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.entity.mine.Login;
 import com.example.hy.wanandroid.event.LoginEvent;
-import com.example.hy.wanandroid.model.mine.MineModel;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 import javax.inject.Inject;
-
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Predicate;
 
 /**
  * 我的界面的Presenter
@@ -22,11 +19,9 @@ import io.reactivex.functions.Predicate;
  */
 public class MinePresenter extends BasePresenter<MineContract.View> implements MineContract.Presenter{
 
-    private MineModel mModel;
-
     @Inject
-    public MinePresenter(MineModel mineModel) {
-        mModel = mineModel;
+    public MinePresenter(DataModel dataModel) {
+        super(dataModel);
     }
 
     @Override

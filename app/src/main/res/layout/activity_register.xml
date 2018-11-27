@@ -10,6 +10,7 @@
         android:id="@+id/cl_register"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         android:visibility="visible">
 
         <com.scwang.wave.MultiWaveHeader
@@ -38,6 +39,7 @@
             android:id="@+id/tl_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="@color/colorEtHint"
             android:layout_marginTop="@dimen/dp_16"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
@@ -51,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/registerActivity_account"
                 android:inputType="text"
+                android:textColor="@color/primaryText"
                 android:maxLines="1"
                 android:singleLine="true" />
 
@@ -60,6 +63,7 @@
             android:id="@+id/tl_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="@color/colorEtHint"
             android:layout_marginTop="@dimen/dp_16"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
@@ -73,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/registerActivity_password"
                 android:imeActionId="6"
+                android:textColor="@color/primaryText"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
@@ -86,6 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_16"
+            android:textColorHint="@color/colorEtHint"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
             app:layout_constraintRight_toRightOf="parent"
@@ -98,6 +104,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/registerActivity_password_again"
                 android:imeActionId="6"
+                android:textColor="@color/primaryText"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"

@@ -2,14 +2,13 @@ package com.example.hy.wanandroid.presenter.mine;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.core.network.entity.mine.Collection;
-import com.example.hy.wanandroid.core.network.entity.mine.CollectionRequest;
-import com.example.hy.wanandroid.model.mine.CollectionModel;
+import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.network.entity.mine.CollectionRequest;
 import com.example.hy.wanandroid.utils.RxUtils;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -19,11 +18,9 @@ import javax.inject.Inject;
  */
 public class CollectionPresenter extends BasePresenter<CollectionContract.View> implements CollectionContract.Presenter{
 
-    private CollectionContract.Model mModel;
-
     @Inject
-    public CollectionPresenter(CollectionModel model) {
-        mModel = model;
+    public CollectionPresenter(DataModel model) {
+        super(model);
     }
 
     @Override

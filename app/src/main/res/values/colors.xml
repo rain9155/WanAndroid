@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    //主题
+
     <color name="colorPrimary">#00BCD4</color>
     <color name="colorPrimaryDark">#0097A7</color>
     <color name="colorAccent">#03A9F4</color>
@@ -14,7 +14,13 @@
     <color name="translucence">#80FFFFFF</color>
     <color name="transparency">#00000000</color>
     <color name="colorCollected">#81ff0000</color>
-
-    //mine
-
+    <color name="colorIndicator">#00BCD4</color>
+    <color name="colorBorder">#00BCD4</color>
+    <color name="colorNavBtmBackground">#FFFFFF</color>
+    <color name="colorNavBtmIconTint">#00BCD4</color>
+    <color name="colorNavBtmText">#9E9E9E</color>
+    <color name="colorEtHint">#9E9E9E</color>
+    <color name="colorTrackOpen">#03A9F4</color>
+    <color name="colorTrackClose">#757575</color>
+    <color name="colorSwitchButton">#9E9E9E</color>
 </resources>

@@ -2,10 +2,10 @@ package com.example.hy.wanandroid.presenter.project;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.project.ProjectContract;
-import com.example.hy.wanandroid.model.project.ProjectModel;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.core.network.entity.project.Project;
+import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.entity.project.Project;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 import java.util.List;
@@ -22,17 +22,15 @@ import io.reactivex.schedulers.Schedulers;
 public class ProjectPresenter extends BasePresenter<ProjectContract.View> implements ProjectContract.Presenter{
 
 
-    private ProjectContract.Model mProjectModel;
-
     @Inject
-    public ProjectPresenter(ProjectModel projectModel) {
-        mProjectModel = projectModel;
+    public ProjectPresenter(DataModel dataModel) {
+        super(dataModel);
     }
 
     @Override
     public void loadProjectList() {
         addSubcriber(
-                mProjectModel.getProjectList()
+                mModel.getProjectList()
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
                 .subscribeWith(new DefaultObserver<List<Project>>(mView ) {

@@ -15,7 +15,7 @@ import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
 import com.example.hy.wanandroid.contract.navigation.NavigationContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerNavigationActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.NavigationActivityModule;
-import com.example.hy.wanandroid.core.network.entity.navigation.Tag;
+import com.example.hy.wanandroid.model.network.entity.navigation.Tag;
 import com.example.hy.wanandroid.presenter.navigation.NavigationPresenter;
 import com.example.hy.wanandroid.view.search.SearchActivity;
 
@@ -65,8 +65,8 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
     }
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
+    protected void initView() {
+        super.initView();
         DaggerNavigationActivityComponent.builder().appComponent(getAppComponent()).navigationActivityModule(new NavigationActivityModule()).build().inject(this);
         mPresenter.attachView(this);
 

@@ -18,6 +18,8 @@
     <string name="articleActivity_support">网页由WanAndroid网站提供\n
                                             \t\t www.wanandroid.com</string>
     <string name="articleActivity_share">分享</string>
+    <string name="articleActivity_share_fail">分享失败</string>
+    <string name="articleActivity_share_to">分享到</string>
     <string name="articleActivity_collection" tools:ignore="ExtraTranslation">收藏</string>
     <string name="articleActivity_copy">复制链接</string>
     <string name="articleActivity_browser">用系统浏览器打开</string>
@@ -74,6 +76,15 @@
 
     <string name="collectionActivity_empty_collection">空空如也，快去收藏干货吧！</string>
 
+    <string name="settingsActivity_tvSettingsCommon">基本设置</string>
+    <string name="settingsActivity_tvSettingsOther">其他设置</string>
+    <string name="settingsActivity_tvNoImage">无图模式</string>
+    <string name="settingsActivity_tvAutoCache">自动缓存</string>
+    <string name="settingsActivity_tvNightMode">夜间模式</string>
+    <string name="settingsActivity_tvClearCache">清空缓存</string>
+    <string name="settingsActivity_tvFeedback">意见反馈</string>
+    <string name="settingsActivity_email_to">发送给</string>
+
     //navigation
     <string name="navigationActivity_tlTitle">导航</string>
 
@@ -91,6 +102,7 @@
     <string name="error_unavailable">网络不可用</string>
     <string name="error_unknown">未知错误</string>
     <string name="loading_error">出错啦！点击空白处刷新</string>
+    <string name="error_switch_fail">切换夜间模式失败</string>
     <string name="login">请先登陆！</string>
 
     //behaviour
@@ -99,5 +111,6 @@
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_about_us">AboutUsActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
 
 </resources>

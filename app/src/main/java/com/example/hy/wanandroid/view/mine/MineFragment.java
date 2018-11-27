@@ -83,7 +83,7 @@ public class MineFragment extends BaseFragment implements MineContract.View {
         }
 
         btnLogin.setOnClickListener(v -> LoginActivity.startActivity(_mActivity));
-
+        clSettings.setOnClickListener(v -> SettingsActivity.startActivity(_mActivity));
         clCollection.setOnClickListener(v -> CollectionActivity.startActivity(_mActivity));
         clAboutus.setOnClickListener(v -> AboutUsActivity.startActivity(_mActivity));
         clLogout.setOnClickListener(v -> {

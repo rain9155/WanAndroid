@@ -1,8 +1,7 @@
 package com.example.hy.wanandroid.contract;
 
 import com.example.hy.wanandroid.base.presenter.IPresenter;
-import com.example.hy.wanandroid.base.view.IView;
-import com.example.hy.wanandroid.view.MainActivity;
+import com.example.hy.wanandroid.base.view.BaseView;
 
 /**
  * Mian活动
@@ -10,16 +9,12 @@ import com.example.hy.wanandroid.view.MainActivity;
  */
 public interface MainContract {
 
-    interface View extends IView{
+    interface View extends BaseView {
 
     }
 
     interface Presenter extends IPresenter<MainContract.View>{
-
+        void setCurrentItem(int position);
+        int getCurrentItem();
     }
-
-    interface Model{
-
-    }
-
 }

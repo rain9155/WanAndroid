@@ -1,11 +1,9 @@
 package com.example.hy.wanandroid.contract.project;
 
 import com.example.hy.wanandroid.base.presenter.IPresenter;
-import com.example.hy.wanandroid.base.view.IView;
-import com.example.hy.wanandroid.contract.MainContract;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.homepager.Article;
-import com.example.hy.wanandroid.core.network.entity.project.Project;
+import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.project.Project;
 
 import java.util.List;
 
@@ -17,7 +15,7 @@ import io.reactivex.Observable;
  */
 public interface ProjectContract {
 
-    interface View extends IView {
+    interface View extends BaseView {
         void showProjectList(List<Project> projectList);
     }
 

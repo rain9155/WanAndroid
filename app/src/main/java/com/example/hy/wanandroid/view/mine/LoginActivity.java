@@ -67,7 +67,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
+    protected void initView( ) {
         DaggerLoginActivityComponent.builder().appComponent(getAppComponent()).loginActivityModule(new LoginActivityModule()).build().inject(this);
         mPresenter.attachView(this);
 

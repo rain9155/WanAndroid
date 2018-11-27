@@ -1,14 +1,12 @@
 package com.example.hy.wanandroid.contract.search;
 
-import android.database.Cursor;
-
 import com.example.hy.wanandroid.base.presenter.IPresenter;
-import com.example.hy.wanandroid.base.view.IView;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.homepager.Article;
-import com.example.hy.wanandroid.core.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.core.network.entity.mine.Collection;
-import com.example.hy.wanandroid.core.network.entity.search.HotKey;
+import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.homepager.Articles;
+import com.example.hy.wanandroid.model.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.network.entity.search.HotKey;
 
 import java.util.List;
 
@@ -21,7 +19,7 @@ import io.reactivex.Observable;
 public interface SearchContract {
 
 
-    interface View extends IView{
+    interface View extends BaseView {
         void showHotKey(List<HotKey> hotKeyList);//显示搜索热词
         void showHistories(List<String> histories);//显示搜索历史
         void addOneHistorySuccess(String record);//添加一条搜索历史成功

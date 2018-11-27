@@ -4,7 +4,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.NavigationTagsAdapter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerActivity;
-import com.example.hy.wanandroid.core.network.entity.navigation.Tag;
+import com.example.hy.wanandroid.model.network.entity.navigation.Tag;
 
 import java.util.ArrayList;
 import java.util.List;

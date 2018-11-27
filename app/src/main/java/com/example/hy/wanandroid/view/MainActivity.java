@@ -28,6 +28,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaeger.library.StatusBarUtil;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import butterknife.BindView;
 import android.os.Handler;
@@ -58,13 +59,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
-        mMainActivityComponent = DaggerMainActivityComponent.builder()
-                .appComponent(getAppComponent())
-                .build();
-        mMainActivityComponent.inject(this);
-        mPresenter.attachView(this);
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mFragments = new BaseFragment[4];
         if(savedInstanceState == null) {
             mFragments[0] = HomeFragment.newInstance();
@@ -72,12 +68,23 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             mFragments[2] = ProjectFragment.newInstance();
             mFragments[3] = MineFragment.newInstance();
             loadMultipleRootFragment(R.id.fl_container, 0, mFragments);
+            AppCompatDelegate.setDefaultNightMode(mPresenter.getNightModeState() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         }else {
             mFragments[0] = findFragment(HomeFragment.class);
             mFragments[1] = findFragment(HierarchyFragment.class);
             mFragments[2] = findFragment(ProjectFragment.class);
             mFragments[3] = findFragment(MineFragment.class);
+            bnvBtm.setSelectedItemId(getSelectedId(mPresenter.getCurrentItem()));
         }
+    }
+
+    @Override
+    protected void initView() {
+        mMainActivityComponent = DaggerMainActivityComponent.builder()
+                .appComponent(getAppComponent())
+                .build();
+        mMainActivityComponent.inject(this);
+        mPresenter.attachView(this);
 
         bnvBtm.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()){
@@ -115,7 +122,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     protected void initData() {
-
+        mPresenter.subscribleEvent();
     }
 
     @Override
@@ -126,6 +133,12 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             Constant.TOUCH_TIME = System.currentTimeMillis();
             ToastUtil.showToast(this, getResources().getString(R.string.mainActivity_back));
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mPresenter.setCurrentItem(mPreFragmentPosition);
     }
 
     @Override
@@ -145,6 +158,31 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     public MainActivityComponent getComponent(){
         return mMainActivityComponent;
     }
+    /**
+     * 获得被选中的item
+     */
+    private int getSelectedId(int currentItem) {
+        int id;
+        switch (currentItem){
+            case 0:
+                id = R.id.item_home;
+                break;
+            case 1:
+                id = R.id.hierarchy;
+                break;
+            case 2:
+                id = R.id.item_project;
+                break;
+            case 3:
+                id = R.id.item_mine;
+                break;
+            default:
+                id = R.id.item_home;
+                break;
+        }
+        return id;
+    }
+
 
     /**
      * 显示floatingButton

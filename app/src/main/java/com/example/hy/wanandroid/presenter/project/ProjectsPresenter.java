@@ -2,12 +2,13 @@ package com.example.hy.wanandroid.presenter.project;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.mine.Collection;
+import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.event.ToppingEvent;
-import com.example.hy.wanandroid.model.project.ProjectsModel;
-import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.core.network.entity.homepager.Articles;
+import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.entity.homepager.Articles;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utils.RxUtils;
 
@@ -19,11 +20,10 @@ import javax.inject.Inject;
  */
 public class ProjectsPresenter extends BasePresenter<ProjectsContract.View> implements ProjectsContract.Presenter {
 
-    private ProjectsContract.Model mProjectsModel;
 
     @Inject
-    public ProjectsPresenter(ProjectsModel projectsModel) {
-        mProjectsModel = projectsModel;
+    public ProjectsPresenter(DataModel dataModel) {
+       super(dataModel);
     }
 
     @Override
@@ -33,12 +33,16 @@ public class ProjectsPresenter extends BasePresenter<ProjectsContract.View> impl
                 RxBus.getInstance().toObservable(ToppingEvent.class)
                 .subscribe(toppingEvent -> mView.topping())
         );
+        addSubcriber(
+                RxBus.getInstance().toObservable(CollectionEvent.class)
+                        .subscribe(collectionEvent -> mView.refreshCollections(collectionEvent.getIds()))
+        );
     }
 
     @Override
     public void loadProjects(int pageNum, int id) {
         addSubcriber(
-                mProjectsModel.getProjects(pageNum, id)
+                mModel.getProjects(pageNum, id)
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
                 .subscribeWith(new DefaultObserver<Articles>(mView) {
@@ -53,7 +57,7 @@ public class ProjectsPresenter extends BasePresenter<ProjectsContract.View> impl
     @Override
     public void loadMoreProjects(int pageNum, int id) {
         addSubcriber(
-                mProjectsModel.getProjects(pageNum, id)
+                mModel.getProjects(pageNum, id)
                         .compose(RxUtils.switchSchedulers())
                         .compose(RxUtils.handleRequest2())
                         .subscribeWith(new DefaultObserver<Articles>(mView, false, false) {
@@ -68,7 +72,7 @@ public class ProjectsPresenter extends BasePresenter<ProjectsContract.View> impl
     @Override
     public void collectArticle(int id) {
         addSubcriber(
-                mProjectsModel.getCollectRequest(id)
+                mModel.getCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
                             @Override
@@ -83,7 +87,7 @@ public class ProjectsPresenter extends BasePresenter<ProjectsContract.View> impl
     @Override
     public void unCollectArticle(int id) {
         addSubcriber(
-                mProjectsModel.getUnCollectRequest(id)
+                mModel.getUnCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
                             @Override

@@ -7,7 +7,7 @@
 
     <list>
 
-        <mapping class="com.example.hy.wanandroid.core.db.bean.HistoryRecord"> </mapping>
+        <mapping class="com.example.hy.wanandroid.model.db.bean.HistoryRecord"> </mapping>
 
     </list>
 

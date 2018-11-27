@@ -1,9 +1,9 @@
 package com.example.hy.wanandroid.contract.hierarchy;
 
 import com.example.hy.wanandroid.base.presenter.IPresenter;
-import com.example.hy.wanandroid.base.view.IView;
-import com.example.hy.wanandroid.core.network.entity.BaseResponse;
-import com.example.hy.wanandroid.core.network.entity.hierarchy.FirstHierarchy;
+import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchy;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import io.reactivex.Observable;
  */
 public interface HierarchyContract {
 
-    interface View extends IView {
+    interface View extends BaseView {
         void showFirstHierarchyList(List<FirstHierarchy> firstHierarchyList);
         void showMoreFirstHierarchyList(List<FirstHierarchy> firstHierarchyList);
         void topping();//置顶

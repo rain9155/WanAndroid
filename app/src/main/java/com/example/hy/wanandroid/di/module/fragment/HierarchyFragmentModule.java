@@ -4,7 +4,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.FirstHierarchyAdapter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerFragment;
-import com.example.hy.wanandroid.core.network.entity.hierarchy.FirstHierarchy;
+import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchy;
 
 import java.util.ArrayList;
 import java.util.List;

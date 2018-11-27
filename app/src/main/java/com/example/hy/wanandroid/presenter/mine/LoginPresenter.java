@@ -9,9 +9,9 @@ import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.LoginContract;
 import com.example.hy.wanandroid.event.LoginEvent;
-import com.example.hy.wanandroid.model.mine.LoginModel;
-import com.example.hy.wanandroid.core.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.core.network.entity.mine.Login;
+import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.entity.mine.Login;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 import javax.inject.Inject;
@@ -21,11 +21,9 @@ import javax.inject.Inject;
  */
 public class LoginPresenter extends BasePresenter<LoginContract.View> implements LoginContract.Presenter {
 
-    private LoginContract.Model mModel;
-
     @Inject
-    public LoginPresenter(LoginModel loginModel) {
-        this.mModel = loginModel;
+    public LoginPresenter(DataModel dataModel) {
+        super(dataModel);
     }
 
     @Override
