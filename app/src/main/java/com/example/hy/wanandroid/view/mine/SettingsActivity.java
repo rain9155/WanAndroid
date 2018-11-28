@@ -20,6 +20,7 @@ import com.example.hy.wanandroid.view.search.SearchActivity;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;

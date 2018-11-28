@@ -25,6 +25,7 @@ public interface HomeContract {
         void collectArticleSuccess();//收藏文章成功
         void unCollectArticleSuccess();//取消收藏成功
         void refreshCollections(List<Integer> ids);//刷新文章列表中的收藏
+        void autoRefresh();//自动刷新
     }
 
     interface Presenter extends IPresenter<HomeContract.View> {

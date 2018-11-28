@@ -2,6 +2,8 @@ package com.example.hy.wanandroid.presenter.homepager;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
+import com.example.hy.wanandroid.event.AutoCacheEvent;
+import com.example.hy.wanandroid.event.NoImageEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.mine.Collection;
@@ -39,6 +41,15 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
         addSubcriber(
                 RxBus.getInstance().toObservable(CollectionEvent.class)
                 .subscribe(collectionEvent -> mView.refreshCollections(collectionEvent.getIds()))
+        );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(NoImageEvent.class)
+                .subscribe(noImageEvent -> mView.autoRefresh())
+        );
+        addSubcriber(
+                RxBus.getInstance().toObservable(AutoCacheEvent.class)
+                        .subscribe(noImageEvent -> mView.autoRefresh())
         );
     }
 

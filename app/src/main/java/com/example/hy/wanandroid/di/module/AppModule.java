@@ -2,6 +2,9 @@ package com.example.hy.wanandroid.di.module;
 
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
+import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.model.db.DbHelper;
+import com.example.hy.wanandroid.model.network.NetworkHelper;
 import com.example.hy.wanandroid.model.network.interceptor.ReadCookiesInterceptor;
 import com.example.hy.wanandroid.model.network.interceptor.WriteCookiesInterceptor;
 import com.example.hy.wanandroid.di.scope.PerFragment;
@@ -12,6 +15,7 @@ import com.example.hy.wanandroid.model.network.api.NavigationApis;
 import com.example.hy.wanandroid.model.network.api.ProjectApis;
 import com.example.hy.wanandroid.model.network.api.SearchApis;
 import com.example.hy.wanandroid.model.network.gson.CustomGsonConverterFactory;
+import com.example.hy.wanandroid.model.prefs.PreferencesHelper;
 
 import java.util.concurrent.TimeUnit;
 
@@ -109,5 +113,4 @@ public class AppModule {
      MineApis provideMineApis(Retrofit retrofit){
         return retrofit.create(MineApis.class);
     }
-
 }

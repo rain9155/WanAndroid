@@ -212,6 +212,11 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
     }
 
     @Override
+    public void autoRefresh() {
+        srlHome.autoRefresh();
+    }
+
+    @Override
     public void unableRefresh() {
         if(isLoadMore) srlHome.finishLoadMore(); else srlHome.finishRefresh();
     }

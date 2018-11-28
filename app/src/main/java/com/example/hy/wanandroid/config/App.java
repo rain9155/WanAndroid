@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatDelegate;
  */
 public class App extends LitePalApplication {
 
-    private static Context mContext;
+    private static App mContext;
 
     //static 代码段可以防止内存泄露
     static {
@@ -43,14 +43,15 @@ public class App extends LitePalApplication {
         super.onCreate();
         SQLiteDatabase db = LitePal.getDatabase();
         mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
-        mContext = getApplicationContext();
+        mContext = this;
+        getApplicationContext();
     }
 
     public AppComponent getAppComponent(){
         return mAppComponent;
     }
 
-    public static Context getContext(){
+    public static App getContext(){
         return mContext;
     }
 }

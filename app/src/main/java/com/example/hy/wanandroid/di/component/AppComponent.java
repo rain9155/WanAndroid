@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.di.component;
 
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.module.AppModule;
+import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.api.HierarchyApis;
 import com.example.hy.wanandroid.model.network.api.HomeApis;
 import com.example.hy.wanandroid.model.network.api.MineApis;
@@ -24,6 +25,8 @@ public interface AppComponent {
     void inject(App app);//注入App
 
     App getApp();
+
+    DataModel getDataModel();
 
     Retrofit getRetrofit();
     HomeApis getHomeApis();

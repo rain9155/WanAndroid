@@ -3,7 +3,9 @@ package com.example.hy.wanandroid.presenter.mine;
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
+import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
+import com.example.hy.wanandroid.event.NoImageEvent;
 import com.example.hy.wanandroid.model.DataModel;
 
 import javax.inject.Inject;
@@ -22,11 +24,13 @@ public class SettingsPresenter extends BasePresenter<SettingsContract.View> impl
     @Override
     public void setNoImageState(boolean isNoImage) {
         mModel.setNoImageState(isNoImage);
+        RxBus.getInstance().post(new NoImageEvent());
     }
 
     @Override
     public void setAutoCacheState(boolean isAuto) {
         mModel.setAutoCacheState(isAuto);
+        RxBus.getInstance().post(new AutoCacheEvent());
     }
 
     @Override

@@ -189,6 +189,11 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
         }
     }
 
+    @Override
+    public void autoRefresh() {
+        srlProjects.autoRefresh();
+    }
+
 
     @Override
     public void reLoad() {

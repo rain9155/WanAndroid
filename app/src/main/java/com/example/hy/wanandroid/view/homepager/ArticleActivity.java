@@ -29,6 +29,7 @@ import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerArticleActivityComponent;
 import com.example.hy.wanandroid.presenter.homepager.ArticlePresenter;
+import com.example.hy.wanandroid.utils.NetWorkUtil;
 import com.example.hy.wanandroid.utils.ShareUtil;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.widget.layout.WebLayout;
@@ -266,17 +267,24 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
      */
     @SuppressLint("SetJavaScriptEnabled")
     private void setSettings(WebSettings settings) {
-
-        if (mPresenter.getNoImageState()){
+        if (mPresenter.getNoImageState())
             settings.setBlockNetworkImage(true);
-        }else {
+        else
             settings.setBlockNetworkImage(false);
-        }
 
         if(mPresenter.getAutoCacheState()){
-
+            settings.setAppCacheEnabled(true);
+            settings.setDatabaseEnabled(true);
+            settings.setDatabaseEnabled(true);
+            if(NetWorkUtil.isNetworkConnected())
+                settings.setCacheMode(WebSettings.LOAD_DEFAULT);//（默认）根据cache-control决定是否从网络上取数据
+            else
+                settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//只要本地有，无论是否过期，或者no-cache，都使用缓存中的数据。
         }else {
-
+            settings.setAppCacheEnabled(false);
+            settings.setDatabaseEnabled(false);
+            settings.setDatabaseEnabled(false);
+            settings.setCacheMode(WebSettings.LOAD_NO_CACHE);//不使用缓存，只从网络获取数据
         }
 
         //支持缩放

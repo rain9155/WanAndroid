@@ -9,6 +9,15 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <!-- 解决启动页白屏的问题 -->
+    <style name="LauncherTheme" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@drawable/ic_launch</item>
+    </style>
+
     <style name="SwitchTrack" parent="Theme.AppCompat.Light">
         <!--开启时的颜色-->
         <item name="colorControlActivated">@color/colorTrackOpen</item>

@@ -59,6 +59,6 @@ public class PreferencesHelperImp implements PreferencesHelper {
 
     @Override
     public boolean getAutoCacheState() {
-        return mPreferences.getBoolean(Constant.KEY_PREFS_AUTOCACHE, false);
+        return mPreferences.getBoolean(Constant.KEY_PREFS_AUTOCACHE, true);
     }
 }

@@ -23,11 +23,7 @@
         <activity
             android:name=".view.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".view.hierarchy.HierarchySecondActivity" />
         <activity android:name=".view.navigation.NavigationActivity" />
@@ -44,7 +40,16 @@
             android:label="@string/title_activity_about_us"
             android:theme="@style/AppTheme" />
         <activity android:name=".view.mine.CollectionActivity" />
-        <activity android:name=".view.mine.SettingsActivity"></activity>
+        <activity android:name=".view.mine.SettingsActivity" />
+        <activity
+            android:name=".view.LaunchActivity"
+            android:theme="@style/LauncherTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
