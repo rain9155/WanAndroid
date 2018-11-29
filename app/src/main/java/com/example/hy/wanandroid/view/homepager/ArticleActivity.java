@@ -214,6 +214,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     private void collection() {
         if(!User.getInstance().isLoginStatus()){
             LoginActivity.startActivityForResult(this, Constant.REQUEST_COLLECT_ARTICLE);
+            showToast(getString(R.string.first_login));
             return;
         }
         if (isCollection) {

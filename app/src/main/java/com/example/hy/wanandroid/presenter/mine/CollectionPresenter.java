@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.presenter.mine;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
@@ -34,6 +35,12 @@ public class CollectionPresenter extends BasePresenter<CollectionContract.View> 
                     public void onNext(CollectionRequest collectionRequest) {
                         super.onNext(collectionRequest);
                         mView.showCollections(collectionRequest.getDatas());
+                    }
+
+                    @Override
+                    protected void tokenExpire() {
+                        super.tokenExpire();
+                        mView.tokenExpire(Constant.REQUEST_SHOW_COLLECTIONS);
                     }
                 })
         );

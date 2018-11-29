@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.presenter.homepager;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
@@ -110,6 +111,12 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                         super.onNext(baseResponse);
                         mView.collectArticleSuccess();
                     }
+
+                    @Override
+                    protected void tokenExpire() {
+                        super.tokenExpire();
+                        mView.tokenExpire(Constant.REQUEST_COLLECT_ARTICLE);
+                    }
                 })
         );
     }
@@ -124,6 +131,12 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                             public void onNext(BaseResponse<Collection> baseResponse) {
                                 super.onNext(baseResponse);
                                 mView.unCollectArticleSuccess();
+                            }
+
+                            @Override
+                            protected void tokenExpire() {
+                                super.tokenExpire();
+                                mView.tokenExpire(Constant.REQUEST_COLLECT_ARTICLE);
                             }
                         })
         );

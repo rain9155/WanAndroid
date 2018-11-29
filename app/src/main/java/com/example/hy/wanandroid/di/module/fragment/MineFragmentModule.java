@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.di.module.fragment;
 
 import com.example.hy.wanandroid.di.scope.PerFragment;
-import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
 
 import dagger.Module;
 import dagger.Provides;
@@ -12,10 +11,5 @@ import dagger.Provides;
 @Module
 public class MineFragmentModule {
 
-    @Provides
-    @PerFragment
-    LogoutDialog provideLogoutDialog(){
-        return new LogoutDialog();
-    }
 
 }

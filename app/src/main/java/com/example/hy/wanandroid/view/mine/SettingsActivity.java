@@ -111,7 +111,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
 
     @Override
     protected void initData() {
-
+        mPresenter.subscribleEvent();
     }
 
     @Override

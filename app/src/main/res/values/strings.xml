@@ -5,6 +5,7 @@
     //other
     <string name="mainActivity_back">再按一次退出WanAndroid</string>
     <string name="loading">loading</string>
+    <string name="first_login">请先登陆</string>
 
     //common
     <string name="common_collection_success">收藏成功</string>
@@ -34,10 +35,10 @@
     <string name="mineFragment_tvSetting">设置</string>
     <string name="mineFragment_tvAboutUs">关于我们</string>
     <string name="mineFragment_tvLogout">退出登陆</string>
-    <string name="mineFragment_confirm_logout">确认退出登陆？</string>
-    <string name="mineFragment_logout_toast">提示</string>
-    <string name="mineFragment_logout_cancel">取消</string>
-    <string name="mineFragment_logout_confirm">确认</string>
+    <string name="dialog_confirm_logout">确认退出登陆？</string>
+    <string name="dialog_logout_toast">提示</string>
+    <string name="dialog_logout_cancel">取消</string>
+    <string name="dialog_logout_confirm">确认</string>
 
     <string name="loginActivity_account">用户名</string>
     <string name="loginActivity_password">密码</string>

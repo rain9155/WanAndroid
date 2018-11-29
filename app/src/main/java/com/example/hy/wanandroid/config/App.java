@@ -33,7 +33,6 @@ public class App extends LitePalApplication {
         //设置全局的Footer构建器
         SmartRefreshLayout.setDefaultRefreshFooterCreator(((context, layout) ->
                 new ClassicsFooter(context).setDrawableSize(20))); //经典Footer
-
     }
 
     private AppComponent mAppComponent;

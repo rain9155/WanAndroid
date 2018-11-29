@@ -158,6 +158,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     public MainActivityComponent getComponent(){
         return mMainActivityComponent;
     }
+
     /**
      * 获得被选中的item
      */

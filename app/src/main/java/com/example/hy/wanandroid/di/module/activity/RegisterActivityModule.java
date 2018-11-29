@@ -2,7 +2,6 @@ package com.example.hy.wanandroid.di.module.activity;
 
 import com.example.hy.wanandroid.di.scope.PerActivity;
 import com.example.hy.wanandroid.widget.dialog.LoadingDialog;
-import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
 
 import dagger.Module;
 import dagger.Provides;

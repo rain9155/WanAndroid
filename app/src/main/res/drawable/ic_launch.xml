@@ -3,7 +3,7 @@
 
     <item
         android:gravity="fill"
-        android:drawable="@color/foreground"/>
+        android:drawable="@color/white"/>
 
     <item
         android:gravity="center"

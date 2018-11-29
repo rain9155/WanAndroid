@@ -60,6 +60,7 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
             ApiException apiException = (ApiException)e;
             if(apiException.getErrorCode() == -1001){//token失效
                 mView.showToast(apiException.getErrorMessage());
+                tokenExpire();
                 LogUtil.e(TAG_ERROR, "token：" + apiException.getErrorMessage());
             }else {//其他
                 LogUtil.e(TAG_ERROR, "other：" + apiException.getErrorMessage());
@@ -83,6 +84,12 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
                 unknown();
             }
         }
+    }
+
+    /**
+     * token失效
+     */
+    protected void tokenExpire() {
     }
 
     /**

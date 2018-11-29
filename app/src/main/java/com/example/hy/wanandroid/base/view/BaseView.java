@@ -34,4 +34,6 @@ public interface BaseView {
 
     //夜间模式
     void userNightNode(boolean isNight);
+
+    void tokenExpire(int requestCode);
 }

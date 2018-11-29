@@ -26,25 +26,6 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
     }
 
     @Override
-    public void subscribleEvent() {
-        addSubcriber(
-                RxBus.getInstance().toObservable(NightModeEvent.class)
-                       .compose(RxUtils.switchSchedulers())
-                       .subscribeWith(new DefaultObserver<NightModeEvent>(mView, false, false){
-                           @Override
-                           public void onNext(NightModeEvent nightModeEvent) {
-                               mView.userNightNode(nightModeEvent.isNight());
-                           }
-
-                           @Override
-                           protected void unknown() {
-                               mView.showToast(App.getContext().getString(R.string.error_switch_fail));
-                           }
-                       })
-        );
-    }
-
-    @Override
     public void setCurrentItem(int position) {
         mModel.setCurrentItem(position);
     }

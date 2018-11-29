@@ -22,5 +22,6 @@
     <color name="colorEtHint">#9E9E9E</color>
     <color name="colorTrackOpen">#03A9F4</color>
     <color name="colorTrackClose">#757575</color>
+    <color name="colorDialogBackground">#212121</color>
 
 </resources>

@@ -73,9 +73,6 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     protected void initView( ) {
         super.initView();
 
-        if (!User.getInstance().isLoginStatus())
-            LoginActivity.startActivityForResult(this, Constant.REQUEST_SHOW_COLLECTIONS);
-
         DaggerCollectionActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
 
@@ -116,14 +113,6 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     @Override
     protected void initData() {
         mPresenter.loadCollections(0);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RESULT_CANCELED)
-            finish();
-        if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_SHOW_COLLECTIONS)
-            mPresenter.loadCollections(0);
     }
 
     @Override

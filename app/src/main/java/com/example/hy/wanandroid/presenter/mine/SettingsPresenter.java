@@ -1,12 +1,16 @@
 package com.example.hy.wanandroid.presenter.mine;
 
+import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
 import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.utils.RxUtils;
 
 import javax.inject.Inject;
 

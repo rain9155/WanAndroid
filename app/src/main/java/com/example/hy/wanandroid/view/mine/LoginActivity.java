@@ -71,10 +71,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         DaggerLoginActivityComponent.builder().appComponent(getAppComponent()).loginActivityModule(new LoginActivityModule()).build().inject(this);
         mPresenter.attachView(this);
 
-        ivBack.setOnClickListener(v -> {
-            setResult(RESULT_CANCELED);
-            finish();
-        });
+        ivBack.setOnClickListener(v -> finish());
         tvRegister.setOnClickListener(v -> RegisterActivity.startActivity(this));
         btnLogin.setOnClickListener(v -> {
             // Reset errors.
@@ -91,12 +88,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     protected void initData() {
 
-    }
-
-    @Override
-    public void onBackPressedSupport() {
-        setResult(RESULT_CANCELED);
-        finish();
     }
 
     @Override

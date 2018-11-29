@@ -6,8 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.config.User;
+import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.utils.SnackUtil;
 import com.example.hy.wanandroid.utils.ToastUtil;
+import com.example.hy.wanandroid.view.mine.LoginActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -68,6 +72,13 @@ public abstract class BaseFragment extends SupportFragment
     @Override
     public void showLoading() {
 
+    }
+
+    @Override
+    public void tokenExpire(int requestCode) {
+        User.getInstance().reset();
+        RxBus.getInstance().post(new LoginEvent(false));
+        LoginActivity.startActivityForResultByFragment(_mActivity, this, requestCode);
     }
 
     @Override

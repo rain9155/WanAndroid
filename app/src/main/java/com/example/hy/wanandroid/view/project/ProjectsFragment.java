@@ -85,7 +85,11 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
         });
         mProjectsAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;
-            if(!User.getInstance().isLoginStatus()) LoginActivity.startActivityForResultByFragment(_mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
+            if(!User.getInstance().isLoginStatus()){
+                LoginActivity.startActivityForResultByFragment(_mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
+                showToast(getString(R.string.first_login));
+                return;
+            }
             Article article = mArticles.get(position);
             if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
             else mPresenter.collectArticle(article.getId());

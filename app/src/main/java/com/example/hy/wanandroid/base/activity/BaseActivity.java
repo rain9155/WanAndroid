@@ -6,9 +6,13 @@ import android.os.Bundle;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.di.component.AppComponent;
+import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.utils.SnackUtil;
 import com.example.hy.wanandroid.utils.ToastUtil;
+import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.jaeger.library.StatusBarUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -88,6 +92,13 @@ public abstract class BaseActivity extends SupportActivity
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
         recreate();
+    }
+
+    @Override
+    public void tokenExpire(int requestCode) {
+        User.getInstance().reset();
+        RxBus.getInstance().post(new LoginEvent(false));
+        LoginActivity.startActivityForResult(this, requestCode);
     }
 
     @Override

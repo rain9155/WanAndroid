@@ -1,13 +1,7 @@
 package com.example.hy.wanandroid.view.mine;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -22,7 +16,6 @@ import com.example.hy.wanandroid.contract.mine.RegisterContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerRegisterActivityComponent;
 import com.example.hy.wanandroid.presenter.mine.RegisterPresenter;
 import com.example.hy.wanandroid.widget.dialog.LoadingDialog;
-import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
 import com.google.android.material.textfield.TextInputLayout;
 
 import javax.inject.Inject;
