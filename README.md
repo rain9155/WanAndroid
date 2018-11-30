@@ -10,7 +10,7 @@
 - [x] 我的收藏、取消收藏、添加收藏
 - [x] 文章内容，分享文章
 - [x] 关于我们
-### Tips:
+### Tips
 * 本项目前只是第一版，可能会在bug，如有任何问题或有更好的想法，欢迎[issues](https://github.com/rain9155/WanAndroid/issues), email([1847796089@qq.com]("")) 和 [PR](https://github.com/rain9155/WanAndroid/pulls)
 * 项目中所用到的api均由[WanAndroid网站](http://www.wanandroid.com/blog/show/2)提供
 * 本项目只用作学习用途，不做其他用途 
