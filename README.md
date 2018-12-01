@@ -64,7 +64,8 @@
 [AgentWeb](https://github.com/Justson/AgentWeb)<br>
 [SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout)<br>
 ### License
-```Copyright 2018 rain9155
+```
+Copyright 2018 rain9155
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
