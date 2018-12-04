@@ -23,7 +23,8 @@
     <color name="colorTrackOpen">#03A9F4</color>
     <color name="colorTrackClose">#757575</color>
     <color name="colorSwitchButton">#9E9E9E</color>
-    <color name="white">#FFFFFF</color>
     <color name="colorDialogBackground">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#212121</color>
 
 </resources>

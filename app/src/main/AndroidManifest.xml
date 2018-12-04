@@ -12,7 +12,7 @@
 
     <application
         android:name=".config.App"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,28 +22,44 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".view.MainActivity"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden">
+            android:launchMode="singleTask"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
 
-        </activity>
-        <activity android:name=".view.hierarchy.HierarchySecondActivity" />
-        <activity android:name=".view.navigation.NavigationActivity" />
+        <activity
+            android:name=".view.hierarchy.HierarchySecondActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".view.navigation.NavigationActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".view.search.SearchActivity"
+            android:launchMode="singleTask"
             android:theme="@style/SearchActivityStyle" />
-        <activity android:name=".view.homepager.ArticleActivity" />
+        <activity
+            android:name=".view.homepager.ArticleActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".view.mine.LoginActivity"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_login" />
-        <activity android:name=".view.mine.RegisterActivity" />
+        <activity
+            android:name=".view.mine.RegisterActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".view.mine.AboutUsActivity"
             android:label="@string/title_activity_about_us"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme" />
-        <activity android:name=".view.mine.CollectionActivity" />
-        <activity android:name=".view.mine.SettingsActivity" />
+        <activity
+            android:name=".view.mine.CollectionActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".view.mine.SettingsActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".view.LaunchActivity"
-            android:theme="@style/LauncherTheme">
+            android:theme="@style/LauncherTheme"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

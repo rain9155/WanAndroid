@@ -18,7 +18,7 @@
         android:id="@+id/tv_launch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:text="WanAndroid"
         android:textSize="@dimen/sp_26"
