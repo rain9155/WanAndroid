@@ -62,4 +62,5 @@ public class BottomNavBehaviour extends CoordinatorLayout.Behavior<View>{
             mHideAnimator.start();
         }
     }
+
 }

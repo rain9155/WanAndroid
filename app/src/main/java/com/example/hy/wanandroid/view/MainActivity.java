@@ -19,11 +19,11 @@ import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.config.RxBus;
-import com.example.hy.wanandroid.utils.ToastUtil;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
 import com.example.hy.wanandroid.view.project.ProjectFragment;
+import com.example.utilslibrary.ToastUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaeger.library.StatusBarUtil;
@@ -46,7 +46,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     private int mPreFragmentPosition = 0;//上一个被选中的Fragment位置
     private MainActivityComponent mMainActivityComponent;
-    private ObjectAnimator mShowAnimator;
+    private ObjectAnimator mShowNavAnimator;
+    private ViewPropertyAnimator mHideFbtnAnimator, mShowFbtnAnimator;
 
     @Inject
     MainPresenter mPresenter;
@@ -131,7 +132,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             finish();
         }else {
             Constant.TOUCH_TIME = System.currentTimeMillis();
-            ToastUtil.showToast(this, getResources().getString(R.string.mainActivity_back));
+            ToastUtil.toastInCenter(this, getString(R.string.mainActivity_back), null);
         }
     }
 
@@ -139,6 +140,14 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mPresenter.setCurrentItem(mPreFragmentPosition);
+    }
+
+    @Override
+    protected void onStop() {
+        if(mHideFbtnAnimator != null) mHideFbtnAnimator.cancel();
+        if(mShowFbtnAnimator != null) mShowFbtnAnimator.cancel();
+        if(mShowNavAnimator != null) mShowNavAnimator.cancel();
+        super.onStop();
     }
 
     @Override
@@ -192,7 +201,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private void showFloatingButton(){
         if(fbtnUp.getVisibility() == View.INVISIBLE){
             fbtnUp.setVisibility(View.VISIBLE);
-            fbtnUp.animate().setDuration(500).setInterpolator(new BounceInterpolator()).translationY(0).start();
+            mShowFbtnAnimator = fbtnUp.animate().setDuration(500).setInterpolator(new BounceInterpolator()).translationY(0);
         }
     }
 
@@ -202,11 +211,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @SuppressLint("RestrictedApi")
     private void hideFloatingButton(){
         if(fbtnUp.getVisibility() == View.VISIBLE){
-            ViewPropertyAnimator animator = fbtnUp.animate().setDuration(300).setInterpolator(new AccelerateDecelerateInterpolator()).translationY(
+            mHideFbtnAnimator = fbtnUp.animate().setDuration(300).setInterpolator(new AccelerateDecelerateInterpolator()).translationY(
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 400, getResources().getDisplayMetrics())
             );
             new Handler().postDelayed(() -> fbtnUp.setVisibility(View.INVISIBLE), 301);
-            animator.start();
+            mHideFbtnAnimator.start();
         }
     }
 
@@ -214,13 +223,13 @@ public class MainActivity extends BaseActivity implements MainContract.View {
      * 底部导航栏显示
      */
     private void show(View child) {
-        if(mShowAnimator == null){
-            mShowAnimator = ObjectAnimator.ofFloat(child, "translationY", child.getHeight(), 0)
+        if(mShowNavAnimator == null){
+            mShowNavAnimator = ObjectAnimator.ofFloat(child, "translationY", child.getHeight(), 0)
                     .setDuration(200);
-            mShowAnimator.setInterpolator(new FastOutSlowInInterpolator());
+            mShowNavAnimator.setInterpolator(new FastOutSlowInInterpolator());
         }
-        if(!mShowAnimator.isRunning() && child.getTranslationY() >= child.getHeight()){
-            mShowAnimator.start();
+        if(!mShowNavAnimator.isRunning() && child.getTranslationY() >= child.getHeight()){
+            mShowNavAnimator.start();
         }
     }
 }

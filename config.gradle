@@ -37,6 +37,9 @@ version = [
         TwinklingRefreshLayoutVersion : '1.0.7',
         MultiWaveHeaderVersion : '1.0.0-alpha-1',
 
+        //other
+        UtilsVersion : '3723c20b45',
+
         //test
         JunitVersion           : "4.12",
         RunnerVersion          : "1.1.0-beta02",
@@ -96,6 +99,9 @@ ext {
             "dagger2Cpmplier" : "com.google.dagger:dagger-compiler:${version.Dagger2Version}",
             "bufferKinfe" : "com.jakewharton:butterknife:${version.BufferKinfeVersion}",
             "bufferKinfeCompiler" : "com.jakewharton:butterknife-compiler:${version.BufferKinfeVersion}",
+
+            //other
+            "utils" : "com.github.rain9155:RUtils:${version.UtilsVersion}",
 
             //test
             "junit"                 : "junit:junit:${version.JunitVersion}",

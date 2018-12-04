@@ -2,7 +2,6 @@ package com.example.hy.wanandroid.view.mine;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,17 +9,15 @@ import android.widget.TextView;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.CollectionsAdapter;
 import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
-import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.RxBus;
-import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
 import com.example.hy.wanandroid.model.network.entity.mine.Collection;
 import com.example.hy.wanandroid.di.component.activity.DaggerCollectionActivityComponent;
 import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.presenter.mine.CollectionPresenter;
-import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
+import com.example.utilslibrary.AnimUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -31,7 +28,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class CollectionActivity extends BaseLoadActivity implements CollectionContract.View {
 

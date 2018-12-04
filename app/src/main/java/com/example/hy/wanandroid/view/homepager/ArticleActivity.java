@@ -7,8 +7,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -29,16 +27,15 @@ import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerArticleActivityComponent;
 import com.example.hy.wanandroid.presenter.homepager.ArticlePresenter;
-import com.example.hy.wanandroid.utils.NetWorkUtil;
 import com.example.hy.wanandroid.utils.ShareUtil;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.widget.layout.WebLayout;
+import com.example.utilslibrary.NetWorkUtil;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
 
 import javax.inject.Inject;
 
-import androidx.annotation.IntRange;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
@@ -257,9 +254,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
             showToast(getString(R.string.articleActivity_browser_error));
             return;
         }
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(mAddress));
-        startActivity(intent);
+        ShareUtil.openBrowser(this, mAddress);
     }
 
 
@@ -277,7 +272,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
             settings.setAppCacheEnabled(true);
             settings.setDatabaseEnabled(true);
             settings.setDatabaseEnabled(true);
-            if(NetWorkUtil.isNetworkConnected())
+            if(NetWorkUtil.isNetworkConnected(this))
                 settings.setCacheMode(WebSettings.LOAD_DEFAULT);//（默认）根据cache-control决定是否从网络上取数据
             else
                 settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//只要本地有，无论是否过期，或者no-cache，都使用缓存中的数据。

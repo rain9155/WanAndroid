@@ -10,4 +10,5 @@
     <stroke
         android:color="@color/translucence"
         android:width="@dimen/dp_2"/>
+
 </shape>

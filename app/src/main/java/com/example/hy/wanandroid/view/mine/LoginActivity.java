@@ -3,7 +3,6 @@ package com.example.hy.wanandroid.view.mine;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -13,13 +12,12 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
-import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.LoginContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerLoginActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.LoginActivityModule;
 import com.example.hy.wanandroid.presenter.mine.LoginPresenter;
-import com.example.hy.wanandroid.utils.KeyBoardUtil;
 import com.example.hy.wanandroid.widget.dialog.LoadingDialog;
+import com.example.utilslibrary.KeyBoardUtil;
 import com.google.android.material.textfield.TextInputLayout;
 
 import javax.inject.Inject;

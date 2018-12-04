@@ -10,8 +10,8 @@ import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.utils.SnackUtil;
-import com.example.hy.wanandroid.utils.ToastUtil;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
+import com.example.utilslibrary.ToastUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -3,13 +3,8 @@ package com.example.hy.wanandroid.view.mine;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 import android.graphics.PorterDuff;
-import android.renderscript.Sampler;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,8 +19,8 @@ import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.di.module.fragment.MineFragmentModule;
 import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.presenter.mine.MinePresenter;
-import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.view.MainActivity;
+import com.example.utilslibrary.AnimUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.lang.reflect.Field;
@@ -33,7 +28,6 @@ import java.lang.reflect.Field;
 import javax.inject.Inject;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.transition.Visibility;
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 

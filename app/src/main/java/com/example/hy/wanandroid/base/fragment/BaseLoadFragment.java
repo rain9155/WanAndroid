@@ -1,7 +1,5 @@
 package com.example.hy.wanandroid.base.fragment;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -11,7 +9,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.utils.AnimUtil;
+import com.example.utilslibrary.AnimUtil;
 
 import static com.example.hy.wanandroid.config.Constant.ERROR_STATE;
 import static com.example.hy.wanandroid.config.Constant.LOADING_STATE;
@@ -83,12 +81,11 @@ public abstract class BaseLoadFragment extends BaseFragment {
         startReloadAnimator();
     }
 
-
-
     @Override
-    public void onDestroy() {
+    public void onStop() {
         if(mReloadAnimator != null) mReloadAnimator.cancel();
-        super.onDestroy();
+        mIvReload.clearAnimation();
+        super.onStop();
     }
 
     /**
