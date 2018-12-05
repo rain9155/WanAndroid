@@ -2,7 +2,6 @@ package com.example.hy.wanandroid.view.search;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,8 +18,8 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSearchActivityComponent;
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
-import com.example.hy.wanandroid.model.network.entity.search.HotKey;
+import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.model.network.entity.HotKey;
 import com.example.hy.wanandroid.presenter.search.SearchPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;

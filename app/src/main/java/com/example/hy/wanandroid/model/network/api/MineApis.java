@@ -1,9 +1,9 @@
 package com.example.hy.wanandroid.model.network.api;
 
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.mine.Collection;
-import com.example.hy.wanandroid.model.network.entity.mine.CollectionRequest;
-import com.example.hy.wanandroid.model.network.entity.mine.Login;
+import com.example.hy.wanandroid.model.network.entity.Collection;
+import com.example.hy.wanandroid.model.network.entity.CollectionRequest;
+import com.example.hy.wanandroid.model.network.entity.Login;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;

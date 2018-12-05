@@ -1,4 +1,7 @@
 package com.example.hy.wanandroid.config;
+import com.example.utilslibrary.FileUtils;
+
+import java.io.File;
 
 /**
  * 网路请求的base地址
@@ -53,4 +56,6 @@ public class Constant {
     //utils
     public static final String EMAIL_ADDRESS = "1847796089@qq.com";
 
+    //path
+    public static final String PATH_NETCACHE = FileUtils.getCachePath(App.getContext(), "netData");
 }

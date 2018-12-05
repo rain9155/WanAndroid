@@ -7,16 +7,16 @@ import com.example.hy.wanandroid.model.network.api.NavigationApis;
 import com.example.hy.wanandroid.model.network.api.ProjectApis;
 import com.example.hy.wanandroid.model.network.api.SearchApis;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchy;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.SecondHierarchy;
-import com.example.hy.wanandroid.model.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.model.network.entity.homepager.BannerData;
-import com.example.hy.wanandroid.model.network.entity.mine.Collection;
-import com.example.hy.wanandroid.model.network.entity.mine.CollectionRequest;
-import com.example.hy.wanandroid.model.network.entity.mine.Login;
-import com.example.hy.wanandroid.model.network.entity.navigation.Tag;
-import com.example.hy.wanandroid.model.network.entity.project.Project;
-import com.example.hy.wanandroid.model.network.entity.search.HotKey;
+import com.example.hy.wanandroid.model.network.entity.FirstHierarchy;
+import com.example.hy.wanandroid.model.network.entity.SecondHierarchy;
+import com.example.hy.wanandroid.model.network.entity.Articles;
+import com.example.hy.wanandroid.model.network.entity.BannerData;
+import com.example.hy.wanandroid.model.network.entity.Collection;
+import com.example.hy.wanandroid.model.network.entity.CollectionRequest;
+import com.example.hy.wanandroid.model.network.entity.Login;
+import com.example.hy.wanandroid.model.network.entity.Tag;
+import com.example.hy.wanandroid.model.network.entity.Tab;
+import com.example.hy.wanandroid.model.network.entity.HotKey;
 
 import java.util.List;
 
@@ -68,7 +68,7 @@ public class NetworkHelperImp implements NetworkHelper{
     }
 
     @Override
-    public Observable<BaseResponse<List<Project>>> getProjectList() {
+    public Observable<BaseResponse<List<Tab>>> getProjectList() {
         return mProjectApis.getProjectList();
     }
 

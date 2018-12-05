@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.model.network.entity.search;
+package com.example.hy.wanandroid.model.network.entity;
 
 /**
  * 搜索热词实体类

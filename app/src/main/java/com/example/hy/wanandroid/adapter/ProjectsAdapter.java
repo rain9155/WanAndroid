@@ -4,13 +4,10 @@ import android.content.res.ColorStateList;
 import android.text.Html;
 import android.widget.ImageView;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.config.GlideApp;
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.Article;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.utils.ImageUtil;
 

@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.model.network.entity.mine;
+package com.example.hy.wanandroid.model.network.entity;
 
 import java.util.List;
 

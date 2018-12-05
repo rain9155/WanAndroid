@@ -1,23 +1,22 @@
-package com.example.hy.wanandroid.model.network.entity.hierarchy;
+package com.example.hy.wanandroid.model.network.entity;
 
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.Article;
 
 import java.util.List;
 
 /**
- * 第二级体系的实体类
- * Created by 陈健宇 at 2018/10/29
+ * 文章实体类
+ * Created by 陈健宇 at 2018/10/27
  */
-public class SecondHierarchy {
+public class Articles {
 
     /**
      * curPage : 1
-     * datas:[]
-     * offset : 0
+     * datas : []
      * over : false
-     * pageCount : 2
+     * pageCount : 281
      * size : 20
-     * total : 35
+     * total : 5601
      */
 
     private int curPage;
@@ -84,4 +83,3 @@ public class SecondHierarchy {
         this.datas = datas;
     }
 }
-

@@ -9,6 +9,7 @@ import com.example.hy.wanandroid.model.network.api.MineApis;
 import com.example.hy.wanandroid.model.network.api.NavigationApis;
 import com.example.hy.wanandroid.model.network.api.ProjectApis;
 import com.example.hy.wanandroid.model.network.api.SearchApis;
+import com.example.hy.wanandroid.model.network.api.WechatApis;
 
 import javax.inject.Singleton;
 import dagger.Component;
@@ -35,4 +36,6 @@ public interface AppComponent {
     NavigationApis getNavigationApis();
     SearchApis getSearchApis();
     MineApis getMineApis();
+    WechatApis getWechatApis();
+
 }

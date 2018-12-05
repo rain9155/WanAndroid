@@ -6,11 +6,10 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
-import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.contract.project.ProjectContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
-import com.example.hy.wanandroid.model.network.entity.project.Project;
+import com.example.hy.wanandroid.model.network.entity.Tab;
 import com.example.hy.wanandroid.presenter.project.ProjectPresenter;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
@@ -81,8 +80,8 @@ public class ProjectFragment extends BaseLoadFragment implements ProjectContract
     }
 
     @Override
-    public void showProjectList(List<Project> projectList) {
-        for (Project project : projectList) {
+    public void showProjectList(List<Tab> projectList) {
+        for (Tab project : projectList) {
             mIds.add(project.getId());
             mTitles.add(project.getName());
         }

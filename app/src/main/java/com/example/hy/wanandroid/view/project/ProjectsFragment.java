@@ -5,13 +5,12 @@ import android.os.Bundle;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ProjectsAdapter;
-import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.Article;
 import com.example.hy.wanandroid.presenter.project.ProjectsPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.MainActivity;

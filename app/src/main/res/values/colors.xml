@@ -25,5 +25,6 @@
     <color name="colorSwitchButton">#9E9E9E</color>
     <color name="white">#FFFFFF</color>
     <color name="colorDialogBackground">#FFFFFF</color>
+    <color name="toast_background">#c8535353</color>
 
 </resources>

@@ -3,7 +3,7 @@ package com.example.hy.wanandroid.di.module.activity;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.CollectionsAdapter;
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.model.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.network.entity.Collection;
 import com.example.hy.wanandroid.di.scope.PerActivity;
 
 import java.util.ArrayList;

@@ -5,13 +5,12 @@ import android.os.Bundle;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
-import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchySecondContract;
 import com.example.hy.wanandroid.di.module.fragment.HierarchySecondFragmentModule;
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.Article;
 import com.example.hy.wanandroid.presenter.hierarchy.HierarchySecondPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;

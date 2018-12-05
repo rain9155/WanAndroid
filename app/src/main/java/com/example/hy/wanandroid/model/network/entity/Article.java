@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.model.network.entity.homepager;
+package com.example.hy.wanandroid.model.network.entity;
 
 import java.util.List;
 

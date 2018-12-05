@@ -1,21 +1,22 @@
-package com.example.hy.wanandroid.model.network.entity.hierarchy;
+package com.example.hy.wanandroid.model.network.entity;
 
 import java.util.List;
 
 /**
- * 第一级体系下的二级分类的实体类
- * Created by 陈健宇 at 2018/10/28
+ * 项目实体类
+ * Created by 陈健宇 at 2018/10/29
  */
-public class FirstHierarchyChild {
+public class Tab {
+
     /**
      * children : []
      * courseId : 13
-     * id : 60
-     * name : Android Studio相关
-     * order : 1000
-     * parentChapterId : 150
+     * id : 294
+     * name : 完整项目
+     * order : 145000
+     * parentChapterId : 293
      * userControlSetTop : false
-     * visible : 1
+     * visible : 0
      */
 
     private int courseId;

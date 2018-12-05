@@ -7,14 +7,13 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
-import com.example.hy.wanandroid.model.network.entity.navigation.Tag;
+import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.model.network.entity.Tag;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;

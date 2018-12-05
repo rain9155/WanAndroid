@@ -11,7 +11,7 @@ import com.example.hy.wanandroid.adapter.CollectionsAdapter;
 import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
-import com.example.hy.wanandroid.model.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.network.entity.Collection;
 import com.example.hy.wanandroid.di.component.activity.DaggerCollectionActivityComponent;
 import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.presenter.mine.CollectionPresenter;

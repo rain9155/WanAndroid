@@ -4,11 +4,10 @@ import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
-import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.mine.Login;
+import com.example.hy.wanandroid.model.network.entity.Login;
 import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.utils.RxUtils;
 

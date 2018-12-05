@@ -3,7 +3,7 @@ package com.example.hy.wanandroid.contract.mine;
 import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.mine.Login;
+import com.example.hy.wanandroid.model.network.entity.Login;
 
 import io.reactivex.Observable;
 

@@ -6,8 +6,8 @@ import com.example.hy.wanandroid.contract.mine.CollectionContract;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.mine.Collection;
-import com.example.hy.wanandroid.model.network.entity.mine.CollectionRequest;
+import com.example.hy.wanandroid.model.network.entity.Collection;
+import com.example.hy.wanandroid.model.network.entity.CollectionRequest;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 

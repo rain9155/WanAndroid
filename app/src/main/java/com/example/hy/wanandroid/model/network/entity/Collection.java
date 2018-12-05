@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.model.network.entity.mine;
+package com.example.hy.wanandroid.model.network.entity;
 
 /**
  * 收藏的实体类

@@ -1,22 +1,23 @@
-package com.example.hy.wanandroid.model.network.entity.homepager;
+package com.example.hy.wanandroid.model.network.entity;
+
+import com.example.hy.wanandroid.model.network.entity.Collection;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 /**
- * 文章实体类
- * Created by 陈健宇 at 2018/10/27
+ * 收藏的实体类
+ * Created by 陈健宇 at 2018/11/19
  */
-public class Articles {
+public class CollectionRequest {
 
     /**
      * curPage : 1
      * datas : []
-     * over : false
-     * pageCount : 281
+     * offset : 0
+     * over : true
+     * pageCount : 1
      * size : 20
-     * total : 5601
+     * total : 3
      */
 
     private int curPage;
@@ -25,7 +26,7 @@ public class Articles {
     private int pageCount;
     private int size;
     private int total;
-    private List<Article> datas;
+    private List<Collection> datas;
 
     public int getCurPage() {
         return curPage;
@@ -75,11 +76,13 @@ public class Articles {
         this.total = total;
     }
 
-    public List<Article> getDatas() {
+    public List<Collection> getDatas() {
         return datas;
     }
 
-    public void setDatas(List<Article> datas) {
+    public void setDatas(List<Collection> datas) {
         this.datas = datas;
     }
+
+
 }

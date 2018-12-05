@@ -1,17 +1,15 @@
 package com.example.hy.wanandroid.presenter.search;
 
-import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.model.DataModel;
-import com.example.hy.wanandroid.model.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.network.entity.Collection;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
-import com.example.hy.wanandroid.model.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.model.network.entity.search.HotKey;
+import com.example.hy.wanandroid.model.network.entity.Articles;
+import com.example.hy.wanandroid.model.network.entity.HotKey;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.utils.RxUtils;
 
@@ -19,9 +17,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by 陈健宇 at 2018/11/2

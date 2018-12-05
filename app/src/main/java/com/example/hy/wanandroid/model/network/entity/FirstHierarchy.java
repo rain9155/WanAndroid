@@ -1,22 +1,22 @@
-package com.example.hy.wanandroid.model.network.entity.project;
+package com.example.hy.wanandroid.model.network.entity;
 
 import java.util.List;
 
 /**
- * 项目实体类
- * Created by 陈健宇 at 2018/10/29
+ * 第一级体系的实体类
+ * Created by 陈健宇 at 2018/10/28
  */
-public class Project {
+public class FirstHierarchy{
 
     /**
      * children : []
      * courseId : 13
-     * id : 294
-     * name : 完整项目
-     * order : 145000
-     * parentChapterId : 293
+     * id : 150
+     * name : 开发环境
+     * order : 1
+     * parentChapterId : 0
      * userControlSetTop : false
-     * visible : 0
+     * visible : 1
      */
 
     private int courseId;
@@ -26,7 +26,7 @@ public class Project {
     private int parentChapterId;
     private boolean userControlSetTop;
     private int visible;
-    private List<?> children;
+    private List<Tab> children;
 
     public int getCourseId() {
         return courseId;
@@ -84,11 +84,11 @@ public class Project {
         this.visible = visible;
     }
 
-    public List<?> getChildren() {
+    public List<Tab> getChildren() {
         return children;
     }
 
-    public void setChildren(List<?> children) {
+    public void setChildren(List<Tab> children) {
         this.children = children;
     }
 }

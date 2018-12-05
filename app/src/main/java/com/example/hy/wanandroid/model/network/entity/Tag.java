@@ -1,6 +1,6 @@
-package com.example.hy.wanandroid.model.network.entity.navigation;
+package com.example.hy.wanandroid.model.network.entity;
 
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.Article;
 
 import java.util.List;
 

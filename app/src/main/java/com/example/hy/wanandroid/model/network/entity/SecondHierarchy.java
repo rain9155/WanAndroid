@@ -1,21 +1,21 @@
-package com.example.hy.wanandroid.model.network.entity.mine;
+package com.example.hy.wanandroid.model.network.entity;
 
 import java.util.List;
 
 /**
- * 收藏的实体类
- * Created by 陈健宇 at 2018/11/19
+ * 第二级体系的实体类
+ * Created by 陈健宇 at 2018/10/29
  */
-public class CollectionRequest {
+public class SecondHierarchy {
 
     /**
      * curPage : 1
-     * datas : []
+     * datas:[]
      * offset : 0
-     * over : true
-     * pageCount : 1
+     * over : false
+     * pageCount : 2
      * size : 20
-     * total : 3
+     * total : 35
      */
 
     private int curPage;
@@ -24,7 +24,7 @@ public class CollectionRequest {
     private int pageCount;
     private int size;
     private int total;
-    private List<Collection> datas;
+    private List<Article> datas;
 
     public int getCurPage() {
         return curPage;
@@ -74,13 +74,12 @@ public class CollectionRequest {
         this.total = total;
     }
 
-    public List<Collection> getDatas() {
+    public List<Article> getDatas() {
         return datas;
     }
 
-    public void setDatas(List<Collection> datas) {
+    public void setDatas(List<Article> datas) {
         this.datas = datas;
     }
-
-
 }
+

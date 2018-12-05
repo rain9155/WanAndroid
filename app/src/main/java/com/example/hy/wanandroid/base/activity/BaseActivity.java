@@ -11,8 +11,8 @@ import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.utils.SnackUtil;
+import com.example.hy.wanandroid.utils.ToastUtil;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
-import com.example.utilslibrary.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -102,7 +102,7 @@ public abstract class BaseActivity extends SupportActivity
 
     @Override
     public void showToast(String toast) {
-        ToastUtil.showToast(this, toast);
+        ToastUtil.toastInBottom(this, toast, null);
     }
 
     @Override

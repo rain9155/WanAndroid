@@ -9,8 +9,8 @@ import com.example.hy.wanandroid.adapter.FirstHierarchyAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchyContract;
 import com.example.hy.wanandroid.di.module.fragment.HierarchyFragmentModule;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchy;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchyChild;
+import com.example.hy.wanandroid.model.network.entity.FirstHierarchy;
+import com.example.hy.wanandroid.model.network.entity.Tab;
 import com.example.hy.wanandroid.presenter.hierarchy.HierarchyPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.MainActivity;
@@ -139,7 +139,7 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
         if (firstHierarchy != null) {
             ArrayList<String> listName = new ArrayList<>(firstHierarchy.getChildren().size());
             ArrayList<String> listId = new ArrayList<>(firstHierarchy.getChildren().size());
-            for (FirstHierarchyChild child : firstHierarchy.getChildren()) {
+            for (Tab child : firstHierarchy.getChildren()) {
                 listName.add(child.getName());
                 listId.add(String.valueOf(child.getId()));
             }

@@ -2,14 +2,12 @@ package com.example.hy.wanandroid.adapter;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
 import android.text.Html;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.Article;
 import com.example.hy.wanandroid.utils.CommonUtil;
 
 import java.util.List;

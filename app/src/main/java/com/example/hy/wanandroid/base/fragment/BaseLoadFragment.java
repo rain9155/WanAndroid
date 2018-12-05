@@ -84,7 +84,6 @@ public abstract class BaseLoadFragment extends BaseFragment {
     @Override
     public void onStop() {
         if(mReloadAnimator != null) mReloadAnimator.cancel();
-        mIvReload.clearAnimation();
         super.onStop();
     }
 

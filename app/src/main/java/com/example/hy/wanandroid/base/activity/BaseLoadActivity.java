@@ -82,7 +82,6 @@ public abstract  class BaseLoadActivity extends BaseActivity {
     @Override
     protected void onStop() {
         if(mReloadAnimator != null) mReloadAnimator.cancel();
-        mIvReload.clearAnimation();
         super.onStop();
     }
 
