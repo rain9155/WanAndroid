@@ -8,6 +8,7 @@ import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
+import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.utils.RxUtils;
@@ -42,4 +43,11 @@ public class SettingsPresenter extends BasePresenter<SettingsContract.View> impl
         mModel.setNightModeState(isNight);
         RxBus.getInstance().post(new NightModeEvent(isNight));
     }
+
+    @Override
+    public void setStatusBarState(boolean isStatusBar) {
+        mModel.setStatusBarState(isStatusBar);
+        RxBus.getInstance().post(new StatusBarEvent(isStatusBar));
+    }
+
 }

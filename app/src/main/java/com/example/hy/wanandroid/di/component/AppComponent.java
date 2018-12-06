@@ -28,14 +28,5 @@ public interface AppComponent {
     App getApp();
 
     DataModel getDataModel();
-
     Retrofit getRetrofit();
-    HomeApis getHomeApis();
-    HierarchyApis getHierarchyApis();
-    ProjectApis getProjectApis();
-    NavigationApis getNavigationApis();
-    SearchApis getSearchApis();
-    MineApis getMineApis();
-    WechatApis getWechatApis();
-
 }

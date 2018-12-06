@@ -11,6 +11,7 @@ import com.example.hy.wanandroid.contract.project.ProjectContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
 import com.example.hy.wanandroid.model.network.entity.Tab;
 import com.example.hy.wanandroid.presenter.project.ProjectPresenter;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
 import com.example.hy.wanandroid.view.search.SearchActivity;
@@ -37,8 +38,6 @@ public class ProjectFragment extends BaseLoadFragment implements ProjectContract
     TabLayout commonTablayout;
     @BindView(R.id.normal_view)
     ViewPager vpProject;
-    @BindView(R.id.fake_status_bar)
-    View fakeStatusBar;
     @BindView(R.id.tv_common_title)
     TextView tvCommonTitle;
     @BindView(R.id.iv_common_search)
@@ -66,6 +65,7 @@ public class ProjectFragment extends BaseLoadFragment implements ProjectContract
         ((MainActivity) getActivity()).getComponent().getProjectFragmentComponent(new ProjectFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
+        StatusBarUtil.setHeightAndPadding(_mActivity, tlCommon);
         ivCommonSearch.setVisibility(View.VISIBLE);
         tvCommonTitle.setText(R.string.homeFragment_project);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);

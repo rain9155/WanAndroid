@@ -19,6 +19,7 @@ import com.example.hy.wanandroid.model.network.entity.BannerData;
 import com.example.hy.wanandroid.presenter.homepager.HomePresenter;
 import com.example.hy.wanandroid.utils.BannerImageLoader;
 import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
@@ -50,8 +51,6 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
     RecyclerView rvArticles;
     @BindView(R.id.normal_view)
     SmartRefreshLayout srlHome;
-    @BindView(R.id.fake_status_bar)
-    View fakeStatusBar;
     @BindView(R.id.tv_common_title)
     TextView tvCommonTitle;
     @BindView(R.id.iv_common_search)
@@ -92,6 +91,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         ((MainActivity) getActivity()).getComponent().getHomFragmentSubComponent(new HomeFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
+        StatusBarUtil.setHeightAndPadding(_mActivity, tlCommon);
         //标题栏
         ivCommonSearch.setVisibility(View.VISIBLE);
         tvCommonTitle.setText(R.string.homeFragment_home);

@@ -19,6 +19,7 @@ import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.di.module.fragment.MineFragmentModule;
 import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.presenter.mine.MinePresenter;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.utilslibrary.AnimUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -134,6 +135,11 @@ public class MineFragment extends BaseFragment implements MineContract.View {
         super.userNightNode(isNight);
         if (isNight) ivBack.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
         else  ivBack.getDrawable().clearColorFilter();
+    }
+
+    @Override
+    public void setStatusBarColor(boolean isSet) {
+        StatusBarUtil.immersiveForImage(_mActivity, Color.TRANSPARENT, 1);
     }
 
     @Override

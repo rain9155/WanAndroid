@@ -11,10 +11,9 @@ import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.utils.SnackUtil;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.utils.ToastUtil;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
-import com.jaeger.library.StatusBarUtil;
-
 import androidx.appcompat.app.AppCompatDelegate;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -28,7 +27,6 @@ public abstract class BaseActivity extends SupportActivity
         implements BaseView {
 
     private Unbinder mUnbinder;
-
     protected abstract int getLayoutId();//获取Activity的布局Id
     protected abstract void initView();//初始化控件
     protected abstract void initData();//初始化数据
@@ -39,7 +37,7 @@ public abstract class BaseActivity extends SupportActivity
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         mUnbinder = ButterKnife.bind(this);
-        setStatusBarColor();
+        setStatusBarColor(getAppComponent().getDataModel().getStatusBarState());
         initView();
         initData();
     }
@@ -52,11 +50,13 @@ public abstract class BaseActivity extends SupportActivity
         super.onDestroy();
     }
 
-    /**
-     * 设置状态栏颜色
-     */
-    protected void setStatusBarColor(){
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
+    @Override
+    public void setStatusBarColor(boolean isSet) {
+        if(isSet){
+            StatusBarUtil.immersive(this, getResources().getColor(R.color.colorPrimary));
+        }else {
+            StatusBarUtil.immersive(this, getResources().getColor(R.color.colorPrimaryDark));
+        }
     }
 
     protected AppComponent getAppComponent(){

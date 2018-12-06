@@ -26,9 +26,8 @@ public interface IPresenter<T extends BaseView>{
     void subscribleEvent();
 
     boolean getNoImageState();
-
     boolean getAutoCacheState();
-
     boolean getNightModeState();
+    boolean getStatusBarState();
 
 }

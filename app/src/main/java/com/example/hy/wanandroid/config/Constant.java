@@ -46,12 +46,13 @@ public class Constant {
     public static final int LOADING_STATE = 1;
     public static final int ERROR_STATE = 2;
 
-    //SharedPreferencesState
+    //settingActivity
     public static final String SHAREDPREFERENCES_NAME = "prefs";
     public static final String KEY_PREFS_NODEMODE = "nightModeState";
     public static final String KEY_PREFS_CURRWNTITEM = "currentItem";
     public static final String KEY_PREFS_NOIMAGE= "noImage";
     public static final String KEY_PREFS_AUTOCACHE= "autoCache";
+    public static final String KEY_PREFS_STATUSBAR = "statusBar";
 
     //utils
     public static final String EMAIL_ADDRESS = "1847796089@qq.com";

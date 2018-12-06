@@ -4,6 +4,7 @@ import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.Collection;
 import com.example.hy.wanandroid.model.network.entity.CollectionRequest;
 import com.example.hy.wanandroid.model.network.entity.Login;
+import com.example.hy.wanandroid.model.network.entity.Version;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -64,4 +65,18 @@ public interface MineApis {
     Observable<BaseResponse<Collection>> getUnCollectionRequest(@Path("id") int id,//收藏在我的收藏列表的id
                                                                 @Field("originId") int originId//收藏在原始文章列表的id
     );
+
+    /**
+     * 版本更新
+     * https://api.github.com/repos/rain9155/WanAndroid/releases/latest
+     */
+    @GET("https://api.github.com/repos/rain9155/WanAndroid/releases/latest")
+    Observable<Version> getVersionDetial();
+
+
+    /**
+     * apk下载
+     * https://github.com/rain9155/WanAndroid/releases/download/v1.0/app-release.apk
+     */
+
 }

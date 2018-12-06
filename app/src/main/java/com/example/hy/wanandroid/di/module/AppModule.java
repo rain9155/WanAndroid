@@ -59,13 +59,13 @@ public class AppModule {
     @Provides
     @Singleton
     OkHttpClient provideOkHttpClient(OkHttpClient.Builder builder){
-        if(App.getContext().getAppComponent().getDataModel().getAutoCacheState()){
-            //设置缓存
-            File cacheDir = new File(Constant.PATH_NETCACHE);
-            Cache cache = new Cache(cacheDir, 1024 * 1024 * 10);//缓存的最大尺寸10M
-            builder.cache(cache);
-            builder.addInterceptor(new CacheInterceptor());
-        }
+
+        //设置缓存
+        File cacheDir = new File(Constant.PATH_NETCACHE);
+        Cache cache = new Cache(cacheDir, 1024 * 1024 * 10);//缓存的最大尺寸10M
+        builder.cache(cache);
+        builder.addInterceptor(new CacheInterceptor());
+
         //错误重连
         builder.retryOnConnectionFailure(true);
         //设置超时

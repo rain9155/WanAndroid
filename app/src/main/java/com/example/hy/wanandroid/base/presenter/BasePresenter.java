@@ -5,6 +5,7 @@ import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.event.NightModeEvent;
+import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.utils.RxUtils;
@@ -57,6 +58,7 @@ public class BasePresenter<T extends BaseView> implements IPresenter<T> {
 
     @Override
     public void subscribleEvent() {
+
         addSubcriber(
                 RxBus.getInstance().toObservable(NightModeEvent.class)
                         .compose(RxUtils.switchSchedulers())
@@ -71,6 +73,12 @@ public class BasePresenter<T extends BaseView> implements IPresenter<T> {
                                 mView.showToast(App.getContext().getString(R.string.error_switch_fail));
                             }
                         })
+        );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(StatusBarEvent.class)
+                        .compose(RxUtils.switchSchedulers())
+                        .subscribe(statusBarEvent -> mView.setStatusBarColor(statusBarEvent.isSet()))
         );
     }
 
@@ -87,5 +95,10 @@ public class BasePresenter<T extends BaseView> implements IPresenter<T> {
     @Override
     public boolean getNightModeState() {
         return mModel.getNightModeState();
+    }
+
+    @Override
+    public boolean getStatusBarState() {
+        return mModel.getStatusBarState();
     }
 }

@@ -2,6 +2,8 @@ package com.example.hy.wanandroid.view.mine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -14,13 +16,13 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSettingsActivityComponent;
 import com.example.hy.wanandroid.presenter.mine.SettingsPresenter;
+import com.example.hy.wanandroid.utils.FileUtil;
 import com.example.hy.wanandroid.utils.ShareUtil;
-import com.example.hy.wanandroid.view.navigation.NavigationActivity;
-import com.example.hy.wanandroid.view.search.SearchActivity;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -78,9 +80,27 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
     TextView tvCache;
     @BindView(R.id.cl_clearCache)
     ConstraintLayout clClearCache;
+    @BindView(R.id.iv_status_bar)
+    ImageView ivStatusBar;
+    @BindView(R.id.tv_status_bar)
+    TextView tvStatusBar;
+    @BindView(R.id.switch_status_bar)
+    SwitchCompat switchStatusBar;
+    @BindView(R.id.cl_status_bar)
+    ConstraintLayout clStatusBar;
+    @BindView(R.id.iv_updata)
+    ImageView ivUpdata;
+    @BindView(R.id.tv_updata)
+    TextView tvUpdata;
+    @BindView(R.id.tv_version)
+    TextView tvVersion;
+    @BindView(R.id.cl_updata)
+    ConstraintLayout clUpdata;
 
     @Inject
     SettingsPresenter mPresenter;
+    @Inject
+    File mCacheFile;
 
     @Override
     protected int getLayoutId() {
@@ -88,7 +108,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
     }
 
     @Override
-    protected void initView( ) {
+    protected void initView() {
         DaggerSettingsActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
 
@@ -101,12 +121,23 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
         switchNoImage.setChecked(mPresenter.getNoImageState());
         switchAutoCache.setChecked(mPresenter.getAutoCacheState());
         switchNightMode.setChecked(mPresenter.getNightModeState());
+        switchStatusBar.setChecked(mPresenter.getStatusBarState());
 
+        tvCache.setText(FileUtil.getCacheSize(mCacheFile));
+        tvVersion.setText(getVersionName());
+
+        clClearCache.setOnClickListener(v -> {
+            FileUtil.deleteDir(mCacheFile);
+            tvCache.setText(FileUtil.getCacheSize(mCacheFile));
+            showToast(getString(R.string.settingsActivity_clear_cache));
+        });
         clFeedBack.setOnClickListener(v -> ShareUtil.sendEmail(this, Constant.EMAIL_ADDRESS, getString(R.string.settingsActivity_email_to)));
+        clUpdata.setOnClickListener(v -> {});
 
         switchAutoCache.setOnCheckedChangeListener(this);
         switchNoImage.setOnCheckedChangeListener(this);
         switchNightMode.setOnCheckedChangeListener(this);
+        switchStatusBar.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -116,7 +147,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()){
+        switch (buttonView.getId()) {
             case R.id.switch_autoCache:
                 mPresenter.setAutoCacheState(isChecked);
                 break;
@@ -126,6 +157,9 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
             case R.id.switch_nightMode:
                 mPresenter.setNightModeState(isChecked);
                 break;
+            case R.id.switch_status_bar:
+                mPresenter.setStatusBarState(isChecked);
+                break;
             default:
                 break;
         }
@@ -133,7 +167,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
 
     @Override
     protected void onDestroy() {
-        if(mPresenter != null){
+        if (mPresenter != null) {
             mPresenter.detachView();
             mPresenter = null;
         }
@@ -143,5 +177,20 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SettingsActivity.class);
         context.startActivity(intent);
+    }
+
+    /**
+     * 获取版本号
+     */
+    private String getVersionName(){
+        PackageManager packageManager = getPackageManager();
+        String version = "";
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
+            version = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "当前版本:" + version;
     }
 }

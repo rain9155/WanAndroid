@@ -35,5 +35,8 @@ public interface BaseView {
     //夜间模式
     void userNightNode(boolean isNight);
 
+    //设置状态栏颜色
+    void setStatusBarColor(boolean isSet);
+
     void tokenExpire(int requestCode);
 }

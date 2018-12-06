@@ -4,6 +4,7 @@ import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
+import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
@@ -26,7 +27,13 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
 
     @Override
     public void subscribleEvent() {
-        super.subscribleEvent();
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(StatusBarEvent.class)
+                        .compose(RxUtils.switchSchedulers())
+                        .subscribe(statusBarEvent -> mView.setStatusBarColor(statusBarEvent.isSet()))
+        );
+
         addSubcriber(
                 RxBus.getInstance().toObservable(LoginEvent.class)
                         .filter(loginEvent -> loginEvent.isLogin())

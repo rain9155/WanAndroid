@@ -17,5 +17,6 @@ public interface SettingsContract {
         void setNoImageState(boolean isNight);
         void setAutoCacheState(boolean isNight);
         void setNightModeState(boolean isNight);
+        void setStatusBarState(boolean isStatusBar);
     }
 }

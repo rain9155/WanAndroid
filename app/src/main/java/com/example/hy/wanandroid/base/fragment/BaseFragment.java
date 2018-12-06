@@ -55,6 +55,11 @@ public abstract class BaseFragment extends SupportFragment
     }
 
     @Override
+    public void setStatusBarColor(boolean isSet) {
+
+    }
+
+    @Override
     public void showErrorView() {
 
     }

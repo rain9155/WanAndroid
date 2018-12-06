@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.view;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
@@ -26,8 +28,6 @@ import com.example.hy.wanandroid.view.project.ProjectFragment;
 import com.example.utilslibrary.ToastUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.jaeger.library.StatusBarUtil;
-
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import butterknife.BindView;
@@ -93,21 +93,25 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                     showHideFragment(mFragments[0], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 0;
                     showFloatingButton();
+                    setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_hierarchy:
                     showHideFragment(mFragments[1], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 1;
                     showFloatingButton();
+                    setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_project:
                     showHideFragment(mFragments[2], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 2;
                     showFloatingButton();
+                    setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_mine:
                     showHideFragment(mFragments[3], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 3;
                     hideFloatingButton();
+                    StatusBarUtil.immersiveForImage(this, Color.TRANSPARENT, 1);
                     break;
                 default:
                     break;
@@ -159,13 +163,17 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         super.onDestroy();
     }
 
-    @Override
-    protected void setStatusBarColor() {
-        StatusBarUtil.setTransparentForImageViewInFragment(this, null);
-    }
-
     public MainActivityComponent getComponent(){
         return mMainActivityComponent;
+    }
+
+    @Override
+    public void setStatusBarColor(boolean isSet) {
+        if(isSet){
+            StatusBarUtil.immersiveForImage(this, getResources().getColor(R.color.colorPrimary), 1);
+        }else {
+            StatusBarUtil.immersiveForImage(this, getResources().getColor(R.color.colorPrimaryDark), 1);
+        }
     }
 
     /**

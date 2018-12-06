@@ -22,5 +22,9 @@ public interface PreferencesHelper {
     void setAutoCacheState(boolean isAuto);
     //获得自动缓存设置
     boolean getAutoCacheState();
+    //保存状态栏着色设置
+    void setStatusBarState(boolean isStatusBar);
+    //获得状态栏着色设置
+    boolean getStatusBarState();
 
 }

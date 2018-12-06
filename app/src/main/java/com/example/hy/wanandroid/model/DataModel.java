@@ -183,4 +183,14 @@ public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
     public boolean getAutoCacheState() {
         return mPreferencesHelper.getAutoCacheState();
     }
+
+    @Override
+    public void setStatusBarState(boolean isStatusBar) {
+        mPreferencesHelper.setStatusBarState(isStatusBar);
+    }
+
+    @Override
+    public boolean getStatusBarState() {
+        return mPreferencesHelper.getStatusBarState();
+    }
 }

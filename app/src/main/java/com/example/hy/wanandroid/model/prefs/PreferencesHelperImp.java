@@ -61,4 +61,14 @@ public class PreferencesHelperImp implements PreferencesHelper {
     public boolean getAutoCacheState() {
         return mPreferences.getBoolean(Constant.KEY_PREFS_AUTOCACHE, true);
     }
+
+    @Override
+    public void setStatusBarState(boolean isStatusBar) {
+          mPreferences.edit().putBoolean(Constant.KEY_PREFS_STATUSBAR, isStatusBar).apply();
+    }
+
+    @Override
+    public boolean getStatusBarState() {
+        return mPreferences.getBoolean(Constant.KEY_PREFS_STATUSBAR, true);
+    }
 }

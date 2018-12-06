@@ -25,6 +25,7 @@ public class ToastUtil extends com.example.utilslibrary.ToastUtil {
             textView.setText(message);
         }
 
+
         Toast toast = new Toast(context);
         toast.setGravity(Gravity.BOTTOM, 0, DisplayUtil.dp2px(context, 50));
         toast.setDuration(Toast.LENGTH_SHORT);

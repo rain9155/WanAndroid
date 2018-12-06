@@ -1,6 +1,12 @@
 package com.example.hy.wanandroid.di.module.activity;
 
+import com.example.hy.wanandroid.config.Constant;
+import com.example.hy.wanandroid.di.scope.PerActivity;
+
+import java.io.File;
+
 import dagger.Module;
+import dagger.Provides;
 
 /**
  * SettingsActivity的Module
@@ -8,4 +14,11 @@ import dagger.Module;
  */
 @Module
 public class SettingsActivityModule {
+
+    @Provides
+    @PerActivity
+    File provideCacheFile(){
+        return new File(Constant.PATH_NETCACHE);
+    }
+
 }

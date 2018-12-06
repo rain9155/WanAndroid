@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class FileUtil extends com.example.utilslibrary.FileUtils {
 
     /**
-     * 删除某个文件夹下所有的文件
+     * 删除某个文件或某个文件夹下所有的文件
      */
     public static boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
