@@ -24,8 +24,10 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSettingsActivityComponent;
 import com.example.hy.wanandroid.presenter.mine.SettingsPresenter;
+import com.example.hy.wanandroid.utils.DownloadUtil;
 import com.example.hy.wanandroid.utils.FileUtil;
 import com.example.hy.wanandroid.utils.LogUtil;
+import com.example.hy.wanandroid.utils.ServiceUtil;
 import com.example.hy.wanandroid.utils.ShareUtil;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 
@@ -142,7 +144,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
         switchNightMode.setChecked(mPresenter.getNightModeState());
         switchStatusBar.setChecked(mPresenter.getStatusBarState());
 
-        mCurrentVersionName = getVersionName();
+        mCurrentVersionName = DownloadUtil.getVersionName(this);
         tvCache.setText(FileUtil.getCacheSize(mCacheFile));
         tvVersion.setText(getString(R.string.settingsActivity_version_current) + mCurrentVersionName);
 
@@ -153,6 +155,10 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
         });
         clFeedBack.setOnClickListener(v -> ShareUtil.sendEmail(this, Constant.EMAIL_ADDRESS, getString(R.string.settingsActivity_email_to)));
         clUpdata.setOnClickListener(v -> {
+            if(ServiceUtil.isServiceRunning(this, UpdataService.class.getName())){
+                showToast(getString(R.string.downloading));
+                return;
+            }
             if(mAnimator != null && mAnimator.isRunning()) return;
             mPresenter.checkVersion(mCurrentVersionName);
         });
@@ -207,7 +213,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            downloadApk();
+            DownloadUtil.downloadApk(this, mNewVersionName);
         }else {
             showToast(getString(R.string.settingsActivity_permission_denied));
         }
@@ -231,6 +237,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
     @Override
     public void showUpdataDialog(String content) {
         mVersionDialog.setContentText(content);
+        mVersionDialog.setIsMain(false);
         mVersionDialog.show(getSupportFragmentManager(), "tag4");
     }
 
@@ -254,63 +261,13 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE);
         }else {
-            downloadApk();
+            DownloadUtil.downloadApk(this, mNewVersionName);
         }
     }
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SettingsActivity.class);
         context.startActivity(intent);
-    }
-
-
-    /**
-     * 下载apk
-     */
-    private void downloadApk() {
-        String url = Constant.BASE_APK_URL + mNewVersionName + "/app-release.apk";
-        if(canDownloadState(this)){
-            LogUtil.d(LogUtil.TAG_COMMON, "DownloadManager可用");
-            Intent intent = new Intent(this, UpdataService.class);
-            intent.putExtra(Constant.KEY_URL_APK, url);
-            startService(intent);
-        }else {
-            LogUtil.d(LogUtil.TAG_COMMON, "DownloadManager不可用");
-            ShareUtil.openBrowser(this, url);
-        }
-    }
-
-    /**
-     * 是否可以使用DownloadManager,如果不能则使用系统浏览器
-     */
-    private static boolean canDownloadState(Context ctx) {
-        try {
-                int state = ctx.getPackageManager().getApplicationEnabledSetting("com.android.providers.downloads");
-                 if (state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-                     || state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER
-                     || state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_UNTIL_USED) {
-                     return false;
-                 }
-             } catch (Exception e) {
-                 e.printStackTrace();
-                 return false;
-             }
-         return true;
-    }
-
-    /**
-     * 获取版本号
-     */
-    private String getVersionName(){
-        PackageManager packageManager = getPackageManager();
-        String version = "";
-        try {
-            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
-            version = packageInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return version;
     }
 
     /**

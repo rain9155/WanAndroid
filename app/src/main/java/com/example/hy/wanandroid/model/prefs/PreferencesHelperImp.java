@@ -79,6 +79,6 @@ public class PreferencesHelperImp implements PreferencesHelper {
 
     @Override
     public long getDownloadId() {
-        return mPreferences.getInt(Constant.KEY_DOWNLOAD_ID, -1);
+        return mPreferences.getLong(Constant.KEY_DOWNLOAD_ID, -1L);
     }
 }

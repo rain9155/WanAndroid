@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.di.module.activity;
 
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.di.scope.PerActivity;
+import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 
 import dagger.Module;
 import dagger.Provides;
@@ -18,5 +19,12 @@ public class MainActivityModule {
     BaseFragment[] provideFragments(){
         return new BaseFragment[4];
     }
+
+    @Provides
+    @PerActivity
+    VersionDialog provideVersionDialog(){
+        return new VersionDialog();
+    }
+
 
 }

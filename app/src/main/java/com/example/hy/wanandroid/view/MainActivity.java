@@ -1,8 +1,10 @@
 package com.example.hy.wanandroid.view;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -22,15 +24,21 @@ import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utils.DownloadUtil;
 import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
 import com.example.hy.wanandroid.view.project.ProjectFragment;
+import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 import com.example.utilslibrary.ToastUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import butterknife.BindView;
 import android.os.Handler;
@@ -55,6 +63,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     MainPresenter mPresenter;
     @Inject
     BaseFragment[] mFragments;
+    @Inject
+    VersionDialog mVersionDialog;
+
+    private String mNewVersionName;
 
     @Override
     protected int getLayoutId() {
@@ -125,6 +137,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             RxBus.getInstance().post(new ToppingEvent());
             show(bnvBtm);
         });
+
+        mPresenter.checkVersion(DownloadUtil.getVersionName(this));
     }
 
     @Override
@@ -163,6 +177,41 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             mPresenter = null;
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            DownloadUtil.downloadApk(this, mNewVersionName);
+        }else {
+            showToast(getString(R.string.settingsActivity_permission_denied));
+        }
+    }
+
+    @Override
+    public void showUpdataDialog(String content) {
+        mVersionDialog.setContentText(content);
+        mVersionDialog.setIsMain(true);
+        mVersionDialog.show(getSupportFragmentManager(), "tag5");
+    }
+
+    @Override
+    public void setNewVersionName(String versionName) {
+        mNewVersionName = versionName;
+    }
+
+    @Override
+    public void upDataVersion() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE);
+        }else {
+            DownloadUtil.downloadApk(this, mNewVersionName);
+        }
     }
 
     public MainActivityComponent getComponent(){
@@ -242,4 +291,5 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             mShowNavAnimator.start();
         }
     }
+
 }

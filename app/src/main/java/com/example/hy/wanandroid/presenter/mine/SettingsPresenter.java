@@ -39,11 +39,17 @@ public class SettingsPresenter extends BasePresenter<SettingsContract.View> impl
     }
 
     @Override
-    public void addSubcriber(Disposable disposable) {
-        super.addSubcriber(disposable);
+    public void subscribleEvent() {
+        super.subscribleEvent();
         addSubcriber(
                 RxBus.getInstance().toObservable(UpdataEvent.class)
-                .subscribe(updataEvent -> mView.upDataVersion())
+                        .filter(new Predicate<UpdataEvent>() {
+                            @Override
+                            public boolean test(UpdataEvent updataEvent) throws Exception {
+                                return updataEvent.isMain() == false;
+                            }
+                        })
+                        .subscribe(updataEvent -> mView.upDataVersion())
         );
     }
 
@@ -89,13 +95,13 @@ public class SettingsPresenter extends BasePresenter<SettingsContract.View> impl
                         StringBuilder content = new StringBuilder();
                         Resources resources = App.getContext().getResources();
                         mView.setNewVersionName(version.getTag_name());
-                        content.append(resources.getString(R.string.dialog_versionName)).append(version.getTag_name())
-                                .append(resources.getString(R.string.dialog_versionSize)).append(FileUtil.getFormatSize(version.getAssets().get(0).getSize()))
+                        content.append(resources.getString(R.string.dialog_versionName)).append(version.getTag_name()).append("\n")
+                                .append(resources.getString(R.string.dialog_versionSize)).append(FileUtil.getFormatSize(version.getAssets().get(0).getSize())).append("\n")
                                 .append(resources.getString(R.string.dialog_versionContent)).append(version.getBody());
                         return content.toString();
                     }
                 })
-                .subscribeWith(new DefaultObserver<String>(mView, false, true){
+                .subscribeWith(new DefaultObserver<String>(mView, true, true){
                     @Override
                     public void onNext(String s){
                         super.onNext(s);

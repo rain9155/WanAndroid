@@ -25,12 +25,10 @@ import static android.content.Context.DOWNLOAD_SERVICE;
  */
 public class UpdataReceiver extends BroadcastReceiver {
 
-    private Context mContext;
     private DownloadManager mManager;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        mContext = context;
         //下载完成
         if(intent.getAction().equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE)){
             LogUtil.d(LogUtil.TAG_COMMON, "下载完成！");
@@ -58,7 +56,8 @@ public class UpdataReceiver extends BroadcastReceiver {
                     installApk(context);
                      break;
                 case DownloadManager.STATUS_FAILED://下载失败
-                     LogUtil.d(LogUtil.TAG_COMMON, "下载失败.....");
+                    ToastUtil.toastInBottom(context, context.getString(R.string.download_fail), null);
+                    LogUtil.d(LogUtil.TAG_COMMON, "下载失败.....");
                       break;
                 case DownloadManager.STATUS_RUNNING://正在下载
                      LogUtil.d(LogUtil.TAG_COMMON, "正在下载.....");
@@ -81,7 +80,7 @@ public class UpdataReceiver extends BroadcastReceiver {
             install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(install);
         }else {
-            ToastUtil.showToast(context, context.getString(R.string.setup_fail));
+            ToastUtil.toastInBottom(context, context.getString(R.string.setup_fail), null);
         }
     }
 }

@@ -24,6 +24,7 @@ import androidx.fragment.app.DialogFragment;
 public class VersionDialog extends DialogFragment {
 
     private String mContentText;
+    private boolean isMain;
 
     @NonNull
     @Override
@@ -42,12 +43,16 @@ public class VersionDialog extends DialogFragment {
         updataLater.setOnClickListener(v -> dialog.dismiss());
         updataNow.setOnClickListener(v -> {
             dialog.dismiss();
-            RxBus.getInstance().post(new UpdataEvent());
+            RxBus.getInstance().post(new UpdataEvent(isMain));
         });
-        return super.onCreateDialog(savedInstanceState);
+        return dialog;
     }
 
     public void setContentText(String content){
         mContentText = content;
+    }
+
+    public void setIsMain(boolean isMain) {
+        this.isMain = isMain;
     }
 }

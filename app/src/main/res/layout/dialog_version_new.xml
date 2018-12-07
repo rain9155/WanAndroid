@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dp_200"
     android:layout_height="@dimen/dp_200"
+    android:padding="5dp"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background">
@@ -22,7 +23,7 @@
         android:id="@+id/tv_version_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/secondaryText"
+        android:textColor="@color/primaryText"
         android:textSize="@dimen/sp_18"
         android:layout_marginTop="@dimen/dp_10"
         tools:text="1、WanAndroid第一版发布！"
@@ -37,10 +38,10 @@
         android:text="@string/dialog_btnUpdataLater"
         android:textColor="@color/primaryText"
         android:background="@null"
+        android:layout_marginTop="@dimen/dp_10"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_version_new"
-        app:layout_constraintRight_toLeftOf="@+id/btn_updata_now"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_version_content"
+        app:layout_constraintRight_toLeftOf="@+id/btn_updata_now" />
 
     <Button
         android:id="@+id/btn_updata_now"
@@ -48,10 +49,10 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:text="@string/dialog_btnUpdataNow"
+        android:layout_marginTop="@dimen/dp_10"
         android:textColor="@color/primaryText"
         app:layout_constraintLeft_toRightOf="@id/btn_updata_later"
-        app:layout_constraintTop_toBottomOf="@id/tv_version_new"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_version_content"
         app:layout_constraintRight_toRightOf="parent"/>
 
 

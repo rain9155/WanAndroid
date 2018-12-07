@@ -16,6 +16,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.utils.ToastUtil;
 
 import androidx.annotation.Nullable;
 
@@ -49,6 +50,7 @@ public class UpdataService extends Service {
         if(!TextUtils.isEmpty(url)){
             long downloadId = downloadApk(url);
             mDataModel.setDownloadId(downloadId);
+            ToastUtil.toastInBottom(mContext, mContext.getString(R.string.downloading), null);
         }
         return START_REDELIVER_INTENT;
     }
@@ -71,7 +73,7 @@ public class UpdataService extends Service {
         //设置Notification的标题
         request.setTitle(mContext.getString(R.string.app_name));
         //设置描述
-        request.setDescription(mContext.getString(R.string.dowmloading)) ;
+        request.setDescription(mContext.getString(R.string.downloading)) ;
         // 在下载过程中通知栏会一直显示该下载的Notification，在下载完成后该Notification会继续显示，直到用户点击该Notification或者消除该Notification。
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED ) ;
         //下载的文件可以被系统的Downloads应用扫描到并管理

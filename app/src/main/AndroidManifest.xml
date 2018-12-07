@@ -55,6 +55,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".component.UpdataService"
+            android:enabled="true"
+            android:exported="true"/>
+
+        <receiver android:name=".component.UpdataReceiver"
+            android:enabled="true"
+            android:exported="true"/>
+
     </application>
 
 </manifest>
