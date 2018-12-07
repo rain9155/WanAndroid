@@ -71,4 +71,14 @@ public class PreferencesHelperImp implements PreferencesHelper {
     public boolean getStatusBarState() {
         return mPreferences.getBoolean(Constant.KEY_PREFS_STATUSBAR, true);
     }
+
+    @Override
+    public void setDownloadId(long id) {
+        mPreferences.edit().putLong(Constant.KEY_DOWNLOAD_ID, id).apply();
+    }
+
+    @Override
+    public long getDownloadId() {
+        return mPreferences.getInt(Constant.KEY_DOWNLOAD_ID, -1);
+    }
 }

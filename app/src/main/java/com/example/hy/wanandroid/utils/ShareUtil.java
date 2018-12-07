@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.example.hy.wanandroid.R;
 import com.example.utilslibrary.ToastUtil;
@@ -18,6 +19,10 @@ public class ShareUtil extends com.example.utilslibrary.ShareUtil {
      * 打开浏览器
      */
     public static void openBrowser(Context context, String address){
+        if (TextUtils.isEmpty(address) || address.startsWith("file://")) {
+            ToastUtil.showToast(context, context.getString(R.string.articleActivity_browser_error));
+            return;
+        }
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(address));
         if(context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null){

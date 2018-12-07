@@ -11,6 +11,7 @@ import com.example.hy.wanandroid.model.network.entity.Login;
 import com.example.hy.wanandroid.model.network.entity.Tag;
 import com.example.hy.wanandroid.model.network.entity.Tab;
 import com.example.hy.wanandroid.model.network.entity.HotKey;
+import com.example.hy.wanandroid.model.network.entity.Version;
 
 import java.util.List;
 
@@ -63,8 +64,10 @@ public interface NetworkHelper {
     //获得标签
     Observable<BaseResponse<List<Tag>>> getTags();
 
-    /** common */
+    /** version */
+    Observable<Version> getVersionDetails();
 
+    /** common */
     //获得收藏结果
     Observable<BaseResponse<Collection>> getCollectRequest(int id);
     //获得取消收藏结果

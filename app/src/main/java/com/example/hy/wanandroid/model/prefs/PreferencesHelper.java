@@ -26,5 +26,8 @@ public interface PreferencesHelper {
     void setStatusBarState(boolean isStatusBar);
     //获得状态栏着色设置
     boolean getStatusBarState();
-
+    //保存下载记录
+    void setDownloadId(long id);
+    //获得下载记录
+    long getDownloadId();
 }

@@ -6,6 +6,7 @@ import com.example.hy.wanandroid.model.network.api.MineApis;
 import com.example.hy.wanandroid.model.network.api.NavigationApis;
 import com.example.hy.wanandroid.model.network.api.ProjectApis;
 import com.example.hy.wanandroid.model.network.api.SearchApis;
+import com.example.hy.wanandroid.model.network.api.VersionApi;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.FirstHierarchy;
 import com.example.hy.wanandroid.model.network.entity.SecondHierarchy;
@@ -17,6 +18,7 @@ import com.example.hy.wanandroid.model.network.entity.Login;
 import com.example.hy.wanandroid.model.network.entity.Tag;
 import com.example.hy.wanandroid.model.network.entity.Tab;
 import com.example.hy.wanandroid.model.network.entity.HotKey;
+import com.example.hy.wanandroid.model.network.entity.Version;
 
 import java.util.List;
 
@@ -36,15 +38,17 @@ public class NetworkHelperImp implements NetworkHelper{
     private ProjectApis mProjectApis;
     private SearchApis mSearchApis;
     private HierarchyApis mHierarchyApis;
+    private VersionApi mVersionApi;
     
     @Inject
-    public NetworkHelperImp(HomeApis homeApis, MineApis mineApis, NavigationApis navigationApis, ProjectApis projectApis, SearchApis searchApis, HierarchyApis hierarchyApis) {
+    public NetworkHelperImp(VersionApi versionApi, HomeApis homeApis, MineApis mineApis, NavigationApis navigationApis, ProjectApis projectApis, SearchApis searchApis, HierarchyApis hierarchyApis) {
         mHomeApis = homeApis;
         mMineApis = mineApis;
         mNavigationApis = navigationApis;
         mProjectApis = projectApis;
         mSearchApis = searchApis;
         mHierarchyApis = hierarchyApis;
+        mVersionApi = versionApi;
     }
 
     @Override
@@ -115,6 +119,11 @@ public class NetworkHelperImp implements NetworkHelper{
     @Override
     public Observable<BaseResponse<List<Tag>>> getTags() {
         return mNavigationApis.getTags();
+    }
+
+    @Override
+    public Observable<Version> getVersionDetails() {
+        return mVersionApi.getVersionDetial();
     }
 
     @Override

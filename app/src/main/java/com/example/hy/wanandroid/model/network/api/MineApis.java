@@ -66,17 +66,4 @@ public interface MineApis {
                                                                 @Field("originId") int originId//收藏在原始文章列表的id
     );
 
-    /**
-     * 版本更新
-     * https://api.github.com/repos/rain9155/WanAndroid/releases/latest
-     */
-    @GET("https://api.github.com/repos/rain9155/WanAndroid/releases/latest")
-    Observable<Version> getVersionDetial();
-
-
-    /**
-     * apk下载
-     * https://github.com/rain9155/WanAndroid/releases/download/v1.0/app-release.apk
-     */
-
 }

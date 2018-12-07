@@ -2,9 +2,14 @@ package com.example.hy.wanandroid.di.module.activity;
 
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.di.scope.PerActivity;
+import com.example.hy.wanandroid.widget.dialog.UpDataLoadingDialog;
+import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 
 import java.io.File;
 
+import javax.inject.Named;
+
+import androidx.fragment.app.DialogFragment;
 import dagger.Module;
 import dagger.Provides;
 
@@ -20,5 +25,12 @@ public class SettingsActivityModule {
     File provideCacheFile(){
         return new File(Constant.PATH_NETCACHE);
     }
+
+    @Provides
+    @PerActivity
+    VersionDialog provideVersionDialog(){
+        return new VersionDialog();
+    }
+
 
 }

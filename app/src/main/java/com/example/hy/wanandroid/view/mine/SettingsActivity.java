@@ -1,33 +1,45 @@
 package com.example.hy.wanandroid.view.mine;
 
+import android.Manifest;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.component.UpdataService;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSettingsActivityComponent;
 import com.example.hy.wanandroid.presenter.mine.SettingsPresenter;
 import com.example.hy.wanandroid.utils.FileUtil;
+import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.utils.ShareUtil;
+import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 
 import java.io.File;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class SettingsActivity extends BaseActivity implements SettingsContract.View, CompoundButton.OnCheckedChangeListener {
 
@@ -101,12 +113,19 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
     SettingsPresenter mPresenter;
     @Inject
     File mCacheFile;
+    @Inject
+    VersionDialog mVersionDialog;
+
+    private ObjectAnimator mAnimator;
+    private String mNewVersionName;
+    private String mCurrentVersionName;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_settings;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
         DaggerSettingsActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
@@ -123,8 +142,9 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
         switchNightMode.setChecked(mPresenter.getNightModeState());
         switchStatusBar.setChecked(mPresenter.getStatusBarState());
 
+        mCurrentVersionName = getVersionName();
         tvCache.setText(FileUtil.getCacheSize(mCacheFile));
-        tvVersion.setText(getVersionName());
+        tvVersion.setText(getString(R.string.settingsActivity_version_current) + mCurrentVersionName);
 
         clClearCache.setOnClickListener(v -> {
             FileUtil.deleteDir(mCacheFile);
@@ -132,7 +152,10 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
             showToast(getString(R.string.settingsActivity_clear_cache));
         });
         clFeedBack.setOnClickListener(v -> ShareUtil.sendEmail(this, Constant.EMAIL_ADDRESS, getString(R.string.settingsActivity_email_to)));
-        clUpdata.setOnClickListener(v -> {});
+        clUpdata.setOnClickListener(v -> {
+            if(mAnimator != null && mAnimator.isRunning()) return;
+            mPresenter.checkVersion(mCurrentVersionName);
+        });
 
         switchAutoCache.setOnCheckedChangeListener(this);
         switchNoImage.setOnCheckedChangeListener(this);
@@ -166,6 +189,12 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
     }
 
     @Override
+    protected void onStop() {
+        if(mAnimator != null) mAnimator.cancel();
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
         if (mPresenter != null) {
             mPresenter.detachView();
@@ -174,9 +203,99 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
         super.onDestroy();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            downloadApk();
+        }else {
+            showToast(getString(R.string.settingsActivity_permission_denied));
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        startloadAnimator();
+    }
+
+    @Override
+    public void showErrorView() {
+        mAnimator.cancel();
+    }
+
+    @Override
+    public void showNormalView() {
+        mAnimator.cancel();
+    }
+
+    @Override
+    public void showUpdataDialog(String content) {
+        mVersionDialog.setContentText(content);
+        mVersionDialog.show(getSupportFragmentManager(), "tag4");
+    }
+
+    @Override
+    public void setNewVersionName(String versionName) {
+        mNewVersionName = versionName;
+    }
+
+    @Override
+    public void showAlareadNewToast(String content) {
+        mAnimator.cancel();
+        showToast(content);
+    }
+
+    @Override
+    public void upDataVersion() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE);
+        }else {
+            downloadApk();
+        }
+    }
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SettingsActivity.class);
         context.startActivity(intent);
+    }
+
+
+    /**
+     * 下载apk
+     */
+    private void downloadApk() {
+        String url = Constant.BASE_APK_URL + mNewVersionName + "/app-release.apk";
+        if(canDownloadState(this)){
+            LogUtil.d(LogUtil.TAG_COMMON, "DownloadManager可用");
+            Intent intent = new Intent(this, UpdataService.class);
+            intent.putExtra(Constant.KEY_URL_APK, url);
+            startService(intent);
+        }else {
+            LogUtil.d(LogUtil.TAG_COMMON, "DownloadManager不可用");
+            ShareUtil.openBrowser(this, url);
+        }
+    }
+
+    /**
+     * 是否可以使用DownloadManager,如果不能则使用系统浏览器
+     */
+    private static boolean canDownloadState(Context ctx) {
+        try {
+                int state = ctx.getPackageManager().getApplicationEnabledSetting("com.android.providers.downloads");
+                 if (state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                     || state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER
+                     || state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_UNTIL_USED) {
+                     return false;
+                 }
+             } catch (Exception e) {
+                 e.printStackTrace();
+                 return false;
+             }
+         return true;
     }
 
     /**
@@ -191,6 +310,19 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        return "当前版本:" + version;
+        return version;
     }
+
+    /**
+     * 启动load动画
+     */
+    @SuppressLint("WrongConstant")
+    private void startloadAnimator() {
+        mAnimator = ObjectAnimator.ofFloat(ivUpdata, "rotation", 0, 360).setDuration(600);
+        mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        mAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mAnimator.setRepeatMode(ValueAnimator.INFINITE);
+        mAnimator.start();
+    }
+
 }

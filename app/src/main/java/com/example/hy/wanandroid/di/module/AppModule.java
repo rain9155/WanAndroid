@@ -5,7 +5,9 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.db.DbHelper;
 import com.example.hy.wanandroid.model.network.NetworkHelper;
+import com.example.hy.wanandroid.model.network.api.VersionApi;
 import com.example.hy.wanandroid.model.network.api.WechatApis;
+import com.example.hy.wanandroid.model.network.entity.Version;
 import com.example.hy.wanandroid.model.network.interceptor.CacheInterceptor;
 import com.example.hy.wanandroid.model.network.interceptor.ReadCookiesInterceptor;
 import com.example.hy.wanandroid.model.network.interceptor.WriteCookiesInterceptor;
@@ -23,6 +25,7 @@ import com.example.utilslibrary.FileUtils;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
@@ -30,6 +33,7 @@ import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * App的module
@@ -92,6 +96,18 @@ public class AppModule {
 
     @Provides
     @Singleton
+    @Named("version")
+    Retrofit provideRetrofitForVersion(OkHttpClient okHttpClient){
+        return new Retrofit.Builder()
+                .baseUrl(Constant.BASE_URL)
+                .client(okHttpClient)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    @Provides
+    @Singleton
      HierarchyApis provideHierarchyApis(Retrofit retrofit){
         return retrofit.create(HierarchyApis.class);
     }
@@ -130,5 +146,11 @@ public class AppModule {
     @Singleton
     WechatApis provideWechatApis(Retrofit retrofit){
         return retrofit.create(WechatApis.class);
+    }
+
+    @Provides
+    @Singleton
+    VersionApi provideVersionApi(@Named("version") Retrofit retrofit){
+        return retrofit.create(VersionApi.class);
     }
 }

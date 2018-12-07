@@ -15,6 +15,7 @@ import com.example.hy.wanandroid.model.network.entity.Login;
 import com.example.hy.wanandroid.model.network.entity.Tag;
 import com.example.hy.wanandroid.model.network.entity.Tab;
 import com.example.hy.wanandroid.model.network.entity.HotKey;
+import com.example.hy.wanandroid.model.network.entity.Version;
 import com.example.hy.wanandroid.model.prefs.PreferencesHelper;
 import com.example.hy.wanandroid.model.prefs.PreferencesHelperImp;
 import java.util.List;
@@ -110,6 +111,11 @@ public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
     }
 
     @Override
+    public Observable<Version> getVersionDetails() {
+        return mNetworkHelper.getVersionDetails();
+    }
+
+    @Override
     public Observable<BaseResponse<Collection>> getCollectRequest(int id) {
         return mNetworkHelper.getCollectRequest(id);
     }
@@ -192,5 +198,15 @@ public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
     @Override
     public boolean getStatusBarState() {
         return mPreferencesHelper.getStatusBarState();
+    }
+
+    @Override
+    public void setDownloadId(long id) {
+        mPreferencesHelper.setDownloadId(id);
+    }
+
+    @Override
+    public long getDownloadId() {
+        return mPreferencesHelper.getDownloadId();
     }
 }

@@ -138,7 +138,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
                 collection();
                 break;
             case R.id.item_browser:
-                openBrowser();
+                ShareUtil.openBrowser(this, mAddress);
                 break;
             case R.id.item_copy:
                 copy(this, mAddress);
@@ -245,18 +245,6 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
         else
             showToast(getString(R.string.articleActivity_share_fail));
     }
-
-    /**
-     * 打开浏览器
-     */
-    private void openBrowser() {
-        if (TextUtils.isEmpty(mAddress) || mAddress.startsWith("file://")) {
-            showToast(getString(R.string.articleActivity_browser_error));
-            return;
-        }
-        ShareUtil.openBrowser(this, mAddress);
-    }
-
 
     /**
      * 配置WebView
