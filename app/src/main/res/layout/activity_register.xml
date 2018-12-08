@@ -124,6 +124,7 @@
             android:layout_marginRight="@dimen/dp_20"
             android:text="@string/registerActivity_register"
             android:textStyle="bold"
+            android:foreground="@drawable/bg_feedback"
             android:textColor="@color/white"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -156,11 +157,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <ImageView
-        android:id="@+id/iv_back"
+    <ImageButton
+        android:id="@+id/ib_back"
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_50"
-        android:src="@drawable/ic_arrow_left"
+        android:foreground="@drawable/bg_feedback"
+        android:background="@null"
+        app:srcCompat="@drawable/ic_arrow_left"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -4,6 +4,7 @@
     android:id="@+id/common_tablayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:tabBackground="@drawable/bg_feedback"
     app:tabTextAppearance="@style/CommonToolbarTitleSize"
     app:tabIndicatorColor="@color/white"
     app:tabSelectedTextColor="@color/white"

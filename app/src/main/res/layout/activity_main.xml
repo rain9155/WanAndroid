@@ -12,7 +12,8 @@
             android:id="@+id/fl_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:ignore="PrivateResource">
 
         </FrameLayout>
 
@@ -24,6 +25,7 @@
             android:layout_gravity="bottom|right"
             android:src="@drawable/ic_main_missile"
             android:layout_marginRight="@dimen/dp_10"
+            android:foreground="@drawable/bg_feedback"
             android:layout_marginBottom="@dimen/dp_68"
             android:clickable="true"
             app:layout_behavior="@string/behaviour_fbtn"
@@ -38,8 +40,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:clickable="true"
+            android:focusable="true"
             android:background="@color/colorNavBtmBackground"
-            app:itemBackground="@color/colorNavBtmBackground"
+            app:itemBackground="@drawable/bg_feedback"
             app:itemIconTint="@drawable/nav_btm_color"
             app:itemTextColor="@drawable/nav_btm_color"
             app:layout_behavior="@string/behaviour_bottom_nav"

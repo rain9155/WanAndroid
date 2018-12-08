@@ -10,6 +10,9 @@
     android:gravity="center"
     android:textSize="@dimen/sp_16"
     android:textColor="@color/primaryText"
+    android:foreground="@drawable/bg_feedback"
+    android:focusable="true"
+    android:clickable="true"
     tools:text="Google">
 
 </TextView>

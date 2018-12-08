@@ -32,8 +32,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class LoginActivity extends BaseActivity implements LoginContract.View {
 
-    @BindView(R.id.iv_back)
-    ImageView ivBack;
+    @BindView(R.id.ib_back)
+    ImageView ibBack;
     @BindView(R.id.iv_face)
     CircleImageView ivFace;
     @BindView(R.id.at_account)
@@ -69,7 +69,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         DaggerLoginActivityComponent.builder().appComponent(getAppComponent()).loginActivityModule(new LoginActivityModule()).build().inject(this);
         mPresenter.attachView(this);
 
-        ivBack.setOnClickListener(v -> finish());
+        ibBack.setOnClickListener(v -> finish());
         tvRegister.setOnClickListener(v -> RegisterActivity.startActivity(this));
         btnLogin.setOnClickListener(v -> {
             // Reset errors.

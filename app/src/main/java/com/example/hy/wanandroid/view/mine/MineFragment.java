@@ -203,6 +203,7 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     }
 
     public static MineFragment newInstance() {
+
         return new MineFragment();
     }
 }

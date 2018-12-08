@@ -27,7 +27,7 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
 
     @Override
     public void subscribleEvent() {
-
+        super.subscribleEvent();
         addSubcriber(
                 RxBus.getInstance().toObservable(StatusBarEvent.class)
                         .compose(RxUtils.switchSchedulers())
@@ -40,11 +40,12 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
                         .subscribe(loginEvent -> mView.showLoginView())
         );
 
-        addSubcriber(
-                RxBus.getInstance().toObservable(LoginEvent.class)
-                .filter(loginEvent -> !loginEvent.isLogin())
-                .subscribe(loginEvent -> mView.showLogoutView())
-        );
+//        addSubcriber(
+//                RxBus.getInstance().toObservable(LoginEvent.class)
+//                .filter(loginEvent -> !loginEvent.isLogin())
+//                .subscribe(loginEvent -> mView.showLogoutView())
+//        );
+
         addSubcriber(
                 RxBus.getInstance().toObservable(LoginEvent.class)
                 .filter(loginEvent -> !loginEvent.isLogin())

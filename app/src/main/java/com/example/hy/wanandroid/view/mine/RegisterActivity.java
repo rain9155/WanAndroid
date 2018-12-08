@@ -46,8 +46,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     ConstraintLayout clRegister;
     @BindView(R.id.login_progress)
     ProgressBar loginProgress;
-    @BindView(R.id.iv_back)
-    ImageView ivBack;
+    @BindView(R.id.ib_back)
+    ImageView ibBack;
     @BindView(R.id.btn_register)
     Button btnRegister;
 
@@ -70,7 +70,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
         mPresenter.attachView(this);
 
         tvLogin.setOnClickListener(v -> finish());
-        ivBack.setOnClickListener(v -> finish());
+        ibBack.setOnClickListener(v -> finish());
         btnRegister.setOnClickListener(v -> {
             tlAccount.setError(null);
             tlPasswordAgain.setError(null);
