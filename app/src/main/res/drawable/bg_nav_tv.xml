@@ -6,27 +6,25 @@
 
         <shape android:shape="rectangle">
 
-            <corners android:radius="@dimen/dp_15" />
+            <corners android:radius="@dimen/dp_18" />
 
-            <stroke
-                android:width="@dimen/dp_2"
-                android:color="@color/foreground"/>
+            <stroke android:width="@dimen/dp_2"
+                android:color="@color/colorPrimary"/>
 
-            <solid android:color="@color/foreground"/>
+            <solid android:color="@color/colorPrimary"/>
         </shape>
 
     </item>
 
     <item>
-
         <shape android:shape="rectangle">
-            <corners android:radius="@dimen/dp_15"/>
+            <corners android:radius="@dimen/dp_18"/>
 
             <stroke
                 android:width="@dimen/dp_2"
                 android:color="@color/colorPrimary"/>
-
             <solid android:color="@color/foreground"/>
+
         </shape>
 
     </item>

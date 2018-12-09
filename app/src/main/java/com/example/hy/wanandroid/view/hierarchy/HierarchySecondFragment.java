@@ -12,6 +12,7 @@ import com.example.hy.wanandroid.contract.hierarchy.HierarchySecondContract;
 import com.example.hy.wanandroid.di.module.fragment.HierarchySecondFragmentModule;
 import com.example.hy.wanandroid.model.network.entity.Article;
 import com.example.hy.wanandroid.presenter.hierarchy.HierarchySecondPresenter;
+import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
@@ -90,6 +91,7 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
             Article article = mArticleList.get(position);
             if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
             else mPresenter.collectArticle(article.getId());
+            AnimUtil.scale(view, -1);
         });
     }
 

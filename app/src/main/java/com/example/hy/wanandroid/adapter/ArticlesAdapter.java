@@ -8,9 +8,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.CommonUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -35,7 +37,17 @@ public class ArticlesAdapter extends BaseQuickAdapter<Article, BaseViewHolder> {
                 .setText(R.id.tv_publish_time, article.getNiceDate())
                 .addOnClickListener(R.id.iv_collection);
 
-        if(article.isCollect()) holder.setImageDrawable(R.id.iv_collection, CommonUtil.getTintDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_home_collection), ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.colorCollected))));
-        else holder.setImageResource(R.id.iv_collection, R.drawable.ic_home_collection);
+        if(article.isCollect()){
+            holder.setImageDrawable(
+                    R.id.iv_collection,
+                    CommonUtil.getTintDrawable(
+                            Objects.requireNonNull(ContextCompat.getDrawable(mContext, R.drawable.ic_home_collection)),
+                            ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.colorCollected))
+                    )
+            );
+        }
+        else{
+            holder.setImageResource(R.id.iv_collection, R.drawable.ic_home_collection);
+        }
     }
 }

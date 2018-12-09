@@ -21,6 +21,7 @@ import com.example.hy.wanandroid.di.component.activity.DaggerSearchActivityCompo
 import com.example.hy.wanandroid.model.network.entity.Article;
 import com.example.hy.wanandroid.model.network.entity.HotKey;
 import com.example.hy.wanandroid.presenter.search.SearchPresenter;
+import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
@@ -156,6 +157,7 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
             Article article = mSearchResquestList.get(position);
             if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
             else mPresenter.collectArticle(article.getId());
+            AnimUtil.scale(view, -1);
         });
         normalView.setEnableLoadMore(false);
         normalView.setEnableRefresh(false);

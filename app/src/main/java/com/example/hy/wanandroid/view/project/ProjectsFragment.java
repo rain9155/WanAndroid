@@ -12,6 +12,7 @@ import com.example.hy.wanandroid.contract.project.ProjectsContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
 import com.example.hy.wanandroid.model.network.entity.Article;
 import com.example.hy.wanandroid.presenter.project.ProjectsPresenter;
+import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
@@ -92,6 +93,7 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
             Article article = mArticles.get(position);
             if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
             else mPresenter.collectArticle(article.getId());
+            AnimUtil.scale(view, -1);
         });
     }
 

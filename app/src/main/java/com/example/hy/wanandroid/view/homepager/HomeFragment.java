@@ -17,6 +17,7 @@ import com.example.hy.wanandroid.di.module.fragment.HomeFragmentModule;
 import com.example.hy.wanandroid.model.network.entity.Article;
 import com.example.hy.wanandroid.model.network.entity.BannerData;
 import com.example.hy.wanandroid.presenter.homepager.HomePresenter;
+import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.BannerImageLoader;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.utils.StatusBarUtil;
@@ -121,6 +122,8 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
             Article article = mArticles.get(position);
             if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
             else mPresenter.collectArticle(article.getId());
+            AnimUtil.scale(view, -1);
+
         });
         srlHome.setOnLoadMoreListener(refreshLayout -> {
             pageNum++;

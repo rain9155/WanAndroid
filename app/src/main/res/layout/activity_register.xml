@@ -124,7 +124,6 @@
             android:layout_marginRight="@dimen/dp_20"
             android:text="@string/registerActivity_register"
             android:textStyle="bold"
-            android:foreground="@drawable/bg_feedback"
             android:textColor="@color/white"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -139,6 +138,9 @@
             android:textColor="@color/thirdText"
             android:layout_marginTop="@dimen/dp_16"
             android:gravity="center"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@drawable/bg_login_tv"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_register"/>
@@ -161,8 +163,8 @@
         android:id="@+id/ib_back"
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_50"
-        android:foreground="@drawable/bg_feedback"
         android:background="@null"
+        android:foreground="@drawable/fg_back"
         app:srcCompat="@drawable/ic_arrow_left"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

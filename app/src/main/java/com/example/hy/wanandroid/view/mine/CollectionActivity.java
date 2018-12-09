@@ -15,9 +15,9 @@ import com.example.hy.wanandroid.model.network.entity.Collection;
 import com.example.hy.wanandroid.di.component.activity.DaggerCollectionActivityComponent;
 import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.presenter.mine.CollectionPresenter;
+import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
-import com.example.utilslibrary.AnimUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -94,6 +94,7 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
             mCollectionPosition = position;
             Collection collection = mCollections.get(position);
             mPresenter.unCollectArticle(collection.getId(), collection.getOriginId());
+            AnimUtil.scale(view, -1);
         });
         normalView.setOnRefreshListener(refreshLayout -> {
             isLoadMore = false;

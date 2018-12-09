@@ -42,7 +42,6 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:background="@drawable/bg_mine_btn"
                 android:text="@string/mineFragment_tvLogin"
-                android:foreground="@drawable/bg_feedback"
                 android:textColor="@color/primaryText"
                 android:visibility="visible"
                 android:layout_marginTop="@dimen/dp_5"
@@ -76,8 +75,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="@drawable/bg_feedback"
-                android:background="@color/foreground"
+                android:background="@drawable/bg_rect"
                 style="@style/MineFragmentConstaintStyle"
                 android:layout_marginTop="@dimen/dp_20"
                 app:layout_constraintTop_toTopOf="parent">
@@ -120,9 +118,8 @@
                 android:layout_height="wrap_content"
                 android:focusable="true"
                 android:clickable="true"
-                android:foreground="@drawable/bg_feedback"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
+                android:background="@drawable/bg_rect"
                 android:layout_marginTop="@dimen/dp_2"
                 app:layout_constraintTop_toBottomOf="@id/cl_collection">
 
@@ -163,9 +160,8 @@
                 android:layout_height="wrap_content"
                 android:focusable="true"
                 android:clickable="true"
-                android:foreground="@drawable/bg_feedback"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
+                android:background="@drawable/bg_rect"
                 android:layout_marginTop="@dimen/dp_20"
                 app:layout_constraintTop_toBottomOf="@id/cl_settings">
 
@@ -206,9 +202,8 @@
                 android:layout_height="wrap_content"
                 android:focusable="true"
                 android:clickable="true"
-                android:foreground="@drawable/bg_feedback"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
+                android:background="@drawable/bg_rect"
                 android:layout_marginTop="@dimen/dp_2"
                 app:layout_constraintTop_toBottomOf="@id/cl_about_us">
 
