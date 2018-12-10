@@ -3,6 +3,8 @@ package com.example.hy.wanandroid.view.mine;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -16,6 +18,7 @@ import com.example.hy.wanandroid.contract.mine.LoginContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerLoginActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.LoginActivityModule;
 import com.example.hy.wanandroid.presenter.mine.LoginPresenter;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.widget.dialog.LoadingDialog;
 import com.example.utilslibrary.KeyBoardUtil;
 import com.google.android.material.textfield.TextInputLayout;
@@ -25,6 +28,7 @@ import javax.inject.Inject;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -50,11 +54,14 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     TextView tvRegister;
     @BindView(R.id.cl_login)
     ConstraintLayout clLogin;
+    @BindView(R.id.root_view)
+    ConstraintLayout rootView;
 
     @Inject
     LoginPresenter mPresenter;
     @Inject
     LoadingDialog mLoadingDialog;
+
 
     private View focusView = null;
     private static boolean isNeedResult = false;
@@ -65,9 +72,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     @Override
-    protected void initView( ) {
+    protected void initView() {
         DaggerLoginActivityComponent.builder().appComponent(getAppComponent()).loginActivityModule(new LoginActivityModule()).build().inject(this);
         mPresenter.attachView(this);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setPaddingSmart(this, rootView);
 
         ibBack.setOnClickListener(v -> finish());
         tvRegister.setOnClickListener(v -> RegisterActivity.startActivity(this));
@@ -90,7 +100,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     protected void onDestroy() {
-        if(mPresenter != null){
+        if (mPresenter != null) {
             mPresenter.detachView();
             mPresenter = null;
         }
@@ -126,12 +136,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void requestFocus(boolean cancel) {
-        if(focusView == null || !cancel) return;
+        if (focusView == null || !cancel) return;
         focusView.requestFocus();
     }
 
     @Override
-    public void loginSuccess(){
+    public void loginSuccess() {
         showToast(getString(R.string.loginActivity_success));
         if (isNeedResult) setResult(RESULT_OK);
         finish();
@@ -153,6 +163,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         isNeedResult = true;
         Intent intent = new Intent(activity, LoginActivity.class);
         fragment.startActivityForResult(intent, request);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }
 

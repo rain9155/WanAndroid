@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.view.mine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.presenter.mine.CollectionPresenter;
 import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -71,6 +73,9 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
 
         DaggerCollectionActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, tlCommon);
 
         //标题
         ivCommonSearch.setVisibility(View.INVISIBLE);

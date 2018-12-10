@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.example.hy.wanandroid.utils.FileUtil;
 import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.utils.ServiceUtil;
 import com.example.hy.wanandroid.utils.ShareUtil;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 
 import java.io.File;
@@ -132,6 +134,9 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
     protected void initView() {
         DaggerSettingsActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, tlCommon);
 
         //标题栏
         ivCommonSearch.setVisibility(View.INVISIBLE);

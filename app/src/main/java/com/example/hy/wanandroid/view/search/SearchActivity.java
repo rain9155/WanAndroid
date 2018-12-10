@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.view.search;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.example.hy.wanandroid.model.network.entity.HotKey;
 import com.example.hy.wanandroid.presenter.search.SearchPresenter;
 import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -106,6 +108,9 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
 
         DaggerSearchActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, tlCommon);
 
         //标题栏
         setSupportActionBar(tlCommon);

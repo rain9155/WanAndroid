@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -28,6 +29,7 @@ import com.example.hy.wanandroid.contract.homepager.ArticleContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerArticleActivityComponent;
 import com.example.hy.wanandroid.presenter.homepager.ArticlePresenter;
 import com.example.hy.wanandroid.utils.ShareUtil;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.widget.layout.WebLayout;
 import com.example.utilslibrary.NetWorkUtil;
@@ -71,6 +73,9 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     protected void initView() {
         DaggerArticleActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, tlCommon);
 
         Intent intent = getIntent();
         if(intent != null){

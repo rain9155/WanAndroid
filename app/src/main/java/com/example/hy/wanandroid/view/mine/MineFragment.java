@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
@@ -62,8 +64,6 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     ImageView ivLogout;
     @BindView(R.id.tv_logout)
     TextView tvLogout;
-    @BindView(R.id.cl_logout)
-    ConstraintLayout clLogout;
     @BindView(R.id.srl_mine)
     SmartRefreshLayout srlMine;
     @BindView(R.id.cl_collection)
@@ -72,6 +72,10 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     ConstraintLayout clSettings;
     @BindView(R.id.iv_back)
     ImageView ivBack;
+    @BindView(R.id.rl_logout)
+    RelativeLayout rlLogout;
+    @BindView(R.id.cl_logout)
+    ConstraintLayout clLogout;
 
     @Inject
     MinePresenter mPresenter;
@@ -95,7 +99,8 @@ public class MineFragment extends BaseFragment implements MineContract.View {
             showLogoutView();
         }
 
-        if(mPresenter.getNightModeState()) ivBack.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+        if (mPresenter.getNightModeState())
+            ivBack.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
         btnLogin.setOnClickListener(v -> LoginActivity.startActivity(_mActivity));
         clSettings.setOnClickListener(v -> SettingsActivity.startActivity(_mActivity));
@@ -132,27 +137,26 @@ public class MineFragment extends BaseFragment implements MineContract.View {
 
     @Override
     public void userNightNode(boolean isNight) {
-        super.userNightNode(isNight);
         if (isNight) ivBack.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
-        else  ivBack.getDrawable().clearColorFilter();
+        else ivBack.getDrawable().clearColorFilter();
     }
 
     @Override
     public void setStatusBarColor(boolean isSet) {
-        StatusBarUtil.immersiveForImage(_mActivity, Color.TRANSPARENT, 1);
+        StatusBarUtil.immersiveInFragments(_mActivity, Color.TRANSPARENT, 1);
     }
 
     @Override
     public void showLoginView() {
         AnimUtil.hideByAlpha(btnLogin);
         AnimUtil.showByAlpha(tvUsername);
-        AnimUtil.showByAlpha(clLogout);
+        AnimUtil.showByAlpha(rlLogout);
         tvUsername.setText(User.getInstance().getUsername());
     }
 
     @Override
     public void showLogoutView() {
-        AnimUtil.hideByAlpha(clLogout);
+        AnimUtil.hideByAlpha(rlLogout);
         AnimUtil.hideByAlpha(tvUsername);
         AnimUtil.showByAlpha(btnLogin);
     }

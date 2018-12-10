@@ -29,7 +29,7 @@
         android:layout_marginBottom="@dimen/dp_5"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="@drawable/fg_card_rect"
+        android:foreground="@drawable/bg_ripple"
         app:cardBackgroundColor="@color/foreground"
         app:cardElevation="@dimen/dp_5"
         app:cardCornerRadius="@dimen/dp_8"
@@ -38,15 +38,18 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_noImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
-                android:layout_marginTop="@dimen/dp_20"
+                android:background="@drawable/bg_rect"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
@@ -82,13 +85,14 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_nightMode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_rect"
+                android:clickable="true"
+                android:focusable="true"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
                 app:layout_constraintTop_toBottomOf="@id/cl_noImage">
 
                 <ImageView
@@ -129,8 +133,10 @@
                 android:id="@+id/cl_autoCache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_rect"
+                android:clickable="true"
+                android:focusable="true"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
                 android:layout_marginTop="@dimen/dp_2"
                 app:layout_constraintTop_toBottomOf="@id/cl_nightMode">
 
@@ -168,13 +174,14 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_status_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_rect"
+                android:clickable="true"
+                android:focusable="true"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
                 app:layout_constraintTop_toBottomOf="@id/cl_autoCache">
 
                 <ImageView
@@ -213,7 +220,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     </androidx.cardview.widget.CardView>
 
 
@@ -236,7 +242,7 @@
         android:layout_marginBottom="@dimen/dp_5"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="@drawable/fg_card_rect"
+        android:foreground="@drawable/bg_ripple"
         app:cardBackgroundColor="@color/foreground"
         app:cardElevation="@dimen/dp_5"
         app:cardCornerRadius="@dimen/dp_8"
@@ -245,14 +251,18 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_feedBack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_rect"
+                android:clickable="true"
+                android:focusable="true"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
@@ -278,14 +288,15 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_clearCache"
                 android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
+                android:background="@drawable/bg_rect"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_marginTop="@dimen/dp_2"
                 app:layout_constraintTop_toBottomOf="@id/cl_feedBack">
 
@@ -330,7 +341,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
+                android:background="@drawable/bg_rect"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintTop_toBottomOf="@id/cl_clearCache">
 
                 <ImageView

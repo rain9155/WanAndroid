@@ -1,9 +1,12 @@
 package com.example.hy.wanandroid.presenter.mine;
 
+import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
+import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
@@ -40,16 +43,15 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
                         .subscribe(loginEvent -> mView.showLoginView())
         );
 
-//        addSubcriber(
-//                RxBus.getInstance().toObservable(LoginEvent.class)
-//                .filter(loginEvent -> !loginEvent.isLogin())
-//                .subscribe(loginEvent -> mView.showLogoutView())
-//        );
-
         addSubcriber(
                 RxBus.getInstance().toObservable(LoginEvent.class)
                 .filter(loginEvent -> !loginEvent.isLogin())
                 .subscribe(loginEvent -> logout())
+        );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(NightModeEvent.class)
+                       .subscribe(nightModeEvent -> mView.userNightNode(nightModeEvent.isNight()))
         );
 
     }

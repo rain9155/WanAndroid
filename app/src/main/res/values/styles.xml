@@ -6,16 +6,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/background</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <!-- 解决启动页白屏的问题 -->
     <style name="LauncherTheme" parent="AppTheme">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@drawable/ic_launch</item>
+        <!--<item name="android:windowBackground">@mipmap/ic_launcher</item>-->
     </style>
 
     <!--Dialog风格-->

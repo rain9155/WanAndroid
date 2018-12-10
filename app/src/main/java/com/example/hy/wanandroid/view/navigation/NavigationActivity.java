@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.view.navigation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.example.hy.wanandroid.di.component.activity.DaggerNavigationActivityC
 import com.example.hy.wanandroid.di.module.activity.NavigationActivityModule;
 import com.example.hy.wanandroid.model.network.entity.Tag;
 import com.example.hy.wanandroid.presenter.navigation.NavigationPresenter;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.search.SearchActivity;
 
 import java.util.List;
@@ -66,6 +68,9 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
         super.initView();
         DaggerNavigationActivityComponent.builder().appComponent(getAppComponent()).navigationActivityModule(new NavigationActivityModule()).build().inject(this);
         mPresenter.attachView(this);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, tlCommon);
 
         ivCommonSearch.setVisibility(View.INVISIBLE);
         tvCommonTitle.setText(R.string.navigationActivity_tlTitle);

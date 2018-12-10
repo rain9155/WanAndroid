@@ -3,7 +3,6 @@ package com.example.hy.wanandroid.view;
 import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.FrameLayout;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
-import com.example.hy.wanandroid.component.UpdataService;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityComponent;
@@ -125,7 +123,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                     showHideFragment(mFragments[3], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 3;
                     hideFloatingButton();
-                    StatusBarUtil.immersiveForImage(this, Color.TRANSPARENT, 1);
+                    StatusBarUtil.immersiveInImage(this);
                     break;
                 default:
                     break;
@@ -221,9 +219,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     public void setStatusBarColor(boolean isSet) {
         if(isSet){
-            StatusBarUtil.immersiveForImage(this, getResources().getColor(R.color.colorPrimary), 1);
+            StatusBarUtil.immersiveInFragments(this, getResources().getColor(R.color.colorPrimary), 1);
         }else {
-            StatusBarUtil.immersiveForImage(this, getResources().getColor(R.color.colorPrimaryDark), 1);
+            StatusBarUtil.immersiveInFragments(this, getResources().getColor(R.color.colorPrimaryDark), 1);
         }
     }
 

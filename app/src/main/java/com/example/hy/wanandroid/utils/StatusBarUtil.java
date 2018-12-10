@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -19,6 +20,8 @@ import java.util.regex.Pattern;
 
 import androidx.annotation.FloatRange;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 /**
  * 状态栏透明
@@ -69,9 +72,9 @@ public class StatusBarUtil {
     }
 
     /**
-     * 为头部有照片的设置沉浸式状态栏
+     * 为活动中的Fragment的设置沉浸式状态栏
      */
-    public static void immersiveForImage(Activity activity, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
+    public static void immersiveInFragments(Activity activity, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
         if(Build.VERSION.SDK_INT < MIN_API) return;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -87,6 +90,24 @@ public class StatusBarUtil {
     }
 
     /**
+     * 为头部有照片的设置沉浸式状态栏
+     */
+    public static void immersiveInImage(Activity activity) {
+        if(Build.VERSION.SDK_INT < MIN_API) return;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+            activity.getWindow().getDecorView()
+                    .setSystemUiVisibility(
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        } else{
+            View translucentView = activity.getWindow().getDecorView().findViewById(android.R.id.custom);
+            if(translucentView != null) translucentView.setVisibility(View.GONE);
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+    }
+
+    /**
      * 设置系统状态栏颜色
      */
     public static void setStatusColor(Window window, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
@@ -97,6 +118,7 @@ public class StatusBarUtil {
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         }
     }
+
 
     /**
      * 创建假的透明栏

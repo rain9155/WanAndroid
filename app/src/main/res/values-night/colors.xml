@@ -25,5 +25,7 @@
     <color name="colorDialogBackground">#212121</color>
     <color name="toast_background">#c8535353</color>
     <color name="colorRipple">#c7f5f5f5</color>
+    <color name="colorPress">#6abdbdbd</color>
+    <color name="colorPressFg">#4fffffff</color>
 
 </resources>

@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.view.hierarchy;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.example.hy.wanandroid.di.component.activity.HierarchySecondActivityCo
 import com.example.hy.wanandroid.di.module.activity.HierarchySecondActivityModule;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -66,6 +68,9 @@ public class HierarchySecondActivity extends BaseActivity {
     protected void initView() {
         mComponent = DaggerHierarchySecondActivityComponent.builder().appComponent(getAppComponent()).hierarchySecondActivityModule(new HierarchySecondActivityModule()).build();
         mComponent.inject(this);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, tlCommon);
 
         //取数据
         Intent intent = getIntent();

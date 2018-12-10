@@ -2,6 +2,8 @@ package com.example.hy.wanandroid.view.mine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -15,6 +17,7 @@ import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.contract.mine.RegisterContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerRegisterActivityComponent;
 import com.example.hy.wanandroid.presenter.mine.RegisterPresenter;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.widget.dialog.LoadingDialog;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -22,6 +25,7 @@ import javax.inject.Inject;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterActivity extends BaseActivity implements RegisterContract.View {
@@ -50,6 +54,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     ImageView ibBack;
     @BindView(R.id.btn_register)
     Button btnRegister;
+    @BindView(R.id.root_view)
+    ConstraintLayout rootView;
 
     @Inject
     RegisterPresenter mPresenter;
@@ -64,10 +70,13 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     }
 
     @Override
-    protected void initView( ) {
+    protected void initView() {
 
         DaggerRegisterActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setPaddingSmart(this, rootView);
 
         tvLogin.setOnClickListener(v -> finish());
         ibBack.setOnClickListener(v -> finish());
@@ -91,7 +100,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @Override
     protected void onDestroy() {
-        if(mPresenter != null){
+        if (mPresenter != null) {
             mPresenter.detachView();
             mPresenter = null;
         }
@@ -118,7 +127,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @Override
     public void requestFocus(boolean cancel) {
-        if(!cancel || focusView == null) return;
+        if (!cancel || focusView == null) return;
         focusView.requestFocus();
     }
 
@@ -146,5 +155,12 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, RegisterActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }
