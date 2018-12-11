@@ -1,8 +1,6 @@
 package com.example.hy.wanandroid.presenter.mine;
 
-import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
@@ -31,11 +29,6 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
     @Override
     public void subscribleEvent() {
         super.subscribleEvent();
-        addSubcriber(
-                RxBus.getInstance().toObservable(StatusBarEvent.class)
-                        .compose(RxUtils.switchSchedulers())
-                        .subscribe(statusBarEvent -> mView.setStatusBarColor(statusBarEvent.isSet()))
-        );
 
         addSubcriber(
                 RxBus.getInstance().toObservable(LoginEvent.class)
@@ -51,7 +44,8 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
 
         addSubcriber(
                 RxBus.getInstance().toObservable(NightModeEvent.class)
-                       .subscribe(nightModeEvent -> mView.userNightNode(nightModeEvent.isNight()))
+                        .compose(RxUtils.switchSchedulers())
+                       .subscribe(nightModeEvent -> mView.useNightNode(nightModeEvent.isNight()))
         );
 
     }

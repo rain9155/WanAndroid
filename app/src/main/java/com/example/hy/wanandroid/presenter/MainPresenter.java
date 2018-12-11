@@ -8,14 +8,13 @@ import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.event.NightModeEvent;
-import com.example.hy.wanandroid.event.StatusBarEvent;
+import com.example.hy.wanandroid.event.SettingsNightModeEvent;
 import com.example.hy.wanandroid.event.UpdataEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.model.network.entity.Version;
 import com.example.hy.wanandroid.utils.FileUtil;
 import com.example.hy.wanandroid.utils.RxUtils;
-import com.example.hy.wanandroid.utils.StatusBarUtil;
 
 import javax.inject.Inject;
 
@@ -36,14 +35,14 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
     @Override
     public void subscribleEvent() {
         super.subscribleEvent();
-
         addSubcriber(
                 RxBus.getInstance().toObservable(NightModeEvent.class)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<NightModeEvent>(mView, false, false){
                             @Override
                             public void onNext(NightModeEvent nightModeEvent) {
-                                mView.userNightNode(nightModeEvent.isNight());
+                                mView.useNightNode(nightModeEvent.isNight());
+                                RxBus.getInstance().post(new SettingsNightModeEvent(nightModeEvent.isNight()));
                             }
 
                             @Override

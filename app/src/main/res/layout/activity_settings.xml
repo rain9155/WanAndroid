@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,6 +22,7 @@
         android:text="@string/settingsActivity_tvSettingsCommon"/>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cd_base_settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
@@ -234,6 +236,7 @@
         android:text="@string/settingsActivity_tvSettingsOther"/>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cd_other_settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
@@ -382,9 +385,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </androidx.cardview.widget.CardView>
 

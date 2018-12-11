@@ -1,21 +1,28 @@
 package com.example.hy.wanandroid.view.mine;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
-import android.text.TextUtils;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
@@ -27,7 +34,6 @@ import com.example.hy.wanandroid.di.component.activity.DaggerSettingsActivityCom
 import com.example.hy.wanandroid.presenter.mine.SettingsPresenter;
 import com.example.hy.wanandroid.utils.DownloadUtil;
 import com.example.hy.wanandroid.utils.FileUtil;
-import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.utils.ServiceUtil;
 import com.example.hy.wanandroid.utils.ShareUtil;
 import com.example.hy.wanandroid.utils.StatusBarUtil;
@@ -38,14 +44,18 @@ import java.io.File;
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class SettingsActivity extends BaseActivity implements SettingsContract.View, CompoundButton.OnCheckedChangeListener {
+public class SettingsActivity extends BaseActivity
+        implements SettingsContract.View, CompoundButton.OnCheckedChangeListener{
 
 
     @BindView(R.id.tv_common_title)
@@ -112,6 +122,12 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
     TextView tvVersion;
     @BindView(R.id.cl_updata)
     ConstraintLayout clUpdata;
+    @BindView(R.id.cd_base_settings)
+    CardView cdBaseSettings;
+    @BindView(R.id.cd_other_settings)
+    CardView cdOtherSettings;
+    @BindView(R.id.root_view)
+    LinearLayout rootView;
 
     @Inject
     SettingsPresenter mPresenter;
@@ -135,7 +151,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
         DaggerSettingsActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
 
         //标题栏
@@ -160,11 +176,11 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
         });
         clFeedBack.setOnClickListener(v -> ShareUtil.sendEmail(this, Constant.EMAIL_ADDRESS, getString(R.string.settingsActivity_email_to)));
         clUpdata.setOnClickListener(v -> {
-            if(ServiceUtil.isServiceRunning(this, UpdataService.class.getName())){
+            if (ServiceUtil.isServiceRunning(this, UpdataService.class.getName())) {
                 showToast(getString(R.string.downloading));
                 return;
             }
-            if(mAnimator != null && mAnimator.isRunning()) return;
+            if (mAnimator != null && mAnimator.isRunning()) return;
             mPresenter.checkVersion(mCurrentVersionName);
         });
 
@@ -201,7 +217,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
 
     @Override
     protected void onStop() {
-        if(mAnimator != null) mAnimator.cancel();
+        if (mAnimator != null) mAnimator.cancel();
         super.onStop();
     }
 
@@ -216,13 +232,89 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             DownloadUtil.downloadApk(this, mNewVersionName);
-        }else {
+        } else {
             showToast(getString(R.string.settingsActivity_permission_denied));
         }
     }
+
+    @Override
+    public void useNightNode(boolean isNight) {
+        int background, primaryText, foreground, colorPrimary, colorPrimaryDark, colorRipple;
+        if(isNight){
+            colorPrimary = Color.parseColor("#212121");
+            if(mPresenter.getStatusBarState())
+                colorPrimaryDark = Color.parseColor("#212121");
+            else
+                colorPrimaryDark = Color.parseColor("#424242");
+            background = Color.parseColor("#212121");
+            foreground = Color.parseColor("#424242");
+            primaryText = Color.parseColor("#FAFAFA");
+            colorRipple = Color.parseColor("#c7f5f5f5");
+        }else {
+            colorPrimary = Color.parseColor("#00BCD4");
+            if(mPresenter.getStatusBarState())
+                colorPrimaryDark = Color.parseColor("#00BCD4");
+            else
+                colorPrimaryDark = Color.parseColor("#0097A7");
+            foreground = Color.parseColor("#FFFFFF");
+            background = Color.parseColor("#fafafa");
+            primaryText = Color.parseColor("#212121");
+            colorRipple = Color.parseColor("#B3E5FC");
+        }
+        //动态改变颜色
+        StatusBarUtil.immersive(this, colorPrimaryDark, 1f);
+        tlCommon.setBackgroundColor(colorPrimary);
+        rootView.setBackgroundColor(background);
+        tvSettingsCommon.setTextColor(primaryText);
+        cdBaseSettings.setCardBackgroundColor(foreground);
+        tvNoImage.setTextColor(primaryText);
+        tvNightMode.setTextColor(primaryText);
+        tvAutoCache.setTextColor(primaryText);
+        tvStatusBar.setTextColor(primaryText);
+        tvSettingsOther.setTextColor(primaryText);
+        cdOtherSettings.setCardBackgroundColor(foreground);
+        tvFeedBack.setTextColor(primaryText);
+        tvClearCache.setTextColor(primaryText);
+        tvCache.setTextColor(primaryText);
+        tvUpdata.setTextColor(primaryText);
+        tvVersion.setTextColor(primaryText);
+        //动态改变波纹点击颜色
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            ((RippleDrawable)clNoImage.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable)clAutoCache.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable)clClearCache.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable)clNightMode.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable)clStatusBar.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable)clFeedBack.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable)clUpdata.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+        }
+    }
+
+    public void showChangeAnimation() {
+        final View decorView = getWindow().getDecorView();
+        Bitmap cacheBitmap = getCacheBitmapFromView(decorView);
+        if (decorView instanceof ViewGroup && cacheBitmap != null) {
+            final View view = new View(this);
+            view.setBackgroundDrawable(new BitmapDrawable(getResources(), cacheBitmap));
+            ViewGroup.LayoutParams layoutParam = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT);
+            ((ViewGroup) decorView).addView(view, layoutParam);
+            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f);
+            objectAnimator.setDuration(300);
+            objectAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    ((ViewGroup) decorView).removeView(view);
+                }
+            });
+            objectAnimator.start();
+        }
+    }
+
 
     @Override
     public void showLoading() {
@@ -259,13 +351,13 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
 
     @Override
     public void upDataVersion() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                     this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE);
-        }else {
+        } else {
             DownloadUtil.downloadApk(this, mNewVersionName);
         }
     }
@@ -287,4 +379,23 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
         mAnimator.start();
     }
 
+    /**
+     * 获取一个View的缓存视图
+     */
+    private Bitmap getCacheBitmapFromView(View view) {
+        final boolean drawingCacheEnabled = true;
+        view.setDrawingCacheEnabled(drawingCacheEnabled);
+        view.buildDrawingCache(drawingCacheEnabled);
+        final Bitmap drawingCache = view.getDrawingCache();
+        Bitmap bitmap;
+        if (drawingCache != null) {
+            bitmap = Bitmap.createBitmap(drawingCache);
+            view.setDrawingCacheEnabled(false);
+        } else {
+            bitmap = null;
+        }
+        return bitmap;
+    }
+
 }
+

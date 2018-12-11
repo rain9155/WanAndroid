@@ -112,7 +112,7 @@ public abstract class BaseFragment extends SupportFragment
     }
 
     @Override
-    public void userNightNode(boolean isNight) {
+    public void useNightNode(boolean isNight) {
 
     }
 }

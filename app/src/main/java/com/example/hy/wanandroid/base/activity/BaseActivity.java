@@ -84,7 +84,7 @@ public abstract class BaseActivity extends SupportActivity
     }
 
     @Override
-    public void userNightNode(boolean isNight) {
+    public void useNightNode(boolean isNight) {
         if(isNight){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }else {

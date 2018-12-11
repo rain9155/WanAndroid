@@ -14,6 +14,7 @@ public interface SettingsContract {
         void setNewVersionName(String versionName);//设置最新版本号
         void showAlareadNewToast(String content);//已经是最新版本
         void upDataVersion();//更新
+        void showChangeAnimation();//显示一个夜间模式切换动画
     }
 
     interface Presenter extends IPresenter<View>{

@@ -33,7 +33,7 @@ public interface BaseView {
     void unableRefresh();
 
     //夜间模式
-    void userNightNode(boolean isNight);
+    void useNightNode(boolean isNight);
 
     //设置状态栏颜色
     void setStatusBarColor(boolean isSet);

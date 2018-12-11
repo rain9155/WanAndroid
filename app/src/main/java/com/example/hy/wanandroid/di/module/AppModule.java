@@ -19,6 +19,8 @@ import com.example.hy.wanandroid.model.network.api.NavigationApis;
 import com.example.hy.wanandroid.model.network.api.ProjectApis;
 import com.example.hy.wanandroid.model.network.api.SearchApis;
 import com.example.hy.wanandroid.model.network.gson.CustomGsonConverterFactory;
+import com.example.hy.wanandroid.model.network.ssl.SSLSocketCompatFactory;
+import com.example.hy.wanandroid.model.network.ssl.TrustAllCert;
 import com.example.hy.wanandroid.model.prefs.PreferencesHelper;
 import com.example.utilslibrary.FileUtils;
 
@@ -63,6 +65,10 @@ public class AppModule {
     @Provides
     @Singleton
     OkHttpClient provideOkHttpClient(OkHttpClient.Builder builder){
+
+        //设置ssl
+        TrustAllCert trustAllCert = new TrustAllCert();
+        builder.sslSocketFactory(new SSLSocketCompatFactory(trustAllCert), trustAllCert);
 
         //设置缓存
         File cacheDir = new File(Constant.PATH_NETCACHE);

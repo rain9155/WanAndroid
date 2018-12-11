@@ -19,8 +19,8 @@
 
     <!--Dialog风格-->
     <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:windowBackground">@color/colorNavBtmBackground</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@color/colorNavBtmBackground</item>
     </style>
 
 

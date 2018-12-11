@@ -11,6 +11,7 @@ import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
+import com.example.hy.wanandroid.event.SettingsNightModeEvent;
 import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.event.UpdataEvent;
 import com.example.hy.wanandroid.model.DataModel;
@@ -50,6 +51,15 @@ public class SettingsPresenter extends BasePresenter<SettingsContract.View> impl
                             }
                         })
                         .subscribe(updataEvent -> mView.upDataVersion())
+        );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(SettingsNightModeEvent.class)
+                .subscribe(
+                        settingsNightModeEvent -> {
+                            mView.showChangeAnimation();
+                            mView.useNightNode(settingsNightModeEvent.isNightMode());
+                        })
         );
     }
 
