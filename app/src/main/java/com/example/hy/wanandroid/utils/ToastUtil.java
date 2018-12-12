@@ -1,14 +1,19 @@
 package com.example.hy.wanandroid.utils;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hy.wanandroid.R;
+import com.example.utilslibrary.anim.AnimatorListener;
 
 import q.rorbin.badgeview.DisplayUtil;
 
@@ -33,4 +38,27 @@ public class ToastUtil extends com.example.utilslibrary.ToastUtil {
         toast.show();
     }
 
+    public static void toastMake(Context context, final ViewGroup viewGroup, String s, int backgroundColor, int textColor) {
+        final TextView textView = new TextView(context);
+        textView.setId(-1);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(-1, -2);
+        textView.setText(s);
+        textView.setGravity(17);
+        textView.setPadding(0, 15, 0, 15);
+        textView.setTextColor(textColor);
+        textView.setBackgroundColor(backgroundColor);
+        textView.setLayoutParams(params);
+        viewGroup.addView(textView);
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator translationY1 = ObjectAnimator.ofFloat(textView, "translationY", new float[]{-65.0F, 0.0F});
+        ObjectAnimator translationY2 = ObjectAnimator.ofFloat(textView, "translationY", new float[]{0.0F, -65.0F});
+        translationY2.setStartDelay(2500L);
+        animatorSet.playSequentially(new Animator[]{translationY1, translationY2});
+        animatorSet.start();
+        animatorSet.addListener(new AnimatorListener() {
+            public void onAnimationEnd(Animator animation) {
+                viewGroup.removeView(textView);
+            }
+        });
+    }
 }

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -34,7 +36,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends BaseActivity implements LoginContract.View {
+public class LoginActivity extends BaseActivity implements LoginContract.View{
 
     @BindView(R.id.ib_back)
     ImageView ibBack;
@@ -90,7 +92,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             KeyBoardUtil.closeKeyBoard(this, etPassword);
             mPresenter.login(atAccount.getText().toString().trim(), etPassword.getText().toString().trim());
         });
-
     }
 
     @Override

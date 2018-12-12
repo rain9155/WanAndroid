@@ -27,5 +27,7 @@
     <color name="colorRipple">#c7f5f5f5</color>
     <color name="colorPress">#6abdbdbd</color>
     <color name="colorPressFg">#4fffffff</color>
+    <color name="colorTip">#f50000</color>
+    <color name="colorTipBackground">#81212121</color>
 
 </resources>

@@ -82,4 +82,10 @@
         <item name="android:paddingRight">@dimen/dp_10</item>
     </style>
 
+    <!-- tip窗口动画 -->
+    <style name="TipWindowAnim">
+        <item name="android:windowEnterAnimation">@anim/anim_tip_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_tip_out</item>
+    </style>
+
 </resources>

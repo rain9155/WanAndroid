@@ -9,6 +9,7 @@ import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.SettingsNightModeEvent;
+import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.event.UpdataEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
@@ -35,6 +36,13 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
     @Override
     public void subscribleEvent() {
         super.subscribleEvent();
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(StatusBarEvent.class)
+                        .compose(RxUtils.switchSchedulers())
+                        .subscribe(statusBarEvent -> mView.setStatusBarColor(statusBarEvent.isSet()))
+        );
+
         addSubcriber(
                 RxBus.getInstance().toObservable(NightModeEvent.class)
                         .compose(RxUtils.switchSchedulers())

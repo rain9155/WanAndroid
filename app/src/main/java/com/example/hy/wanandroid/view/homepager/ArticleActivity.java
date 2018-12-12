@@ -77,6 +77,8 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
 
+        isEnableTip = false;
+
         Intent intent = getIntent();
         if(intent != null){
             mAddress = intent.getStringExtra(Constant.KEY_ARTICLE_ADDRESS);

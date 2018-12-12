@@ -114,6 +114,7 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
 
     @Override
     protected void initData() {
+        mPresenter.subscribleEvent();
         mPresenter.loadCollections(0);
     }
 

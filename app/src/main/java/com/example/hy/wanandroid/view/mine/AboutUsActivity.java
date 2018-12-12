@@ -65,6 +65,8 @@ public class AboutUsActivity extends BaseActivity {
 
         toolbar.setNavigationOnClickListener(v -> finish());
 
+        isEnableTip = false;
+
         flyRefreshHeader.setUp(mountain, flyView);//绑定场景和纸飞机
         refreshLayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
         refreshLayout.setReboundDuration(1000);//设置回弹动画时长
@@ -128,7 +130,6 @@ public class AboutUsActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
     }
 
     public static void startActivity(Context context) {

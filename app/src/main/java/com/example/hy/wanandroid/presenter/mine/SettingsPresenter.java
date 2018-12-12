@@ -42,6 +42,13 @@ public class SettingsPresenter extends BasePresenter<SettingsContract.View> impl
     @Override
     public void subscribleEvent() {
         super.subscribleEvent();
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(StatusBarEvent.class)
+                        .compose(RxUtils.switchSchedulers())
+                        .subscribe(statusBarEvent -> mView.setStatusBarColor(statusBarEvent.isSet()))
+        );
+
         addSubcriber(
                 RxBus.getInstance().toObservable(UpdataEvent.class)
                         .filter(new Predicate<UpdataEvent>() {

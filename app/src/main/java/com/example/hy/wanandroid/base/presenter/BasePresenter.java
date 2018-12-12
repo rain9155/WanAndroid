@@ -4,6 +4,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.event.NetWorkChangeEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.model.DataModel;
@@ -59,9 +60,8 @@ public class BasePresenter<T extends BaseView> implements IPresenter<T> {
     @Override
     public void subscribleEvent() {
         addSubcriber(
-                RxBus.getInstance().toObservable(StatusBarEvent.class)
-                        .compose(RxUtils.switchSchedulers())
-                        .subscribe(statusBarEvent -> mView.setStatusBarColor(statusBarEvent.isSet()))
+                RxBus.getInstance().toObservable(NetWorkChangeEvent.class)
+                .subscribe(netWorkChangeEvent -> mView.showTipsView(netWorkChangeEvent.isConnection()))
         );
     }
 

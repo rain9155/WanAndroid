@@ -170,6 +170,7 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
 
     @Override
     protected void initData() {
+        mPresenter.subscribleEvent();
         mPresenter.loadHotkey();
         mPresenter.loadHistories();
     }

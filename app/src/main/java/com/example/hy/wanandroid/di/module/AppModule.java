@@ -7,6 +7,7 @@ import com.example.hy.wanandroid.model.db.DbHelper;
 import com.example.hy.wanandroid.model.network.NetworkHelper;
 import com.example.hy.wanandroid.model.network.api.VersionApi;
 import com.example.hy.wanandroid.model.network.api.WechatApis;
+import com.example.hy.wanandroid.model.network.cookie.CookieManger;
 import com.example.hy.wanandroid.model.network.entity.Version;
 import com.example.hy.wanandroid.model.network.interceptor.CacheInterceptor;
 import com.example.hy.wanandroid.model.network.interceptor.ReadCookiesInterceptor;
@@ -83,8 +84,9 @@ public class AppModule {
         builder.readTimeout(20, TimeUnit.SECONDS);
         builder.writeTimeout(20, TimeUnit.SECONDS);
         //cookie认证
-        builder.addInterceptor(new ReadCookiesInterceptor(App.getContext()));
-        builder.addInterceptor(new WriteCookiesInterceptor(App.getContext()));
+        //builder.addInterceptor(new ReadCookiesInterceptor(App.getContext()));
+        //builder.addInterceptor(new WriteCookiesInterceptor(App.getContext()));
+        builder.cookieJar(new CookieManger(App.getContext()));
         return builder.build();
     }
 

@@ -154,6 +154,8 @@ public class SettingsActivity extends BaseActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
 
+        isEnableTip = false;
+
         //标题栏
         ivCommonSearch.setVisibility(View.INVISIBLE);
         tvCommonTitle.setText(R.string.mineFragment_tvSetting);

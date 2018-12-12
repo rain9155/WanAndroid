@@ -26,9 +26,6 @@ public interface BaseView {
     //显示Toast
     void showToast(String toast);
 
-    //显示SnackBar
-    void showSnackBar(String toast);
-
     //禁止加载
     void unableRefresh();
 
@@ -37,6 +34,9 @@ public interface BaseView {
 
     //设置状态栏颜色
     void setStatusBarColor(boolean isSet);
+
+    //显示网络状态信息
+    void showTipsView(boolean isConnection);
 
     void tokenExpire(int requestCode);
 }

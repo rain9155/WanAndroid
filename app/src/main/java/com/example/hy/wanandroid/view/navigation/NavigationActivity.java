@@ -116,6 +116,7 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
 
     @Override
     protected void initData() {
+        mPresenter.subscribleEvent();
         mPresenter.loadTags();
     }
 
