@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.event.NetWorkChangeEvent;
+import com.example.hy.wanandroid.model.DataModel;
 import com.example.utilslibrary.NetWorkUtil;
 
 /**
@@ -14,9 +16,24 @@ import com.example.utilslibrary.NetWorkUtil;
  */
 public class NetWorkChangeReceiver extends BroadcastReceiver {
 
+    DataModel mDataModel;
+
+    public NetWorkChangeReceiver() {
+        super();
+        mDataModel = App.getContext().getAppComponent().getDataModel();
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        RxBus.getInstance().post(new NetWorkChangeEvent(NetWorkUtil.isNetworkConnected(context)));
+        boolean isConnection = NetWorkUtil.isNetworkConnected(context);
+        boolean hasNetWork = mDataModel.getNetWorkState();
+        if(isConnection){
+            if(isConnection != hasNetWork)//防止重复刷新
+                RxBus.getInstance().post(new NetWorkChangeEvent(isConnection));
+        }else {
+            RxBus.getInstance().post(new NetWorkChangeEvent(isConnection));
+        }
+        mDataModel.setNetWorkState(isConnection);
     }
 
 }

@@ -209,4 +209,14 @@ public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
     public long getDownloadId() {
         return mPreferencesHelper.getDownloadId();
     }
+
+    @Override
+    public void setNetWorkState(boolean isConnection) {
+        mPreferencesHelper.setNetWorkState(isConnection);
+    }
+
+    @Override
+    public boolean getNetWorkState() {
+        return mPreferencesHelper.getNetWorkState();
+    }
 }

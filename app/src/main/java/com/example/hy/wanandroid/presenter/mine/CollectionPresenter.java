@@ -1,17 +1,24 @@
 package com.example.hy.wanandroid.presenter.mine;
 
+import android.media.session.MediaSession;
+
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.config.Constant;
+import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
+import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
 import com.example.hy.wanandroid.model.network.entity.Collection;
 import com.example.hy.wanandroid.model.network.entity.CollectionRequest;
+import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 /**
  * Collection的Presenter
@@ -22,6 +29,16 @@ public class CollectionPresenter extends BasePresenter<CollectionContract.View> 
     @Inject
     public CollectionPresenter(DataModel model) {
         super(model);
+    }
+
+
+    @Override
+    public void subscribleEvent() {
+        super.subscribleEvent();
+        addSubcriber(
+                RxBus.getInstance().toObservable(TokenExpiresEvent.class)
+                        .subscribe(tokenExpiresEvent -> loadCollections(0))
+        );
     }
 
     @Override
@@ -35,12 +52,6 @@ public class CollectionPresenter extends BasePresenter<CollectionContract.View> 
                     public void onNext(CollectionRequest collectionRequest) {
                         super.onNext(collectionRequest);
                         mView.showCollections(collectionRequest.getDatas());
-                    }
-
-                    @Override
-                    protected void tokenExpire() {
-                        super.tokenExpire();
-                        mView.tokenExpire(Constant.REQUEST_SHOW_COLLECTIONS);
                     }
                 })
         );

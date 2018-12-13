@@ -38,6 +38,7 @@ public interface SearchContract {
         void hideEmptyLayout();
         void collectArticleSuccess();//收藏文章成功
         void unCollectArticleSuccess();//取消收藏成功
+        void collect();
     }
 
     interface Presenter extends IPresenter<View>{

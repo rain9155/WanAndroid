@@ -30,7 +30,6 @@ public class ToastUtil extends com.example.utilslibrary.ToastUtil {
             textView.setText(message);
         }
 
-
         Toast toast = new Toast(context);
         toast.setGravity(Gravity.BOTTOM, 0, DisplayUtil.dp2px(context, 50));
         toast.setDuration(Toast.LENGTH_SHORT);
@@ -38,9 +37,7 @@ public class ToastUtil extends com.example.utilslibrary.ToastUtil {
         toast.show();
     }
 
-    public static void toastMake(Context context, final ViewGroup viewGroup, String s, int backgroundColor, int textColor) {
-        final TextView textView = new TextView(context);
-        textView.setId(-1);
+    public static void toastMake(TextView textView, final ViewGroup viewGroup, String s, int backgroundColor, int textColor) {
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(-1, -2);
         textView.setText(s);
         textView.setGravity(17);
@@ -61,4 +58,5 @@ public class ToastUtil extends com.example.utilslibrary.ToastUtil {
             }
         });
     }
+
 }

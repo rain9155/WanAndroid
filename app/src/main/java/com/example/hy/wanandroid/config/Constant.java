@@ -56,6 +56,7 @@ public class Constant {
     public static final String KEY_PREFS_NOIMAGE= "noImage";
     public static final String KEY_PREFS_AUTOCACHE= "autoCache";
     public static final String KEY_PREFS_STATUSBAR = "statusBar";
+    public static final String KEY_PREFS_NETWORK = "netWork";
 
 
     //utils

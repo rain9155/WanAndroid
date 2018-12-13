@@ -50,7 +50,8 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
     private int mPageNum = 0;
     private int mId = -1;
     private boolean isLoadMore = false;
-    private int mArticlePosition = -1;//点击的位置
+    private int mArticlePosition = 0;//点击的位置
+    private Article mArticle;
 
     @Override
     protected int getLayoutId() {
@@ -77,20 +78,18 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
             isLoadMore = true;
         });
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
-            mArticlePosition = position;
             Article article = mArticleList.get(position);
             ArticleActivity.startActicityForResultByFragment(_mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;
+            mArticle = mArticleList.get(position);
             if(!User.getInstance().isLoginStatus()) {
                 LoginActivity.startActivityForResultByFragment(_mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
                 showToast(getString(R.string.first_login));
                 return;
             }
-            Article article = mArticleList.get(position);
-            if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
-            else mPresenter.collectArticle(article.getId());
+            collect();
             AnimUtil.scale(view, -1);
         });
     }
@@ -104,6 +103,7 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
 
     @Override
     public void showArticles(List<Article> articleList) {
+        if(!CommonUtil.isEmptyList(mArticleList)) mArticleList.clear();
         mArticleList.addAll(articleList);
         mArticlesAdapter.notifyDataSetChanged();
     }
@@ -137,6 +137,15 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
         showToast(getString(R.string.common_uncollection_success));
         mArticleList.get(mArticlePosition).setCollect(false);
         mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
+    }
+
+    @Override
+    public void collect() {
+        if (mArticle == null) return;
+        if(mArticle.isCollect())
+            mPresenter.unCollectArticle(mArticle.getId());
+        else
+            mPresenter.collectArticle(mArticle.getId());
     }
 
     @Override

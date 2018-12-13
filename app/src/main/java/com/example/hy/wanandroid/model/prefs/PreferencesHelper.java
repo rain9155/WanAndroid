@@ -30,4 +30,8 @@ public interface PreferencesHelper {
     void setDownloadId(long id);
     //获得下载记录
     long getDownloadId();
+    //保存网络状态
+    void setNetWorkState(boolean isConnection);
+    //获得网络状态
+    boolean getNetWorkState();
 }

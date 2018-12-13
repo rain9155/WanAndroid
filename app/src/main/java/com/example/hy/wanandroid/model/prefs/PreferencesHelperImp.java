@@ -81,4 +81,14 @@ public class PreferencesHelperImp implements PreferencesHelper {
     public long getDownloadId() {
         return mPreferences.getLong(Constant.KEY_DOWNLOAD_ID, -1L);
     }
+
+    @Override
+    public void setNetWorkState(boolean isConnection) {
+        mPreferences.edit().putBoolean(Constant.KEY_PREFS_NETWORK, isConnection).apply();
+    }
+
+    @Override
+    public boolean getNetWorkState() {
+        return mPreferences.getBoolean(Constant.KEY_PREFS_NETWORK, true);
+    }
 }

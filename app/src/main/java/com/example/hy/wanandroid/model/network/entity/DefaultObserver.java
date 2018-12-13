@@ -1,19 +1,33 @@
 package com.example.hy.wanandroid.model.network.entity;
 
 import android.net.ParseException;
+import android.util.Log;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.config.User;
+import com.example.hy.wanandroid.event.LoginEvent;
+import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.network.gson.ApiException;
 import com.example.hy.wanandroid.utils.LogUtil;
+import com.example.hy.wanandroid.utils.RxUtils;
+import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.google.gson.JsonParseException;
 
 import org.json.JSONException;
 
 import java.net.UnknownHostException;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.observers.ResourceObserver;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.HttpException;
 
 import static com.example.hy.wanandroid.utils.LogUtil.TAG_ERROR;
@@ -27,6 +41,7 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
     private BaseView mView;
     private boolean isShowErrorView = true;
     private boolean isShowProgress = true;
+    private Disposable mDisposable;
 
     private DefaultObserver() {}
 
@@ -59,8 +74,40 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
         if(e instanceof ApiException){
             ApiException apiException = (ApiException)e;
             if(apiException.getErrorCode() == -1001){//token失效
-                mView.showToast(apiException.getErrorMessage());
-                tokenExpire();
+                //重新发起登陆
+                App.getContext().getAppComponent().getDataModel()
+                        .getLoginRequest(
+                                User.getInstance().getUsername(),
+                                User.getInstance().getPassword()
+                        )
+                        .compose(RxUtils.switchSchedulers())
+                        .compose(RxUtils.handleRequest2())
+                        .subscribe(new Observer<Login>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                                mDisposable = d;
+                            }
+
+                            @Override
+                            public void onNext(Login login) {
+                                LogUtil.d(LogUtil.TAG_ERROR, "重新登陆成功");
+                                RxBus.getInstance().post(new TokenExpiresEvent());
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                LogUtil.d(LogUtil.TAG_ERROR, "重新登陆失败");
+                                User.getInstance().reset();
+                                RxBus.getInstance().post(new LoginEvent(false));
+                                mView.showToast(apiException.getErrorMessage());
+                                LoginActivity.startActivity(App.getContext());
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                if(mDisposable != null) mDisposable.dispose();
+                            }
+                        });
                 LogUtil.e(TAG_ERROR, "token：" + apiException.getErrorMessage());
             }else {//其他
                 LogUtil.e(TAG_ERROR, "other：" + apiException.getErrorMessage());
@@ -87,12 +134,6 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
     }
 
     /**
-     * token失效
-     */
-    protected void tokenExpire() {
-    }
-
-    /**
      * 未知错误
      */
     protected void unknown() {
@@ -113,6 +154,7 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
      * http错误
      */
     protected void httpError(){
+        mView.showToast(App.getContext().getString(R.string.error_http));
         mView.unableRefresh();
         if (isShowErrorView) mView.showErrorView();
     }

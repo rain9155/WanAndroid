@@ -90,13 +90,6 @@ public abstract class BaseFragment extends SupportFragment
     }
 
     @Override
-    public void tokenExpire(int requestCode) {
-        User.getInstance().reset();
-        RxBus.getInstance().post(new LoginEvent(false));
-        LoginActivity.startActivityForResultByFragment(_mActivity, this, requestCode);
-    }
-
-    @Override
     public void showToast(String toast) {
         ToastUtil.toastInBottom(_mActivity, toast, null);
     }

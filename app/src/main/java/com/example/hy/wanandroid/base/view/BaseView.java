@@ -37,6 +37,4 @@ public interface BaseView {
 
     //显示网络状态信息
     void showTipsView(boolean isConnection);
-
-    void tokenExpire(int requestCode);
 }

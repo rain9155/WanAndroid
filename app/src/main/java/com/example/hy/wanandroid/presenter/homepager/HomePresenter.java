@@ -5,6 +5,7 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
+import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.Collection;
@@ -48,9 +49,15 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                 RxBus.getInstance().toObservable(NoImageEvent.class)
                 .subscribe(noImageEvent -> mView.autoRefresh())
         );
+
         addSubcriber(
                 RxBus.getInstance().toObservable(AutoCacheEvent.class)
                         .subscribe(noImageEvent -> mView.autoRefresh())
+        );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(TokenExpiresEvent.class)
+                .subscribe(tokenExpiresEvent -> mView.collect())
         );
     }
 
@@ -112,11 +119,6 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                         mView.collectArticleSuccess();
                     }
 
-                    @Override
-                    protected void tokenExpire() {
-                        super.tokenExpire();
-                        mView.tokenExpire(Constant.REQUEST_COLLECT_ARTICLE);
-                    }
                 })
         );
     }
@@ -131,12 +133,6 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                             public void onNext(BaseResponse<Collection> baseResponse) {
                                 super.onNext(baseResponse);
                                 mView.unCollectArticleSuccess();
-                            }
-
-                            @Override
-                            protected void tokenExpire() {
-                                super.tokenExpire();
-                                mView.tokenExpire(Constant.REQUEST_COLLECT_ARTICLE);
                             }
                         })
         );

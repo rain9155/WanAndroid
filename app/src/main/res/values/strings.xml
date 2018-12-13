@@ -121,6 +121,7 @@
     <string name="error_nothing">获取不到数据</string>
     <string name="error_timeout">网络连接超时</string>
     <string name="error_unavailable">网络不可用</string>
+    <string name="error_http">网络连接错误</string>
     <string name="error_unknown">未知错误</string>
     <string name="loading_error">出错啦！点击空白处刷新</string>
     <string name="error_switch_fail">切换夜间模式失败</string>

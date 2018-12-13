@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
@@ -38,6 +37,7 @@ public abstract class BaseActivity extends SupportActivity
 
     private Unbinder mUnbinder;
     private NetWorkChangeReceiver mNetWorkChangeReceiver;
+    private TextView mTipView;
     protected boolean isEnableTip = true;
     protected abstract int getLayoutId();//获取Activity的布局Id
     protected abstract void initView();//初始化控件
@@ -73,6 +73,7 @@ public abstract class BaseActivity extends SupportActivity
         if(mUnbinder != null && mUnbinder != Unbinder.EMPTY){
             mUnbinder.unbind();
         }
+        if(mTipView != null && mTipView.getParent() != null) ((ViewGroup)getWindow().getDecorView()).removeView(mTipView);
         super.onDestroy();
     }
 
@@ -88,19 +89,20 @@ public abstract class BaseActivity extends SupportActivity
     @Override
     public void showTipsView(boolean isConnection) {
         if (!isEnableTip) return;
-        if (isConnection)
-                reLoad();
+        if(mTipView == null) mTipView = new TextView(this);
+        if (isConnection){
+            if(mTipView.getParent() != null) ((ViewGroup)getWindow().getDecorView()).removeView(mTipView);
+            reLoad();
+        }
         else{
-            if(((ViewGroup) getWindow().getDecorView()).findViewById(-1) != null) return;
+            if(mTipView.getParent() != null) return;
             ToastUtil.toastMake(
-                    this,
+                    mTipView,
                     (ViewGroup) getWindow().getDecorView(),
                     getString(R.string.error_unavailable),
                     ContextCompat.getColor(this, R.color.colorTipBackground),
                     ContextCompat.getColor(this, R.color.colorTip));
         }
-
-
     }
 
     protected AppComponent getAppComponent(){
@@ -135,13 +137,6 @@ public abstract class BaseActivity extends SupportActivity
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
         recreate();
-    }
-
-    @Override
-    public void tokenExpire(int requestCode) {
-        User.getInstance().reset();
-        RxBus.getInstance().post(new LoginEvent(false));
-        LoginActivity.startActivityForResult(this, requestCode);
     }
 
     @Override

@@ -77,7 +77,8 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
 
     private int pageNum = 0;//首页文章页数
     private boolean isLoadMore = false;
-    private int mArticlePosition = -1;//点击的位置
+    private int mArticlePosition = 0;//点击的位置
+    private Article mArticle;//点击的文章
     private Banner banner;
 
     @Override
@@ -108,20 +109,18 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         mArticlesAdapter.addHeaderView(bannerLayout);
         rvArticles.setAdapter(mArticlesAdapter);
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
-            mArticlePosition = position;
             Article article = mArticles.get(position);
             ArticleActivity.startActicityForResultByFragment(_mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;
+            mArticle = mArticles.get(position);
             if(!User.getInstance().isLoginStatus()){
                 LoginActivity.startActivityForResultByFragment(_mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
                 showToast(getString(R.string.first_login));
                 return;
             }
-            Article article = mArticles.get(position);
-            if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
-            else mPresenter.collectArticle(article.getId());
+            collect();
             AnimUtil.scale(view, -1);
 
         });
@@ -170,6 +169,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
 
     @Override
     public void showArticles(List<Article> articleList) {
+        if(!CommonUtil.isEmptyList(mArticles)) mArticles.clear();
         mArticles.addAll(articleList);
         mArticlesAdapter.notifyDataSetChanged();
     }
@@ -216,6 +216,15 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
               }
           }
        }
+    }
+
+    @Override
+    public void collect() {
+        if(mArticle == null) return;
+        if(mArticle.isCollect())
+            mPresenter.unCollectArticle(mArticle.getId());
+        else
+            mPresenter.collectArticle(mArticle.getId());
     }
 
     @Override

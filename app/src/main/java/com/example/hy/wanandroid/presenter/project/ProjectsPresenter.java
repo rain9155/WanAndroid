@@ -4,6 +4,7 @@ import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
+import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.Collection;
@@ -46,6 +47,10 @@ public class ProjectsPresenter extends BasePresenter<ProjectsContract.View> impl
         addSubcriber(
                 RxBus.getInstance().toObservable(AutoCacheEvent.class)
                         .subscribe(noImageEvent -> mView.autoRefresh())
+        );
+        addSubcriber(
+                RxBus.getInstance().toObservable(TokenExpiresEvent.class)
+                .subscribe(tokenExpiresEvent -> mView.collect())
         );
     }
 

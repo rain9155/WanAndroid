@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.presenter.hierarchy;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchySecondContract;
+import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.Collection;
@@ -35,6 +36,11 @@ public class HierarchySecondPresenter extends BasePresenter<HierarchySecondContr
         addSubcriber(
                 RxBus.getInstance().toObservable(CollectionEvent.class)
                         .subscribe(collectionEvent -> mView.refreshCollections(collectionEvent.getIds()))
+        );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(TokenExpiresEvent.class)
+                .subscribe(tokenExpiresEvent -> mView.collect())
         );
     }
 

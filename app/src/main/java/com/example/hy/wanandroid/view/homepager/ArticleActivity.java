@@ -77,7 +77,6 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
 
-        isEnableTip = false;
 
         Intent intent = getIntent();
         if(intent != null){
@@ -212,6 +211,14 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
         showToast(getString(R.string.common_uncollection_success));
     }
 
+    @Override
+    public void collect() {
+        if(isCollection)
+            mPresenter.unCollectArticle(mArticleId);
+        else
+            mPresenter.collectArticle(mArticleId);
+    }
+
     /**
      * 收藏事件
      */
@@ -221,11 +228,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
             showToast(getString(R.string.first_login));
             return;
         }
-        if (isCollection) {
-            mPresenter.unCollectArticle(mArticleId);
-        }else {
-            mPresenter.collectArticle(mArticleId);
-        }
+        collect();
     }
 
     /**

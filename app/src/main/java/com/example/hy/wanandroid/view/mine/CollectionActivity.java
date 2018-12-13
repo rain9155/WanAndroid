@@ -3,6 +3,7 @@ package com.example.hy.wanandroid.view.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.presenter.mine.CollectionPresenter;
 import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -63,7 +65,7 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     private int mCollectionPosition = -1;//点击的位置
 
     @Override
-    protected int getLayoutId() {
+    protected int getLayoutId(){
         return R.layout.activity_collection;
     }
 
@@ -147,6 +149,7 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
 
     @Override
     public void showCollections(List<Collection> collections) {
+        if(!CommonUtil.isEmptyList(mCollections)) mCollections.clear();
         mCollections.addAll(collections);
         mCollectionsAdapter.notifyDataSetChanged();
         if(CommonUtil.isEmptyList(mCollections)) showEmptyLayout();

@@ -101,6 +101,7 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
 
     @Override
     public void showFirstHierarchyList(List<FirstHierarchy> firstHierarchyList) {
+        if(!CommonUtil.isEmptyList(mFirstHierarchyList)) mFirstHierarchyList.clear();
         mFirstHierarchyList.addAll(firstHierarchyList);
         mListAdapter.notifyDataSetChanged();
     }

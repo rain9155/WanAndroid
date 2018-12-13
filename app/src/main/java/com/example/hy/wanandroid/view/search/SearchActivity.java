@@ -95,7 +95,8 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     private FlowTagsAdapter mFlowTagsAdapter;
     private boolean isLoadMore = false;
     private int mPageNum = 0;
-    private int mArticlePosition = -1;//点击的位置
+    private int mArticlePosition = 0;//点击的位置
+    private Article mArticle;
 
     @Override
     protected int getLayoutId() {
@@ -148,20 +149,18 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
             mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), mPageNum);
         });
         mSearchResquestAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
-            mArticlePosition = position;
             Article article = mSearchResquestList.get(position);
             ArticleActivity.startActivityForResult(SearchActivity.this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mSearchResquestAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;
+            mArticle =  mSearchResquestList.get(position);
             if(!User.getInstance().isLoginStatus()){
                 LoginActivity.startActivityForResult(this, Constant.REQUEST_COLLECT_ARTICLE);
                 showToast(getString(R.string.first_login));
                 return;
             }
-            Article article = mSearchResquestList.get(position);
-            if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
-            else mPresenter.collectArticle(article.getId());
+            collect();
             AnimUtil.scale(view, -1);
         });
         normalView.setEnableLoadMore(false);
@@ -231,6 +230,16 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
         if(!CommonUtil.isEmptyList(mSearchResquestList)) mSearchResquestList.clear();
         rlContainer.setVisibility(View.GONE);
     }
+
+    @Override
+    public void collect() {
+        if (mArticle == null) return;
+        if(mArticle.isCollect())
+            mPresenter.unCollectArticle(mArticle.getId());
+        else
+            mPresenter.collectArticle(mArticle.getId());
+    }
+
 
     @Override
     public void showEmptyLayout() {
