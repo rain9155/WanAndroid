@@ -19,6 +19,7 @@ public class LaunchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launch);
         new Handler().postDelayed(() -> {
             startActivity(new Intent(LaunchActivity.this, MainActivity.class));
+            overridePendingTransition(R.anim.anim_launch_enter, 0);
             finish();
         }, 2000);
     }
