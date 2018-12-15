@@ -9,9 +9,9 @@
 - [x] 登录、注册、注销
 - [x] 我的收藏、取消收藏、添加收藏
 - [x] 文章内容，分享文章
-- [x] 夜间模式
+- [x] 夜间模式，沉浸式切换
 ### Tips
-* 本项目前只是第一版，可能会在bug，如有任何问题或有更好的想法，欢迎[issues](https://github.com/rain9155/WanAndroid/issues), email([1847796089@qq.com]("")) 和 [PR](https://github.com/rain9155/WanAndroid/pulls)
+* 本项目前只是第一版，可能会在bug，如有任何问题或有更好的想法，欢迎[issues](https://github.com/rain9155/WanAndroid/issues)
 * 项目中所用到的api均由[WanAndroid网站](http://www.wanandroid.com/blog/show/2)提供
 * 本项目只用作学习用途，不做其他用途 
 ### Preview
@@ -26,11 +26,10 @@
 [WanAndroid Apk](https://github.com/rain9155/WanAndroid/releases/download/v1.0/app-release.apk)
 ### TODO
 - [ ] 公众号模块
-- [ ] 常用网站
-- [ ] 登陆持久化
-- [ ] 缓存管理
-- [ ] 沉浸式切换
 - [ ] Dagger-Android
+- [ ] Bugly管理
+- [ ] 优化app
+- [ ] 最新文章
 ### ChangeLog
 ```
 v1.0 2018-12-1
@@ -38,7 +37,7 @@ v1.0 2018-12-1
 ```
 ### Thanks
 * **App** <br>
-[WanAndroidClient](https://github.com/wangzailfm/WanAndroidClient) <br> 
+[WanAndroid](https://github.com/iceCola7/WanAndroid) <br> 
 [Awesome-WanAndroid](https://github.com/JsonChao/Awesome-WanAndroid) <br>
 [GeekNews](https://github.com/codeestX/GeekNews) <br>
 * **UI** <br>
@@ -61,7 +60,6 @@ v1.0 2018-12-1
 [MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)<br>
 [VerticalTabLayout](https://github.com/qstumn/VerticalTabLayout)<br>
 [BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)<br>
-[StatusBarUtil](https://github.com/laobie/StatusBarUtil)<br>
 [Banner](https://github.com/youth5201314/banner)<br>
 [Butterknife](https://github.com/JakeWharton/butterknife)<br>
 [Fragmentation](https://github.com/YoKeyword/Fragmentation)<br>
