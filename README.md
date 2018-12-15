@@ -9,11 +9,10 @@
 - [x] 登录、注册、注销
 - [x] 我的收藏、取消收藏、添加收藏
 - [x] 文章内容，分享文章
-- [x] 夜间模式，沉浸式切换
+- [x] 夜间模式，沉浸式切换，清除缓存
 ### Tips
 * 本项目前只是第一版，可能会在bug，如有任何问题或有更好的想法，欢迎[issues](https://github.com/rain9155/WanAndroid/issues)
-* 项目中所用到的api均由[WanAndroid网站](http://www.wanandroid.com/blog/show/2)提供
-* 本项目只用作学习用途，不做其他用途 
+* 项目中所用到的api均由[WanAndroid网站](http://www.wanandroid.com/blog/show/2)提供 
 ### Preview
 <br> ![wan1](/screenshots/wan1.gif) ![wan2](/screenshots/wan2.gif) <br>
  <br> ![wan3](/screenshots/wan3.gif) ![wan4](/screenshots/wan4.gif) <br>
@@ -66,6 +65,8 @@ v1.0 2018-12-1
 [FlowLayout](https://github.com/hongyangAndroid/FlowLayout)<br>
 [AgentWeb](https://github.com/Justson/AgentWeb)<br>
 [SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout)<br>
+### End
+本项目只用作学习用途，不做其他用途 
 ### License
 ```
 Copyright 2018 rain9155
