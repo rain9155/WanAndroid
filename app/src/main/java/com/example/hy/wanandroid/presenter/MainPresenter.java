@@ -8,6 +8,7 @@ import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.event.NightModeEvent;
+import com.example.hy.wanandroid.event.OpenBrowseEvent;
 import com.example.hy.wanandroid.event.SettingsNightModeEvent;
 import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.event.UpdataEvent;
@@ -70,6 +71,11 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
                 })
                 .subscribe(updataEvent -> mView.upDataVersion())
         );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(OpenBrowseEvent.class)
+                .subscribe(openBrowseEvent -> mView.showOpenBrowseDialog())
+        );
     }
 
     @Override
@@ -101,7 +107,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
                                 mView.setNewVersionName(version.getTag_name());
                                 content.append(resources.getString(R.string.dialog_versionName)).append(version.getTag_name()).append("\n")
                                         .append(resources.getString(R.string.dialog_versionSize)).append(FileUtil.getFormatSize(version.getAssets().get(0).getSize())).append("\n")
-                                        .append(resources.getString(R.string.dialog_versionContent)).append(version.getBody());
+                                        .append(resources.getString(R.string.dialog_versionContent)).append("\n").append(version.getBody());
                                 return content.toString();
                             }
                         })

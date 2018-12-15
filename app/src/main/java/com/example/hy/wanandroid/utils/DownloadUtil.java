@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Environment;
 
 import com.example.hy.wanandroid.component.UpdataService;
 import com.example.hy.wanandroid.config.Constant;
+
+import java.io.File;
 
 /**
  * 下载工具
@@ -19,6 +22,7 @@ public class DownloadUtil {
      */
     public static void downloadApk(Context context, String newVersionName) {
         String url = Constant.BASE_APK_URL + newVersionName + "/app-release.apk";
+        Constant.NEW_VERSION_URL = url;
         if(canDownloadState(context)){
             LogUtil.d(LogUtil.TAG_COMMON, "DownloadManager可用");
             Intent intent = new Intent(context, UpdataService.class);
@@ -26,6 +30,8 @@ public class DownloadUtil {
             context.startService(intent);
         }else {
             LogUtil.d(LogUtil.TAG_COMMON, "DownloadManager不可用");
+            File file = new File(Constant.PATH_APK_2);
+            if(file.exists()) file.delete();
             ShareUtil.openBrowser(context, url);
         }
     }
