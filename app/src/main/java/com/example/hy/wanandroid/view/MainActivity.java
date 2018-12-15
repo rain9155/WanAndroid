@@ -29,6 +29,7 @@ import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
 import com.example.hy.wanandroid.view.project.ProjectFragment;
+import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 import com.example.utilslibrary.ToastUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -64,6 +65,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     BaseFragment[] mFragments;
     @Inject
     VersionDialog mVersionDialog;
+    @Inject
+    OpenBrowseDialog mOpenBrowseDialog;
 
     private String mNewVersionName;
 
@@ -212,6 +215,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         }else {
             DownloadUtil.downloadApk(this, mNewVersionName);
         }
+    }
+
+    @Override
+    public void showOpenBrowseDialog() {
+        mOpenBrowseDialog.show(getSupportFragmentManager(), "tag10");
     }
 
     public MainActivityComponent getComponent(){

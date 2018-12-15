@@ -51,6 +51,7 @@
     <string name="mineFragment_tvLogout">退出登陆</string>
     <string name="dialog_confirm_logout">确认退出登陆？</string>
     <string name="dialog_confirm_clear">确认清空缓存？</string>
+    <string name="dialog_open_browse">新版本下载失败, 是否打开系统浏览器重新下载？</string>
     <string name="dialog_toast">提示</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_confirm">确认</string>

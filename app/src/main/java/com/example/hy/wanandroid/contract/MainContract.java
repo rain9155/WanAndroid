@@ -13,6 +13,7 @@ public interface MainContract {
         void showUpdataDialog(String content);//显示更新弹窗
         void setNewVersionName(String versionName);//设置最新版本号
         void upDataVersion();//更新
+        void showOpenBrowseDialog();
     }
 
     interface Presenter extends IPresenter<MainContract.View>{

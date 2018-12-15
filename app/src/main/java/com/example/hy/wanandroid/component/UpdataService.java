@@ -18,6 +18,8 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.utils.ToastUtil;
 
+import java.io.File;
+
 import androidx.annotation.Nullable;
 
 /**
@@ -68,6 +70,9 @@ public class UpdataService extends Service {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         //创建目录, 外部存储--> Download文件夹
         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdir() ;
+        File file = new File(Constant.PATH_APK_1);
+        if(file.exists())
+            file.delete();
         //设置文件存放路径
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS  , "WanAndroid.apk");
         //设置Notification的标题
@@ -84,6 +89,6 @@ public class UpdataService extends Service {
         //下载网络需求 - 手机数据流量、wifi
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI ) ;
         DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-        return  downloadManager.enqueue(request);
+        return downloadManager.enqueue(request);
     }
 }

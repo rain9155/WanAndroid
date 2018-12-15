@@ -120,7 +120,7 @@ public class SettingsPresenter extends BasePresenter<SettingsContract.View> impl
                         mView.setNewVersionName(version.getTag_name());
                         content.append(resources.getString(R.string.dialog_versionName)).append(version.getTag_name()).append("\n")
                                 .append(resources.getString(R.string.dialog_versionSize)).append(FileUtil.getFormatSize(version.getAssets().get(0).getSize())).append("\n")
-                                .append(resources.getString(R.string.dialog_versionContent)).append(version.getBody());
+                                .append(resources.getString(R.string.dialog_versionContent)).append("\n").append(version.getBody());
                         return content.toString();
                     }
                 })

@@ -65,11 +65,14 @@ public class Constant {
 
     //path
     public static final String PATH_NETCACHE = FileUtils.getCachePath(App.getContext(), "netData");
-    public static final String PATH_APK = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "WanAndroid.apk";
+    public static final String PATH_APK_1 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/WanAndroid.apk";
+    public static final String PATH_APK_2 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/app-release.apk";
+
 
     //common
     public static final int REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE = 4;
     public static final String KEY_URL_APK = "urlApk";
     public static final String KEY_DOWNLOAD_ID = "downloadId";
+    public static String NEW_VERSION_URL = "";
 
 }
