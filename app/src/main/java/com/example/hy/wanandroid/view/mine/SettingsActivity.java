@@ -13,7 +13,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,6 +36,7 @@ import com.example.hy.wanandroid.utils.FileUtil;
 import com.example.hy.wanandroid.utils.ServiceUtil;
 import com.example.hy.wanandroid.utils.ShareUtil;
 import com.example.hy.wanandroid.utils.StatusBarUtil;
+import com.example.hy.wanandroid.widget.dialog.ClearCacheDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 
 import java.io.File;
@@ -44,7 +44,6 @@ import java.io.File;
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -55,7 +54,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SettingsActivity extends BaseActivity
-        implements SettingsContract.View, CompoundButton.OnCheckedChangeListener{
+        implements SettingsContract.View, CompoundButton.OnCheckedChangeListener {
 
 
     @BindView(R.id.tv_common_title)
@@ -128,6 +127,14 @@ public class SettingsActivity extends BaseActivity
     CardView cdOtherSettings;
     @BindView(R.id.root_view)
     LinearLayout rootView;
+    @BindView(R.id.iv_auto_updata)
+    ImageView ivAutoUpdata;
+    @BindView(R.id.tv_auto_updata)
+    TextView tvAutoUpdata;
+    @BindView(R.id.switch_auto_updata)
+    SwitchCompat switchAutoUpdata;
+    @BindView(R.id.cl_auto_updata)
+    ConstraintLayout clAutoUpdata;
 
     @Inject
     SettingsPresenter mPresenter;
@@ -135,6 +142,8 @@ public class SettingsActivity extends BaseActivity
     File mCacheFile;
     @Inject
     VersionDialog mVersionDialog;
+    @Inject
+    ClearCacheDialog mClearCacheDialog;
 
     private ObjectAnimator mAnimator;
     private String mNewVersionName;
@@ -166,15 +175,20 @@ public class SettingsActivity extends BaseActivity
         switchAutoCache.setChecked(mPresenter.getAutoCacheState());
         switchNightMode.setChecked(mPresenter.getNightModeState());
         switchStatusBar.setChecked(mPresenter.getStatusBarState());
+        switchAutoUpdata.setChecked(mPresenter.getAutoUpdataState());
 
         mCurrentVersionName = DownloadUtil.getVersionName(this);
         tvCache.setText(FileUtil.getCacheSize(mCacheFile));
         tvVersion.setText(getString(R.string.settingsActivity_version_current) + mCurrentVersionName);
 
         clClearCache.setOnClickListener(v -> {
-            FileUtil.deleteDir(mCacheFile);
-            tvCache.setText(FileUtil.getCacheSize(mCacheFile));
-            showToast(getString(R.string.settingsActivity_clear_cache));
+            String cache = FileUtil.getCacheSize(mCacheFile);
+            if (cache.equals("0K"))
+                showToast(getString(R.string.settingsActivity_already_clear));
+            else {
+                mClearCacheDialog.setContent(cache);
+                mClearCacheDialog.show(getSupportFragmentManager(), "tag8");
+            }
         });
         clFeedBack.setOnClickListener(v -> ShareUtil.sendEmail(this, Constant.EMAIL_ADDRESS, getString(R.string.settingsActivity_email_to)));
         clUpdata.setOnClickListener(v -> {
@@ -190,6 +204,7 @@ public class SettingsActivity extends BaseActivity
         switchNoImage.setOnCheckedChangeListener(this);
         switchNightMode.setOnCheckedChangeListener(this);
         switchStatusBar.setOnCheckedChangeListener(this);
+        switchAutoUpdata.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -245,9 +260,9 @@ public class SettingsActivity extends BaseActivity
     @Override
     public void useNightNode(boolean isNight) {
         int background, primaryText, foreground, colorPrimary, colorPrimaryDark, colorRipple;
-        if(isNight){
+        if (isNight) {
             colorPrimary = Color.parseColor("#212121");
-            if(mPresenter.getStatusBarState())
+            if (mPresenter.getStatusBarState())
                 colorPrimaryDark = Color.parseColor("#212121");
             else
                 colorPrimaryDark = Color.parseColor("#424242");
@@ -255,9 +270,9 @@ public class SettingsActivity extends BaseActivity
             foreground = Color.parseColor("#424242");
             primaryText = Color.parseColor("#FAFAFA");
             colorRipple = Color.parseColor("#c7f5f5f5");
-        }else {
+        } else {
             colorPrimary = Color.parseColor("#00BCD4");
-            if(mPresenter.getStatusBarState())
+            if (mPresenter.getStatusBarState())
                 colorPrimaryDark = Color.parseColor("#00BCD4");
             else
                 colorPrimaryDark = Color.parseColor("#0097A7");
@@ -276,6 +291,7 @@ public class SettingsActivity extends BaseActivity
         tvNightMode.setTextColor(primaryText);
         tvAutoCache.setTextColor(primaryText);
         tvStatusBar.setTextColor(primaryText);
+        tvAutoUpdata.setTextColor(primaryText);
         tvSettingsOther.setTextColor(primaryText);
         cdOtherSettings.setCardBackgroundColor(foreground);
         tvFeedBack.setTextColor(primaryText);
@@ -284,14 +300,15 @@ public class SettingsActivity extends BaseActivity
         tvUpdata.setTextColor(primaryText);
         tvVersion.setTextColor(primaryText);
         //动态改变波纹点击颜色
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            ((RippleDrawable)clNoImage.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable)clAutoCache.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable)clClearCache.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable)clNightMode.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable)clStatusBar.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable)clFeedBack.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable)clUpdata.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ((RippleDrawable) clNoImage.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable) clAutoCache.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable) clClearCache.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable) clNightMode.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable) clStatusBar.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable) clFeedBack.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable) clUpdata.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable) clAutoUpdata.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
         }
     }
 
@@ -352,6 +369,13 @@ public class SettingsActivity extends BaseActivity
     }
 
     @Override
+    public void clearCache() {
+        FileUtil.deleteDir(mCacheFile);
+        tvCache.setText(FileUtil.getCacheSize(mCacheFile));
+        showToast(getString(R.string.settingsActivity_clear_cache));
+    }
+
+    @Override
     public void upDataVersion() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -399,5 +423,11 @@ public class SettingsActivity extends BaseActivity
         return bitmap;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }
 

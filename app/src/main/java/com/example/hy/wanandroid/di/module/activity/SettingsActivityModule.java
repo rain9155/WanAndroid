@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.di.module.activity;
 
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.di.scope.PerActivity;
+import com.example.hy.wanandroid.widget.dialog.ClearCacheDialog;
 import com.example.hy.wanandroid.widget.dialog.UpDataLoadingDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 
@@ -30,6 +31,12 @@ public class SettingsActivityModule {
     @PerActivity
     VersionDialog provideVersionDialog(){
         return new VersionDialog();
+    }
+
+    @Provides
+    @PerActivity
+    ClearCacheDialog provideClearCacheDialog(){
+        return new ClearCacheDialog();
     }
 
 

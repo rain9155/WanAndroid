@@ -9,6 +9,7 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
+import com.example.hy.wanandroid.event.ClearCacheEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
 import com.example.hy.wanandroid.event.SettingsNightModeEvent;
@@ -67,6 +68,11 @@ public class SettingsPresenter extends BasePresenter<SettingsContract.View> impl
                             mView.showChangeAnimation();
                             mView.useNightNode(settingsNightModeEvent.isNightMode());
                         })
+        );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(ClearCacheEvent.class)
+                .subscribe(clearCacheEvent -> mView.clearCache())
         );
     }
 

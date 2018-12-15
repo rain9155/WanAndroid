@@ -84,4 +84,9 @@ public class BasePresenter<T extends BaseView> implements IPresenter<T> {
     public boolean getStatusBarState() {
         return mModel.getStatusBarState();
     }
+
+    @Override
+    public boolean getAutoUpdataState() {
+        return mModel.getAutoUpdataState();
+    }
 }

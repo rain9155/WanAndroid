@@ -34,4 +34,8 @@ public interface PreferencesHelper {
     void setNetWorkState(boolean isConnection);
     //获得网络状态
     boolean getNetWorkState();
+    //保存自动更新状态
+    void setAutoUpdataState(boolean isAuto);
+    //获得自动更新状态
+    boolean getAutoUpdataState();
 }

@@ -137,7 +137,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             show(bnvBtm);
         });
 
-        mPresenter.checkVersion(DownloadUtil.getVersionName(this));
+        if(mPresenter.getAutoUpdataState())
+            mPresenter.checkVersion(DownloadUtil.getVersionName(this));
     }
 
     @Override

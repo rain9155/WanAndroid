@@ -50,9 +50,10 @@
     <string name="mineFragment_tvAboutUs">关于我们</string>
     <string name="mineFragment_tvLogout">退出登陆</string>
     <string name="dialog_confirm_logout">确认退出登陆？</string>
-    <string name="dialog_logout_toast">提示</string>
-    <string name="dialog_logout_cancel">取消</string>
-    <string name="dialog_logout_confirm">确认</string>
+    <string name="dialog_confirm_clear">确认清空缓存？</string>
+    <string name="dialog_toast">提示</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_confirm">确认</string>
 
     <string name="loginActivity_account">用户名</string>
     <string name="loginActivity_password">密码</string>
@@ -97,11 +98,13 @@
     <string name="settingsActivity_tvAutoCache">自动缓存文章</string>
     <string name="settingsActivity_tvNightMode">夜间模式</string>
     <string name="settingsActivity_tvStatusBar">状态栏跟随主题</string>
+    <string name="settingsActivity_tvAutoUpadta">自动检查更新</string>
     <string name="settingsActivity_tvClearCache">清空缓存</string>
     <string name="settingsActivity_tvFeedback">意见反馈</string>
     <string name="settingsActivity_tvUpdata">检查更新</string>
     <string name="settingsActivity_email_to">发送给</string>
     <string name="settingsActivity_clear_cache">已清空缓存</string>
+    <string name="settingsActivity_already_clear">缓存已清空</string>
     <string name="settingsActivity_version_current">当前版本:</string>
     <string name="settingsActivity_permission_denied">下载应用需要文件写入权限哦!</string>
 

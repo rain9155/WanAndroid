@@ -219,4 +219,14 @@ public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
     public boolean getNetWorkState() {
         return mPreferencesHelper.getNetWorkState();
     }
+
+    @Override
+    public void setAutoUpdataState(boolean isAuto) {
+        mPreferencesHelper.setAutoUpdataState(isAuto);
+    }
+
+    @Override
+    public boolean getAutoUpdataState() {
+        return mPreferencesHelper.getAutoUpdataState();
+    }
 }

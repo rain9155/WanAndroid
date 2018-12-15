@@ -91,4 +91,14 @@ public class PreferencesHelperImp implements PreferencesHelper {
     public boolean getNetWorkState() {
         return mPreferences.getBoolean(Constant.KEY_PREFS_NETWORK, true);
     }
+
+    @Override
+    public void setAutoUpdataState(boolean isAuto) {
+        mPreferences.edit().putBoolean(Constant.KEY_PREFS_AUTOUPDATA, isAuto).apply();
+    }
+
+    @Override
+    public boolean getAutoUpdataState() {
+        return mPreferences.getBoolean(Constant.KEY_PREFS_AUTOUPDATA, true);
+    }
 }

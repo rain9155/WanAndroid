@@ -32,13 +32,13 @@
         android:layout_marginStart="@dimen/dp_10" />
 
     <TextView
-        android:id="@+id/tv_logout"
+        android:id="@+id/tv_clear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/primaryText"
         android:textSize="@dimen/sp_18"
         android:layout_marginTop="@dimen/dp_20"
-        android:text="@string/dialog_confirm_logout"
+        tools:text="确认清空123k缓存？"
         app:layout_constraintLeft_toLeftOf="@id/iv_toast"
         app:layout_constraintTop_toBottomOf="@id/tv_toast"
         app:layout_constraintBottom_toTopOf="@+id/btn_cancel"/>

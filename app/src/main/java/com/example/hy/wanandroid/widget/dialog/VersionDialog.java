@@ -23,7 +23,7 @@ import androidx.fragment.app.DialogFragment;
  */
 public class VersionDialog extends DialogFragment {
 
-    private String mContentText;
+    private String mContentText = "";
     private boolean isMain;
 
     @NonNull

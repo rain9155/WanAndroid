@@ -22,18 +22,24 @@ import q.rorbin.badgeview.DisplayUtil;
  */
 public class ToastUtil extends com.example.utilslibrary.ToastUtil {
 
+    private static Toast toast;
+    private static TextView textView;
+
     @SuppressLint({"ResourceAsColor"})
     public static void toastInBottom(Context context, String message, View toastView) {
-        if (toastView == null) {
-            toastView = LayoutInflater.from(context).inflate(R.layout.toast, null);
-            TextView textView = toastView.findViewById(R.id.tv_toast);
+        if(toast == null){
+            if (toastView == null) {
+                toastView = LayoutInflater.from(context).inflate(R.layout.toast, null);
+                textView = toastView.findViewById(R.id.tv_toast);
+                textView.setText(message);
+            }
+            toast = new Toast(context);
+            toast.setGravity(Gravity.BOTTOM, 0, DisplayUtil.dp2px(context, 50));
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(toastView);
+         }else {
             textView.setText(message);
         }
-
-        Toast toast = new Toast(context);
-        toast.setGravity(Gravity.BOTTOM, 0, DisplayUtil.dp2px(context, 50));
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(toastView);
         toast.show();
     }
 

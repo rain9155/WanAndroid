@@ -18,7 +18,6 @@ import java.lang.reflect.Field;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 /**
@@ -35,10 +34,10 @@ public class LogoutDialog extends DialogFragment {
             dialog = new AlertDialog.Builder(getActivity(), R.style.AlertDialog)
                     .setCancelable(false)
                     .setIcon(R.drawable.ic_toast)
-                    .setTitle(R.string.dialog_logout_toast)
+                    .setTitle(R.string.dialog_toast)
                     .setMessage(R.string.dialog_confirm_logout)
-                    .setNegativeButton(R.string.dialog_logout_cancel, (dialog1, which) -> this.dismiss())
-                    .setPositiveButton(R.string.dialog_logout_confirm, (dialog1, which) -> {
+                    .setNegativeButton(R.string.dialog_cancel, (dialog1, which) -> this.dismiss())
+                    .setPositiveButton(R.string.dialog_confirm, (dialog1, which) -> {
                         this.dismiss();
                         RxBus.getInstance().post(new LoginEvent(false));
                     })
