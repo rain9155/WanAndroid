@@ -2,30 +2,34 @@ package com.example.hy.wanandroid.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.text.TextUtils;
+
+import com.example.hy.wanandroid.R;
+import com.example.utilslibrary.ToastUtil;
 
 /**
  * 分享工具
  * Created by codeest on 2016/8/22.
  */
-public class ShareUtil {
+public class ShareUtil extends com.example.utilslibrary.ShareUtil {
 
     /**
-     * 分享文字
+     * 打开浏览器
      */
-    public static void shareText(Context context, String text, String title){
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, text);
-        context.startActivity(Intent.createChooser(intent, title));
+    public static void openBrowser(Context context, String address){
+        if (TextUtils.isEmpty(address) || address.startsWith("file://")) {
+            ToastUtil.showToast(context, context.getString(R.string.articleActivity_browser_error));
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(address));
+        if(context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null){
+            context.startActivity(intent);
+        }else {
+            ToastUtil.showToast(context, context.getString(R.string.open_browser_unknown));
+        }
     }
 
-    /**
-     * 发送邮件
-     */
-    public static void sendEmail(Context context, String address, String title) {
-        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(
-                "mailto:" + address));
-        context.startActivity(Intent.createChooser(intent, title));
-    }
 }

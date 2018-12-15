@@ -1,291 +1,448 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background"
     tools:context=".view.mine.SettingsActivity">
 
     <include layout="@layout/common_toolbal"/>
 
-    <TextView
-        android:id="@+id/tv_settings_common"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/secondaryText"
-        android:textSize="@dimen/dp_18"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:text="@string/settingsActivity_tvSettingsCommon"/>
-
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginBottom="@dimen/dp_5"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:selectableItemBackground"
-        app:cardBackgroundColor="@color/foreground"
-        app:cardElevation="@dimen/dp_5"
-        app:cardCornerRadius="@dimen/dp_8"
-        app:cardUseCompatPadding="true"
-        app:cardPreventCornerOverlap="false">
+        android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_settings_common"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondaryText"
+                android:textSize="@dimen/dp_18"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:text="@string/settingsActivity_tvSettingsCommon"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_noImage"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cd_base_settings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
-                android:layout_marginTop="@dimen/dp_20"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/bg_ripple"
+                app:cardBackgroundColor="@color/foreground"
+                app:cardElevation="@dimen/dp_5"
+                app:cardCornerRadius="@dimen/dp_8"
+                app:cardUseCompatPadding="true"
+                app:cardPreventCornerOverlap="false">
 
-                <ImageView
-                    android:id="@+id/iv_noImage"
-                    android:layout_width="@dimen/dp_28"
-                    android:layout_height="@dimen/dp_28"
-                    app:srcCompat="@drawable/ic_settings_noimage"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/tv_noImage"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/settingsActivity_tvNoImage"
-                    style="@style/MineFragmentTextStyle"
-                    app:layout_constraintLeft_toRightOf="@id/iv_noImage"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_10">
 
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_noImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_28"
-                    android:theme="@style/SwitchTrack"
-                    app:thumbTint="@color/colorSwitchButton"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    tools:ignore="ContentDescription" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_noImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/MineFragmentConstaintStyle"
+                        android:background="@drawable/bg_rect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:layout_constraintTop_toTopOf="parent">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        <ImageView
+                            android:id="@+id/iv_noImage"
+                            android:layout_width="@dimen/dp_28"
+                            android:layout_height="@dimen/dp_28"
+                            app:srcCompat="@drawable/ic_settings_noimage"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_autoCache"
+                        <TextView
+                            android:id="@+id/tv_noImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settingsActivity_tvNoImage"
+                            style="@style/MineFragmentTextStyle"
+                            app:layout_constraintLeft_toRightOf="@id/iv_noImage"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switch_noImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:theme="@style/SwitchTrack"
+                            app:thumbTint="@color/colorSwitchButton"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_nightMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        style="@style/MineFragmentConstaintStyle"
+                        app:layout_constraintTop_toBottomOf="@id/cl_noImage">
+
+                        <ImageView
+                            android:id="@+id/iv_nightMode"
+                            android:layout_width="@dimen/dp_28"
+                            android:layout_height="@dimen/dp_28"
+                            app:srcCompat="@drawable/ic_settings_nightmode"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_nightMode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settingsActivity_tvNightMode"
+                            style="@style/MineFragmentTextStyle"
+                            app:layout_constraintLeft_toRightOf="@id/iv_nightMode"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switch_nightMode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:src="@drawable/ic_mine_next"
+                            android:theme="@style/SwitchTrack"
+                            app:thumbTint="@color/colorSwitchButton"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_autoCache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        style="@style/MineFragmentConstaintStyle"
+                        android:layout_marginTop="@dimen/dp_2"
+                        app:layout_constraintTop_toBottomOf="@id/cl_nightMode">
+
+                        <ImageView
+                            android:id="@+id/iv_autoCache"
+                            android:layout_width="@dimen/dp_28"
+                            android:layout_height="@dimen/dp_28"
+                            app:srcCompat="@drawable/ic_settings_autocache"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_autoCache"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settingsActivity_tvAutoCache"
+                            style="@style/MineFragmentTextStyle"
+                            app:layout_constraintLeft_toRightOf="@id/iv_autoCache"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switch_autoCache"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:src="@drawable/ic_mine_next"
+                            android:theme="@style/SwitchTrack"
+                            app:thumbTint="@color/colorSwitchButton"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_status_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        style="@style/MineFragmentConstaintStyle"
+                        app:layout_constraintTop_toBottomOf="@id/cl_autoCache">
+
+                        <ImageView
+                            android:id="@+id/iv_status_bar"
+                            android:layout_width="@dimen/dp_28"
+                            android:layout_height="@dimen/dp_28"
+                            app:srcCompat="@drawable/ic_settings_statusbar"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_status_bar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settingsActivity_tvStatusBar"
+                            style="@style/MineFragmentTextStyle"
+                            app:layout_constraintLeft_toRightOf="@id/iv_status_bar"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switch_status_bar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:src="@drawable/ic_mine_next"
+                            android:theme="@style/SwitchTrack"
+                            app:thumbTint="@color/colorSwitchButton"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_auto_updata"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        style="@style/MineFragmentConstaintStyle"
+                        app:layout_constraintTop_toBottomOf="@id/cl_status_bar">
+
+                        <ImageView
+                            android:id="@+id/iv_auto_updata"
+                            android:layout_width="@dimen/dp_28"
+                            android:layout_height="@dimen/dp_28"
+                            app:srcCompat="@drawable/ic_settings_auto_updata"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_auto_updata"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settingsActivity_tvAutoUpadta"
+                            style="@style/MineFragmentTextStyle"
+                            app:layout_constraintLeft_toRightOf="@id/iv_auto_updata"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switch_auto_updata"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:src="@drawable/ic_mine_next"
+                            android:theme="@style/SwitchTrack"
+                            app:thumbTint="@color/colorSwitchButton"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:id="@+id/tv_settings_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondaryText"
+                android:textSize="@dimen/dp_18"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:text="@string/settingsActivity_tvSettingsOther"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cd_other_settings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
-                android:layout_marginTop="@dimen/dp_2"
-                app:layout_constraintTop_toBottomOf="@id/cl_noImage">
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/bg_ripple"
+                app:cardBackgroundColor="@color/foreground"
+                app:cardElevation="@dimen/dp_5"
+                app:cardCornerRadius="@dimen/dp_8"
+                app:cardUseCompatPadding="true"
+                app:cardPreventCornerOverlap="false">
 
-                <ImageView
-                    android:id="@+id/iv_autoCache"
-                    android:layout_width="@dimen/dp_28"
-                    android:layout_height="@dimen/dp_28"
-                    app:srcCompat="@drawable/ic_settings_autocache"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/tv_autoCache"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/settingsActivity_tvAutoCache"
-                    style="@style/MineFragmentTextStyle"
-                    app:layout_constraintLeft_toRightOf="@id/iv_autoCache"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_10">
 
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_autoCache"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_28"
-                    android:src="@drawable/ic_mine_next"
-                    android:theme="@style/SwitchTrack"
-                    app:thumbTint="@color/colorSwitchButton"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    tools:ignore="ContentDescription" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_feedBack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        style="@style/MineFragmentConstaintStyle"
+                        app:layout_constraintTop_toTopOf="parent">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        <ImageView
+                            android:id="@+id/iv_feedBack"
+                            android:layout_width="@dimen/dp_28"
+                            android:layout_height="@dimen/dp_28"
+                            app:srcCompat="@drawable/ic_settings_feedback"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_nightMode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
-                app:layout_constraintTop_toBottomOf="@id/cl_autoCache">
-
-                <ImageView
-                    android:id="@+id/iv_nightMode"
-                    android:layout_width="@dimen/dp_28"
-                    android:layout_height="@dimen/dp_28"
-                    app:srcCompat="@drawable/ic_settings_nightmode"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/tv_nightMode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settingsActivity_tvNightMode"
-                    style="@style/MineFragmentTextStyle"
-                    app:layout_constraintLeft_toRightOf="@id/iv_nightMode"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_nightMode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_28"
-                    android:src="@drawable/ic_mine_next"
-                    android:theme="@style/SwitchTrack"
-                    app:thumbTint="@color/colorSwitchButton"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    tools:ignore="ContentDescription" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/tv_feedBack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settingsActivity_tvFeedback"
+                            style="@style/MineFragmentTextStyle"
+                            app:layout_constraintLeft_toRightOf="@id/iv_feedBack"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_clearCache"
+                        android:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/MineFragmentConstaintStyle"
+                        android:background="@drawable/bg_rect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_marginTop="@dimen/dp_2"
+                        app:layout_constraintTop_toBottomOf="@id/cl_feedBack">
 
-    </androidx.cardview.widget.CardView>
+                        <ImageView
+                            android:id="@+id/iv_clearCache"
+                            android:layout_width="@dimen/dp_28"
+                            android:layout_height="@dimen/dp_28"
+                            app:srcCompat="@drawable/ic_settings_deleteall"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
+                        <TextView
+                            android:id="@+id/tv_clearCache"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settingsActivity_tvClearCache"
+                            style="@style/MineFragmentTextStyle"
+                            app:layout_constraintLeft_toRightOf="@id/iv_clearCache"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_settings_other"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/secondaryText"
-        android:textSize="@dimen/dp_18"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:text="@string/settingsActivity_tvSettingsOther"/>
+                        <TextView
+                            android:id="@+id/tv_cache"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:src="@drawable/ic_mine_next"
+                            android:gravity="center"
+                            android:textColor="@color/secondaryText"
+                            android:textSize="@dimen/sp_16"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            tools:ignore="ContentDescription"
+                            tools:text="10k"/>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginBottom="@dimen/dp_5"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:selectableItemBackground"
-        app:cardBackgroundColor="@color/foreground"
-        app:cardElevation="@dimen/dp_5"
-        app:cardCornerRadius="@dimen/dp_8"
-        app:cardUseCompatPadding="true"
-        app:cardPreventCornerOverlap="false">
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_updata"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/MineFragmentConstaintStyle"
+                        android:background="@drawable/bg_rect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:layout_constraintTop_toBottomOf="@id/cl_clearCache">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_feedBack"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
-                app:layout_constraintTop_toTopOf="parent">
+                        <ImageView
+                            android:id="@+id/iv_updata"
+                            android:layout_width="@dimen/dp_28"
+                            android:layout_height="@dimen/dp_28"
+                            app:srcCompat="@drawable/ic_settings_updata"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
 
-                <ImageView
-                    android:id="@+id/iv_feedBack"
-                    android:layout_width="@dimen/dp_28"
-                    android:layout_height="@dimen/dp_28"
-                    app:srcCompat="@drawable/ic_settings_feedback"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription" />
+                        <TextView
+                            android:id="@+id/tv_updata"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settingsActivity_tvUpdata"
+                            style="@style/MineFragmentTextStyle"
+                            app:layout_constraintLeft_toRightOf="@id/iv_updata"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
-                <TextView
-                    android:id="@+id/tv_feedBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settingsActivity_tvFeedback"
-                    style="@style/MineFragmentTextStyle"
-                    app:layout_constraintLeft_toRightOf="@id/iv_feedBack"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                        <TextView
+                            android:id="@+id/tv_version"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:src="@drawable/ic_mine_next"
+                            android:gravity="center"
+                            android:textColor="@color/secondaryText"
+                            android:textSize="@dimen/sp_16"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            tools:ignore="ContentDescription"
+                            tools:text="当前版本:v1.0"/>
 
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
+            </androidx.cardview.widget.CardView>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_clearCache"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
-                android:layout_marginTop="@dimen/dp_2"
-                app:layout_constraintTop_toBottomOf="@id/cl_feedBack">
+        </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/iv_clearCache"
-                    android:layout_width="@dimen/dp_28"
-                    android:layout_height="@dimen/dp_28"
-                    app:srcCompat="@drawable/ic_settings_deleteall"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/tv_clearCache"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settingsActivity_tvClearCache"
-                    style="@style/MineFragmentTextStyle"
-                    app:layout_constraintLeft_toRightOf="@id/iv_clearCache"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_cache"
-                    android:layout_width="@dimen/dp_28"
-                    android:layout_height="@dimen/dp_28"
-                    android:src="@drawable/ic_mine_next"
-                    android:gravity="center"
-                    android:textColor="@color/secondaryText"
-                    android:textSize="@dimen/sp_16"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    tools:ignore="ContentDescription"
-                    tools:text="10k"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </androidx.cardview.widget.CardView>
-
+    </ScrollView>
 
 </LinearLayout>

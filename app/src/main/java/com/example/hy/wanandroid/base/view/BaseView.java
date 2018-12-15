@@ -26,14 +26,15 @@ public interface BaseView {
     //显示Toast
     void showToast(String toast);
 
-    //显示SnackBar
-    void showSnackBar(String toast);
-
     //禁止加载
     void unableRefresh();
 
     //夜间模式
-    void userNightNode(boolean isNight);
+    void useNightNode(boolean isNight);
 
-    void tokenExpire(int requestCode);
+    //设置状态栏颜色
+    void setStatusBarColor(boolean isSet);
+
+    //显示网络状态信息
+    void showTipsView(boolean isConnection);
 }

@@ -9,10 +9,11 @@ import com.example.hy.wanandroid.adapter.FirstHierarchyAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchyContract;
 import com.example.hy.wanandroid.di.module.fragment.HierarchyFragmentModule;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchy;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchyChild;
+import com.example.hy.wanandroid.model.network.entity.FirstHierarchy;
+import com.example.hy.wanandroid.model.network.entity.Tab;
 import com.example.hy.wanandroid.presenter.hierarchy.HierarchyPresenter;
 import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
 import com.example.hy.wanandroid.view.search.SearchActivity;
@@ -38,8 +39,6 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
     Toolbar tlCommon;
     @BindView(R.id.rv_hierarchy)
     RecyclerView rvHierarchy;
-    @BindView(R.id.fake_status_bar)
-    View fakeStatusBar;
     @BindView(R.id.tv_common_title)
     TextView tvCommonTitle;
     @BindView(R.id.iv_common_search)
@@ -69,6 +68,7 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
         ((MainActivity) getActivity()).getComponent().getHierarchyFragmentSubComponent(new HierarchyFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
+        StatusBarUtil.setHeightAndPadding(_mActivity, tlCommon);
         ivCommonSearch.setVisibility(View.VISIBLE);
         tvCommonTitle.setText(R.string.homeFragment_hierarchy);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
@@ -101,6 +101,7 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
 
     @Override
     public void showFirstHierarchyList(List<FirstHierarchy> firstHierarchyList) {
+        if(!CommonUtil.isEmptyList(mFirstHierarchyList)) mFirstHierarchyList.clear();
         mFirstHierarchyList.addAll(firstHierarchyList);
         mListAdapter.notifyDataSetChanged();
     }
@@ -139,7 +140,7 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
         if (firstHierarchy != null) {
             ArrayList<String> listName = new ArrayList<>(firstHierarchy.getChildren().size());
             ArrayList<String> listId = new ArrayList<>(firstHierarchy.getChildren().size());
-            for (FirstHierarchyChild child : firstHierarchy.getChildren()) {
+            for (Tab child : firstHierarchy.getChildren()) {
                 listName.add(child.getName());
                 listId.add(String.valueOf(child.getId()));
             }

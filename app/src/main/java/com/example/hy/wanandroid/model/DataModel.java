@@ -5,16 +5,17 @@ import com.example.hy.wanandroid.model.db.DbHelperImp;
 import com.example.hy.wanandroid.model.network.NetworkHelper;
 import com.example.hy.wanandroid.model.network.NetworkHelperImp;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchy;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.SecondHierarchy;
-import com.example.hy.wanandroid.model.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.model.network.entity.homepager.BannerData;
-import com.example.hy.wanandroid.model.network.entity.mine.Collection;
-import com.example.hy.wanandroid.model.network.entity.mine.CollectionRequest;
-import com.example.hy.wanandroid.model.network.entity.mine.Login;
-import com.example.hy.wanandroid.model.network.entity.navigation.Tag;
-import com.example.hy.wanandroid.model.network.entity.project.Project;
-import com.example.hy.wanandroid.model.network.entity.search.HotKey;
+import com.example.hy.wanandroid.model.network.entity.FirstHierarchy;
+import com.example.hy.wanandroid.model.network.entity.SecondHierarchy;
+import com.example.hy.wanandroid.model.network.entity.Articles;
+import com.example.hy.wanandroid.model.network.entity.BannerData;
+import com.example.hy.wanandroid.model.network.entity.Collection;
+import com.example.hy.wanandroid.model.network.entity.CollectionRequest;
+import com.example.hy.wanandroid.model.network.entity.Login;
+import com.example.hy.wanandroid.model.network.entity.Tag;
+import com.example.hy.wanandroid.model.network.entity.Tab;
+import com.example.hy.wanandroid.model.network.entity.HotKey;
+import com.example.hy.wanandroid.model.network.entity.Version;
 import com.example.hy.wanandroid.model.prefs.PreferencesHelper;
 import com.example.hy.wanandroid.model.prefs.PreferencesHelperImp;
 import java.util.List;
@@ -60,7 +61,7 @@ public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
     }
 
     @Override
-    public Observable<BaseResponse<List<Project>>> getProjectList() {
+    public Observable<BaseResponse<List<Tab>>> getProjectList() {
         return mNetworkHelper.getProjectList();
     }
 
@@ -107,6 +108,11 @@ public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
     @Override
     public Observable<BaseResponse<List<Tag>>> getTags() {
         return mNetworkHelper.getTags();
+    }
+
+    @Override
+    public Observable<Version> getVersionDetails() {
+        return mNetworkHelper.getVersionDetails();
     }
 
     @Override
@@ -182,5 +188,45 @@ public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
     @Override
     public boolean getAutoCacheState() {
         return mPreferencesHelper.getAutoCacheState();
+    }
+
+    @Override
+    public void setStatusBarState(boolean isStatusBar) {
+        mPreferencesHelper.setStatusBarState(isStatusBar);
+    }
+
+    @Override
+    public boolean getStatusBarState() {
+        return mPreferencesHelper.getStatusBarState();
+    }
+
+    @Override
+    public void setDownloadId(long id) {
+        mPreferencesHelper.setDownloadId(id);
+    }
+
+    @Override
+    public long getDownloadId() {
+        return mPreferencesHelper.getDownloadId();
+    }
+
+    @Override
+    public void setNetWorkState(boolean isConnection) {
+        mPreferencesHelper.setNetWorkState(isConnection);
+    }
+
+    @Override
+    public boolean getNetWorkState() {
+        return mPreferencesHelper.getNetWorkState();
+    }
+
+    @Override
+    public void setAutoUpdataState(boolean isAuto) {
+        mPreferencesHelper.setAutoUpdataState(isAuto);
+    }
+
+    @Override
+    public boolean getAutoUpdataState() {
+        return mPreferencesHelper.getAutoUpdataState();
     }
 }

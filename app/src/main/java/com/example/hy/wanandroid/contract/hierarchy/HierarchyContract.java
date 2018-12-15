@@ -3,7 +3,7 @@ package com.example.hy.wanandroid.contract.hierarchy;
 import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchy;
+import com.example.hy.wanandroid.model.network.entity.FirstHierarchy;
 
 import java.util.List;
 

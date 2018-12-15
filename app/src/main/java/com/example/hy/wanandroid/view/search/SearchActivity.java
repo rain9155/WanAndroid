@@ -2,7 +2,7 @@ package com.example.hy.wanandroid.view.search;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,12 +19,15 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSearchActivityComponent;
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
-import com.example.hy.wanandroid.model.network.entity.search.HotKey;
+import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.model.network.entity.HotKey;
 import com.example.hy.wanandroid.presenter.search.SearchPresenter;
+import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
+import com.example.utilslibrary.KeyBoardUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
@@ -93,7 +96,8 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     private FlowTagsAdapter mFlowTagsAdapter;
     private boolean isLoadMore = false;
     private int mPageNum = 0;
-    private int mArticlePosition = -1;//点击的位置
+    private int mArticlePosition = 0;//点击的位置
+    private Article mArticle;
 
     @Override
     protected int getLayoutId() {
@@ -107,6 +111,9 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
         DaggerSearchActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, tlCommon);
+
         //标题栏
         setSupportActionBar(tlCommon);
         tlCommon.setTitle("");
@@ -117,6 +124,8 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
                 hideSearchRequestLayout();
                 showHistoryHotLayout();
             }else {
+                mSearchView.setQuery("", false);
+                mSearchView.clearFocus();
                 finish();
             }
         });
@@ -143,20 +152,19 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
             mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), mPageNum);
         });
         mSearchResquestAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
-            mArticlePosition = position;
             Article article = mSearchResquestList.get(position);
             ArticleActivity.startActivityForResult(SearchActivity.this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mSearchResquestAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;
+            mArticle =  mSearchResquestList.get(position);
             if(!User.getInstance().isLoginStatus()){
                 LoginActivity.startActivityForResult(this, Constant.REQUEST_COLLECT_ARTICLE);
                 showToast(getString(R.string.first_login));
                 return;
             }
-            Article article = mSearchResquestList.get(position);
-            if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
-            else mPresenter.collectArticle(article.getId());
+            collect();
+            AnimUtil.scale(view, -1);
         });
         normalView.setEnableLoadMore(false);
         normalView.setEnableRefresh(false);
@@ -164,8 +172,80 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
 
     @Override
     protected void initData() {
+        mPresenter.subscribleEvent();
         mPresenter.loadHotkey();
         mPresenter.loadHistories();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != RESULT_OK) return;
+        Article article = mSearchResquestList.get(mArticlePosition);
+        switch (requestCode){
+            case Constant.REQUEST_COLLECT_ARTICLE:
+                if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
+                else mPresenter.collectArticle(article.getId());
+                break;
+            case Constant.REQUEST_REFRESH_ARTICLE:
+                boolean isCollect = data.getBooleanExtra(Constant.KEY_DATA_RETURN, false);
+                if(article.isCollect() != isCollect){
+                    article.setCollect(isCollect);
+                    mSearchResquestAdapter.notifyItemChanged(mArticlePosition + mSearchResquestAdapter.getHeaderLayoutCount());
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_tl_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.item_search);
+        //得到SearchView
+        mSearchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        mSearchAutoComplete = mSearchView.findViewById(R.id.search_src_text);
+        mSearchView.setMaxWidth(R.dimen.dp_400);//设置最大宽度
+        mSearchView.setSubmitButtonEnabled(true);//设置是否显示搜索框展开时的提交按钮
+        mSearchView.setQueryHint(getResources().getString(R.string.searchActivity_hint));//设置输入框提示语
+        mSearchView.onActionViewExpanded();//设置搜索框直接展开显示。左侧有放大镜(在搜索框中) 右侧无叉叉 有输入内容后有叉叉 不能关闭搜索框
+        mSearchAutoComplete.setTextColor(getResources().getColor(R.color.white));//设置内容文字颜色
+        //搜索框文字变化监听，搜索按钮监听
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mPresenter.addHistoryRecord(query);
+                mPresenter.loadSearchResquest(query, 0);
+                isLoadMore = false;
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mPresenter.clearAllSearchKey(newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        if(clHistoryHot.getVisibility() == View.INVISIBLE){
+            hideSearchRequestLayout();
+            showHistoryHotLayout();
+        }else {
+            finish();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mPresenter != null) {
+            mPresenter.detachView();
+            mPresenter = null;
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -224,6 +304,16 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
         if(!CommonUtil.isEmptyList(mSearchResquestList)) mSearchResquestList.clear();
         rlContainer.setVisibility(View.GONE);
     }
+
+    @Override
+    public void collect() {
+        if (mArticle == null) return;
+        if(mArticle.isCollect())
+            mPresenter.unCollectArticle(mArticle.getId());
+        else
+            mPresenter.collectArticle(mArticle.getId());
+    }
+
 
     @Override
     public void showEmptyLayout() {
@@ -314,77 +404,6 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     @Override
     public void unableRefresh() {
         if(isLoadMore) normalView.finishLoadMore(); else normalView.finishRefresh();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode != RESULT_OK) return;
-        Article article = mSearchResquestList.get(mArticlePosition);
-        switch (requestCode){
-            case Constant.REQUEST_COLLECT_ARTICLE:
-                if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
-                else mPresenter.collectArticle(article.getId());
-                break;
-            case Constant.REQUEST_REFRESH_ARTICLE:
-                boolean isCollect = data.getBooleanExtra(Constant.KEY_DATA_RETURN, false);
-                if(article.isCollect() != isCollect){
-                    article.setCollect(isCollect);
-                    mSearchResquestAdapter.notifyItemChanged(mArticlePosition + mSearchResquestAdapter.getHeaderLayoutCount());
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_tl_menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.item_search);
-        //得到SearchView
-        mSearchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-        mSearchAutoComplete = mSearchView.findViewById(R.id.search_src_text);
-        mSearchView.setMaxWidth(R.dimen.dp_400);//设置最大宽度
-        mSearchView.setSubmitButtonEnabled(true);//设置是否显示搜索框展开时的提交按钮
-        mSearchView.setQueryHint(getResources().getString(R.string.searchActivity_hint));//设置输入框提示语
-        mSearchView.onActionViewExpanded();//设置搜索框直接展开显示。左侧有放大镜(在搜索框中) 右侧无叉叉 有输入内容后有叉叉 不能关闭搜索框
-        mSearchAutoComplete.setTextColor(getResources().getColor(R.color.white));//设置内容文字颜色
-        //搜索框文字变化监听，搜索按钮监听
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                mPresenter.addHistoryRecord(query);
-                mPresenter.loadSearchResquest(query, 0);
-                isLoadMore = false;
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mPresenter.clearAllSearchKey(newText);
-                return false;
-            }
-        });
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public void onBackPressedSupport() {
-        if(clHistoryHot.getVisibility() == View.INVISIBLE){
-            hideSearchRequestLayout();
-            showHistoryHotLayout();
-        }else {
-            finish();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
     }
 
     public static void startActivity(Context context) {

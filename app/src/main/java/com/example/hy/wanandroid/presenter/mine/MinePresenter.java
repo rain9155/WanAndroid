@@ -5,10 +5,11 @@ import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.event.NightModeEvent;
+import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.mine.Login;
+import com.example.hy.wanandroid.model.network.entity.Login;
 import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.utils.RxUtils;
 
@@ -28,6 +29,7 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
     @Override
     public void subscribleEvent() {
         super.subscribleEvent();
+
         addSubcriber(
                 RxBus.getInstance().toObservable(LoginEvent.class)
                         .filter(loginEvent -> loginEvent.isLogin())
@@ -37,12 +39,13 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
         addSubcriber(
                 RxBus.getInstance().toObservable(LoginEvent.class)
                 .filter(loginEvent -> !loginEvent.isLogin())
-                .subscribe(loginEvent -> mView.showLogoutView())
-        );
-        addSubcriber(
-                RxBus.getInstance().toObservable(LoginEvent.class)
-                .filter(loginEvent -> !loginEvent.isLogin())
                 .subscribe(loginEvent -> logout())
+        );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(NightModeEvent.class)
+                        .compose(RxUtils.switchSchedulers())
+                       .subscribe(nightModeEvent -> mView.useNightNode(nightModeEvent.isNight()))
         );
 
     }

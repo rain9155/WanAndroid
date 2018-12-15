@@ -76,7 +76,6 @@ dependencies {
     implementation rootProject.ext.dependencies["flowLayout"]
     implementation rootProject.ext.dependencies["banner"]
     implementation rootProject.ext.dependencies["circleImage"]
-    implementation rootProject.ext.dependencies["statusBarUtil"]
     implementation rootProject.ext.dependencies["fragmentation"]
     implementation rootProject.ext.dependencies["verticalTablayout"]
     implementation rootProject.ext.dependencies["waveLoading"]
@@ -89,6 +88,9 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["dagger2Cpmplier"]
     implementation rootProject.ext.dependencies["bufferKinfe"]
     annotationProcessor rootProject.ext.dependencies["bufferKinfeCompiler"]
+
+    //other
+    implementation rootProject.ext.dependencies["utils"]
 
     testImplementation rootProject.ext.dependencies["junit"]
     androidTestImplementation rootProject.ext.dependencies["runner"]

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_300"
+    android:layout_height="@dimen/dp_150"
+    android:padding="5dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background">
+
+    <ImageView
+        android:id="@+id/iv_toast"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:src="@drawable/ic_toast"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/dp_10" />
+
+    <TextView
+        android:id="@+id/tv_toast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/sp_20"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:text="@string/dialog_toast"
+        app:layout_constraintTop_toTopOf="@id/iv_toast"
+        app:layout_constraintLeft_toRightOf="@id/iv_toast"
+        app:layout_constraintBottom_toBottomOf="@id/iv_toast"
+        android:layout_marginStart="@dimen/dp_10" />
+
+    <TextView
+        android:id="@+id/tv_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/sp_18"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="@string/dialog_confirm_logout"
+        app:layout_constraintLeft_toLeftOf="@id/iv_toast"
+        app:layout_constraintTop_toBottomOf="@id/tv_toast"
+        app:layout_constraintBottom_toTopOf="@+id/btn_cancel"/>
+
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/sp_14"
+        android:background="@drawable/bg_common_rect"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="@string/dialog_cancel"
+        app:layout_constraintTop_toBottomOf="@id/tv_logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btn_confirm"/>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/sp_14"
+        android:background="@drawable/bg_common_rect"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="@string/dialog_confirm"
+        app:layout_constraintTop_toBottomOf="@id/tv_logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

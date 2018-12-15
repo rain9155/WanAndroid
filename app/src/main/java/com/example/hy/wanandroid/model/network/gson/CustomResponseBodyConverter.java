@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.model.network.gson;
 
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.model.network.entity.Version;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class CustomResponseBodyConverter<T> implements Converter<ResponseBody, O
             }else {
                 throw new ApiException(baseResponse.getErrorCode(), baseResponse.getErrorMsg());
             }
-        } finally {
+            } finally {
             value.close();
         }
     }

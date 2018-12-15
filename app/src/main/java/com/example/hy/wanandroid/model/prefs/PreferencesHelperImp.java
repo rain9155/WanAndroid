@@ -61,4 +61,44 @@ public class PreferencesHelperImp implements PreferencesHelper {
     public boolean getAutoCacheState() {
         return mPreferences.getBoolean(Constant.KEY_PREFS_AUTOCACHE, true);
     }
+
+    @Override
+    public void setStatusBarState(boolean isStatusBar) {
+          mPreferences.edit().putBoolean(Constant.KEY_PREFS_STATUSBAR, isStatusBar).apply();
+    }
+
+    @Override
+    public boolean getStatusBarState() {
+        return mPreferences.getBoolean(Constant.KEY_PREFS_STATUSBAR, true);
+    }
+
+    @Override
+    public void setDownloadId(long id) {
+        mPreferences.edit().putLong(Constant.KEY_DOWNLOAD_ID, id).apply();
+    }
+
+    @Override
+    public long getDownloadId() {
+        return mPreferences.getLong(Constant.KEY_DOWNLOAD_ID, -1L);
+    }
+
+    @Override
+    public void setNetWorkState(boolean isConnection) {
+        mPreferences.edit().putBoolean(Constant.KEY_PREFS_NETWORK, isConnection).apply();
+    }
+
+    @Override
+    public boolean getNetWorkState() {
+        return mPreferences.getBoolean(Constant.KEY_PREFS_NETWORK, true);
+    }
+
+    @Override
+    public void setAutoUpdataState(boolean isAuto) {
+        mPreferences.edit().putBoolean(Constant.KEY_PREFS_AUTOUPDATA, isAuto).apply();
+    }
+
+    @Override
+    public boolean getAutoUpdataState() {
+        return mPreferences.getBoolean(Constant.KEY_PREFS_AUTOUPDATA, true);
+    }
 }

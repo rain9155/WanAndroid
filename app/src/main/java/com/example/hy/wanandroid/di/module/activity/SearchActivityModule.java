@@ -2,19 +2,14 @@ package com.example.hy.wanandroid.di.module.activity;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
-import com.example.hy.wanandroid.adapter.FlowTagsAdapter;
 import com.example.hy.wanandroid.adapter.HistoryAdapter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerActivity;
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
-import com.example.hy.wanandroid.model.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.model.network.entity.search.HotKey;
+import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.model.network.entity.HotKey;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Named;
-import javax.inject.Singleton;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import dagger.Module;

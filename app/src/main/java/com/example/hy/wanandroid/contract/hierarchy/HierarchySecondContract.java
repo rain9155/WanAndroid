@@ -3,9 +3,9 @@ package com.example.hy.wanandroid.contract.hierarchy;
 import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.SecondHierarchy;
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
-import com.example.hy.wanandroid.model.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.network.entity.SecondHierarchy;
+import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.model.network.entity.Collection;
 
 import java.util.List;
 
@@ -23,6 +23,7 @@ public interface HierarchySecondContract {
         void topping();//置顶
         void collectArticleSuccess();//收藏文章成功
         void unCollectArticleSuccess();//取消收藏成功
+        void collect();
         void refreshCollections(List<Integer> ids);//刷新文章列表中的收藏
     }
 

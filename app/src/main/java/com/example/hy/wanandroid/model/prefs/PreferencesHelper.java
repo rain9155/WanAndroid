@@ -22,5 +22,20 @@ public interface PreferencesHelper {
     void setAutoCacheState(boolean isAuto);
     //获得自动缓存设置
     boolean getAutoCacheState();
-
+    //保存状态栏着色设置
+    void setStatusBarState(boolean isStatusBar);
+    //获得状态栏着色设置
+    boolean getStatusBarState();
+    //保存下载记录
+    void setDownloadId(long id);
+    //获得下载记录
+    long getDownloadId();
+    //保存网络状态
+    void setNetWorkState(boolean isConnection);
+    //获得网络状态
+    boolean getNetWorkState();
+    //保存自动更新状态
+    void setAutoUpdataState(boolean isAuto);
+    //获得自动更新状态
+    boolean getAutoUpdataState();
 }

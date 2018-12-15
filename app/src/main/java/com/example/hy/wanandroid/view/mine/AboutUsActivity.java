@@ -3,6 +3,7 @@ package com.example.hy.wanandroid.view.mine;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.widget.interpolator.ElasticOutInterpolator;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -58,7 +60,12 @@ public class AboutUsActivity extends BaseActivity {
     @Override
     protected void initView() {
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, toolbar);
+
         toolbar.setNavigationOnClickListener(v -> finish());
+
+        isEnableTip = false;
 
         flyRefreshHeader.setUp(mountain, flyView);//绑定场景和纸飞机
         refreshLayout.setReboundInterpolator(new ElasticOutInterpolator());//设置回弹插值器，会带有弹簧震动效果
@@ -123,7 +130,6 @@ public class AboutUsActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
     }
 
     public static void startActivity(Context context) {

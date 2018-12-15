@@ -1,4 +1,9 @@
 package com.example.hy.wanandroid.config;
+import android.os.Environment;
+
+import com.example.utilslibrary.FileUtils;
+
+import java.io.File;
 
 /**
  * 网路请求的base地址
@@ -8,6 +13,7 @@ public class Constant {
 
     //Url
     public final static String BASE_URL = "http://www.wanandroid.com/";
+    public final static String BASE_APK_URL = "https://github.com/rain9155/WanAndroid/releases/download/";
 
     //HierarchyFragment
     public static final String KEY_HIERARCHY_PAGENUM = "hierarchyPageNum";
@@ -43,14 +49,27 @@ public class Constant {
     public static final int LOADING_STATE = 1;
     public static final int ERROR_STATE = 2;
 
-    //SharedPreferencesState
+    //settingActivity
     public static final String SHAREDPREFERENCES_NAME = "prefs";
     public static final String KEY_PREFS_NODEMODE = "nightModeState";
     public static final String KEY_PREFS_CURRWNTITEM = "currentItem";
     public static final String KEY_PREFS_NOIMAGE= "noImage";
     public static final String KEY_PREFS_AUTOCACHE= "autoCache";
+    public static final String KEY_PREFS_STATUSBAR = "statusBar";
+    public static final String KEY_PREFS_NETWORK = "netWork";
+    public static final String KEY_PREFS_AUTOUPDATA = "autoUpdata";
+
 
     //utils
     public static final String EMAIL_ADDRESS = "1847796089@qq.com";
+
+    //path
+    public static final String PATH_NETCACHE = FileUtils.getCachePath(App.getContext(), "netData");
+    public static final String PATH_APK = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "WanAndroid.apk";
+
+    //common
+    public static final int REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE = 4;
+    public static final String KEY_URL_APK = "urlApk";
+    public static final String KEY_DOWNLOAD_ID = "downloadId";
 
 }

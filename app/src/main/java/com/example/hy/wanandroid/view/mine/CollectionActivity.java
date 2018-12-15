@@ -2,7 +2,8 @@ package com.example.hy.wanandroid.view.mine;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,16 +11,16 @@ import android.widget.TextView;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.CollectionsAdapter;
 import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
-import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.RxBus;
-import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
-import com.example.hy.wanandroid.model.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.network.entity.Collection;
 import com.example.hy.wanandroid.di.component.activity.DaggerCollectionActivityComponent;
 import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.presenter.mine.CollectionPresenter;
 import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.hy.wanandroid.utils.LogUtil;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -31,7 +32,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class CollectionActivity extends BaseLoadActivity implements CollectionContract.View {
 
@@ -65,7 +65,7 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     private int mCollectionPosition = -1;//点击的位置
 
     @Override
-    protected int getLayoutId() {
+    protected int getLayoutId(){
         return R.layout.activity_collection;
     }
 
@@ -75,6 +75,9 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
 
         DaggerCollectionActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, tlCommon);
 
         //标题
         ivCommonSearch.setVisibility(View.INVISIBLE);
@@ -98,6 +101,7 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
             mCollectionPosition = position;
             Collection collection = mCollections.get(position);
             mPresenter.unCollectArticle(collection.getId(), collection.getOriginId());
+            AnimUtil.scale(view, -1);
         });
         normalView.setOnRefreshListener(refreshLayout -> {
             isLoadMore = false;
@@ -112,6 +116,7 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
 
     @Override
     protected void initData() {
+        mPresenter.subscribleEvent();
         mPresenter.loadCollections(0);
     }
 
@@ -144,6 +149,7 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
 
     @Override
     public void showCollections(List<Collection> collections) {
+        if(!CommonUtil.isEmptyList(mCollections)) mCollections.clear();
         mCollections.addAll(collections);
         mCollectionsAdapter.notifyDataSetChanged();
         if(CommonUtil.isEmptyList(mCollections)) showEmptyLayout();

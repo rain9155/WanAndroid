@@ -1,8 +1,8 @@
 package com.example.hy.wanandroid.model.network.api;
 
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.model.network.entity.project.Project;
+import com.example.hy.wanandroid.model.network.entity.Articles;
+import com.example.hy.wanandroid.model.network.entity.Tab;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public interface ProjectApis {
      * http://www.wanandroid.com/project/tree/json
      */
     @GET("project/tree/json")
-    Observable<BaseResponse<List<Project>>> getProjectList();
+    Observable<BaseResponse<List<Tab>>> getProjectList();
 
     /**
      * 获得详细项目列表

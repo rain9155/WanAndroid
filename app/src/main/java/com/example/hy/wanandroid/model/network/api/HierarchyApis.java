@@ -1,9 +1,8 @@
 package com.example.hy.wanandroid.model.network.api;
 
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchy;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.SecondHierarchy;
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.FirstHierarchy;
+import com.example.hy.wanandroid.model.network.entity.SecondHierarchy;
 
 import java.util.List;
 

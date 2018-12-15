@@ -14,6 +14,10 @@ import com.example.hy.wanandroid.config.GlideApp;
  */
 public class ImageUtil {
 
+    private ImageUtil() {
+        throw new IllegalAccessError();
+    }
+
     public static void loadImage(Context context, ImageView imageView, String path){
 
         String imageUrl = path;

@@ -5,14 +5,14 @@ import android.os.Bundle;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ProjectsAdapter;
-import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
+import com.example.hy.wanandroid.model.network.entity.Article;
 import com.example.hy.wanandroid.presenter.project.ProjectsPresenter;
+import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
@@ -52,7 +52,8 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
     private int mPageNum = 0;
     private int mId;
     private boolean isLoadMore = false;
-    private int mArticlePosition = -1;//点击的位置
+    private int mArticlePosition = 0;//点击的位置
+    private Article mArticle;
 
     @Override
     protected int getLayoutId() {
@@ -79,20 +80,19 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
             isLoadMore = false;
         });
         mProjectsAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
-            mArticlePosition = position;
             Article article = mArticles.get(position);
             ArticleActivity.startActicityForResultByFragment(_mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mProjectsAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;
+            mArticle =  mArticles.get(position);
             if(!User.getInstance().isLoginStatus()){
                 LoginActivity.startActivityForResultByFragment(_mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
                 showToast(getString(R.string.first_login));
                 return;
             }
-            Article article = mArticles.get(position);
-            if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
-            else mPresenter.collectArticle(article.getId());
+            collect();
+            AnimUtil.scale(view, -1);
         });
     }
 
@@ -144,8 +144,18 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
 
     @Override
     public void showProjects(List<Article> articleList) {
+        if(!CommonUtil.isEmptyList(mArticles)) mArticles.clear();
         mArticles.addAll(articleList);
         mProjectsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void collect() {
+        if (mArticle == null) return;
+        if(mArticle.isCollect())
+            mPresenter.unCollectArticle(mArticle.getId());
+        else
+            mPresenter.collectArticle(mArticle.getId());
     }
 
     @Override

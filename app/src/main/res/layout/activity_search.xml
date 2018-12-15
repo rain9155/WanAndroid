@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background">
+    android:layout_height="match_parent">
 
     <include layout="@layout/common_toolbal" />
 
@@ -23,8 +22,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_search_request"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/background">
+                android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -46,7 +44,6 @@
         android:id="@+id/cl_history_hot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
         android:visibility="visible">
 
         <TextView
@@ -65,7 +62,6 @@
 
         <com.zhy.view.flowlayout.TagFlowLayout
             android:id="@+id/tfl_tag"
-            android:background="@color/background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_20"

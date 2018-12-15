@@ -1,20 +1,27 @@
 package com.example.hy.wanandroid.base.fragment;
 
+import android.content.Context;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.TextView;
 
+import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.component.NetWorkChangeReceiver;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.event.LoginEvent;
-import com.example.hy.wanandroid.utils.SnackUtil;
 import com.example.hy.wanandroid.utils.ToastUtil;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -27,7 +34,6 @@ public abstract class BaseFragment extends SupportFragment
         implements BaseView {
 
     private Unbinder mUnbinder;
-
     protected abstract void initView();//初始化控件
     protected abstract void loadData();//加载数据
     protected abstract int getLayoutId();//获取Fragment的布局Id
@@ -55,6 +61,11 @@ public abstract class BaseFragment extends SupportFragment
     }
 
     @Override
+    public void setStatusBarColor(boolean isSet){
+
+    }
+
+    @Override
     public void showErrorView() {
 
     }
@@ -75,20 +86,12 @@ public abstract class BaseFragment extends SupportFragment
     }
 
     @Override
-    public void tokenExpire(int requestCode) {
-        User.getInstance().reset();
-        RxBus.getInstance().post(new LoginEvent(false));
-        LoginActivity.startActivityForResultByFragment(_mActivity, this, requestCode);
+    public void showTipsView(boolean isConnection) {
     }
 
     @Override
     public void showToast(String toast) {
-        ToastUtil.showToast(_mActivity, toast);
-    }
-
-    @Override
-    public void showSnackBar(String toast) {
-        SnackUtil.showSnackBar(_mActivity, toast);
+        ToastUtil.toastInBottom(_mActivity, toast, null);
     }
 
     @Override
@@ -107,7 +110,8 @@ public abstract class BaseFragment extends SupportFragment
     }
 
     @Override
-    public void userNightNode(boolean isNight) {
+    public void useNightNode(boolean isNight) {
 
     }
+
 }

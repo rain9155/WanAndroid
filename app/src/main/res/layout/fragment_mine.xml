@@ -9,9 +9,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/background">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -39,21 +38,22 @@
                 android:id="@+id/btn_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?android:textAppearanceSmall"
-                android:text="@string/mineFragment_tvLogin"
-                android:layout_marginTop="@dimen/dp_5"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:background="@drawable/bg_mine_btn"
+                android:text="@string/mineFragment_tvLogin"
                 android:textColor="@color/primaryText"
                 android:visibility="visible"
+                android:layout_marginTop="@dimen/dp_5"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_face" />
+                app:layout_constraintTop_toBottomOf="@id/iv_face"/>
 
             <TextView
                 android:id="@+id/tv_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
+                style="?android:textAppearanceSmall"
                 android:textSize="@dimen/sp_18"
                 android:layout_marginTop="@dimen/dp_5"
                 android:visibility="invisible"
@@ -62,20 +62,31 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_face"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        
-        
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/foreground">
+
+            <View
+                android:id="@+id/view_1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_20"
+                android:background="@color/background"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_collection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/bg_rect"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
-                android:layout_marginTop="@dimen/dp_20"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/view_1">
+
 
                 <ImageView
                     android:id="@+id/iv_collection"
@@ -108,15 +119,25 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/view_2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_2"
+                android:background="@color/background"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_collection"/>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_settings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
+                android:clickable="true"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
-                android:layout_marginTop="@dimen/dp_2"
-                app:layout_constraintTop_toBottomOf="@id/cl_collection">
+                android:background="@drawable/bg_rect"
+                app:layout_constraintTop_toBottomOf="@id/view_2">
 
                 <ImageView
                     android:id="@+id/iv_setting"
@@ -149,14 +170,24 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/view_3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_20"
+                android:background="@color/background"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_settings"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_about_us"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
+                android:clickable="true"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
-                android:layout_marginTop="@dimen/dp_20"
-                app:layout_constraintTop_toBottomOf="@id/cl_settings">
+                android:background="@drawable/bg_rect"
+                app:layout_constraintTop_toBottomOf="@id/view_3">
 
                 <ImageView
                     android:id="@+id/iv_about_us"
@@ -189,14 +220,33 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/view_4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_2"
+                android:background="@color/background"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_about_us"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_logout"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/foreground">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
+                android:clickable="true"
                 style="@style/MineFragmentConstaintStyle"
-                android:background="@color/foreground"
-                android:layout_marginTop="@dimen/dp_2"
-                app:layout_constraintTop_toBottomOf="@id/cl_about_us">
+                android:background="@drawable/bg_rect">
 
                 <ImageView
                     android:id="@+id/iv_logout"
@@ -220,9 +270,8 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+        </RelativeLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        
     </LinearLayout>
 
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

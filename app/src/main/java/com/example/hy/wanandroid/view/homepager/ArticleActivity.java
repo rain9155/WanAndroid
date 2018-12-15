@@ -2,19 +2,21 @@ package com.example.hy.wanandroid.view.homepager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.Bundle;
+import android.os.Build;
 import android.text.TextUtils;
+import android.transition.Slide;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
@@ -29,16 +31,16 @@ import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerArticleActivityComponent;
 import com.example.hy.wanandroid.presenter.homepager.ArticlePresenter;
-import com.example.hy.wanandroid.utils.NetWorkUtil;
 import com.example.hy.wanandroid.utils.ShareUtil;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.widget.layout.WebLayout;
+import com.example.utilslibrary.NetWorkUtil;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
 
 import javax.inject.Inject;
 
-import androidx.annotation.IntRange;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
@@ -74,6 +76,9 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     protected void initView() {
         DaggerArticleActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, tlCommon);
 
         Intent intent = getIntent();
         if(intent != null){
@@ -141,7 +146,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
                 collection();
                 break;
             case R.id.item_browser:
-                openBrowser();
+                ShareUtil.openBrowser(this, mAddress);
                 break;
             case R.id.item_copy:
                 copy(this, mAddress);
@@ -208,6 +213,14 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
         showToast(getString(R.string.common_uncollection_success));
     }
 
+    @Override
+    public void collect() {
+        if(isCollection)
+            mPresenter.unCollectArticle(mArticleId);
+        else
+            mPresenter.collectArticle(mArticleId);
+    }
+
     /**
      * 收藏事件
      */
@@ -217,11 +230,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
             showToast(getString(R.string.first_login));
             return;
         }
-        if (isCollection) {
-            mPresenter.unCollectArticle(mArticleId);
-        }else {
-            mPresenter.collectArticle(mArticleId);
-        }
+        collect();
     }
 
     /**
@@ -250,20 +259,6 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     }
 
     /**
-     * 打开浏览器
-     */
-    private void openBrowser() {
-        if (TextUtils.isEmpty(mAddress) || mAddress.startsWith("file://")) {
-            showToast(getString(R.string.articleActivity_browser_error));
-            return;
-        }
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(mAddress));
-        startActivity(intent);
-    }
-
-
-    /**
      * 配置WebView
      */
     @SuppressLint("SetJavaScriptEnabled")
@@ -277,7 +272,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
             settings.setAppCacheEnabled(true);
             settings.setDatabaseEnabled(true);
             settings.setDatabaseEnabled(true);
-            if(NetWorkUtil.isNetworkConnected())
+            if(NetWorkUtil.isNetworkConnected(this))
                 settings.setCacheMode(WebSettings.LOAD_DEFAULT);//（默认）根据cache-control决定是否从网络上取数据
             else
                 settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//只要本地有，无论是否过期，或者no-cache，都使用缓存中的数据。

@@ -1,22 +1,31 @@
 package com.example.hy.wanandroid.base.activity;
 
+import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.IntentFilter;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.component.NetWorkChangeReceiver;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.event.LoginEvent;
-import com.example.hy.wanandroid.utils.SnackUtil;
+import com.example.hy.wanandroid.utils.LogUtil;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.utils.ToastUtil;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
-import com.jaeger.library.StatusBarUtil;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportActivity;
@@ -29,7 +38,9 @@ public abstract class BaseActivity extends SupportActivity
         implements BaseView {
 
     private Unbinder mUnbinder;
-
+    private NetWorkChangeReceiver mNetWorkChangeReceiver;
+    private TextView mTipView;
+    protected boolean isEnableTip = true;
     protected abstract int getLayoutId();//获取Activity的布局Id
     protected abstract void initView();//初始化控件
     protected abstract void initData();//初始化数据
@@ -40,9 +51,23 @@ public abstract class BaseActivity extends SupportActivity
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         mUnbinder = ButterKnife.bind(this);
-        setStatusBarColor();
+        setStatusBarColor(getAppComponent().getDataModel().getStatusBarState());
         initView();
         initData();
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+        mNetWorkChangeReceiver = new NetWorkChangeReceiver();
+        registerReceiver(mNetWorkChangeReceiver, intentFilter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(mNetWorkChangeReceiver);
+        super.onStop();
     }
 
     @Override
@@ -50,14 +75,36 @@ public abstract class BaseActivity extends SupportActivity
         if(mUnbinder != null && mUnbinder != Unbinder.EMPTY){
             mUnbinder.unbind();
         }
+        if(mTipView != null && mTipView.getParent() != null) ((ViewGroup)getWindow().getDecorView()).removeView(mTipView);
         super.onDestroy();
     }
 
-    /**
-     * 设置状态栏颜色
-     */
-    protected void setStatusBarColor(){
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
+    @Override
+    public void setStatusBarColor(boolean isSet) {
+        if(isSet){
+            StatusBarUtil.immersive(this, getResources().getColor(R.color.colorPrimary));
+        }else {
+            StatusBarUtil.immersive(this, getResources().getColor(R.color.colorPrimaryDark));
+        }
+    }
+
+    @Override
+    public void showTipsView(boolean isConnection) {
+        if (!isEnableTip) return;
+        if(mTipView == null) mTipView = new TextView(this);
+        if (isConnection){
+            if(mTipView.getParent() != null) ((ViewGroup)getWindow().getDecorView()).removeView(mTipView);
+            reLoad();
+        }
+        else{
+            if(mTipView.getParent() != null) return;
+            ToastUtil.toastMake(
+                    mTipView,
+                    (ViewGroup) getWindow().getDecorView(),
+                    getString(R.string.error_unavailable),
+                    ContextCompat.getColor(this, R.color.colorTipBackground),
+                    ContextCompat.getColor(this, R.color.colorTip));
+        }
     }
 
     protected AppComponent getAppComponent(){
@@ -85,7 +132,7 @@ public abstract class BaseActivity extends SupportActivity
     }
 
     @Override
-    public void userNightNode(boolean isNight) {
+    public void useNightNode(boolean isNight) {
         if(isNight){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }else {
@@ -95,20 +142,8 @@ public abstract class BaseActivity extends SupportActivity
     }
 
     @Override
-    public void tokenExpire(int requestCode) {
-        User.getInstance().reset();
-        RxBus.getInstance().post(new LoginEvent(false));
-        LoginActivity.startActivityForResult(this, requestCode);
-    }
-
-    @Override
     public void showToast(String toast) {
-        ToastUtil.showToast(this, toast);
-    }
-
-    @Override
-    public void showSnackBar(String toast) {
-        SnackUtil.showSnackBar(this, toast);
+        ToastUtil.toastInBottom(this, toast, null);
     }
 
     @Override
@@ -125,4 +160,5 @@ public abstract class BaseActivity extends SupportActivity
     public void showDialog() {
 
     }
+
 }

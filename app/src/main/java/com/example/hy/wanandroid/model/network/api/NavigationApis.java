@@ -1,7 +1,7 @@
 package com.example.hy.wanandroid.model.network.api;
 
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.navigation.Tag;
+import com.example.hy.wanandroid.model.network.entity.Tag;
 
 import java.util.List;
 

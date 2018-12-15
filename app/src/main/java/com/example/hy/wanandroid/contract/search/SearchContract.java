@@ -3,10 +3,10 @@ package com.example.hy.wanandroid.contract.search;
 import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.homepager.Article;
-import com.example.hy.wanandroid.model.network.entity.homepager.Articles;
-import com.example.hy.wanandroid.model.network.entity.mine.Collection;
-import com.example.hy.wanandroid.model.network.entity.search.HotKey;
+import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.model.network.entity.Articles;
+import com.example.hy.wanandroid.model.network.entity.Collection;
+import com.example.hy.wanandroid.model.network.entity.HotKey;
 
 import java.util.List;
 
@@ -38,6 +38,7 @@ public interface SearchContract {
         void hideEmptyLayout();
         void collectArticleSuccess();//收藏文章成功
         void unCollectArticleSuccess();//取消收藏成功
+        void collect();
     }
 
     interface Presenter extends IPresenter<View>{

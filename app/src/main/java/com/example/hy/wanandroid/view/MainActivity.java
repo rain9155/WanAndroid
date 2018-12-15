@@ -1,7 +1,11 @@
 package com.example.hy.wanandroid.view;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -19,16 +23,21 @@ import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.config.RxBus;
-import com.example.hy.wanandroid.utils.ToastUtil;
+import com.example.hy.wanandroid.utils.DownloadUtil;
+import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
 import com.example.hy.wanandroid.view.project.ProjectFragment;
+import com.example.hy.wanandroid.widget.dialog.VersionDialog;
+import com.example.utilslibrary.ToastUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.jaeger.library.StatusBarUtil;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import butterknife.BindView;
 import android.os.Handler;
@@ -46,12 +55,17 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     private int mPreFragmentPosition = 0;//上一个被选中的Fragment位置
     private MainActivityComponent mMainActivityComponent;
-    private ObjectAnimator mShowAnimator;
+    private ObjectAnimator mShowNavAnimator;
+    private ViewPropertyAnimator mHideFbtnAnimator, mShowFbtnAnimator;
 
     @Inject
     MainPresenter mPresenter;
     @Inject
     BaseFragment[] mFragments;
+    @Inject
+    VersionDialog mVersionDialog;
+
+    private String mNewVersionName;
 
     @Override
     protected int getLayoutId() {
@@ -92,21 +106,25 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                     showHideFragment(mFragments[0], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 0;
                     showFloatingButton();
+                    setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_hierarchy:
                     showHideFragment(mFragments[1], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 1;
                     showFloatingButton();
+                    setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_project:
                     showHideFragment(mFragments[2], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 2;
                     showFloatingButton();
+                    setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_mine:
                     showHideFragment(mFragments[3], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 3;
                     hideFloatingButton();
+                    StatusBarUtil.immersiveInImage(this);
                     break;
                 default:
                     break;
@@ -118,6 +136,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             RxBus.getInstance().post(new ToppingEvent());
             show(bnvBtm);
         });
+
+        if(mPresenter.getAutoUpdataState())
+            mPresenter.checkVersion(DownloadUtil.getVersionName(this));
     }
 
     @Override
@@ -131,7 +152,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             finish();
         }else {
             Constant.TOUCH_TIME = System.currentTimeMillis();
-            ToastUtil.showToast(this, getResources().getString(R.string.mainActivity_back));
+            ToastUtil.toastInCenter(this, getString(R.string.mainActivity_back), null);
         }
     }
 
@@ -139,6 +160,14 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mPresenter.setCurrentItem(mPreFragmentPosition);
+    }
+
+    @Override
+    protected void onStop() {
+        if(mHideFbtnAnimator != null) mHideFbtnAnimator.cancel();
+        if(mShowFbtnAnimator != null) mShowFbtnAnimator.cancel();
+        if(mShowNavAnimator != null) mShowNavAnimator.cancel();
+        super.onStop();
     }
 
     @Override
@@ -151,12 +180,51 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     @Override
-    protected void setStatusBarColor() {
-        StatusBarUtil.setTransparentForImageViewInFragment(this, null);
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            DownloadUtil.downloadApk(this, mNewVersionName);
+        }else {
+            showToast(getString(R.string.settingsActivity_permission_denied));
+        }
+    }
+
+    @Override
+    public void showUpdataDialog(String content) {
+        mVersionDialog.setContentText(content);
+        mVersionDialog.setIsMain(true);
+        mVersionDialog.show(getSupportFragmentManager(), "tag5");
+    }
+
+    @Override
+    public void setNewVersionName(String versionName) {
+        mNewVersionName = versionName;
+    }
+
+    @Override
+    public void upDataVersion() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE);
+        }else {
+            DownloadUtil.downloadApk(this, mNewVersionName);
+        }
     }
 
     public MainActivityComponent getComponent(){
         return mMainActivityComponent;
+    }
+
+    @Override
+    public void setStatusBarColor(boolean isSet) {
+        if(isSet){
+            StatusBarUtil.immersiveInFragments(this, getResources().getColor(R.color.colorPrimary), 1);
+        }else {
+            StatusBarUtil.immersiveInFragments(this, getResources().getColor(R.color.colorPrimaryDark), 1);
+        }
     }
 
     /**
@@ -192,7 +260,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private void showFloatingButton(){
         if(fbtnUp.getVisibility() == View.INVISIBLE){
             fbtnUp.setVisibility(View.VISIBLE);
-            fbtnUp.animate().setDuration(500).setInterpolator(new BounceInterpolator()).translationY(0).start();
+            mShowFbtnAnimator = fbtnUp.animate().setDuration(500).setInterpolator(new BounceInterpolator()).translationY(0);
         }
     }
 
@@ -202,11 +270,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @SuppressLint("RestrictedApi")
     private void hideFloatingButton(){
         if(fbtnUp.getVisibility() == View.VISIBLE){
-            ViewPropertyAnimator animator = fbtnUp.animate().setDuration(300).setInterpolator(new AccelerateDecelerateInterpolator()).translationY(
+            mHideFbtnAnimator = fbtnUp.animate().setDuration(300).setInterpolator(new AccelerateDecelerateInterpolator()).translationY(
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 400, getResources().getDisplayMetrics())
             );
             new Handler().postDelayed(() -> fbtnUp.setVisibility(View.INVISIBLE), 301);
-            animator.start();
+            mHideFbtnAnimator.start();
         }
     }
 
@@ -214,13 +282,14 @@ public class MainActivity extends BaseActivity implements MainContract.View {
      * 底部导航栏显示
      */
     private void show(View child) {
-        if(mShowAnimator == null){
-            mShowAnimator = ObjectAnimator.ofFloat(child, "translationY", child.getHeight(), 0)
+        if(mShowNavAnimator == null){
+            mShowNavAnimator = ObjectAnimator.ofFloat(child, "translationY", child.getHeight(), 0)
                     .setDuration(200);
-            mShowAnimator.setInterpolator(new FastOutSlowInInterpolator());
+            mShowNavAnimator.setInterpolator(new FastOutSlowInInterpolator());
         }
-        if(!mShowAnimator.isRunning() && child.getTranslationY() >= child.getHeight()){
-            mShowAnimator.start();
+        if(!mShowNavAnimator.isRunning() && child.getTranslationY() >= child.getHeight()){
+            mShowNavAnimator.start();
         }
     }
+
 }

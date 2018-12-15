@@ -3,7 +3,7 @@ package com.example.hy.wanandroid.contract.homepager;
 import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.mine.Collection;
+import com.example.hy.wanandroid.model.network.entity.Collection;
 
 import io.reactivex.Observable;
 
@@ -16,6 +16,7 @@ public interface ArticleContract {
     interface View extends BaseView {
         void collectArticleSuccess();//收藏文章成功
         void unCollectArticleSuccess();//取消收藏成功
+        void collect();
     }
 
     interface Presenter extends IPresenter<View>{

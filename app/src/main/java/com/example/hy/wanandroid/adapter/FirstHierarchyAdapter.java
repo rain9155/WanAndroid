@@ -3,13 +3,11 @@ package com.example.hy.wanandroid.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchy;
-import com.example.hy.wanandroid.model.network.entity.hierarchy.FirstHierarchyChild;
+import com.example.hy.wanandroid.model.network.entity.FirstHierarchy;
+import com.example.hy.wanandroid.model.network.entity.Tab;
 import com.example.hy.wanandroid.utils.CommonUtil;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
 
@@ -28,7 +26,7 @@ public class FirstHierarchyAdapter extends BaseQuickAdapter<FirstHierarchy, Base
         if(item == null) return;
         String secondLeverText = "";
         if(!CommonUtil.isEmptyList(item.getChildren()))
-                for (FirstHierarchyChild child : item.getChildren()){
+                for (Tab child : item.getChildren()){
                     secondLeverText += child.getName() + "  ";
                 }
             helper.setText(R.id.tv_first_lever, item.getName())

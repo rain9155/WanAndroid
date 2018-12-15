@@ -10,7 +10,7 @@
     android:layout_marginBottom="@dimen/dp_5"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:selectableItemBackground"
+    android:foreground="@drawable/fg_card_rect"
     app:cardBackgroundColor="@color/foreground"
     app:cardElevation="@dimen/dp_5"
     app:cardCornerRadius="@dimen/dp_8"
