@@ -7,9 +7,11 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.di.component.DaggerAppComponent;
 import com.example.hy.wanandroid.di.module.AppModule;
+import com.example.hy.wanandroid.utils.CommonUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
@@ -23,7 +25,7 @@ public class App extends LitePalApplication {
 
     private static App mContext;
 
-    //static 代码段可以防止内存泄露
+    //static代码段可以防止内存泄露
     static {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(((context, layout) -> {
@@ -43,7 +45,20 @@ public class App extends LitePalApplication {
         SQLiteDatabase db = LitePal.getDatabase();
         mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         mContext = this;
-        getApplicationContext();
+        initBugly();
+    }
+
+    private void initBugly() {
+        Context context = getApplicationContext();
+        // 获取当前包名
+        String packageName = context.getPackageName();
+        // 获取当前进程名
+        String processName = CommonUtil.getProcessName(context, android.os.Process.myPid());
+        // 设置是否为上报进程
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
+        strategy.setUploadProcess(processName == null || processName.equals(packageName));
+        // 初始化Bugly
+        CrashReport.initCrashReport(getApplicationContext(), Constant.BUGLY_ID, true);
     }
 
     public AppComponent getAppComponent(){

@@ -1,5 +1,7 @@
 package com.example.hy.wanandroid.utils;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
@@ -15,7 +17,26 @@ import androidx.annotation.RequiresApi;
  * 动画工具
  * Created by 陈健宇 at 2018/12/9
  */
-public class AnimUtil extends com.example.utilslibrary.AnimUtil {
+public class AnimUtil{
+
+    public static void showByAlpha(final View view) {
+        int shortAnimTime = 200;
+        view.setVisibility(View.VISIBLE);
+        view.animate().alpha(1.0F).setDuration((long)shortAnimTime).setListener(new AnimatorListenerAdapter() {
+            public void onAnimationEnd(Animator animation) {
+                view.setVisibility(View.VISIBLE);
+            }
+        }).start();
+    }
+
+    public static void hideByAlpha(final View view) {
+        int shortAnimTime = 200;
+        view.animate().alpha(0.0F).setDuration((long)shortAnimTime).setListener(new AnimatorListenerAdapter() {
+            public void onAnimationEnd(Animator animation) {
+                view.setVisibility(View.INVISIBLE);
+            }
+        }).start();
+    }
 
     /**
      * 放大复原动画

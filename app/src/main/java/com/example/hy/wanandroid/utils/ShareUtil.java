@@ -5,15 +5,35 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.text.TextUtils;
-
 import com.example.hy.wanandroid.R;
-import com.example.utilslibrary.ToastUtil;
 
 /**
  * 分享工具
  * Created by codeest on 2016/8/22.
  */
-public class ShareUtil extends com.example.utilslibrary.ShareUtil {
+public class ShareUtil{
+
+    public static void shareText(Context context, String text, String title) {
+        Intent intent = new Intent("android.intent.action.SEND");
+        intent.setType("text/plain");
+        intent.putExtra("android.intent.extra.TEXT", text);
+        if (context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+            context.startActivity(Intent.createChooser(intent, title));
+        } else {
+            ToastUtil.showToast(context, context.getString(R.string.share_unknown));
+        }
+
+    }
+
+    public static void sendEmail(Context context, String address, String title) {
+        Intent intent = new Intent("android.intent.action.SENDTO", Uri.parse("mailto:" + address));
+        if (context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+            context.startActivity(Intent.createChooser(intent, title));
+        } else {
+            ToastUtil.showToast(context, context.getString(R.string.share_email_unknown));
+        }
+
+    }
 
     /**
      * 打开浏览器

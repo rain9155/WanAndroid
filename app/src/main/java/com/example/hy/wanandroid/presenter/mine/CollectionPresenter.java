@@ -1,24 +1,18 @@
 package com.example.hy.wanandroid.presenter.mine;
 
-import android.media.session.MediaSession;
-
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.DefaultObserver;
 import com.example.hy.wanandroid.model.network.entity.Collection;
 import com.example.hy.wanandroid.model.network.entity.CollectionRequest;
-import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.utils.RxUtils;
 
 
 import javax.inject.Inject;
-
-import io.reactivex.disposables.Disposable;
 
 /**
  * Collection的Presenter

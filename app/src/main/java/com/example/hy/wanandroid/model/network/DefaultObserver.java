@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.model.network.entity;
+package com.example.hy.wanandroid.model.network;
 
 import android.net.ParseException;
 import android.util.Log;
@@ -10,11 +10,13 @@ import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
+import com.example.hy.wanandroid.model.network.entity.Login;
 import com.example.hy.wanandroid.model.network.gson.ApiException;
 import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.utils.RxUtils;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.google.gson.JsonParseException;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.json.JSONException;
 

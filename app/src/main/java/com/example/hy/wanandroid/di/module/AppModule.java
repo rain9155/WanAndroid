@@ -23,7 +23,6 @@ import com.example.hy.wanandroid.model.network.gson.CustomGsonConverterFactory;
 import com.example.hy.wanandroid.model.network.ssl.SSLSocketCompatFactory;
 import com.example.hy.wanandroid.model.network.ssl.TrustAllCert;
 import com.example.hy.wanandroid.model.prefs.PreferencesHelper;
-import com.example.utilslibrary.FileUtils;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;

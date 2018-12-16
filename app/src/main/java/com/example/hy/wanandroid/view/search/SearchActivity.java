@@ -27,7 +27,6 @@ import com.example.hy.wanandroid.utils.CommonUtil;
 import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
-import com.example.utilslibrary.KeyBoardUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 

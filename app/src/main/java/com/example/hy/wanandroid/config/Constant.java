@@ -1,7 +1,7 @@
 package com.example.hy.wanandroid.config;
 import android.os.Environment;
 
-import com.example.utilslibrary.FileUtils;
+import com.example.hy.wanandroid.utils.FileUtil;
 
 import java.io.File;
 
@@ -63,8 +63,11 @@ public class Constant {
     //utils
     public static final String EMAIL_ADDRESS = "1847796089@qq.com";
 
+    //bugly
+    public static final String BUGLY_ID = "a0768ddf34";
+
     //path
-    public static final String PATH_NETCACHE = FileUtils.getCachePath(App.getContext(), "netData");
+    public static final String PATH_NETCACHE = FileUtil.getCachePath(App.getContext(), "netData");
     public static final String PATH_APK_1 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/WanAndroid.apk";
     public static final String PATH_APK_2 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/app-release.apk";
 

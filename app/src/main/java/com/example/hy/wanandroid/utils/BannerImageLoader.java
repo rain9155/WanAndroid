@@ -2,11 +2,6 @@ package com.example.hy.wanandroid.utils;
 
 import android.content.Context;
 import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
-import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.config.GlideApp;
 import com.youth.banner.loader.ImageLoader;
 
 /**

@@ -1,14 +1,8 @@
 package com.example.hy.wanandroid.base.activity;
 
-import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.IntentFilter;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -16,14 +10,9 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.component.NetWorkChangeReceiver;
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.config.RxBus;
-import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.di.component.AppComponent;
-import com.example.hy.wanandroid.event.LoginEvent;
-import com.example.hy.wanandroid.utils.LogUtil;
 import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.utils.ToastUtil;
-import com.example.hy.wanandroid.view.mine.LoginActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import butterknife.ButterKnife;
@@ -143,7 +132,7 @@ public abstract class BaseActivity extends SupportActivity
 
     @Override
     public void showToast(String toast) {
-        ToastUtil.toastInBottom(this, toast, null);
+        ToastUtil.toastInBottom(this, toast);
     }
 
     @Override

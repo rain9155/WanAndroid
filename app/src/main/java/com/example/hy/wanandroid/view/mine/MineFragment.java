@@ -21,10 +21,10 @@ import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.di.module.fragment.MineFragmentModule;
 import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.presenter.mine.MinePresenter;
+import com.example.hy.wanandroid.utils.AnimUtil;
 import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
-import com.example.utilslibrary.AnimUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.lang.reflect.Field;

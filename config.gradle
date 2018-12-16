@@ -1,50 +1,3 @@
-
-version = [
-
-        //androidx
-        LibraryCompatVersion   : "1.0.0-alpha1",
-        ConstraintLayoutVersion: "1.1.2",
-        MarterialDesignVersion : "1.0.0-alpha1",
-
-        //db
-        LitepalVersion         : "3.0.0",
-
-        //network
-        RetrofitVersion        : "2.4.0",
-
-        //rxJava2
-        Rxjava2Version : "2.2.2",
-        RxAndroidVersion : "2.1.0",
-        RxRelayVersion : "2.1.0",
-
-        //dagger2
-        Dagger2Version           : "2.18",
-        BufferKinfeVersion          : "9.0.0-rc1",
-
-        //ui
-        BaseAdapterVersion     : "2.9.43-alpha1",
-        SmartrefreshVersion    : "1.1.0-alpha-14",
-        AgentWebVersion         : "4.0.2",
-        Gilde                   : "4.8.0",
-        FlowLayout              : "1.1.2",
-        BannerVersion : '1.4.10',
-        CircleImageVersion : '2.2.0',
-        FragmentationVersion : '1.3.6',
-        VerticalTabLayoutVersion : '1.2.5',
-        YViewPagerDemoVersion : '0.4',
-        WaveLoadingVersion : '0.3.5',
-        TwinklingRefreshLayoutVersion : '1.0.7',
-        MultiWaveHeaderVersion : '1.0.0-alpha-1',
-
-        //other
-        UtilsVersion : '3723c20b45',
-
-        //test
-        JunitVersion           : "4.12",
-        RunnerVersion          : "1.1.0-beta02",
-        EspressoVersion        : "3.1.0-beta02"
-
-]
 ext {
 
     android = [
@@ -54,6 +7,50 @@ ext {
             targetSdkVersion        : 28,
             versionCode             : 2,
             versionName             : "v1.1",
+    ]
+
+    version = [
+
+            //androidx
+            LibraryCompatVersion   : "1.0.0-alpha1",
+            ConstraintLayoutVersion: "1.1.2",
+            MarterialDesignVersion : "1.0.0-alpha1",
+
+            //db
+            LitepalVersion         : "3.0.0",
+
+            //network
+            RetrofitVersion        : "2.4.0",
+
+            //rxJava2
+            Rxjava2Version : "2.2.2",
+            RxAndroidVersion : "2.1.0",
+            RxRelayVersion : "2.1.0",
+
+            //dagger2
+            Dagger2Version           : "2.18",
+            BufferKinfeVersion          : "9.0.0-rc1",
+
+            //ui
+            BaseAdapterVersion     : "2.9.43-alpha1",
+            SmartrefreshVersion    : "1.1.0-alpha-14",
+            AgentWebVersion         : "4.0.2",
+            Gilde                   : "4.8.0",
+            FlowLayout              : "1.1.2",
+            BannerVersion : '1.4.10',
+            CircleImageVersion : '2.2.0',
+            FragmentationVersion : '1.3.6',
+            VerticalTabLayoutVersion : '1.2.5',
+            YViewPagerDemoVersion : '0.4',
+            WaveLoadingVersion : '0.3.5',
+            TwinklingRefreshLayoutVersion : '1.0.7',
+            MultiWaveHeaderVersion : '1.0.0-alpha-1',
+
+            //test
+            JunitVersion           : "4.12",
+            RunnerVersion          : "1.1.0-beta02",
+            EspressoVersion        : "3.1.0-beta02"
+
     ]
 
     dependencies = [
@@ -98,8 +95,8 @@ ext {
             "bufferKinfe" : "com.jakewharton:butterknife:${version.BufferKinfeVersion}",
             "bufferKinfeCompiler" : "com.jakewharton:butterknife-compiler:${version.BufferKinfeVersion}",
 
-            //other
-            "utils" : "com.github.rain9155:RUtils:${version.UtilsVersion}",
+            //bugly
+            "bugly" : "com.tencent.bugly:crashreport:latest.release",
 
             //test
             "junit"                 : "junit:junit:${version.JunitVersion}",

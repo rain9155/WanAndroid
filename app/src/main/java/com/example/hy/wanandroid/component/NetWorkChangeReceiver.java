@@ -9,7 +9,7 @@ import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.event.NetWorkChangeEvent;
 import com.example.hy.wanandroid.model.DataModel;
-import com.example.utilslibrary.NetWorkUtil;
+import com.example.hy.wanandroid.utils.NetWorkUtil;
 
 /**
  * Created by 陈健宇 at 2018/12/12

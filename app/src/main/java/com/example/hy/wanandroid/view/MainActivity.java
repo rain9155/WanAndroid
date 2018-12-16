@@ -25,15 +25,16 @@ import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utils.DownloadUtil;
 import com.example.hy.wanandroid.utils.StatusBarUtil;
+import com.example.hy.wanandroid.utils.ToastUtil;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
 import com.example.hy.wanandroid.view.project.ProjectFragment;
 import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
-import com.example.utilslibrary.ToastUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -155,7 +156,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             finish();
         }else {
             Constant.TOUCH_TIME = System.currentTimeMillis();
-            ToastUtil.toastInCenter(this, getString(R.string.mainActivity_back), null);
+            ToastUtil.toastInCenter(this, getString(R.string.mainActivity_back));
         }
     }
 

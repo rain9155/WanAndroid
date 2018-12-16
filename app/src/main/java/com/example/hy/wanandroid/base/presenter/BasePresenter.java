@@ -1,15 +1,9 @@
 package com.example.hy.wanandroid.base.presenter;
 
-import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.BaseView;
-import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.event.NetWorkChangeEvent;
-import com.example.hy.wanandroid.event.NightModeEvent;
-import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.model.DataModel;
-import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
-import com.example.hy.wanandroid.utils.RxUtils;
 
 import javax.inject.Inject;
 

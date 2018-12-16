@@ -7,7 +7,7 @@ import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.Collection;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.DefaultObserver;
 import com.example.hy.wanandroid.model.network.entity.Articles;
 import com.example.hy.wanandroid.model.network.entity.HotKey;
 import com.example.hy.wanandroid.utils.CommonUtil;

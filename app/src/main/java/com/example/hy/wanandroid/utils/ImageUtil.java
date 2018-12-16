@@ -30,7 +30,6 @@ public class ImageUtil {
             diskCacheStrategy = DiskCacheStrategy.NONE;
             isSkipMemory = true;
         }
-
             GlideApp.with(context)
                     .load(imageUrl)
                     .placeholder(R.drawable.placeholder_android)

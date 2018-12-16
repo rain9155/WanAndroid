@@ -52,7 +52,7 @@ public class UpdataService extends Service {
         if(!TextUtils.isEmpty(url)){
             long downloadId = downloadApk(url);
             mDataModel.setDownloadId(downloadId);
-            ToastUtil.toastInBottom(mContext, mContext.getString(R.string.downloading), null);
+            ToastUtil.toastInBottom(mContext, mContext.getString(R.string.downloading));
         }
         return START_REDELIVER_INTENT;
     }

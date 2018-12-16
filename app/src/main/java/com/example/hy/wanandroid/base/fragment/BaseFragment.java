@@ -91,7 +91,7 @@ public abstract class BaseFragment extends SupportFragment
 
     @Override
     public void showToast(String toast) {
-        ToastUtil.toastInBottom(_mActivity, toast, null);
+        ToastUtil.toastInBottom(_mActivity, toast);
     }
 
     @Override

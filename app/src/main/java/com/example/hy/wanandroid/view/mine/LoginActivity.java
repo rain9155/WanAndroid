@@ -20,9 +20,9 @@ import com.example.hy.wanandroid.contract.mine.LoginContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerLoginActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.LoginActivityModule;
 import com.example.hy.wanandroid.presenter.mine.LoginPresenter;
+import com.example.hy.wanandroid.utils.KeyBoardUtil;
 import com.example.hy.wanandroid.utils.StatusBarUtil;
 import com.example.hy.wanandroid.widget.dialog.LoadingDialog;
-import com.example.utilslibrary.KeyBoardUtil;
 import com.google.android.material.textfield.TextInputLayout;
 
 import javax.inject.Inject;

@@ -1,6 +1,6 @@
 package com.example.hy.wanandroid.config;
 
-import com.example.utilslibrary.FileUtils;
+import com.example.hy.wanandroid.utils.FileUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,10 +23,10 @@ public class User implements Serializable, Cloneable{
         if (instance == null) {
             synchronized (User.class){
                 if(instance == null){
-                    Object object = FileUtils.restoreObject(App.getContext(), TAG);
+                    Object object = FileUtil.restoreObject(App.getContext(), TAG);
                     if (object == null) { // App第一次启动，文件不存在，则新建之
                         object = new User();
-                        FileUtils.saveObject(App.getContext(), TAG, object);
+                        FileUtil.saveObject(App.getContext(), TAG, object);
                     }
                     instance = (User)object;
                 }
@@ -47,7 +47,7 @@ public class User implements Serializable, Cloneable{
     }
 
     public void save() {
-        FileUtils.saveObject(App.getContext(), TAG, this);
+        FileUtil.saveObject(App.getContext(), TAG, this);
     }
 
     public String getUsername() {

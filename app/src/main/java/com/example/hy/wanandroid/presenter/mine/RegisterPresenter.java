@@ -7,7 +7,7 @@ import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.contract.mine.RegisterContract;
 import com.example.hy.wanandroid.model.DataModel;
-import com.example.hy.wanandroid.model.network.entity.DefaultObserver;
+import com.example.hy.wanandroid.model.network.DefaultObserver;
 import com.example.hy.wanandroid.model.network.entity.Login;
 import com.example.hy.wanandroid.utils.RxUtils;
 
