@@ -5,8 +5,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.hy.wanandroid.utils.LogUtil;
-
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;

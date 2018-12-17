@@ -1,11 +1,12 @@
-package com.example.hy.wanandroid.utils;
+package com.example.commonlib.utils;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.text.TextUtils;
-import com.example.hy.wanandroid.R;
+
+import com.example.commonlib.R;
 
 /**
  * 分享工具

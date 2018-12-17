@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.event.UpdataEvent;
-import com.example.hy.wanandroid.utils.RxUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

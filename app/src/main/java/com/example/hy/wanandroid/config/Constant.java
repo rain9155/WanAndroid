@@ -1,9 +1,7 @@
 package com.example.hy.wanandroid.config;
 import android.os.Environment;
 
-import com.example.hy.wanandroid.utils.FileUtil;
-
-import java.io.File;
+import com.example.commonlib.utils.FileUtil;
 
 /**
  * 网路请求的base地址

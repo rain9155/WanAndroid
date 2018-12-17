@@ -1,5 +1,6 @@
 package com.example.hy.wanandroid.config;
 
+import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -7,16 +8,15 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.di.component.DaggerAppComponent;
 import com.example.hy.wanandroid.di.module.AppModule;
-import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.commonlib.utils.CommonUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
-
-import androidx.appcompat.app.AppCompatDelegate;
 
 /**
  * Created by 陈健宇 at 2018/10/20
@@ -42,10 +42,31 @@ public class App extends LitePalApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        SQLiteDatabase db = LitePal.getDatabase();
         mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         mContext = this;
+        initLitepal();
         initBugly();
+        initLeakCanary();
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        //当应用所有UI隐藏时应该释放UI上所有占用的资源
+        if(ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN == level)
+            GlideApp.get(this).clearMemory();
+        //根据level级别来清除一些图片缓存
+        GlideApp.get(this).onTrimMemory(level);
+    }
+
+    private void initLeakCanary() {
+        if (!LeakCanary.isInAnalyzerProcess(this))
+            LeakCanary.install(this);
+    }
+
+
+    private void initLitepal() {
+        LitePal.getDatabase();
     }
 
     private void initBugly() {

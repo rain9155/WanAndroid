@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.utils;
+package com.example.commonlib.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hy.wanandroid.R;
-import q.rorbin.badgeview.DisplayUtil;
+import com.example.commonlib.R;
 
 /**
  * Created by 陈健宇 at 2018/12/5
@@ -61,7 +60,7 @@ public class ToastUtil{
             textView.setText(message);
 
             toast = new Toast(context);
-            toast.setGravity(Gravity.BOTTOM, 0, DisplayUtil.dp2px(context, 50));
+            toast.setGravity(Gravity.BOTTOM, 0, DisplayUtil.dip2px(context, 50));
             toast.setDuration(Toast.LENGTH_SHORT);
             toast.setView(toastView);
          }else {
@@ -70,7 +69,7 @@ public class ToastUtil{
         toast.show();
     }
 
-    public static void toastMake(TextView textView, final ViewGroup viewGroup, String s, int backgroundColor, int textColor) {
+    public static void toastMake(final TextView textView, final ViewGroup viewGroup, String s, int backgroundColor, int textColor) {
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(-1, -2);
         textView.setText(s);
         textView.setGravity(17);

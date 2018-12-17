@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.model.network;
 
 import android.net.ParseException;
-import android.util.Log;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.BaseView;
@@ -12,27 +11,21 @@ import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.network.entity.Login;
 import com.example.hy.wanandroid.model.network.gson.ApiException;
-import com.example.hy.wanandroid.utils.LogUtil;
-import com.example.hy.wanandroid.utils.RxUtils;
+import com.example.commonlib.utils.LogUtil;
+import com.example.hy.wanandroid.utlis.RxUtils;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.google.gson.JsonParseException;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import org.json.JSONException;
 
 import java.net.UnknownHostException;
 
-import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.observers.ResourceObserver;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.HttpException;
 
-import static com.example.hy.wanandroid.utils.LogUtil.TAG_ERROR;
+import static com.example.commonlib.utils.LogUtil.TAG_ERROR;
 
 /**
  * 封装Observer

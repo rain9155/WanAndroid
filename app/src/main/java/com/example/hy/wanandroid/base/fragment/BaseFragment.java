@@ -1,27 +1,15 @@
 package com.example.hy.wanandroid.base.fragment;
 
-import android.content.Context;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.TextView;
 
-import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.BaseView;
-import com.example.hy.wanandroid.component.NetWorkChangeReceiver;
-import com.example.hy.wanandroid.config.RxBus;
-import com.example.hy.wanandroid.config.User;
-import com.example.hy.wanandroid.event.LoginEvent;
-import com.example.hy.wanandroid.utils.ToastUtil;
-import com.example.hy.wanandroid.view.mine.LoginActivity;
+import com.example.commonlib.utils.ToastUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;

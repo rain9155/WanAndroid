@@ -1,11 +1,12 @@
-package com.example.hy.wanandroid.utils;
+package com.example.hy.wanandroid.utlis;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Environment;
 
+import com.example.commonlib.utils.LogUtil;
+import com.example.commonlib.utils.ShareUtil;
 import com.example.hy.wanandroid.component.UpdataService;
 import com.example.hy.wanandroid.config.Constant;
 

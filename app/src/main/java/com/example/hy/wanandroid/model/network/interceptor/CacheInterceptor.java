@@ -1,7 +1,7 @@
 package com.example.hy.wanandroid.model.network.interceptor;
 
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.utils.NetWorkUtil;
+import com.example.commonlib.utils.NetWorkUtil;
 
 import java.io.IOException;
 

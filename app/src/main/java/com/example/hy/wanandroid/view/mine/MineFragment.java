@@ -1,12 +1,8 @@
 package com.example.hy.wanandroid.view.mine;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,20 +11,15 @@ import android.widget.TextView;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.config.Constant;
-import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.di.module.fragment.MineFragmentModule;
-import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.presenter.mine.MinePresenter;
-import com.example.hy.wanandroid.utils.AnimUtil;
-import com.example.hy.wanandroid.utils.StatusBarUtil;
+import com.example.commonlib.utils.AnimUtil;
+import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-
-import java.lang.reflect.Field;
-import java.util.Objects;
 
 import javax.inject.Inject;
 

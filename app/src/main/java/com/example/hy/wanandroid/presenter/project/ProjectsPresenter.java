@@ -13,7 +13,7 @@ import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
 import com.example.hy.wanandroid.model.network.entity.Articles;
 import com.example.hy.wanandroid.config.RxBus;
-import com.example.hy.wanandroid.utils.RxUtils;
+import com.example.hy.wanandroid.utlis.RxUtils;
 
 import javax.inject.Inject;
 

@@ -17,7 +17,7 @@ import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.contract.mine.RegisterContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerRegisterActivityComponent;
 import com.example.hy.wanandroid.presenter.mine.RegisterPresenter;
-import com.example.hy.wanandroid.utils.StatusBarUtil;
+import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.widget.dialog.LoadingDialog;
 import com.google.android.material.textfield.TextInputLayout;
 

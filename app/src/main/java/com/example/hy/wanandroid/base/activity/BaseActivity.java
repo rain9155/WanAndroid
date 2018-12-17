@@ -11,8 +11,8 @@ import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.component.NetWorkChangeReceiver;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.component.AppComponent;
-import com.example.hy.wanandroid.utils.StatusBarUtil;
-import com.example.hy.wanandroid.utils.ToastUtil;
+import com.example.commonlib.utils.StatusBarUtil;
+import com.example.commonlib.utils.ToastUtil;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import butterknife.ButterKnife;
@@ -66,6 +66,11 @@ public abstract class BaseActivity extends SupportActivity
         }
         if(mTipView != null && mTipView.getParent() != null) ((ViewGroup)getWindow().getDecorView()).removeView(mTipView);
         super.onDestroy();
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
     }
 
     @Override

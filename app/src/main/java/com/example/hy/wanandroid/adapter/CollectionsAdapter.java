@@ -7,8 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.model.network.entity.Collection;
-import com.example.hy.wanandroid.utils.AnimUtil;
-import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.commonlib.utils.CommonUtil;
 
 import java.util.List;
 import java.util.Objects;

@@ -22,9 +22,9 @@ import com.example.hy.wanandroid.di.component.activity.DaggerSearchActivityCompo
 import com.example.hy.wanandroid.model.network.entity.Article;
 import com.example.hy.wanandroid.model.network.entity.HotKey;
 import com.example.hy.wanandroid.presenter.search.SearchPresenter;
-import com.example.hy.wanandroid.utils.AnimUtil;
-import com.example.hy.wanandroid.utils.CommonUtil;
-import com.example.hy.wanandroid.utils.StatusBarUtil;
+import com.example.commonlib.utils.AnimUtil;
+import com.example.commonlib.utils.CommonUtil;
+import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;

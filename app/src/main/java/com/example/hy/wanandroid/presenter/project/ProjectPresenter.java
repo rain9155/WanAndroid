@@ -5,7 +5,7 @@ import com.example.hy.wanandroid.contract.project.ProjectContract;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
 import com.example.hy.wanandroid.model.network.entity.Tab;
-import com.example.hy.wanandroid.utils.RxUtils;
+import com.example.hy.wanandroid.utlis.RxUtils;
 
 import java.util.List;
 

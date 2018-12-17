@@ -12,7 +12,7 @@ ext {
     version = [
 
             //androidx
-            LibraryCompatVersion   : "1.0.0-alpha1",
+            LibraryCompatVersion   : "1.0.1",
             ConstraintLayoutVersion: "1.1.2",
             MarterialDesignVersion : "1.0.0-alpha1",
 
@@ -31,6 +31,9 @@ ext {
             Dagger2Version           : "2.18",
             BufferKinfeVersion          : "9.0.0-rc1",
 
+            //leakcanary
+            LeakCanaryVersion : "1.6.2",
+
             //ui
             BaseAdapterVersion     : "2.9.43-alpha1",
             SmartrefreshVersion    : "1.1.0-alpha-14",
@@ -48,8 +51,8 @@ ext {
 
             //test
             JunitVersion           : "4.12",
-            RunnerVersion          : "1.1.0-beta02",
-            EspressoVersion        : "3.1.0-beta02"
+            RunnerVersion          : "1.1.0",
+            EspressoVersion        : "3.1.0"
 
     ]
 
@@ -72,6 +75,11 @@ ext {
             "rxJava2" : "io.reactivex.rxjava2:rxjava:${version.Rxjava2Version}",
             "rxAndroid" : "io.reactivex.rxjava2:rxandroid:${version.RxAndroidVersion}",
             "rxRelay" : "com.jakewharton.rxrelay2:rxrelay:${version.RxRelayVersion}",
+
+            //leakcanary
+            leakCanaryDebug : "com.squareup.leakcanary:leakcanary-android:${version.LeakCanaryVersion}",
+            leakCanaryRelease : "com.squareup.leakcanary:leakcanary-android-no-op:${version.LeakCanaryVersion}",
+            leakCanaryDebugSupport : "com.squareup.leakcanary:leakcanary-support-fragment:${version.LeakCanaryVersion}",
 
             //ui
             "baseAdapter"           : "com.github.CymChad:BaseRecyclerViewAdapterHelper:${version.BaseAdapterVersion}",
@@ -102,6 +110,5 @@ ext {
             "junit"                 : "junit:junit:${version.JunitVersion}",
             "runner"                : "androidx.test:runner:${version.RunnerVersion}",
             "espresso"              : "androidx.test.espresso:espresso-core:${version.EspressoVersion}"
-
     ]
 }

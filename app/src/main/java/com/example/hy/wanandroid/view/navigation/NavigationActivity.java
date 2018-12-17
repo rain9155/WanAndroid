@@ -16,7 +16,7 @@ import com.example.hy.wanandroid.di.component.activity.DaggerNavigationActivityC
 import com.example.hy.wanandroid.di.module.activity.NavigationActivityModule;
 import com.example.hy.wanandroid.model.network.entity.Tag;
 import com.example.hy.wanandroid.presenter.navigation.NavigationPresenter;
-import com.example.hy.wanandroid.utils.StatusBarUtil;
+import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.search.SearchActivity;
 
 import java.util.List;

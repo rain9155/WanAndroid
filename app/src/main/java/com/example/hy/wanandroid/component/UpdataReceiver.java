@@ -1,6 +1,5 @@
 package com.example.hy.wanandroid.component;
 
-import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,14 +12,10 @@ import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.event.OpenBrowseEvent;
-import com.example.hy.wanandroid.model.DataModel;
-import com.example.hy.wanandroid.utils.LogUtil;
-import com.example.hy.wanandroid.utils.ToastUtil;
-import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
+import com.example.commonlib.utils.LogUtil;
+import com.example.commonlib.utils.ToastUtil;
 
 import java.io.File;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 

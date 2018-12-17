@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.utils;
+package com.example.hy.wanandroid.utlis;
 
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.gson.ApiException;

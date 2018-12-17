@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.utils;
+package com.example.commonlib.utils;
 
 /**
  * log工具类
@@ -7,7 +7,7 @@ package com.example.hy.wanandroid.utils;
 public class LogUtil {
 
     private static final boolean isDebug = true;
-    public static final String TAG_ERROR = "netError";
+    public static final String TAG_ERROR = "error";
     public static final String TAG_COMMON = "rain";
     public static final String TAG_HTTP = "http";
 

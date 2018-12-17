@@ -9,7 +9,7 @@ import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
 import com.example.hy.wanandroid.model.network.entity.Collection;
 import com.example.hy.wanandroid.model.network.entity.CollectionRequest;
-import com.example.hy.wanandroid.utils.RxUtils;
+import com.example.hy.wanandroid.utlis.RxUtils;
 
 
 import javax.inject.Inject;

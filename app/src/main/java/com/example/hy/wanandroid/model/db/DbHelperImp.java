@@ -1,7 +1,7 @@
 package com.example.hy.wanandroid.model.db;
 
 import com.example.hy.wanandroid.model.db.bean.HistoryRecord;
-import com.example.hy.wanandroid.utils.CommonUtil;
+import com.example.commonlib.utils.CommonUtil;
 
 import org.litepal.LitePal;
 

@@ -16,7 +16,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.model.DataModel;
-import com.example.hy.wanandroid.utils.ToastUtil;
+import com.example.commonlib.utils.ToastUtil;
 
 import java.io.File;
 

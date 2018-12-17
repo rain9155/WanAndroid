@@ -11,7 +11,7 @@ import com.example.hy.wanandroid.contract.project.ProjectContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
 import com.example.hy.wanandroid.model.network.entity.Tab;
 import com.example.hy.wanandroid.presenter.project.ProjectPresenter;
-import com.example.hy.wanandroid.utils.StatusBarUtil;
+import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
 import com.example.hy.wanandroid.view.search.SearchActivity;

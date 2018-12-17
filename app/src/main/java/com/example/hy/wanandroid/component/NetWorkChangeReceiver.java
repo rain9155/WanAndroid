@@ -3,13 +3,12 @@ package com.example.hy.wanandroid.component;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.event.NetWorkChangeEvent;
 import com.example.hy.wanandroid.model.DataModel;
-import com.example.hy.wanandroid.utils.NetWorkUtil;
+import com.example.commonlib.utils.NetWorkUtil;
 
 /**
  * Created by 陈健宇 at 2018/12/12

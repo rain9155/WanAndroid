@@ -12,7 +12,7 @@ import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
 import com.example.hy.wanandroid.model.network.entity.Login;
-import com.example.hy.wanandroid.utils.RxUtils;
+import com.example.hy.wanandroid.utlis.RxUtils;
 
 import javax.inject.Inject;
 

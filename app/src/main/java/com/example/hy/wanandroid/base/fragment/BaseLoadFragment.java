@@ -9,7 +9,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.utils.AnimUtil;
+import com.example.commonlib.utils.AnimUtil;
 
 import static com.example.hy.wanandroid.config.Constant.ERROR_STATE;
 import static com.example.hy.wanandroid.config.Constant.LOADING_STATE;

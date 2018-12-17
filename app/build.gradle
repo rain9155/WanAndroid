@@ -50,6 +50,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation project(':commonlib')
 
     //androidx
@@ -97,6 +98,11 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport:latest.release'
     //noinspection GradleDependency
     implementation 'com.tencent.bugly:nativecrashreport:latest.release'
+
+    //leakcanary
+    debugImplementation rootProject.ext.dependencies["leakCanaryDebug"]
+    releaseImplementation rootProject.ext.dependencies["leakCanaryRelease"]
+    debugImplementation rootProject.ext.dependencies["leakCanaryDebugSupport"]
 
     testImplementation rootProject.ext.dependencies["junit"]
     androidTestImplementation rootProject.ext.dependencies["runner"]

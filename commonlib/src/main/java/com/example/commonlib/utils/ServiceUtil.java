@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.utils;
+package com.example.commonlib.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;

@@ -15,7 +15,6 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -31,11 +30,11 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSettingsActivityComponent;
 import com.example.hy.wanandroid.presenter.mine.SettingsPresenter;
-import com.example.hy.wanandroid.utils.DownloadUtil;
-import com.example.hy.wanandroid.utils.FileUtil;
-import com.example.hy.wanandroid.utils.ServiceUtil;
-import com.example.hy.wanandroid.utils.ShareUtil;
-import com.example.hy.wanandroid.utils.StatusBarUtil;
+import com.example.hy.wanandroid.utlis.DownloadUtil;
+import com.example.commonlib.utils.FileUtil;
+import com.example.commonlib.utils.ServiceUtil;
+import com.example.commonlib.utils.ShareUtil;
+import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.widget.dialog.ClearCacheDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 
@@ -51,7 +50,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class SettingsActivity extends BaseActivity
         implements SettingsContract.View, CompoundButton.OnCheckedChangeListener {

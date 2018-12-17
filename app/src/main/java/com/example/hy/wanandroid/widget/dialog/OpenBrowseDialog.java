@@ -6,14 +6,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.config.Constant;
-import com.example.hy.wanandroid.config.RxBus;
-import com.example.hy.wanandroid.event.ClearCacheEvent;
-import com.example.hy.wanandroid.utils.LogUtil;
-import com.example.hy.wanandroid.utils.ShareUtil;
+import com.example.commonlib.utils.LogUtil;
+import com.example.commonlib.utils.ShareUtil;
 
 import java.io.File;
 
