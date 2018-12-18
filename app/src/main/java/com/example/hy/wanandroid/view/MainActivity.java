@@ -177,6 +177,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             mPresenter.detachView();
             mPresenter = null;
         }
+        if(mOpenBrowseDialog != null)
+            mOpenBrowseDialog = null;
+        if(mVersionDialog != null)
+            mVersionDialog = null;
         super.onDestroy();
     }
 

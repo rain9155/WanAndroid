@@ -137,7 +137,7 @@ public abstract class BaseActivity extends SupportActivity
 
     @Override
     public void showToast(String toast) {
-        ToastUtil.toastInBottom(this, toast);
+        ToastUtil.toastInBottom(App.getContext(), toast);
     }
 
     @Override

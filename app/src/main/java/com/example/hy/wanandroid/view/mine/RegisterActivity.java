@@ -104,6 +104,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             mPresenter.detachView();
             mPresenter = null;
         }
+        if(mLoadingDialog != null)
+            mLoadingDialog = null;
         super.onDestroy();
     }
 

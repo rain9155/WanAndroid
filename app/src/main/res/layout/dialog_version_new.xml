@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/dp_200"
+    android:layout_width="@dimen/dp_300"
     android:layout_height="@dimen/dp_200"
     android:padding="5dp"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,52 +13,88 @@
         android:layout_height="wrap_content"
         android:textColor="@color/primaryText"
         android:textSize="@dimen/sp_20"
-        android:layout_marginTop="@dimen/dp_5"
+        android:layout_margin="@dimen/dp_5"
         android:text="@string/dialog_version_new"
         android:scrollbars="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <TextView
-        android:id="@+id/tv_version_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/primaryText"
-        android:textSize="@dimen/sp_18"
-        android:layout_margin="@dimen/dp_5"
-        tools:text="1、WanAndroid第一版发布！"
+    <View
+        android:id="@+id/divider_1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:background="@color/divier"
+        android:layout_marginTop="@dimen/dp_5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_version_new"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <Button
-        android:id="@+id/btn_updata_later"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/tv_version_content"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_btnUpdataLater"
-        android:textColor="@color/primaryText"
-        android:background="@drawable/bg_dialog_btn"
-        android:layout_marginLeft="@dimen/dp_5"
-        android:layout_marginRight="@dimen/dp_5"
-        android:layout_marginBottom="@dimen/dp_5"
+        android:textColor="@color/secondaryText"
+        android:textSize="@dimen/sp_18"
+        android:layout_margin="@dimen/dp_5"
+        tools:text="1、WanAndroid第一版发布！1、WanAndroid第一版发布！ 1、WanAndroid第一版发布！  "
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_version_content"
-        app:layout_constraintRight_toLeftOf="@+id/btn_updata_now" />
+        app:layout_constraintTop_toBottomOf="@id/divider_1"
+        app:layout_constraintRight_toRightOf="parent"/>
 
-    <Button
-        android:id="@+id/btn_updata_now"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_dialog_btn"
-        android:text="@string/dialog_btnUpdataNow"
-        android:textColor="@color/primaryText"
-        android:layout_marginLeft="@dimen/dp_5"
-        android:layout_marginRight="@dimen/dp_5"
-        android:layout_marginBottom="@dimen/dp_5"
-        app:layout_constraintLeft_toRightOf="@id/btn_updata_later"
+    <View
+        android:id="@+id/divider_2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:background="@color/divier"
+        android:layout_marginTop="@dimen/dp_5"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_version_content"
         app:layout_constraintRight_toRightOf="parent"/>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        app:layout_constraintTop_toBottomOf="@id/divider_2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tv_updata_later"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_btnUpdataLater"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/bg_dialog_tv"
+            android:textColor="@color/secondaryText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/divider_3"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <View
+            android:id="@+id/divider_3"
+            android:layout_width="@dimen/dp_2"
+            android:layout_height="0dp"
+            android:background="@color/divier"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_updata_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_btnUpdataNow"
+            android:textColor="@color/primaryText"
+            android:background="@drawable/bg_dialog_tv"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/divider_3"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

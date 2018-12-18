@@ -122,6 +122,8 @@ public class MineFragment extends BaseFragment implements MineContract.View {
             mPresenter.detachView();
             mPresenter = null;
         }
+        if(mDialog != null)
+            mDialog = null;
         super.onDestroy();
     }
 

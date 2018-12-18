@@ -35,8 +35,8 @@ public class VersionDialog extends DialogFragment {
                 .create();
         dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
         dialog.setOnKeyListener((dialog1, keyCode, event) -> keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0);
-        Button updataLater = view.findViewById(R.id.btn_updata_later);
-        Button updataNow = view.findViewById(R.id.btn_updata_now);
+        Button updataLater = view.findViewById(R.id.tv_updata_later);
+        Button updataNow = view.findViewById(R.id.tv_updata_now);
         TextView content = view.findViewById(R.id.tv_version_content);
         content.setText(mContentText);
         updataLater.setOnClickListener(v -> dialog.dismiss());

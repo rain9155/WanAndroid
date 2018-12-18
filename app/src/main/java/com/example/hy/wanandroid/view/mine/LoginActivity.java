@@ -103,6 +103,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
             mPresenter.detachView();
             mPresenter = null;
         }
+        if(mLoadingDialog != null)
+            mLoadingDialog = null;
         super.onDestroy();
     }
 

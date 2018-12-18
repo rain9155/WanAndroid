@@ -242,6 +242,10 @@ public class SettingsActivity extends BaseActivity
             mPresenter.detachView();
             mPresenter = null;
         }
+        if(mClearCacheDialog != null)
+            mClearCacheDialog = null;
+        if(mVersionDialog != null)
+            mVersionDialog = null;
         super.onDestroy();
     }
 

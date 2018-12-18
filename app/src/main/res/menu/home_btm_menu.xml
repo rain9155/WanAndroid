@@ -15,6 +15,12 @@
         app:showAsAction="ifRoom"/>
 
     <item
+        android:id="@+id/item_wechat"
+        android:title="@string/homeFragment_wechat"
+        android:icon="@drawable/ic_main_weixin"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/item_project"
         android:title="@string/homeFragment_project"
         android:icon="@drawable/ic_main_project"
