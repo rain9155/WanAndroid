@@ -17,6 +17,9 @@ public class Constant {
     public static final String KEY_HIERARCHY_PAGENUM = "hierarchyPageNum";
     public static final String KEY_PROJECT_ID = "projectId";
 
+    //WeChatFragment
+    public static final String KEY_WECHAT_ID = "wechatId";
+
     //HierarchyActivity
     public static final String KEY_HIERARCHY_ID = "hierarchyId";
     public static final String KEY_HIERARCHY_NAMES = "hierarchyNames";

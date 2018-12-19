@@ -113,11 +113,4 @@ public class HierarchySecondActivity extends BaseActivity {
         intent.putExtra(Constant.KEY_HIERARCHY_NAME, name);
         context.startActivity(intent);
     }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

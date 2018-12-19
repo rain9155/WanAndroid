@@ -25,8 +25,5 @@ public interface HierarchyContract {
         void loadMoreFirstHierarchyList();
     }
 
-    interface Model{
-        Observable<BaseResponse<List<FirstHierarchy>>> getFirstHierarchyList();
-    }
 
 }

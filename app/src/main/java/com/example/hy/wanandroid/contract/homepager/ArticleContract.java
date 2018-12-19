@@ -23,9 +23,4 @@ public interface ArticleContract {
         void collectArticle(int id);//收藏文章
         void unCollectArticle(int id);//取消收藏
     }
-
-    interface Model{
-        Observable<BaseResponse<Collection>> getCollectRequest(int id);//获得收藏结果
-        Observable<BaseResponse<Collection>> getUnCollectRequest(int id);//获得取消收藏结果
-    }
 }

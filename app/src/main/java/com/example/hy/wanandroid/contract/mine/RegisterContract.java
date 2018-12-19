@@ -26,8 +26,4 @@ public interface RegisterContract {
         void register(String username, String password, String rePassword);//注册
     }
 
-    interface Model{
-        Observable<BaseResponse<Login>> getRegisterRequest(String username, String password, String rePassword);//获得注册结果
-    }
-
 }

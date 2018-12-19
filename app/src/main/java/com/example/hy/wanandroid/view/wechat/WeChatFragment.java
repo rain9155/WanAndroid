@@ -1,19 +1,22 @@
-package com.example.hy.wanandroid.view.project;
+package com.example.hy.wanandroid.view.wechat;
 
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
-import com.example.hy.wanandroid.contract.project.ProjectContract;
+import com.example.hy.wanandroid.contract.wechat.WeChatContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
+import com.example.hy.wanandroid.di.module.fragment.WeChatFragmentModule;
 import com.example.hy.wanandroid.model.network.entity.Tab;
-import com.example.hy.wanandroid.presenter.project.ProjectPresenter;
-import com.example.commonlib.utils.StatusBarUtil;
+import com.example.hy.wanandroid.presenter.wechat.WeChatPresenter;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
+import com.example.hy.wanandroid.view.project.ProjectFragment;
+import com.example.hy.wanandroid.view.project.ProjectsFragment;
 import com.example.hy.wanandroid.view.search.SearchActivity;
 import com.google.android.material.tabs.TabLayout;
 
@@ -27,24 +30,24 @@ import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 
 /**
- * 项目tab
- * Created by 陈健宇 at 2018/10/23
+ * 微信公众号tab
+ * Created by 陈健宇 at 2018/12/19
  */
-public class ProjectFragment extends BaseLoadFragment implements ProjectContract.View {
+public class WeChatFragment extends BaseLoadFragment implements WeChatContract.View {
 
+    @BindView(R.id.tv_common_title)
+    TextView tvCommonTitle;
+    @BindView(R.id.iv_common_search)
+    ImageView ivCommonSearch;
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
     @BindView(R.id.common_tablayout)
     TabLayout commonTablayout;
     @BindView(R.id.normal_view)
-    ViewPager vpProject;
-    @BindView(R.id.tv_common_title)
-    TextView tvCommonTitle;
-    @BindView(R.id.iv_common_search)
-    ImageView ivCommonSearch;
+    ViewPager vpWeChats;
 
     @Inject
-    ProjectPresenter mPresenter;
+    WeChatPresenter mPresenter;
     @Inject
     List<String> mTitles;
     @Inject
@@ -52,22 +55,15 @@ public class ProjectFragment extends BaseLoadFragment implements ProjectContract
     @Inject
     List<Fragment> mFragments;
 
-    private VpAdapter mVpAdapter;
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_project;
-    }
-
     @Override
     protected void initView() {
         if (!(getActivity() instanceof MainActivity)) return;
-        ((MainActivity) getActivity()).getComponent().getProjectFragmentComponent(new ProjectFragmentModule()).inject(this);
+        ((MainActivity) getActivity()).getComponent().getWeChatFragmentComponent(new WeChatFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
         StatusBarUtil.setHeightAndPadding(_mActivity, tlCommon);
         ivCommonSearch.setVisibility(View.VISIBLE);
-        tvCommonTitle.setText(R.string.homeFragment_project);
+        tvCommonTitle.setText(R.string.homeFragment_wechat);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
         tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
         ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
@@ -76,28 +72,33 @@ public class ProjectFragment extends BaseLoadFragment implements ProjectContract
     @Override
     protected void loadData() {
         super.loadData();
-        mPresenter.loadProjectList();
+        mPresenter.loadWeChatTabs();
     }
 
     @Override
-    public void showProjectList(List<Tab> projectList) {
-        for (Tab project : projectList) {
-            mIds.add(project.getId());
-            mTitles.add(project.getName());
+    protected int getLayoutId() {
+        return R.layout.fragment_wechat;
+    }
+
+    @Override
+    public void showWeChatTabs(List<Tab> tabs) {
+        for (Tab tab : tabs) {
+            mIds.add(tab.getId());
+            mTitles.add(tab.getName());
         }
-        for (int i = 0; i < projectList.size(); i++) {
-            mFragments.add(ProjectsFragment.newInstance(mIds.get(i)));
+        for (int i = 0; i < tabs.size(); i++) {
+            mFragments.add(WeChatsFragment.newInstance(mIds.get(i)));
         }
-        mVpAdapter = new VpAdapter(getChildFragmentManager(), mFragments, mTitles);
-        vpProject.setAdapter(mVpAdapter);
-        vpProject.setOffscreenPageLimit(mTitles.size());
-        commonTablayout.setupWithViewPager(vpProject);
+        VpAdapter vpAdapter = new VpAdapter(getChildFragmentManager(), mFragments, mTitles);
+        vpWeChats.setAdapter(vpAdapter);
+        vpWeChats.setOffscreenPageLimit(mTitles.size());
+        commonTablayout.setupWithViewPager(vpWeChats);
     }
 
     @Override
     public void reLoad() {
         super.reLoad();
-        mPresenter.loadProjectList();
+        mPresenter.loadWeChatTabs();
     }
 
     @Override
@@ -109,8 +110,8 @@ public class ProjectFragment extends BaseLoadFragment implements ProjectContract
         super.onDestroy();
     }
 
-    public static ProjectFragment newInstance() {
-        return new ProjectFragment();
+    public static WeChatFragment newInstance() {
+        return new WeChatFragment();
     }
 
 }

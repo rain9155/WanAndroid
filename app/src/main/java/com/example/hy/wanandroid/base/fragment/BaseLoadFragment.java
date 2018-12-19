@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 
+import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.commonlib.utils.AnimUtil;
 
@@ -32,7 +33,6 @@ public abstract class BaseLoadFragment extends BaseFragment {
     @Override
     protected void loadData() {
         if(getView() == null) return;
-
         mNormalView = getView().findViewById(R.id.normal_view);
         if(mNormalView == null) throw new IllegalStateException("The subclass of BaseLoadFragment must contain a View it's id is named normal_view");
         if(!(mNormalView.getParent() instanceof ViewGroup)) throw new IllegalStateException("mNormalView's ParentView should be a ViewGroup");

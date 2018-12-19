@@ -24,7 +24,4 @@ public interface NavigationContract {
         void loadTags();//加载tag标签
     }
 
-    interface Model{
-        Observable<BaseResponse<List<Tag>>> getTags();//从网络获得tag标签数据
-    }
 }

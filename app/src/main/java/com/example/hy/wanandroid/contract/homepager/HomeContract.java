@@ -37,11 +37,4 @@ public interface HomeContract {
         void unCollectArticle(int id);//取消收藏
     }
 
-    interface Model{
-        Observable<BaseResponse<List<BannerData>>> getBannerDatas();//获得banner数据
-        Observable<BaseResponse<Articles>> getArticles(int pageNum);//获得首页文章数据
-        Observable<BaseResponse<Collection>> getCollectRequest(int id);//获得收藏结果
-        Observable<BaseResponse<Collection>> getUnCollectRequest(int id);//获得取消收藏结果
-    }
-
 }

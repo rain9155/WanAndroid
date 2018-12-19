@@ -60,6 +60,6 @@ public class HomeFragmentModule {
     @Provides
     @PerFragment
     ArticlesAdapter provideArticlesAdapter(List<Article> articles){
-        return new ArticlesAdapter(R.layout.item_home_acticles, articles, App.getContext());
+        return new ArticlesAdapter(R.layout.item_acticles, articles);
     }
 }

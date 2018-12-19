@@ -53,17 +53,4 @@ public interface SearchContract {
         void collectArticle(int id);//收藏文章
         void unCollectArticle(int id);//取消收藏
     }
-
-    interface Model{
-        Observable<BaseResponse<Articles>> getSearchResquest(String key, int pageNum);//获得搜索结果
-        Observable<BaseResponse<List<HotKey>>> getHotKey();//获得搜索热词
-        boolean addHistoryRecord(String record);//添加搜索历史是否成功
-        List<String> getHistories();//获得搜索历史
-        int deleteOneHistoryRecord(String record);//删除一条搜索历史
-        int deleteAllHistoryRecord();//删除所有搜索历史
-        boolean isExistHistoryRecord(String record);//判断搜索历史是否存在
-        Observable<BaseResponse<Collection>> getCollectRequest(int id);//获得收藏结果
-        Observable<BaseResponse<Collection>> getUnCollectRequest(int id);//获得取消收藏结果
-    }
-
 }

@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.di.module.fragment;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
+import com.example.hy.wanandroid.adapter.ProjectsAdapter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerFragment;
 import com.example.hy.wanandroid.model.network.entity.Article;
@@ -14,11 +15,10 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * HierarchySecond的Fragment
- * Created by 陈健宇 at 2018/10/29
+ * Created by 陈健宇 at 2018/12/19
  */
 @Module
-public class HierarchySecondFragmentModule {
+public class WeChatsFragmentModule {
 
     @Provides
     @PerFragment
@@ -27,14 +27,12 @@ public class HierarchySecondFragmentModule {
     }
 
     @Provides
-    @PerFragment
-    ArticlesAdapter provideArticlesAdapter(List<Article> articles){
-        return new ArticlesAdapter(R.layout.item_acticles, articles);
-    }
-
-    @Provides
     LinearLayoutManager provideLinearLayoutManager(){
         return new LinearLayoutManager(App.getContext());
     }
 
+    @Provides
+    ArticlesAdapter provideArticlesAdapter(List<Article> articles){
+        return new ArticlesAdapter(R.layout.item_acticles, articles);
+    }
 }

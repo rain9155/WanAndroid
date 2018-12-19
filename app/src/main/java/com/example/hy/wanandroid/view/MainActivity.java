@@ -28,6 +28,8 @@ import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
 import com.example.hy.wanandroid.view.project.ProjectFragment;
+import com.example.hy.wanandroid.view.wechat.WeChatFragment;
+import com.example.hy.wanandroid.view.wechat.WeChatsFragment;
 import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -76,19 +78,21 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mFragments = new BaseFragment[4];
+        mFragments = new BaseFragment[5];
         if(savedInstanceState == null) {
             mFragments[0] = HomeFragment.newInstance();
             mFragments[1] = HierarchyFragment.newInstance();
-            mFragments[2] = ProjectFragment.newInstance();
-            mFragments[3] = MineFragment.newInstance();
+            mFragments[2] = WeChatFragment.newInstance();
+            mFragments[3] = ProjectFragment.newInstance();
+            mFragments[4] = MineFragment.newInstance();
             loadMultipleRootFragment(R.id.fl_container, 0, mFragments);
             AppCompatDelegate.setDefaultNightMode(mPresenter.getNightModeState() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         }else {
             mFragments[0] = findFragment(HomeFragment.class);
             mFragments[1] = findFragment(HierarchyFragment.class);
-            mFragments[2] = findFragment(ProjectFragment.class);
-            mFragments[3] = findFragment(MineFragment.class);
+            mFragments[2] = findFragment(WeChatFragment.class);
+            mFragments[3] = findFragment(ProjectFragment.class);
+            mFragments[4] = findFragment(MineFragment.class);
             bnvBtm.setSelectedItemId(getSelectedId(mPresenter.getCurrentItem()));
         }
     }
@@ -115,15 +119,21 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                     showFloatingButton();
                     setStatusBarColor(mPresenter.getStatusBarState());
                     break;
-                case R.id.item_project:
+                case R.id.item_wechat:
                     showHideFragment(mFragments[2], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 2;
                     showFloatingButton();
                     setStatusBarColor(mPresenter.getStatusBarState());
                     break;
-                case R.id.item_mine:
+                case R.id.item_project:
                     showHideFragment(mFragments[3], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 3;
+                    showFloatingButton();
+                    setStatusBarColor(mPresenter.getStatusBarState());
+                    break;
+                case R.id.item_mine:
+                    showHideFragment(mFragments[4], mFragments[mPreFragmentPosition]);
+                    mPreFragmentPosition = 4;
                     hideFloatingButton();
                     StatusBarUtil.immersiveInImage(this);
                     break;
@@ -247,12 +257,15 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                 id = R.id.item_home;
                 break;
             case 1:
-                id = R.id.hierarchy;
+                id = R.id.item_hierarchy;
                 break;
             case 2:
-                id = R.id.item_project;
+                id = R.id.item_wechat;
                 break;
             case 3:
+                id = R.id.item_project;
+                break;
+            case 4:
                 id = R.id.item_mine;
                 break;
             default:

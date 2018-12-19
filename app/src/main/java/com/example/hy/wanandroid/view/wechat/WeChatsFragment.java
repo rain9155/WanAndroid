@@ -1,22 +1,23 @@
-package com.example.hy.wanandroid.view.project;
+package com.example.hy.wanandroid.view.wechat;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.commonlib.utils.AnimUtil;
+import com.example.commonlib.utils.CommonUtil;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.adapter.ProjectsAdapter;
+import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
-import com.example.hy.wanandroid.contract.project.ProjectsContract;
-import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
+import com.example.hy.wanandroid.contract.wechat.WeChatsContract;
+import com.example.hy.wanandroid.di.module.fragment.WeChatsFragmentModule;
 import com.example.hy.wanandroid.model.network.entity.Article;
-import com.example.hy.wanandroid.presenter.project.ProjectsPresenter;
-import com.example.commonlib.utils.AnimUtil;
-import com.example.commonlib.utils.CommonUtil;
+import com.example.hy.wanandroid.presenter.wechat.WeChatsPresenter;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
+import com.example.hy.wanandroid.view.project.ProjectsFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -30,22 +31,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**
- * 项目详情列表Fragment
- * Created by 陈健宇 at 2018/10/29
+ * WeChatsFragment
+ * Created by 陈健宇 at 2018/12/19
  */
-public class ProjectsFragment extends BaseLoadFragment implements ProjectsContract.View {
+public class WeChatsFragment extends BaseLoadFragment implements WeChatsContract.View {
 
-    @BindView(R.id.rv_projects)
-    RecyclerView rvProjectList;
+    @BindView(R.id.rv_wechats)
+    RecyclerView rvWechats;
     @BindView(R.id.normal_view)
-    SmartRefreshLayout srlProjects;
+    SmartRefreshLayout srlWeChats;
 
     @Inject
-    ProjectsPresenter mPresenter;
+    WeChatsPresenter mPresenter;
     @Inject
     LinearLayoutManager mLinearLayoutManager;
     @Inject
-    ProjectsAdapter mProjectsAdapter;
+    ArticlesAdapter mArticlesAdapter;
     @Inject
     List<Article> mArticles;
 
@@ -56,34 +57,38 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
     private Article mArticle;
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_projects;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            mId = bundle.getInt(Constant.KEY_WECHAT_ID, -1);
+        }
     }
 
     @Override
     protected void initView() {
-        if(!(getActivity() instanceof MainActivity)) return;
-        ((MainActivity) getActivity()).getComponent().getProjectFragmentComponent(new ProjectFragmentModule()).inject(this);
+        if (!(getActivity() instanceof MainActivity)) return;
+        ((MainActivity) getActivity()).getComponent().getWeChatsFragmentComponent(new WeChatsFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
         //项目列表
-        rvProjectList.setLayoutManager(mLinearLayoutManager);
-        mProjectsAdapter.openLoadAnimation();
-        rvProjectList.setAdapter(mProjectsAdapter);
-        srlProjects.setOnLoadMoreListener(refreshLayout -> {
-           mPageNum++;
-           mPresenter.loadMoreProjects(mPageNum, mId);
-           isLoadMore = true;
+        rvWechats.setLayoutManager(mLinearLayoutManager);
+        mArticlesAdapter.openLoadAnimation();
+        rvWechats.setAdapter(mArticlesAdapter);
+        srlWeChats.setOnLoadMoreListener(refreshLayout -> {
+            mPageNum++;
+            mPresenter.loadMoreMoreWeChats(mPageNum, mId);
+            isLoadMore = true;
         });
-        srlProjects.setOnRefreshListener(refreshLayout -> {
-            mPresenter.loadMoreProjects(1, mId);
+        srlWeChats.setOnRefreshListener(refreshLayout -> {
+            mPresenter.loadMoreMoreWeChats(1, mId);
             isLoadMore = false;
         });
-        mProjectsAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+        mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             Article article = mArticles.get(position);
             ArticleActivity.startActicityForResultByFragment(_mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
         });
-        mProjectsAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
+        mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;
             mArticle =  mArticles.get(position);
             if(!User.getInstance().isLoginStatus()){
@@ -94,14 +99,18 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
             collect();
             AnimUtil.scale(view, -1);
         });
-
     }
 
     @Override
     protected void loadData() {
         super.loadData();
         mPresenter.subscribleEvent();
-        mPresenter.loadProjects(1, mId);
+        mPresenter.loadWeChats(1, mId);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_wechats;
     }
 
     @Override
@@ -117,20 +126,11 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
                 boolean isCollect = data.getBooleanExtra(Constant.KEY_DATA_RETURN, false);
                 if(article.isCollect() != isCollect){
                     article.setCollect(isCollect);
-                    mProjectsAdapter.notifyItemChanged(mArticlePosition + mProjectsAdapter.getHeaderLayoutCount());
+                    mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
                 }
                 break;
             default:
                 break;
-        }
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        if(bundle != null){
-            mId = bundle.getInt(Constant.KEY_PROJECT_ID, -1);
         }
     }
 
@@ -142,12 +142,48 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
         }
         super.onDestroy();
     }
+    @Override
+    public void reLoad() {
+        super.reLoad();
+        mPresenter.loadWeChats(1, mId);
+    }
 
     @Override
-    public void showProjects(List<Article> articleList) {
+    public void showWeChats(List<Article> articleList) {
         if(!CommonUtil.isEmptyList(mArticles)) mArticles.clear();
         mArticles.addAll(articleList);
-        mProjectsAdapter.notifyDataSetChanged();
+        mArticlesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showMoreWeChats(List<Article> articleList) {
+        if(isLoadMore){
+            srlWeChats.finishLoadMore();
+        }else {
+            if(!CommonUtil.isEmptyList(mArticles)) mArticles.clear();
+            srlWeChats.finishRefresh();
+        }
+        mArticles.addAll(articleList);
+        mArticlesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void topping() {
+        if(rvWechats != null) rvWechats.smoothScrollToPosition(0);
+    }
+
+    @Override
+    public void collectArticleSuccess() {
+        showToast(getString(R.string.common_collection_success));
+        mArticles.get(mArticlePosition).setCollect(true);
+        mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
+    }
+
+    @Override
+    public void unCollectArticleSuccess() {
+        showToast(getString(R.string.common_uncollection_success));
+        mArticles.get(mArticlePosition).setCollect(false);
+        mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
     }
 
     @Override
@@ -160,43 +196,12 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
     }
 
     @Override
-    public void showMoreProjects(List<Article> articleList) {
-        if(isLoadMore){
-            srlProjects.finishLoadMore();
-        }else {
-            if(!CommonUtil.isEmptyList(mArticles)) mArticles.clear();
-            srlProjects.finishRefresh();
-        }
-        mArticles.addAll(articleList);
-        mProjectsAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void topping() {
-        if(rvProjectList != null) rvProjectList.smoothScrollToPosition(0);
-    }
-
-    @Override
-    public void collectArticleSuccess() {
-        showToast(getString(R.string.common_collection_success));
-        mArticles.get(mArticlePosition).setCollect(true);
-        mProjectsAdapter.notifyItemChanged(mArticlePosition + mProjectsAdapter.getHeaderLayoutCount());
-    }
-
-    @Override
-    public void unCollectArticleSuccess() {
-        showToast(getString(R.string.common_uncollection_success));
-        mArticles.get(mArticlePosition).setCollect(false);
-        mProjectsAdapter.notifyItemChanged(mArticlePosition + mProjectsAdapter.getHeaderLayoutCount());
-    }
-
-    @Override
     public void refreshCollections(List<Integer> ids) {
         for(int i = 0; i < ids.size(); i++){
             for(int j = 0; j < mArticles.size(); j++){
                 if(mArticles.get(j).getId() == ids.get(i)){
                     mArticles.get(j).setCollect(false);
-                    mProjectsAdapter.notifyItemChanged(j + mProjectsAdapter.getHeaderLayoutCount());
+                    mArticlesAdapter.notifyItemChanged(j + mArticlesAdapter.getHeaderLayoutCount());
                     break;
                 }
             }
@@ -205,24 +210,13 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
 
     @Override
     public void autoRefresh() {
-        srlProjects.autoRefresh();
-    }
-
-    @Override
-    public void reLoad() {
-        super.reLoad();
-        mPresenter.loadProjects(1, mId);
-    }
-
-    @Override
-    public void unableRefresh() {
-        if(isLoadMore) srlProjects.finishLoadMore(); else srlProjects.finishRefresh();
+        srlWeChats.autoRefresh();
     }
 
     public static Fragment newInstance(int id){
         Bundle bundle = new Bundle();
-        bundle.putInt(Constant.KEY_PROJECT_ID, id);
-        Fragment fragment = new ProjectsFragment();
+        bundle.putInt(Constant.KEY_WECHAT_ID, id);
+        Fragment fragment = new WeChatsFragment();
         fragment.setArguments(bundle);
         return fragment;
     }

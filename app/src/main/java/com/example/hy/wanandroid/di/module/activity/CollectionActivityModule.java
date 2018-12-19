@@ -34,7 +34,7 @@ public class CollectionActivityModule {
     @Provides
     @PerActivity
     CollectionsAdapter provideLinearCollectionsAdapter(List<Collection> collections){
-        return new CollectionsAdapter(R.layout.item_home_acticles, collections);
+        return new CollectionsAdapter(R.layout.item_acticles, collections);
     }
 
     @Provides

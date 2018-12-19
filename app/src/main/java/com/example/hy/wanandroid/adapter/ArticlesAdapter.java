@@ -22,7 +22,7 @@ import androidx.core.content.ContextCompat;
  */
 public class ArticlesAdapter extends BaseQuickAdapter<Article, BaseViewHolder> {
 
-    public ArticlesAdapter(int layoutResId, @Nullable List<Article> data, Context context) {
+    public ArticlesAdapter(int layoutResId, @Nullable List<Article> data) {
         super(layoutResId, data);
     }
 

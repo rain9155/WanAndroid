@@ -22,7 +22,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_search_request"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical">
 
             </androidx.recyclerview.widget.RecyclerView>
 

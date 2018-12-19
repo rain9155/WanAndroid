@@ -18,7 +18,7 @@ public class MainActivityModule {
     @Provides
     @PerActivity
     BaseFragment[] provideFragments(){
-        return new BaseFragment[4];
+        return new BaseFragment[5];
     }
 
     @Provides

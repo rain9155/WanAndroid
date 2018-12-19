@@ -41,6 +41,12 @@ public interface NetworkHelper {
     //获得项目列表
     Observable<BaseResponse<Articles>> getProjects(int pageNum, int id);
 
+    /** wechats */
+    //获得wechat的tabs
+    Observable<BaseResponse<List<Tab>>> getWeChatTabs();
+    //获得wechat列表
+    Observable<BaseResponse<Articles>> getWeChats(int pageNum, int id);
+
     /** mine */
     //获得登陆结果
     Observable<BaseResponse<Login>> getLoginRequest(String username, String password);

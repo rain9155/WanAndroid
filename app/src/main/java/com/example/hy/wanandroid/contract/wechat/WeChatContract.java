@@ -1,7 +1,8 @@
-package com.example.hy.wanandroid.contract.project;
+package com.example.hy.wanandroid.contract.wechat;
 
 import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.contract.project.ProjectContract;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.Tab;
 
@@ -10,17 +11,17 @@ import java.util.List;
 import io.reactivex.Observable;
 
 /**
- * 项目的Contract
- * Created by 陈健宇 at 2018/10/23
+ * WeChat的Contract
+ * Created by 陈健宇 at 2018/12/19
  */
-public interface ProjectContract {
+public interface WeChatContract {
 
     interface View extends BaseView {
-        void showProjectList(List<Tab> projectList);
+        void showWeChatTabs(List<Tab> tabs);
     }
 
-    interface Presenter extends IPresenter<ProjectContract.View> {
-        void loadProjectList();
+    interface Presenter extends IPresenter<View> {
+        void loadWeChatTabs();
     }
 
 }

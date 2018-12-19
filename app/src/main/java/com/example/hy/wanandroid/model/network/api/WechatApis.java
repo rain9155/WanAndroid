@@ -28,8 +28,9 @@ public interface WechatApis {
      * http://wanandroid.com/wxarticle/list/408/2/json
      */
     @GET("wxarticle/list/{id}/{pageNum}/json")
-    Observable<BaseResponse<Articles>> getWechatArticles(@Path("id") int id, //某个公众号id
-                                                         @Path("pageNum") int pageNum//某个公众号的页码
+    Observable<BaseResponse<Articles>> getWechatArticles(
+                                                        @Path("pageNum") int pageNum,//某个公众号的页码
+                                                        @Path("id") int id //某个公众号id
     );
 
     /**

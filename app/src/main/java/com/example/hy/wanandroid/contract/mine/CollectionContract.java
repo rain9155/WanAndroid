@@ -29,8 +29,4 @@ public interface CollectionContract {
         void unCollectArticle(int id, int original);//取消收藏
     }
 
-    interface Model{
-        Observable<BaseResponse<CollectionRequest>> getCollectionRequest(int pageNum);//获得收藏结果
-        Observable<BaseResponse<Collection>> getUnCollectRequest(int id, int originalId);//获得取消收藏结果
-    }
 }

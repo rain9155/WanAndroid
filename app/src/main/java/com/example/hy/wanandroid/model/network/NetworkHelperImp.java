@@ -7,6 +7,7 @@ import com.example.hy.wanandroid.model.network.api.NavigationApis;
 import com.example.hy.wanandroid.model.network.api.ProjectApis;
 import com.example.hy.wanandroid.model.network.api.SearchApis;
 import com.example.hy.wanandroid.model.network.api.VersionApi;
+import com.example.hy.wanandroid.model.network.api.WechatApis;
 import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.FirstHierarchy;
 import com.example.hy.wanandroid.model.network.entity.SecondHierarchy;
@@ -39,9 +40,10 @@ public class NetworkHelperImp implements NetworkHelper{
     private SearchApis mSearchApis;
     private HierarchyApis mHierarchyApis;
     private VersionApi mVersionApi;
+    private WechatApis mWechatApis;
     
     @Inject
-    public NetworkHelperImp(VersionApi versionApi, HomeApis homeApis, MineApis mineApis, NavigationApis navigationApis, ProjectApis projectApis, SearchApis searchApis, HierarchyApis hierarchyApis) {
+    public NetworkHelperImp(WechatApis wechatApis, VersionApi versionApi, HomeApis homeApis, MineApis mineApis, NavigationApis navigationApis, ProjectApis projectApis, SearchApis searchApis, HierarchyApis hierarchyApis) {
         mHomeApis = homeApis;
         mMineApis = mineApis;
         mNavigationApis = navigationApis;
@@ -49,6 +51,7 @@ public class NetworkHelperImp implements NetworkHelper{
         mSearchApis = searchApis;
         mHierarchyApis = hierarchyApis;
         mVersionApi = versionApi;
+        mWechatApis = wechatApis;
     }
 
     @Override
@@ -79,6 +82,16 @@ public class NetworkHelperImp implements NetworkHelper{
     @Override
     public Observable<BaseResponse<Articles>> getProjects(int pageNum, int id) {
         return mProjectApis.getProjects(pageNum, id);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<Tab>>> getWeChatTabs() {
+        return mWechatApis.getWechatTabs();
+    }
+
+    @Override
+    public Observable<BaseResponse<Articles>> getWeChats(int id, int pageNum) {
+        return mWechatApis.getWechatArticles(id, pageNum);
     }
 
     @Override

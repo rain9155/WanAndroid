@@ -26,8 +26,4 @@ public interface LoginContract {
         void login(String account, String password);//登陆
     }
 
-    interface Model{
-        Observable<BaseResponse<Login>> getLoginRequest(String username, String password);
-    }
-
 }

@@ -71,6 +71,16 @@ public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
     }
 
     @Override
+    public Observable<BaseResponse<List<Tab>>> getWeChatTabs() {
+        return mNetworkHelper.getWeChatTabs();
+    }
+
+    @Override
+    public Observable<BaseResponse<Articles>> getWeChats(int pageNum, int id) {
+        return mNetworkHelper.getWeChats(pageNum, id);
+    }
+
+    @Override
     public Observable<BaseResponse<Login>> getLoginRequest(String username, String password) {
         return mNetworkHelper.getLoginRequest(username, password);
     }

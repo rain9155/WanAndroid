@@ -20,7 +20,4 @@ public interface MineContract {
         void logout();//退出登陆
     }
 
-    interface Model{
-        Observable<BaseResponse<Login>> getLogoutRequest();
-    }
 }
