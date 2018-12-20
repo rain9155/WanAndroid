@@ -229,13 +229,14 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     }
 
     @Override
-    public void onBackPressedSupport() {
+    public void onBackPressed() {
         if(clHistoryHot.getVisibility() == View.INVISIBLE){
             hideSearchRequestLayout();
             showHistoryHotLayout();
         }else {
             finish();
         }
+
     }
 
     @Override

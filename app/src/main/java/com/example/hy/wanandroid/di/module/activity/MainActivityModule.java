@@ -5,6 +5,7 @@ import com.example.hy.wanandroid.di.scope.PerActivity;
 import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 
+import androidx.fragment.app.Fragment;
 import dagger.Module;
 import dagger.Provides;
 
@@ -17,7 +18,7 @@ public class MainActivityModule {
 
     @Provides
     @PerActivity
-    BaseFragment[] provideFragments(){
+    Fragment[] provideFragments(){
         return new BaseFragment[5];
     }
 

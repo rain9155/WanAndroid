@@ -40,6 +40,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * 首页tab
  * Created by 陈健宇 at 2018/10/23
@@ -93,16 +95,16 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         ((MainActivity) getActivity()).getComponent().getHomFragmentSubComponent(new HomeFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
-        StatusBarUtil.setHeightAndPadding(_mActivity, tlCommon);
+        StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
         //标题栏
         ivCommonSearch.setVisibility(View.VISIBLE);
         tvCommonTitle.setText(R.string.homeFragment_home);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
-        tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
-        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
+        tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(mActivity));
+        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(mActivity));
 
         //首页文章
-        View bannerLayout = LayoutInflater.from(_mActivity).inflate(R.layout.banner_layout, null);
+        View bannerLayout = LayoutInflater.from(mActivity).inflate(R.layout.banner_layout, null);
         banner = bannerLayout.findViewById(R.id.banner);
         rvArticles.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
@@ -110,13 +112,13 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         rvArticles.setAdapter(mArticlesAdapter);
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             Article article = mArticles.get(position);
-            ArticleActivity.startActicityForResultByFragment(_mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
+            ArticleActivity.startActicityForResultByFragment(mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;
             mArticle = mArticles.get(position);
             if(!User.getInstance().isLoginStatus()){
-                LoginActivity.startActivityForResultByFragment(_mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
+                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
                 showToast(getString(R.string.first_login));
                 return;
             }
@@ -138,7 +140,6 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
 
     @Override
     protected void loadData() {
-        super.loadData();
         mPresenter.subscribleEvent();
         mPresenter.loadBannerDatas();
         mPresenter.loadArticles(0);
@@ -162,7 +163,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
                 .setDelayTime(2000)//设置轮播事件间隔
                 .setOnBannerListener(position -> {
                     //跳转到详情
-                    ArticleActivity.startActivity(_mActivity, bannerAddress.get(position), bannerTitles.get(position), -1, false, true);
+                    ArticleActivity.startActivity(mActivity, bannerAddress.get(position), bannerTitles.get(position), -1, false, true);
                 })//设置点击事件，下标从零开始
                 .start();
     }

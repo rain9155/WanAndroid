@@ -9,14 +9,11 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.contract.wechat.WeChatContract;
-import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
 import com.example.hy.wanandroid.di.module.fragment.WeChatFragmentModule;
 import com.example.hy.wanandroid.model.network.entity.Tab;
 import com.example.hy.wanandroid.presenter.wechat.WeChatPresenter;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
-import com.example.hy.wanandroid.view.project.ProjectFragment;
-import com.example.hy.wanandroid.view.project.ProjectsFragment;
 import com.example.hy.wanandroid.view.search.SearchActivity;
 import com.google.android.material.tabs.TabLayout;
 
@@ -61,17 +58,16 @@ public class WeChatFragment extends BaseLoadFragment implements WeChatContract.V
         ((MainActivity) getActivity()).getComponent().getWeChatFragmentComponent(new WeChatFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
-        StatusBarUtil.setHeightAndPadding(_mActivity, tlCommon);
+        StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
         ivCommonSearch.setVisibility(View.VISIBLE);
         tvCommonTitle.setText(R.string.homeFragment_wechat);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
-        tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
-        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
+        tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(mActivity));
+        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(mActivity));
     }
 
     @Override
     protected void loadData() {
-        super.loadData();
         mPresenter.loadWeChatTabs();
     }
 

@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.fragment.BaseFragment;
+import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
@@ -27,11 +27,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * 我的tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class MineFragment extends BaseFragment implements MineContract.View {
+public class MineFragment extends BaseLoadFragment implements MineContract.View {
 
     @BindView(R.id.iv_face)
     CircleImageView ivFace;
@@ -95,16 +97,16 @@ public class MineFragment extends BaseFragment implements MineContract.View {
         if (mPresenter.getNightModeState())
             ivBack.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
-        btnLogin.setOnClickListener(v -> LoginActivity.startActivity(_mActivity));
-        clSettings.setOnClickListener(v -> SettingsActivity.startActivity(_mActivity));
+        btnLogin.setOnClickListener(v -> LoginActivity.startActivity(mActivity));
+        clSettings.setOnClickListener(v -> SettingsActivity.startActivity(mActivity));
         clCollection.setOnClickListener(v -> {
             if (!User.getInstance().isLoginStatus()) {
-                LoginActivity.startActivityForResultByFragment(_mActivity, this, Constant.REQUEST_SHOW_COLLECTIONS);
+                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_SHOW_COLLECTIONS);
                 showToast(getString(R.string.first_login));
             } else
-                CollectionActivity.startActivity(_mActivity);
+                CollectionActivity.startActivity(mActivity);
         });
-        clAboutus.setOnClickListener(v -> AboutUsActivity.startActivity(_mActivity));
+        clAboutus.setOnClickListener(v -> AboutUsActivity.startActivity(mActivity));
         clLogout.setOnClickListener(v -> {
             assert getFragmentManager() != null;
             mDialog.show(getFragmentManager(), "tag7");
@@ -130,7 +132,7 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_SHOW_COLLECTIONS)
-            CollectionActivity.startActivity(_mActivity);
+            CollectionActivity.startActivity(mActivity);
     }
 
     @Override
@@ -143,7 +145,7 @@ public class MineFragment extends BaseFragment implements MineContract.View {
 
     @Override
     public void setStatusBarColor(boolean isSet) {
-        StatusBarUtil.immersiveInFragments(_mActivity, Color.TRANSPARENT, 1);
+        StatusBarUtil.immersiveInFragments(mActivity, Color.TRANSPARENT, 1);
     }
 
     @Override

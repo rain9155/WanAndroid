@@ -17,7 +17,6 @@ import com.example.hy.wanandroid.presenter.wechat.WeChatsPresenter;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
-import com.example.hy.wanandroid.view.project.ProjectsFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -29,6 +28,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * WeChatsFragment
@@ -86,13 +87,13 @@ public class WeChatsFragment extends BaseLoadFragment implements WeChatsContract
         });
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             Article article = mArticles.get(position);
-            ArticleActivity.startActicityForResultByFragment(_mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
+            ArticleActivity.startActicityForResultByFragment(mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;
             mArticle =  mArticles.get(position);
             if(!User.getInstance().isLoginStatus()){
-                LoginActivity.startActivityForResultByFragment(_mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
+                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
                 showToast(getString(R.string.first_login));
                 return;
             }
@@ -103,7 +104,6 @@ public class WeChatsFragment extends BaseLoadFragment implements WeChatsContract
 
     @Override
     protected void loadData() {
-        super.loadData();
         mPresenter.subscribleEvent();
         mPresenter.loadWeChats(1, mId);
     }

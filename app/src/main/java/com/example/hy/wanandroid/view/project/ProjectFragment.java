@@ -65,17 +65,16 @@ public class ProjectFragment extends BaseLoadFragment implements ProjectContract
         ((MainActivity) getActivity()).getComponent().getProjectFragmentComponent(new ProjectFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
-        StatusBarUtil.setHeightAndPadding(_mActivity, tlCommon);
+        StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
         ivCommonSearch.setVisibility(View.VISIBLE);
         tvCommonTitle.setText(R.string.homeFragment_project);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
-        tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
-        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
+        tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(mActivity));
+        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(mActivity));
     }
 
     @Override
     protected void loadData() {
-        super.loadData();
         mPresenter.loadProjectList();
     }
 

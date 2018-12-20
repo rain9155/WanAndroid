@@ -1,10 +1,12 @@
 package com.example.hy.wanandroid.base.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.commonlib.utils.ToastUtil;
 
@@ -12,31 +14,39 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Fragment的基类
  * Created by 陈健宇 at 2018/10/21
  */
-public abstract class BaseFragment extends SupportFragment
+public abstract class BaseFragment extends AbstractLazyLoadFragment
         implements BaseView {
 
     private Unbinder mUnbinder;
+    protected Activity mActivity;
+    protected View mView;
     protected abstract void initView();//初始化控件
     protected abstract void loadData();//加载数据
     protected abstract int getLayoutId();//获取Fragment的布局Id
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity = activity;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(), container, false);
-        mUnbinder = ButterKnife.bind(this, view);
+        mView = inflater.inflate(getLayoutId(), container, false);
+        mUnbinder = ButterKnife.bind(this, mView);
         initView();
-        return view;
+        LogUtil.d("baselazy", "onCreateView()");
+        return mView;
     }
 
     @Override
-    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+    protected void onLazyLoadData() {
         loadData();
     }
 
@@ -79,7 +89,7 @@ public abstract class BaseFragment extends SupportFragment
 
     @Override
     public void showToast(String toast) {
-        ToastUtil.toastInBottom(_mActivity, toast);
+        ToastUtil.toastInBottom(mActivity, toast);
     }
 
     @Override

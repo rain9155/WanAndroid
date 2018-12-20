@@ -119,7 +119,7 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     }
 
     @Override
-    public void onBackPressedSupport() {
+    public void onBackPressed() {
         if(!CommonUtil.isEmptyList(mIds)) RxBus.getInstance().post(new CollectionEvent(mIds));
         finish();
     }

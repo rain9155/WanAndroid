@@ -68,13 +68,13 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
         ((MainActivity) getActivity()).getComponent().getHierarchyFragmentSubComponent(new HierarchyFragmentModule()).inject(this);
         mPresenter.attachView(this);
 
-        StatusBarUtil.setHeightAndPadding(_mActivity, tlCommon);
+        StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
         ivCommonSearch.setVisibility(View.VISIBLE);
         tvCommonTitle.setText(R.string.homeFragment_hierarchy);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
-        tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(_mActivity));
-        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
-        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(_mActivity));
+        tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(mActivity));
+        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(mActivity));
+        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(mActivity));
 
         rvHierarchy.setLayoutManager(mLayoutManager);
         mListAdapter.openLoadAnimation();
@@ -94,7 +94,6 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
 
     @Override
     protected void loadData() {
-        super.loadData();
         mPresenter.subscribleEvent();
         mPresenter.loadFirstHierarchyList();
     }
@@ -144,7 +143,7 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
                 listName.add(child.getName());
                 listId.add(String.valueOf(child.getId()));
             }
-            HierarchySecondActivity.startActivity(_mActivity, firstHierarchy.getName(), listId, listName);
+            HierarchySecondActivity.startActivity(mActivity, firstHierarchy.getName(), listId, listName);
         }
     }
 

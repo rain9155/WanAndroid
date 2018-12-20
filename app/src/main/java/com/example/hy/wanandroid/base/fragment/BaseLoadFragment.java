@@ -3,14 +3,17 @@ package com.example.hy.wanandroid.base.fragment;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 
-import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.commonlib.utils.AnimUtil;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import static com.example.hy.wanandroid.config.Constant.ERROR_STATE;
 import static com.example.hy.wanandroid.config.Constant.LOADING_STATE;
@@ -31,15 +34,20 @@ public abstract class BaseLoadFragment extends BaseFragment {
     private int mCurrentState = NORMAL_STATE;
 
     @Override
-    protected void loadData() {
-        if(getView() == null) return;
-        mNormalView = getView().findViewById(R.id.normal_view);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        loadView();
+    }
+
+    private void loadView() {
+        if(mView == null) return;
+        mNormalView = mView.findViewById(R.id.normal_view);
         if(mNormalView == null) throw new IllegalStateException("The subclass of BaseLoadFragment must contain a View it's id is named normal_view");
         if(!(mNormalView.getParent() instanceof ViewGroup)) throw new IllegalStateException("mNormalView's ParentView should be a ViewGroup");
 
         ViewGroup parent = (ViewGroup) mNormalView.getParent();
-        View.inflate(_mActivity, R.layout.error_view, parent);
-        View.inflate(_mActivity, R.layout.loaging_view, parent);
+        View.inflate(mActivity, R.layout.error_view, parent);
+        View.inflate(mActivity, R.layout.loaging_view, parent);
         mErrorView = parent.findViewById(R.id.cl_reload);
         mLoadingView = parent.findViewById(R.id.rl_loading);
         mIvReload = mErrorView.findViewById(R.id.iv_reload);

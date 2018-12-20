@@ -28,6 +28,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by 陈健宇 at 2018/10/28
  */
@@ -79,13 +81,13 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
         });
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             Article article = mArticleList.get(position);
-            ArticleActivity.startActicityForResultByFragment(_mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
+            ArticleActivity.startActicityForResultByFragment(mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;
             mArticle = mArticleList.get(position);
             if(!User.getInstance().isLoginStatus()) {
-                LoginActivity.startActivityForResultByFragment(_mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
+                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
                 showToast(getString(R.string.first_login));
                 return;
             }
@@ -96,7 +98,6 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
 
     @Override
     protected void loadData() {
-        super.loadData();
         mPresenter.subscribleEvent();
         mPresenter.loadArticles(0, mId);
     }

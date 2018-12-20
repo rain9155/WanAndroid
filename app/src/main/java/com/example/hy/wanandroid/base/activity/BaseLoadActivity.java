@@ -26,9 +26,10 @@ public abstract  class BaseLoadActivity extends BaseActivity {
     private ObjectAnimator mReloadAnimator;
     private int mCurrentState = NORMAL_STATE;
 
+
+
     @Override
     protected void initView() {
-
         mNormalView =  findViewById(R.id.normal_view);
         if(mNormalView == null) throw new IllegalStateException("The subclass of BaseLoadActivity must contain a View it's id is named normal_view");
         if(!(mNormalView.getParent() instanceof ViewGroup)) throw new IllegalStateException("mNormalView's ParentView should be a ViewGroup");

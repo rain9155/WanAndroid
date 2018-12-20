@@ -13,6 +13,8 @@ import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.commonlib.utils.ToastUtil;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import butterknife.ButterKnife;
@@ -23,8 +25,7 @@ import me.yokeyword.fragmentation.SupportActivity;
  * Activity的基类
  * Created by 陈健宇 at 2018/10/21
  */
-public abstract class BaseActivity extends SupportActivity
-        implements BaseView {
+public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
     private Unbinder mUnbinder;
     private NetWorkChangeReceiver mNetWorkChangeReceiver;
@@ -66,11 +67,6 @@ public abstract class BaseActivity extends SupportActivity
         }
         if(mTipView != null && mTipView.getParent() != null) ((ViewGroup)getWindow().getDecorView()).removeView(mTipView);
         super.onDestroy();
-    }
-
-    @Override
-    public void onTrimMemory(int level) {
-        super.onTrimMemory(level);
     }
 
     @Override

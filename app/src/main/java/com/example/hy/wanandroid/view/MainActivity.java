@@ -39,11 +39,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import butterknife.BindView;
 import android.os.Handler;
 
+import java.util.List;
+
 import javax.inject.Inject;
+
+import static com.example.hy.wanandroid.R2.id.fragments;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
 
@@ -62,7 +68,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Inject
     MainPresenter mPresenter;
     @Inject
-    BaseFragment[] mFragments;
+    Fragment[] mFragments;
     @Inject
     VersionDialog mVersionDialog;
     @Inject
@@ -85,14 +91,20 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             mFragments[2] = WeChatFragment.newInstance();
             mFragments[3] = ProjectFragment.newInstance();
             mFragments[4] = MineFragment.newInstance();
-            loadMultipleRootFragment(R.id.fl_container, 0, mFragments);
+            //loadMultipleRootFragment(R.id.fl_container, 0, mFragments);
+            loadMultipleFragment(R.id.fl_container, 0, mFragments);
             AppCompatDelegate.setDefaultNightMode(mPresenter.getNightModeState() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         }else {
-            mFragments[0] = findFragment(HomeFragment.class);
-            mFragments[1] = findFragment(HierarchyFragment.class);
-            mFragments[2] = findFragment(WeChatFragment.class);
-            mFragments[3] = findFragment(ProjectFragment.class);
-            mFragments[4] = findFragment(MineFragment.class);
+//            mFragments[0] = findFragment(HomeFragment.class);
+//            mFragments[1] = findFragment(HierarchyFragment.class);
+//            mFragments[2] = findFragment(WeChatFragment.class);
+//            mFragments[3] = findFragment(ProjectFragment.class);
+//            mFragments[4] = findFragment(MineFragment.class);
+            mFragments[0] = findFragmentByTag(HomeFragment.class.getName());
+            mFragments[1] = findFragmentByTag(HierarchyFragment.class.getName());
+            mFragments[2] = findFragmentByTag(WeChatFragment.class.getName());
+            mFragments[3] = findFragmentByTag(ProjectFragment.class.getName());
+            mFragments[4] = findFragmentByTag(MineFragment.class.getName());
             bnvBtm.setSelectedItemId(getSelectedId(mPresenter.getCurrentItem()));
         }
     }
@@ -108,31 +120,36 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         bnvBtm.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()){
                 case R.id.item_home:
-                    showHideFragment(mFragments[0], mFragments[mPreFragmentPosition]);
+                    //showHideFragment(mFragments[0], mFragments[mPreFragmentPosition]);
+                    showAndHideFragment(mFragments[0], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 0;
                     showFloatingButton();
                     setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_hierarchy:
-                    showHideFragment(mFragments[1], mFragments[mPreFragmentPosition]);
+                    //showHideFragment(mFragments[1], mFragments[mPreFragmentPosition]);
+                    showAndHideFragment(mFragments[1], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 1;
                     showFloatingButton();
                     setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_wechat:
-                    showHideFragment(mFragments[2], mFragments[mPreFragmentPosition]);
+                   // showHideFragment(mFragments[2], mFragments[mPreFragmentPosition]);
+                    showAndHideFragment(mFragments[2], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 2;
                     showFloatingButton();
                     setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_project:
-                    showHideFragment(mFragments[3], mFragments[mPreFragmentPosition]);
+                    //showHideFragment(mFragments[3], mFragments[mPreFragmentPosition]);
+                    showAndHideFragment(mFragments[3], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 3;
                     showFloatingButton();
                     setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_mine:
-                    showHideFragment(mFragments[4], mFragments[mPreFragmentPosition]);
+                    //showHideFragment(mFragments[4], mFragments[mPreFragmentPosition]);
+                    showAndHideFragment(mFragments[4], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 4;
                     hideFloatingButton();
                     StatusBarUtil.immersiveInImage(this);
@@ -158,7 +175,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     @Override
-    public void onBackPressedSupport() {
+    public void onBackPressed() {
         if(System.currentTimeMillis() - Constant.TOUCH_TIME < Constant.WAIT_TIME){
             finish();
         }else {
@@ -245,6 +262,40 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         }else {
             StatusBarUtil.immersiveInFragments(this, getResources().getColor(R.color.colorPrimaryDark), 1);
         }
+    }
+
+    /**
+     * 装载Fragments
+     */
+    private void loadMultipleFragment(int containerId, int showFragment, Fragment... fragments){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        for(int i = 0; i < fragments.length; i++){
+            Fragment fragment = fragments[i];
+            transaction.add(containerId, fragment, fragment.getClass().getName());
+            if(i != showFragment){
+                transaction.hide(fragment);
+            }
+        }
+        transaction.commitAllowingStateLoss();
+    }
+
+    /**
+     * 根据tag找到fragment实例
+     */
+    private Fragment findFragmentByTag(String tag){
+        return getSupportFragmentManager().findFragmentByTag(tag);
+    }
+
+    /**
+     * 显示和隐藏fragment
+     */
+    private void showAndHideFragment(Fragment show, Fragment hide){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if(show != hide)
+            transaction.show(show).hide(hide).commitAllowingStateLoss();
+        else
+            transaction.hide(hide).commitAllowingStateLoss();
+
     }
 
     /**
