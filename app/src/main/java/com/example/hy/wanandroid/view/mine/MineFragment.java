@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
@@ -33,7 +34,7 @@ import static android.app.Activity.RESULT_OK;
  * 我的tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class MineFragment extends BaseLoadFragment implements MineContract.View {
+public class MineFragment extends BaseFragment implements MineContract.View {
 
     @BindView(R.id.iv_face)
     CircleImageView ivFace;

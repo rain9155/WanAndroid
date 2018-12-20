@@ -64,7 +64,6 @@ public class App extends LitePalApplication {
             LeakCanary.install(this);
     }
 
-
     private void initLitepal() {
         LitePal.getDatabase();
     }

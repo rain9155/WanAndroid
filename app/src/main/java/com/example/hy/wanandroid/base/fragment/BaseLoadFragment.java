@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -35,13 +36,8 @@ public abstract class BaseLoadFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        loadView();
-    }
-
-    private void loadView() {
-        if(mView == null) return;
-        mNormalView = mView.findViewById(R.id.normal_view);
+        if(getView() == null) return;
+        mNormalView = getView().findViewById(R.id.normal_view);
         if(mNormalView == null) throw new IllegalStateException("The subclass of BaseLoadFragment must contain a View it's id is named normal_view");
         if(!(mNormalView.getParent() instanceof ViewGroup)) throw new IllegalStateException("mNormalView's ParentView should be a ViewGroup");
 
@@ -57,6 +53,8 @@ public abstract class BaseLoadFragment extends BaseFragment {
         mNormalView.setVisibility(View.VISIBLE);
         mErrorView.setVisibility(View.INVISIBLE);
         mLoadingView.setVisibility(View.INVISIBLE);
+
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override

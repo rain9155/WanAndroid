@@ -293,9 +293,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if(show != hide)
             transaction.show(show).hide(hide).commitAllowingStateLoss();
-        else
-            transaction.hide(hide).commitAllowingStateLoss();
-
     }
 
     /**

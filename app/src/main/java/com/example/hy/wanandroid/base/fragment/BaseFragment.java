@@ -1,12 +1,12 @@
 package com.example.hy.wanandroid.base.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.commonlib.utils.ToastUtil;
 
@@ -30,19 +30,18 @@ public abstract class BaseFragment extends AbstractLazyLoadFragment
     protected abstract int getLayoutId();//获取Fragment的布局Id
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(getLayoutId(), container, false);
-        mUnbinder = ButterKnife.bind(this, mView);
+        View view = inflater.inflate(getLayoutId(), container, false);
+        mUnbinder = ButterKnife.bind(this, view);
         initView();
-        LogUtil.d("baselazy", "onCreateView()");
-        return mView;
+        return view;
     }
 
     @Override
