@@ -16,7 +16,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 
-
     <application
         android:name=".config.App"
         android:allowBackup="true"
@@ -24,15 +23,15 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:debuggable="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning,HardcodedDebugMode">
-        <activity
-            android:name=".view.MainActivity"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden">
+        tools:ignore="GoogleAppIndexingWarning,HardcodedDebugMode"
+        tools:replace="android:supportsRtl">
 
-        </activity>
+        <activity
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:name=".view.MainActivity" />
         <activity android:name=".view.hierarchy.HierarchySecondActivity" />
         <activity android:name=".view.navigation.NavigationActivity" />
         <activity
