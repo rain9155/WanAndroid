@@ -29,7 +29,6 @@ import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
 import com.example.hy.wanandroid.view.project.ProjectFragment;
 import com.example.hy.wanandroid.view.wechat.WeChatFragment;
-import com.example.hy.wanandroid.view.wechat.WeChatsFragment;
 import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -45,11 +44,9 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import butterknife.BindView;
 import android.os.Handler;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
-import static com.example.hy.wanandroid.R2.id.fragments;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
 
@@ -91,15 +88,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             mFragments[2] = WeChatFragment.newInstance();
             mFragments[3] = ProjectFragment.newInstance();
             mFragments[4] = MineFragment.newInstance();
-            //loadMultipleRootFragment(R.id.fl_container, 0, mFragments);
             loadMultipleFragment(R.id.fl_container, 0, mFragments);
             AppCompatDelegate.setDefaultNightMode(mPresenter.getNightModeState() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         }else {
-//            mFragments[0] = findFragment(HomeFragment.class);
-//            mFragments[1] = findFragment(HierarchyFragment.class);
-//            mFragments[2] = findFragment(WeChatFragment.class);
-//            mFragments[3] = findFragment(ProjectFragment.class);
-//            mFragments[4] = findFragment(MineFragment.class);
             mFragments[0] = findFragmentByTag(HomeFragment.class.getName());
             mFragments[1] = findFragmentByTag(HierarchyFragment.class.getName());
             mFragments[2] = findFragmentByTag(WeChatFragment.class.getName());
@@ -120,35 +111,30 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         bnvBtm.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()){
                 case R.id.item_home:
-                    //showHideFragment(mFragments[0], mFragments[mPreFragmentPosition]);
                     showAndHideFragment(mFragments[0], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 0;
                     showFloatingButton();
                     setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_hierarchy:
-                    //showHideFragment(mFragments[1], mFragments[mPreFragmentPosition]);
                     showAndHideFragment(mFragments[1], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 1;
                     showFloatingButton();
                     setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_wechat:
-                   // showHideFragment(mFragments[2], mFragments[mPreFragmentPosition]);
                     showAndHideFragment(mFragments[2], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 2;
                     showFloatingButton();
                     setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_project:
-                    //showHideFragment(mFragments[3], mFragments[mPreFragmentPosition]);
                     showAndHideFragment(mFragments[3], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 3;
                     showFloatingButton();
                     setStatusBarColor(mPresenter.getStatusBarState());
                     break;
                 case R.id.item_mine:
-                    //showHideFragment(mFragments[4], mFragments[mPreFragmentPosition]);
                     showAndHideFragment(mFragments[4], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 4;
                     hideFloatingButton();
