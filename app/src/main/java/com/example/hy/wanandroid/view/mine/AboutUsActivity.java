@@ -120,7 +120,7 @@ public class AboutUsActivity extends BaseActivity {
                 }
             }
         });
-        refreshLayout.autoRefresh();//进入界面时自动刷新
+        //refreshLayout.autoRefresh();//进入界面时自动刷新
         fab.setOnClickListener(v -> refreshLayout.autoRefresh());//点击悬浮按钮时自动刷新
 
         tvContent.setText(Html.fromHtml(getString(R.string.aboutActivity_about_us_text)));

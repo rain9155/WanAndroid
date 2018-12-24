@@ -144,14 +144,7 @@
     @android.support.annotation.Keep <init>(...);
 }
 
--ignorewarnings
-
--keep class * {
-    public private *;
-}
-
 ###################################### 第三方库 ##################################
-
 ### Litpal
 -keep class org.litepal.** { *;}
 -keep class * extends org.litepal.crud.DataSupport { *;}
@@ -195,8 +188,6 @@
   **[] $VALUES;
   public *;
 }
-# for DexGuard only
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
 ### BaseRecyclerViewAdapterHelper
 -keep class com.chad.library.adapter.** {*;}
