@@ -30,7 +30,7 @@
 ### TODO
 - [ ] 公众号模块
 - [ ] Dagger-Android
-- [ ] Bugly管理
+- [ ] 自定义TabLayout
 - [ ] 优化app
 - [ ] 最新文章
 ### ChangeLog
