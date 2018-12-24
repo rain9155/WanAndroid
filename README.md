@@ -5,6 +5,7 @@
 ### Features
 - [x] 首页
 - [x] 知识体系
+- [x] 公众号
 - [x] 导航
 - [x] 项目
 - [x] 搜索，热词搜索，搜索记录
@@ -34,6 +35,12 @@
 - [ ] 最新文章
 ### ChangeLog
 ```
+v1.2 2018-12-24
+1、增加公众号模块
+2、集成bugly
+3、移除Fragmentation库
+4、更新版本更新弹窗
+
 v1.1 2018-12-15
 1、优化夜间切换
 2、加入沉浸切换
@@ -53,7 +60,6 @@ v1.0 2018-12-1
 [GeekNews](https://github.com/codeestX/GeekNews) <br>
 * **UI** <br>
 [阿里巴巴图标](http://www.iconfont.cn/home/index) <br> 
-[花瓣网](http://huaban.com/)<br>
 [Material Design Palette](http://huaban.com/)<br>
 [Material Design Color](https://www.materialui.co/colors)<br>
 * **DB** <br>
@@ -66,14 +72,13 @@ v1.0 2018-12-1
 [Dagger](https://github.com/google/dagger) <br>
 * **ImageLoader** <br>
 [Glide](https://github.com/bumptech/glide)<br>
-* **Other excellent third-party open source library** <br>
+* **Other excellent open source library** <br>
 [WaveLoadingView](https://github.com/tangqi92/WaveLoadingView)<br>
 [MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)<br>
 [VerticalTabLayout](https://github.com/qstumn/VerticalTabLayout)<br>
 [BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)<br>
 [Banner](https://github.com/youth5201314/banner)<br>
 [Butterknife](https://github.com/JakeWharton/butterknife)<br>
-[Fragmentation](https://github.com/YoKeyword/Fragmentation)<br>
 [FlowLayout](https://github.com/hongyangAndroid/FlowLayout)<br>
 [AgentWeb](https://github.com/Justson/AgentWeb)<br>
 [SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout)<br>
