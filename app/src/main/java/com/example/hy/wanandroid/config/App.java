@@ -45,7 +45,7 @@ public class App extends LitePalApplication {
         mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         mContext = this;
         initLitepal();
-        //initBugly();
+        initBugly();
         initLeakCanary();
     }
 
