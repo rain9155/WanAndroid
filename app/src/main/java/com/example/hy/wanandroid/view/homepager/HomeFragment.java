@@ -111,8 +111,9 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         mArticlesAdapter.addHeaderView(bannerLayout);
         rvArticles.setAdapter(mArticlesAdapter);
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
-            Article article = mArticles.get(position);
-            ArticleActivity.startActicityForResultByFragment(mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
+            mArticlePosition = position;
+            mArticle = mArticles.get(position);
+            ArticleActivity.startActicityForResultByFragment(mActivity, this, mArticle.getLink(), mArticle.getTitle(), mArticle.getId(), mArticle.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;

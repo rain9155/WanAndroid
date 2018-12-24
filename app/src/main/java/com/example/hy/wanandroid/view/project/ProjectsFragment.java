@@ -82,7 +82,9 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
             isLoadMore = false;
         });
         mProjectsAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+            mArticlePosition = position;
             Article article = mArticles.get(position);
+            mArticle = article;
             ArticleActivity.startActicityForResultByFragment(mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mProjectsAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏

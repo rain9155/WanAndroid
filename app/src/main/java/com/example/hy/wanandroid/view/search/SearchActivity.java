@@ -151,7 +151,9 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
             mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), mPageNum);
         });
         mSearchResquestAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+            mArticlePosition = position;
             Article article = mSearchResquestList.get(position);
+            mArticle = article;
             ArticleActivity.startActivityForResult(SearchActivity.this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mSearchResquestAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
