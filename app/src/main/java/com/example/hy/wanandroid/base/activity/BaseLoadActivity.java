@@ -26,8 +26,6 @@ public abstract  class BaseLoadActivity extends BaseActivity {
     private ObjectAnimator mReloadAnimator;
     private int mCurrentState = NORMAL_STATE;
 
-
-
     @Override
     protected void initView() {
         mNormalView =  findViewById(R.id.normal_view);

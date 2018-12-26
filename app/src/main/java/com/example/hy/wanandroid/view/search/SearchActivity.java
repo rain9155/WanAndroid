@@ -106,50 +106,21 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     @Override
     protected void initView() {
         super.initView();
-
         DaggerSearchActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
+        initToolBar();
+        initHistoryView();
+        initSearchRequestView();
+        initRefreshView();
+    }
 
-        //标题栏
-        setSupportActionBar(tlCommon);
-        tlCommon.setTitle("");
-        tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
-        ivCommonSearch.setVisibility(View.INVISIBLE);
-        tlCommon.setNavigationOnClickListener(v -> {
-            if(clHistoryHot.getVisibility() == View.INVISIBLE){
-                hideSearchRequestLayout();
-                showHistoryHotLayout();
-            }else {
-                mSearchView.setQuery("", false);
-                mSearchView.clearFocus();
-                finish();
-            }
-        });
-
-        //历史记录
-        mHistoryAdapter.openLoadAnimation();
-        rvHistory.setLayoutManager(mHistoriesManager);
-        rvHistory.setAdapter(mHistoryAdapter);
-        mHistoryAdapter.setOnItemClickListener((adapter, view, position) -> mSearchView.setQuery(mHistoryList.get(position), true));
-        mHistoryAdapter.setOnItemChildClickListener((adapter, view, position) -> mPresenter.deleteOneHistoryRecord(mHistoryList.get(position)));
-        tvClear.setOnClickListener(v -> mPresenter.deleteAllHistoryRecord());
-
+    private void initSearchRequestView() {
         //搜索结果
         mSearchResquestAdapter.openLoadAnimation();
         rvSearchRequest.setLayoutManager(mSearchRequestManager);
         rvSearchRequest.setAdapter(mSearchResquestAdapter);
-        normalView.setOnRefreshListener(refreshLayout -> {
-            isLoadMore = false;
-            mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), 0);
-        });
-        normalView.setOnLoadMoreListener(refreshLayout -> {
-            isLoadMore = true;
-            mPageNum++;
-            mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), mPageNum);
-        });
         mSearchResquestAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             mArticlePosition = position;
             Article article = mSearchResquestList.get(position);
@@ -167,8 +138,48 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
             collect();
             AnimUtil.scale(view, -1);
         });
+    }
+
+    private void initHistoryView() {
+        //历史记录
+        mHistoryAdapter.openLoadAnimation();
+        rvHistory.setLayoutManager(mHistoriesManager);
+        rvHistory.setAdapter(mHistoryAdapter);
+        mHistoryAdapter.setOnItemClickListener((adapter, view, position) -> mSearchView.setQuery(mHistoryList.get(position), true));
+        mHistoryAdapter.setOnItemChildClickListener((adapter, view, position) -> mPresenter.deleteOneHistoryRecord(mHistoryList.get(position)));
+        tvClear.setOnClickListener(v -> mPresenter.deleteAllHistoryRecord());
+    }
+
+    private void initRefreshView() {
+        normalView.setOnRefreshListener(refreshLayout -> {
+            isLoadMore = false;
+            mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), 0);
+        });
+        normalView.setOnLoadMoreListener(refreshLayout -> {
+            isLoadMore = true;
+            mPageNum++;
+            mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), mPageNum);
+        });
         normalView.setEnableLoadMore(false);
         normalView.setEnableRefresh(false);
+    }
+
+    private void initToolBar() {
+        //标题栏
+        setSupportActionBar(tlCommon);
+        tlCommon.setTitle("");
+        tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
+        ivCommonSearch.setVisibility(View.INVISIBLE);
+        tlCommon.setNavigationOnClickListener(v -> {
+            if(clHistoryHot.getVisibility() == View.INVISIBLE){
+                hideSearchRequestLayout();
+                showHistoryHotLayout();
+            }else {
+                mSearchView.setQuery("", false);
+                mSearchView.clearFocus();
+                finish();
+            }
+        });
     }
 
     @Override

@@ -44,8 +44,7 @@ public class ArticlesAdapter extends BaseQuickAdapter<Article, BaseViewHolder> {
                             ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.colorCollected))
                     )
             );
-        }
-        else{
+        } else{
             holder.setImageResource(R.id.iv_collection, R.drawable.ic_home_collection);
         }
     }

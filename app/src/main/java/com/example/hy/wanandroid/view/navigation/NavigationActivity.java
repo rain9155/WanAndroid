@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.NavigationTagsAdapter;
 import com.example.hy.wanandroid.adapter.NavigationTagsNameAdapter;
@@ -56,7 +57,9 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
     List<Tag> mTags;
 
     private NavigationTagsNameAdapter mNavigationTagsNameAdapter;
-    private int index;//滑动停止时标签列表的下标
+    private int mFirstIndex;
+    private int mLastIndex;
+    private int mYConsume = 0;
 
     @Override
     protected int getLayoutId() {
@@ -68,21 +71,40 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
         super.initView();
         DaggerNavigationActivityComponent.builder().appComponent(getAppComponent()).navigationActivityModule(new NavigationActivityModule()).build().inject(this);
         mPresenter.attachView(this);
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
+        initToolBar();
+        initVtlTabs();
+        initRecyclerView();
+    }
 
-        ivCommonSearch.setVisibility(View.INVISIBLE);
-        tvCommonTitle.setText(R.string.navigationActivity_tlTitle);
-        tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
-        tlCommon.setNavigationOnClickListener(v -> finish());
-        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(this));
-
-        //垂直子标签栏
+    private void initRecyclerView() {
         mNavigationTagsAdapter.openLoadAnimation();
         rvNavigation.setLayoutManager(mLinearLayoutManager);
         rvNavigation.setAdapter(mNavigationTagsAdapter);
+        rvNavigation.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && vtlNavigation != null) {
+                    mFirstIndex = mLinearLayoutManager.findFirstVisibleItemPosition();
+                    mLastIndex = mLinearLayoutManager.findLastVisibleItemPosition();
+                    if(mYConsume > 0 && mLastIndex != RecyclerView.NO_POSITION)
+                        vtlNavigation.setTabSelected(mLastIndex);
+                    if(mYConsume < 0 && mFirstIndex != RecyclerView.NO_POSITION)
+                        vtlNavigation.setTabSelected(mFirstIndex);
+                }
+            }
 
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mYConsume = dy;
+            }
+        });
+    }
+
+    private void initVtlTabs() {
         //垂直标签栏
         vtlNavigation.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
@@ -95,23 +117,14 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
 
             }
         });
+    }
 
-        rvNavigation.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    index = mLinearLayoutManager.findFirstVisibleItemPosition();
-                    vtlNavigation.setTabSelected(index);
-                }
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
-
+    private void initToolBar() {
+        ivCommonSearch.setVisibility(View.INVISIBLE);
+        tvCommonTitle.setText(R.string.navigationActivity_tlTitle);
+        tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
+        tlCommon.setNavigationOnClickListener(v -> finish());
+        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(this));
     }
 
     @Override

@@ -70,22 +70,16 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     @Override
     protected void initView( ) {
         super.initView();
-
         DaggerCollectionActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
+        initToolBar();
+        initRecyclerView();
+        initRefreshView();
+    }
 
-        //标题
-        ivCommonSearch.setVisibility(View.INVISIBLE);
-        tvCommonTitle.setText(R.string.mineFragment_tvCollect);
-        tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
-        tlCommon.setNavigationOnClickListener(v -> {
-            if(!CommonUtil.isEmptyList(mIds)) RxBus.getInstance().post(new CollectionEvent(mIds));
-            finish();
-        });
-
+    private void initRecyclerView() {
         //collections
         mCollectionsAdapter.openLoadAnimation();
         rvCollections.setLayoutManager(mLinearLayoutManager);
@@ -101,6 +95,9 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
             mPresenter.unCollectArticle(collection.getId(), collection.getOriginId());
             AnimUtil.scale(view, -1);
         });
+    }
+
+    private void initRefreshView() {
         normalView.setOnRefreshListener(refreshLayout -> {
             isLoadMore = false;
             mPresenter.loadMoreCollections(0);
@@ -109,6 +106,17 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
             isLoadMore = true;
             pageNum++;
             mPresenter.loadMoreCollections(pageNum);
+        });
+    }
+
+    private void initToolBar() {
+        //标题
+        ivCommonSearch.setVisibility(View.INVISIBLE);
+        tvCommonTitle.setText(R.string.mineFragment_tvCollect);
+        tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
+        tlCommon.setNavigationOnClickListener(v -> {
+            if(!CommonUtil.isEmptyList(mIds)) RxBus.getInstance().post(new CollectionEvent(mIds));
+            finish();
         });
     }
 

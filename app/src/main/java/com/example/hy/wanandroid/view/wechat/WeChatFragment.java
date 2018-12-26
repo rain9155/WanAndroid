@@ -57,8 +57,11 @@ public class WeChatFragment extends BaseLoadFragment implements WeChatContract.V
         if (!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getWeChatFragmentComponent(new WeChatFragmentModule()).inject(this);
         mPresenter.attachView(this);
-
         StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
+        initToolBar();
+    }
+
+    private void initToolBar() {
         ivCommonSearch.setVisibility(View.VISIBLE);
         tvCommonTitle.setText(R.string.homeFragment_wechat);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);

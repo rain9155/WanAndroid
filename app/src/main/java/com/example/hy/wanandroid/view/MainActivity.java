@@ -42,6 +42,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import butterknife.BindView;
+import dagger.Lazy;
+
 import android.os.Handler;
 
 
@@ -67,7 +69,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Inject
     Fragment[] mFragments;
     @Inject
-    VersionDialog mVersionDialog;
+    Lazy<VersionDialog> mVersionDialog;
     @Inject
     OpenBrowseDialog mOpenBrowseDialog;
 
@@ -209,9 +211,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     public void showUpdataDialog(String content) {
-        mVersionDialog.setContentText(content);
-        mVersionDialog.setIsMain(true);
-        mVersionDialog.show(getSupportFragmentManager(), "tag5");
+        mVersionDialog.get().setContentText(content);
+        mVersionDialog.get().setIsMain(true);
+        mVersionDialog.get().show(getSupportFragmentManager(), "tag5");
     }
 
     @Override

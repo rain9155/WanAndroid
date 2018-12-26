@@ -26,6 +26,7 @@ import javax.inject.Inject;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.Lazy;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterActivity extends BaseActivity implements RegisterContract.View {
@@ -60,7 +61,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     @Inject
     RegisterPresenter mPresenter;
     @Inject
-    LoadingDialog mLoadingDialog;
+    Lazy<LoadingDialog> mLoadingDialog;
 
     private View focusView = null;
 
@@ -71,10 +72,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @Override
     protected void initView() {
-
         DaggerRegisterActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
         mPresenter.attachView(this);
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setPaddingSmart(this, rootView);
 
@@ -141,17 +140,17 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @Override
     public void showErrorView() {
-        mLoadingDialog.dismiss();
+        mLoadingDialog.get().dismiss();
     }
 
     @Override
     public void showNormalView() {
-        mLoadingDialog.dismiss();
+        mLoadingDialog.get().dismiss();
     }
 
     @Override
     public void showLoading() {
-        mLoadingDialog.show(getSupportFragmentManager(), "tag3");
+        mLoadingDialog.get().show(getSupportFragmentManager(), "tag3");
     }
 
     public static void startActivity(Context context) {

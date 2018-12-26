@@ -67,20 +67,15 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
         if(!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getProjectFragmentComponent(new ProjectFragmentModule()).inject(this);
         mPresenter.attachView(this);
+        initRecyclerView();
+        initRefreshView();
+    }
 
+    private void initRecyclerView() {
         //项目列表
         rvProjectList.setLayoutManager(mLinearLayoutManager);
         mProjectsAdapter.openLoadAnimation();
         rvProjectList.setAdapter(mProjectsAdapter);
-        srlProjects.setOnLoadMoreListener(refreshLayout -> {
-           mPageNum++;
-           mPresenter.loadMoreProjects(mPageNum, mId);
-           isLoadMore = true;
-        });
-        srlProjects.setOnRefreshListener(refreshLayout -> {
-            mPresenter.loadMoreProjects(1, mId);
-            isLoadMore = false;
-        });
         mProjectsAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             mArticlePosition = position;
             Article article = mArticles.get(position);
@@ -98,7 +93,18 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
             collect();
             AnimUtil.scale(view, -1);
         });
+    }
 
+    private void initRefreshView() {
+        srlProjects.setOnLoadMoreListener(refreshLayout -> {
+            mPageNum++;
+            mPresenter.loadMoreProjects(mPageNum, mId);
+            isLoadMore = true;
+        });
+        srlProjects.setOnRefreshListener(refreshLayout -> {
+            mPresenter.loadMoreProjects(1, mId);
+            isLoadMore = false;
+        });
     }
 
     @Override

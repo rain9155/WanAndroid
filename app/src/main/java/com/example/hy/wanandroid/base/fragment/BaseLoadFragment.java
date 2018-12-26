@@ -40,7 +40,6 @@ public abstract class BaseLoadFragment extends BaseFragment {
         mNormalView = getView().findViewById(R.id.normal_view);
         if(mNormalView == null) throw new IllegalStateException("The subclass of BaseLoadFragment must contain a View it's id is named normal_view");
         if(!(mNormalView.getParent() instanceof ViewGroup)) throw new IllegalStateException("mNormalView's ParentView should be a ViewGroup");
-
         ViewGroup parent = (ViewGroup) mNormalView.getParent();
         View.inflate(mActivity, R.layout.error_view, parent);
         View.inflate(mActivity, R.layout.loaging_view, parent);

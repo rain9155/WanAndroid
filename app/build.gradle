@@ -1,9 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'bugly'
 
 android {
 
     compileSdkVersion  rootProject.ext.android.compileSdkVersion
+
+    bugly {
+        appId = 'a0768ddf34' // 注册时分配的App ID
+        appKey = '9d2b9c08-11b7-45d2-b4b4-89753d6df453' // 注册时分配的App Key
+    }
 
     defaultConfig {
         applicationId "com.example.hy.wanandroid"

@@ -19,10 +19,10 @@ import com.example.commonlib.R;
  */
 public class ToastUtil{
 
-    private static Toast toast;
+    private static Toast mToastInBottom;
     @SuppressLint("StaticFieldLeak")
-    private static TextView textView;
-    private static Toast toast2;
+    private static TextView mTextView;
+    private static Toast mShowToast;
 
     /**
      * Toast提示
@@ -30,12 +30,12 @@ public class ToastUtil{
      */
     @SuppressLint("ShowToast")
     public static void showToast(Context context, String message){
-        if(toast2 == null){
-            toast2 = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        if(mShowToast == null){
+            mShowToast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
         }else {
-            toast2.setText(message);
+            mShowToast.setText(message);
         }
-        toast2.show();
+        mShowToast.show();
     }
 
     @SuppressLint({"ResourceAsColor"})
@@ -53,20 +53,20 @@ public class ToastUtil{
 
     @SuppressLint({"ResourceAsColor"})
     public static void toastInBottom(Context context, String message) {
-        if(toast == null){
+        if(mToastInBottom == null){
             @SuppressLint("InflateParams")
             View toastView = LayoutInflater.from(context).inflate(R.layout.toast_bottom, null);
-            textView = toastView.findViewById(R.id.tv_toast);
-            textView.setText(message);
+            mTextView = toastView.findViewById(R.id.tv_toast);
+            mTextView.setText(message);
 
-            toast = new Toast(context);
-            toast.setGravity(Gravity.BOTTOM, 0, DisplayUtil.dip2px(context, 50));
-            toast.setDuration(Toast.LENGTH_SHORT);
-            toast.setView(toastView);
+            mToastInBottom = new Toast(context);
+            mToastInBottom.setGravity(Gravity.BOTTOM, 0, DisplayUtil.dip2px(context, 50));
+            mToastInBottom.setDuration(Toast.LENGTH_SHORT);
+            mToastInBottom.setView(toastView);
          }else {
-            textView.setText(message);
+            mTextView.setText(message);
         }
-        toast.show();
+        mToastInBottom.show();
     }
 
     public static void toastMake(final TextView textView, final ViewGroup viewGroup, String s, int backgroundColor, int textColor) {

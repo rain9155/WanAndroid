@@ -61,24 +61,28 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            mId = bundle.getInt(Constant.KEY_HIERARCHY_PAGENUM, -1);
+        }
+    }
+
+    @Override
     protected void initView() {
         if(!(getActivity() instanceof HierarchySecondActivity)) return;
         ((HierarchySecondActivity) getActivity()).getComponent().getHierarchySecondFragmentComponent(new HierarchySecondFragmentModule()).inject(this);
         mPresenter.attachView(this);
+        initRecyclerView();
+        initRefreshView();
+    }
 
+    private void initRecyclerView() {
         mArticlesAdapter.openLoadAnimation();
         rvHierarchySecondList.setHasFixedSize(true);
         rvHierarchySecondList.setLayoutManager(mLinearLayoutManager);
         rvHierarchySecondList.setAdapter(mArticlesAdapter);
-        srlHierarchyList.setOnRefreshListener(refreshLayout -> {
-            mPresenter.loadMoreArticles(0, mId);
-            isLoadMore = false;
-        });
-        srlHierarchyList.setOnLoadMoreListener(refreshLayout -> {
-            mPageNum++;
-            mPresenter.loadMoreArticles(mPageNum, mId);
-            isLoadMore = true;
-        });
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             mArticlePosition = position;
             Article article = mArticleList.get(position);
@@ -98,10 +102,31 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
         });
     }
 
+    private void initRefreshView() {
+        srlHierarchyList.setOnRefreshListener(refreshLayout -> {
+            mPresenter.loadMoreArticles(0, mId);
+            isLoadMore = false;
+        });
+        srlHierarchyList.setOnLoadMoreListener(refreshLayout -> {
+            mPageNum++;
+            mPresenter.loadMoreArticles(mPageNum, mId);
+            isLoadMore = true;
+        });
+    }
+
     @Override
     protected void loadData() {
         mPresenter.subscribleEvent();
         mPresenter.loadArticles(0, mId);
+    }
+
+    @Override
+    public void onDestroy() {
+        if(mPresenter != null){
+            mPresenter.detachView();
+            mPresenter = null;
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -194,25 +219,6 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
             default:
                 break;
         }
-    }
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        if(bundle != null){
-            mId = bundle.getInt(Constant.KEY_HIERARCHY_PAGENUM, -1);
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        if(mPresenter != null){
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
     }
 
     public static Fragment newInstance(int id){

@@ -66,6 +66,10 @@ public class ProjectFragment extends BaseLoadFragment implements ProjectContract
         mPresenter.attachView(this);
 
         StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
+        initToolBar();
+    }
+
+    private void initToolBar() {
         ivCommonSearch.setVisibility(View.VISIBLE);
         tvCommonTitle.setText(R.string.homeFragment_project);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);

@@ -55,9 +55,9 @@ public class HierarchySecondActivity extends BaseActivity {
     @Inject
     List<Integer> mIds;
 
-
     private FragmentPagerAdapter mPagerAdapter;
     private HierarchySecondActivityComponent mComponent;
+    private String mTitle;
 
     @Override
     protected int getLayoutId() {
@@ -65,37 +65,43 @@ public class HierarchySecondActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
-        mComponent = DaggerHierarchySecondActivityComponent.builder().appComponent(getAppComponent()).hierarchySecondActivityModule(new HierarchySecondActivityModule()).build();
-        mComponent.inject(this);
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
-            StatusBarUtil.setHeightAndPadding(this, tlCommon);
-
-        //取数据
+    protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         for (String s : intent.getStringArrayListExtra(Constant.KEY_HIERARCHY_ID))
             mIds.add(Integer.valueOf(s));
         mTitles = intent.getStringArrayListExtra(Constant.KEY_HIERARCHY_NAMES);
+        mTitle = intent.getStringExtra(Constant.KEY_HIERARCHY_NAME);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void initView() {
+        mComponent = DaggerHierarchySecondActivityComponent.builder().appComponent(getAppComponent()).hierarchySecondActivityModule(new HierarchySecondActivityModule()).build();
+        mComponent.inject(this);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, tlCommon);
+        initToolBar();
+        initViewPager();
+        fbtnUp.setOnClickListener(v -> RxBus.getInstance().post(new ToppingEvent()));
+    }
+
+    private void initViewPager() {
         for (int i = 0; i < mTitles.size(); i++) {
             commonTablayout.addTab(commonTablayout.newTab().setText(mTitles.get(i)));
             mFragments.add(HierarchySecondFragment.newInstance(mIds.get(i)));
         }
-
-        //标题栏
-        setSupportActionBar(tlCommon);
-        ivCommonSearch.setVisibility(View.INVISIBLE);
-        tvCommonTitle.setText(intent.getStringExtra(Constant.KEY_HIERARCHY_NAME));
-        tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
-        tlCommon.setNavigationOnClickListener(v -> finish());
-
-        //viewpager
         mPagerAdapter = new VpAdapter(getSupportFragmentManager(), mFragments, mTitles);
         vpHierarchySecond.setAdapter(mPagerAdapter);
         vpHierarchySecond.setOffscreenPageLimit(mTitles.size());
         commonTablayout.setupWithViewPager(vpHierarchySecond);
+    }
 
-        fbtnUp.setOnClickListener(v -> RxBus.getInstance().post(new ToppingEvent()));
+    private void initToolBar() {
+        setSupportActionBar(tlCommon);
+        ivCommonSearch.setVisibility(View.INVISIBLE);
+        tvCommonTitle.setText(mTitle);
+        tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
+        tlCommon.setNavigationOnClickListener(v -> finish());
     }
 
     @Override

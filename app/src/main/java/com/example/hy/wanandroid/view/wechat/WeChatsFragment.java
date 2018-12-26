@@ -71,20 +71,15 @@ public class WeChatsFragment extends BaseLoadFragment implements WeChatsContract
         if (!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getWeChatsFragmentComponent(new WeChatsFragmentModule()).inject(this);
         mPresenter.attachView(this);
+        initRecyclerView();
+        initRefreshView();
+    }
 
+    private void initRecyclerView() {
         //项目列表
         rvWechats.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
         rvWechats.setAdapter(mArticlesAdapter);
-        srlWeChats.setOnLoadMoreListener(refreshLayout -> {
-            mPageNum++;
-            mPresenter.loadMoreMoreWeChats(mPageNum, mId);
-            isLoadMore = true;
-        });
-        srlWeChats.setOnRefreshListener(refreshLayout -> {
-            mPresenter.loadMoreMoreWeChats(1, mId);
-            isLoadMore = false;
-        });
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             Article article = mArticles.get(position);
             ArticleActivity.startActicityForResultByFragment(mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
@@ -99,6 +94,18 @@ public class WeChatsFragment extends BaseLoadFragment implements WeChatsContract
             }
             collect();
             AnimUtil.scale(view, -1);
+        });
+    }
+
+    private void initRefreshView() {
+        srlWeChats.setOnLoadMoreListener(refreshLayout -> {
+            mPageNum++;
+            mPresenter.loadMoreMoreWeChats(mPageNum, mId);
+            isLoadMore = true;
+        });
+        srlWeChats.setOnRefreshListener(refreshLayout -> {
+            mPresenter.loadMoreMoreWeChats(1, mId);
+            isLoadMore = false;
         });
     }
 

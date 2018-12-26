@@ -26,6 +26,7 @@ import javax.inject.Inject;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
+import dagger.Lazy;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
@@ -76,7 +77,7 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     @Inject
     MinePresenter mPresenter;
     @Inject
-    LogoutDialog mDialog;
+    Lazy<LogoutDialog> mDialog;
 
     @Override
     protected int getLayoutId() {
@@ -110,7 +111,7 @@ public class MineFragment extends BaseFragment implements MineContract.View {
         clAboutus.setOnClickListener(v -> AboutUsActivity.startActivity(mActivity));
         clLogout.setOnClickListener(v -> {
             assert getFragmentManager() != null;
-            mDialog.show(getFragmentManager(), "tag7");
+            mDialog.get().show(getFragmentManager(), "tag7");
         });
     }
 

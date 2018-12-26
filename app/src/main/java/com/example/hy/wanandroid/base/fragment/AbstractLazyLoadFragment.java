@@ -63,7 +63,7 @@ public abstract class AbstractLazyLoadFragment extends Fragment {
                 + " add :" + this.isAdded()
                 + " visible: " + this.isVisible()
                 + " resumed: " + this.isResumed());
-        //onHiddenChanged调用在Resumed之前，所以此时可能，fragment被add, 但还没resumed
+        //onHiddenChanged调用在Resumed之前，所以此时可能fragment被add, 但还没resumed
         if(!hidden && !this.isResumed())
             return;
         //使用hide和show时，fragment的所有生命周期方法都不会调用，除了onHiddenChanged（）

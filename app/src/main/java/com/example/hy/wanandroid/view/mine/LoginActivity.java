@@ -29,6 +29,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.Lazy;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -60,7 +61,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     @Inject
     LoginPresenter mPresenter;
     @Inject
-    LoadingDialog mLoadingDialog;
+    Lazy<LoadingDialog> mLoadingDialog;
 
 
     private View focusView = null;
@@ -110,17 +111,17 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
 
     @Override
     public void showLoading() {
-        mLoadingDialog.show(getSupportFragmentManager(), "tag");
+        mLoadingDialog.get().show(getSupportFragmentManager(), "tag");
     }
 
     @Override
     public void showNormalView() {
-        mLoadingDialog.dismiss();
+        mLoadingDialog.get().dismiss();
     }
 
     @Override
     public void showErrorView() {
-        mLoadingDialog.dismiss();
+        mLoadingDialog.get().dismiss();
     }
 
     @Override

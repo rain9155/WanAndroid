@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.commonlib.utils.ToastUtil;
+import com.example.hy.wanandroid.config.App;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -90,7 +91,7 @@ public abstract class BaseFragment extends AbstractLazyLoadFragment
 
     @Override
     public void showToast(String toast) {
-        ToastUtil.toastInBottom(mActivity, toast);
+        ToastUtil.toastInBottom(App.getContext(), toast);
     }
 
     @Override

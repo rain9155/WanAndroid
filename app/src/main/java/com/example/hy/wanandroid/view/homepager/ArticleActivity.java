@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -70,13 +71,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     }
 
     @Override
-    protected void initView() {
-        DaggerArticleActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
-        mPresenter.attachView(this);
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
-            StatusBarUtil.setHeightAndPadding(this, tlCommon);
-
+    protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if(intent != null){
             mAddress = intent.getStringExtra(Constant.KEY_ARTICLE_ADDRESS);
@@ -85,8 +80,19 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
             isHideCollection = intent.getBooleanExtra(Constant.KEY_ARTICLE_FLAG, false);
             mArticleId = intent.getIntExtra(Constant.KEY_ARTICLE_ID, -1);
         }
+        super.onCreate(savedInstanceState);
+    }
 
-        //标题栏
+    @Override
+    protected void initView() {
+        DaggerArticleActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+        mPresenter.attachView(this);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, tlCommon);
+        initToolBar();
+    }
+
+    private void initToolBar() {
         setSupportActionBar(tlCommon);
         tlCommon.setTitle("");
         tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
@@ -101,7 +107,6 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
 
     @Override
     protected void initData() {
-
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(flContainer, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator(getResources().getColor(R.color.colorPrimary))

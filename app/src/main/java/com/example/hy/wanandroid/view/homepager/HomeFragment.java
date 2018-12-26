@@ -3,8 +3,10 @@ package com.example.hy.wanandroid.view.homepager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
@@ -25,6 +27,7 @@ import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
 import com.example.hy.wanandroid.view.search.SearchActivity;
+import com.example.hy.wanandroid.widget.popup.PressPopup;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -34,11 +37,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import dagger.Lazy;
+import dagger.Provides;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -46,7 +52,8 @@ import static android.app.Activity.RESULT_OK;
  * 首页tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class HomeFragment extends BaseLoadFragment implements HomeContract.View {
+public class HomeFragment extends BaseLoadFragment implements HomeContract.View{
+
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
@@ -76,12 +83,15 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
     LinearLayoutManager mLinearLayoutManager;
     @Inject
     ArticlesAdapter mArticlesAdapter;
+    @Inject
+    Provider<PressPopup> mPopupWindow;
 
     private int pageNum = 0;//首页文章页数
     private boolean isLoadMore = false;
     private int mArticlePosition = 0;//点击的位置
     private Article mArticle;//点击的文章
     private Banner banner;
+    private int mX, mY;
 
     @Override
     protected int getLayoutId() {
@@ -94,15 +104,13 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         if (!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getHomFragmentSubComponent(new HomeFragmentModule()).inject(this);
         mPresenter.attachView(this);
-
         StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
-        //标题栏
-        ivCommonSearch.setVisibility(View.VISIBLE);
-        tvCommonTitle.setText(R.string.homeFragment_home);
-        tlCommon.setNavigationIcon(R.drawable.ic_navigation);
-        tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(mActivity));
-        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(mActivity));
+        initToolBar();
+        initRecyclerView();
+        initRefreshView();
+    }
 
+    private void initRecyclerView() {
         //首页文章
         View bannerLayout = LayoutInflater.from(mActivity).inflate(R.layout.banner_layout, null);
         banner = bannerLayout.findViewById(R.id.banner);
@@ -110,6 +118,7 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         mArticlesAdapter.openLoadAnimation();
         mArticlesAdapter.addHeaderView(bannerLayout);
         rvArticles.setAdapter(mArticlesAdapter);
+
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             mArticlePosition = position;
             mArticle = mArticles.get(position);
@@ -125,8 +134,17 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
             }
             collect();
             AnimUtil.scale(view, -1);
-
         });
+        mArticlesAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            mPopupWindow.get().show(tlCommon, 100, 100);
+            view.setPressed(true);
+            mPopupWindow.get().setOnDismissListener(() -> view.setPressed(false));
+            return false;
+        });
+
+    }
+
+    private void initRefreshView() {
         srlHome.setOnLoadMoreListener(refreshLayout -> {
             pageNum++;
             mPresenter.loadMoreArticles(pageNum);
@@ -137,6 +155,15 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
             mPresenter.loadBannerDatas();
             isLoadMore = false;
         });
+    }
+
+    private void initToolBar() {
+        //标题栏
+        ivCommonSearch.setVisibility(View.VISIBLE);
+        tvCommonTitle.setText(R.string.homeFragment_home);
+        tlCommon.setNavigationIcon(R.drawable.ic_navigation);
+        tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(mActivity));
+        ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(mActivity));
     }
 
     @Override
@@ -291,7 +318,6 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View 
         }
         super.onDestroy();
     }
-
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
