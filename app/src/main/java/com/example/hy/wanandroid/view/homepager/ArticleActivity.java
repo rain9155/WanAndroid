@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.bean.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
@@ -74,11 +75,12 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if(intent != null){
-            mAddress = intent.getStringExtra(Constant.KEY_ARTICLE_ADDRESS);
-            mTitle = intent.getStringExtra(Constant.KEY_ARTICLE_TITLE);
-            isCollection = intent.getBooleanExtra(Constant.KEY_ARTICLE_ISCOLLECTION, false);
+            ArticleBean articleBean = intent.getParcelableExtra(Constant.KEY_ARTICLE_BEAN);
+            mAddress = articleBean.getLink();
+            mTitle = articleBean.getTitle();
+            isCollection = articleBean.isCollect();
+            mArticleId = articleBean.getId();
             isHideCollection = intent.getBooleanExtra(Constant.KEY_ARTICLE_FLAG, false);
-            mArticleId = intent.getIntExtra(Constant.KEY_ARTICLE_ID, -1);
         }
         super.onCreate(savedInstanceState);
     }
@@ -239,10 +241,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
      * 复制字符串
      */
     private void copy(Context context, String text) {
-        if(TextUtils.isEmpty(text)) return;
-        ClipboardManager mClipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        assert mClipboardManager != null;
-        mClipboardManager.setPrimaryClip(ClipData.newPlainText(null, text));
+        ShareUtil.copyString(context, text);
         showToast(getString(R.string.articleActivity_copy_success));
     }
 
@@ -318,42 +317,31 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
 
     /**
      * 启动活动
-     * @param address html地址
      */
-    public static void startActivity(Context context, String address, String title, int id, boolean isCollection, boolean isHideCollection){
+    public static void startActivity(Context context,  ArticleBean articleBean, boolean isHideCollection){
         Intent intent = new Intent(context, ArticleActivity.class);
-        intent.putExtra(Constant.KEY_ARTICLE_ADDRESS, address);
-        intent.putExtra(Constant.KEY_ARTICLE_TITLE, title);
-        intent.putExtra(Constant.KEY_ARTICLE_ISCOLLECTION, isCollection);
         intent.putExtra(Constant.KEY_ARTICLE_FLAG, isHideCollection);
-        intent.putExtra(Constant.KEY_ARTICLE_ID, id);
+        intent.putExtra(Constant.KEY_ARTICLE_BEAN, articleBean);
         context.startActivity(intent);
     }
 
     /**
      * 启动活动，使用Activity中的startActivityForResult（）
-     * @param address html地址
      */
-    public static void startActivityForResult(Activity activity, String address, String title, int id, boolean isCollection, boolean isHideCollection, int request){
+    public static void startActivityForResult(Activity activity, ArticleBean articleBean, boolean isHideCollection, int request){
         Intent intent = new Intent(activity, ArticleActivity.class);
-        intent.putExtra(Constant.KEY_ARTICLE_ADDRESS, address);
-        intent.putExtra(Constant.KEY_ARTICLE_TITLE, title);
-        intent.putExtra(Constant.KEY_ARTICLE_ISCOLLECTION, isCollection);
+        intent.putExtra(Constant.KEY_ARTICLE_BEAN, articleBean);
         intent.putExtra(Constant.KEY_ARTICLE_FLAG, isHideCollection);
-        intent.putExtra(Constant.KEY_ARTICLE_ID, id);
         activity.startActivityForResult(intent, request);
     }
 
     /**
      * 启动活动，使用Fragment中的startActivityForResult（）
      */
-    public static void startActicityForResultByFragment(Activity activity, Fragment fragment, String address, String title, int id, boolean isCollection, boolean isHideCollection, int request){
+    public static void startActicityForResultByFragment(Activity activity, Fragment fragment, ArticleBean articleBean, boolean isHideCollection, int request){
         Intent intent = new Intent(activity, ArticleActivity.class);
-        intent.putExtra(Constant.KEY_ARTICLE_ADDRESS, address);
-        intent.putExtra(Constant.KEY_ARTICLE_TITLE, title);
-        intent.putExtra(Constant.KEY_ARTICLE_ISCOLLECTION, isCollection);
+        intent.putExtra(Constant.KEY_ARTICLE_BEAN, articleBean);
         intent.putExtra(Constant.KEY_ARTICLE_FLAG, isHideCollection);
-        intent.putExtra(Constant.KEY_ARTICLE_ID, id);
         fragment.startActivityForResult(intent, request);
     }
 }

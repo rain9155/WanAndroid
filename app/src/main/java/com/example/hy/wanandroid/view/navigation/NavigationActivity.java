@@ -57,9 +57,9 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
     List<Tag> mTags;
 
     private NavigationTagsNameAdapter mNavigationTagsNameAdapter;
-    private int mFirstIndex;
-    private int mLastIndex;
-    private int mYConsume = 0;
+    private int mCurrentSelectedIndex;
+    private boolean isDownScroll;//RecyclerView是否向下滑动后
+    private boolean isTagUnSelected;//标签是否被选中
 
     @Override
     protected int getLayoutId() {
@@ -86,20 +86,33 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && vtlNavigation != null) {
-                    mFirstIndex = mLinearLayoutManager.findFirstVisibleItemPosition();
-                    mLastIndex = mLinearLayoutManager.findLastVisibleItemPosition();
-                    if(mYConsume > 0 && mLastIndex != RecyclerView.NO_POSITION)
-                        vtlNavigation.setTabSelected(mLastIndex);
-                    if(mYConsume < 0 && mFirstIndex != RecyclerView.NO_POSITION)
-                        vtlNavigation.setTabSelected(mFirstIndex);
+                if(newState == RecyclerView.SCROLL_STATE_IDLE ){
+                    int firstIndex = mLinearLayoutManager.findFirstVisibleItemPosition();
+                    //标签被选中，并且RecyclerView向下滑动， 需要同步，被选中的item置顶
+                    if(isDownScroll){
+                        isDownScroll = false;
+                        int indexInRecyclerView = mCurrentSelectedIndex - firstIndex;
+                        //表示当前选中的位置在第一个可见item的下面
+                        if(indexInRecyclerView >= 0 && indexInRecyclerView < recyclerView.getChildCount()){
+                            View view = recyclerView.getChildAt(indexInRecyclerView);
+                            recyclerView.smoothScrollBy(0, view.getTop());
+                        }
+                    }
+                    //没有选中标签后，但是滚动RecyclerView了，需要同步，以第一个item设置给标签
+                    if(isTagUnSelected){
+                        if(firstIndex != mCurrentSelectedIndex){
+                            vtlNavigation.setTabSelected(firstIndex);
+                            mCurrentSelectedIndex = firstIndex;
+                        }
+                    }
+                    //重置标签选中状态
+                    isTagUnSelected = true;
                 }
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                mYConsume = dy;
             }
         });
     }
@@ -109,7 +122,10 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
         vtlNavigation.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
-                rvNavigation.smoothScrollToPosition(position);
+                isTagUnSelected = false;
+                mCurrentSelectedIndex = position;
+                rvNavigation.stopScroll();
+                smoothScrollToPosition(position);
             }
 
             @Override
@@ -117,6 +133,22 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
 
             }
         });
+    }
+
+    /**
+     * RecyclerView滑动
+     */
+    private void smoothScrollToPosition(int position) {
+        int fistIndex = mLinearLayoutManager.findFirstVisibleItemPosition();
+        int lastIndex = mLinearLayoutManager.findLastVisibleItemPosition();
+        if(position < fistIndex)
+            rvNavigation.smoothScrollToPosition(position);
+        else if(position < lastIndex)//此处position，调用RecyclerView.smoothScrollToPosition(position)不会滚动，要手动smoothScroll
+            rvNavigation.smoothScrollBy(0, rvNavigation.getChildAt(mCurrentSelectedIndex - fistIndex).getTop());
+        else{
+            rvNavigation.smoothScrollToPosition(position);
+            isDownScroll = true;
+        }
     }
 
     private void initToolBar() {

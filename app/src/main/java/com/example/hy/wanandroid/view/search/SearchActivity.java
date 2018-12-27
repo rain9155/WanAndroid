@@ -1,10 +1,12 @@
 package com.example.hy.wanandroid.view.search;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,6 +17,7 @@ import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.adapter.FlowTagsAdapter;
 import com.example.hy.wanandroid.adapter.HistoryAdapter;
 import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
+import com.example.hy.wanandroid.bean.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.search.SearchContract;
@@ -27,6 +30,7 @@ import com.example.commonlib.utils.CommonUtil;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
+import com.example.hy.wanandroid.widget.popup.PressPopup;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
@@ -41,6 +45,7 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import dagger.Lazy;
 
 public class SearchActivity extends BaseLoadActivity implements SearchContract.View {
 
@@ -89,6 +94,8 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     List<String> mHistoryList;
     @Inject
     List<HotKey> mHotKeyList;
+    @Inject
+    Lazy<PressPopup> mPopupWindow;
 
     private SearchView mSearchView;
     private SearchView.SearchAutoComplete mSearchAutoComplete;
@@ -97,6 +104,7 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     private int mPageNum = 0;
     private int mArticlePosition = 0;//点击的位置
     private Article mArticle;
+    private boolean isPress = false;
 
     @Override
     protected int getLayoutId() {
@@ -116,6 +124,7 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
         initRefreshView();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initSearchRequestView() {
         //搜索结果
         mSearchResquestAdapter.openLoadAnimation();
@@ -123,9 +132,9 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
         rvSearchRequest.setAdapter(mSearchResquestAdapter);
         mSearchResquestAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             mArticlePosition = position;
-            Article article = mSearchResquestList.get(position);
-            mArticle = article;
-            ArticleActivity.startActivityForResult(SearchActivity.this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
+            mArticle = mSearchResquestList.get(position);
+            ArticleBean articleBean = new ArticleBean(mArticle);
+            ArticleActivity.startActivityForResult(SearchActivity.this, articleBean, false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mSearchResquestAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;
@@ -137,6 +146,19 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
             }
             collect();
             AnimUtil.scale(view, -1);
+        });
+        mSearchResquestAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            Article article = mSearchResquestList.get(position);
+            view.setOnTouchListener((v, event) -> {
+                if(event.getAction() == MotionEvent.ACTION_UP && isPress){
+                    mPopupWindow.get().show(tlCommon, event.getRawX(), event.getRawY());
+                    mPopupWindow.get().setMessage(article.getTitle(), article.getLink());
+                    isPress = false;
+                }
+                return false;
+            });
+            isPress = true;
+            return true;
         });
     }
 

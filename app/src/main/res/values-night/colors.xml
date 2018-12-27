@@ -28,6 +28,7 @@
     <color name="colorPress">#6abdbdbd</color>
     <color name="colorPressFg">#4fffffff</color>
     <color name="colorTip">#f50000</color>
+    <color name="colorElevation">#14bdbdbd</color>
     <color name="colorTipBackground">#81212121</color>
 
 </resources>

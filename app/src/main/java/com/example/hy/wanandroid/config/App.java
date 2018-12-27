@@ -42,8 +42,8 @@ public class App extends LitePalApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         mContext = this;
+        mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         initLitepal();
         initBugly();
         initLeakCanary();

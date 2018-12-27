@@ -1,8 +1,10 @@
 package com.example.hy.wanandroid.view.mine;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.CollectionsAdapter;
 import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
+import com.example.hy.wanandroid.bean.ArticleBean;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
 import com.example.hy.wanandroid.model.network.entity.Collection;
@@ -20,6 +23,7 @@ import com.example.commonlib.utils.AnimUtil;
 import com.example.commonlib.utils.CommonUtil;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
+import com.example.hy.wanandroid.widget.popup.PressPopup;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -30,6 +34,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import dagger.Lazy;
 
 public class CollectionActivity extends BaseLoadActivity implements CollectionContract.View {
 
@@ -57,10 +62,14 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     CollectionsAdapter mCollectionsAdapter;
     @Inject
     List<Integer> mIds;
+    @Inject
+    Lazy<PressPopup> mPopupWindow;
 
     private int pageNum = 0;//首页文章页数
     private boolean isLoadMore = false;
     private int mCollectionPosition = -1;//点击的位置
+    private boolean isPress = false;
+    private Collection mCollection;
 
     @Override
     protected int getLayoutId(){
@@ -79,6 +88,7 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
         initRefreshView();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initRecyclerView() {
         //collections
         mCollectionsAdapter.openLoadAnimation();
@@ -86,14 +96,27 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
         rvCollections.setAdapter(mCollectionsAdapter);
         mCollectionsAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             mCollectionPosition = position;
-            Collection collection = mCollections.get(position);
-            ArticleActivity.startActivity(this, collection.getLink(), collection.getTitle(), collection.getId(), true, true);
+            ArticleBean articleBean = new ArticleBean(mCollections.get(position));
+            ArticleActivity.startActivity(this, articleBean, true);
         });
         mCollectionsAdapter.setOnItemChildClickListener((adapter, view, position) -> {//取消收藏
             mCollectionPosition = position;
-            Collection collection = mCollections.get(position);
-            mPresenter.unCollectArticle(collection.getId(), collection.getOriginId());
+            mCollection = mCollections.get(position);
+            mPresenter.unCollectArticle(mCollection.getId(), mCollection.getOriginId());
             AnimUtil.scale(view, -1);
+        });
+        mCollectionsAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            Collection collection = mCollections.get(position);
+            view.setOnTouchListener((v, event) -> {
+                if(event.getAction() == MotionEvent.ACTION_UP && isPress){
+                    mPopupWindow.get().show(tlCommon, event.getRawX(), event.getRawY());
+                    mPopupWindow.get().setMessage(collection.getTitle(), collection.getLink());
+                    isPress = false;
+                }
+                return false;
+            });
+            isPress = true;
+            return true;
         });
     }
 

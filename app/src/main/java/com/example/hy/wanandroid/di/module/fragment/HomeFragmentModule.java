@@ -59,11 +59,6 @@ public class HomeFragmentModule {
     }
 
     @Provides
-    PressPopup providePressPopup(){
-        return new PressPopup(App.getContext());
-    }
-
-    @Provides
     @PerFragment
     ArticlesAdapter provideArticlesAdapter(List<Article> articles){
         return new ArticlesAdapter(R.layout.item_acticles, articles);

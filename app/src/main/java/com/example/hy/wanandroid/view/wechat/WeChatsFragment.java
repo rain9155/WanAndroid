@@ -1,13 +1,16 @@
 package com.example.hy.wanandroid.view.wechat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 
 import com.example.commonlib.utils.AnimUtil;
 import com.example.commonlib.utils.CommonUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
+import com.example.hy.wanandroid.bean.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.wechat.WeChatsContract;
@@ -17,6 +20,7 @@ import com.example.hy.wanandroid.presenter.wechat.WeChatsPresenter;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
+import com.example.hy.wanandroid.widget.popup.PressPopup;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -28,6 +32,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import dagger.Lazy;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -50,12 +55,15 @@ public class WeChatsFragment extends BaseLoadFragment implements WeChatsContract
     ArticlesAdapter mArticlesAdapter;
     @Inject
     List<Article> mArticles;
+    @Inject
+    Lazy<PressPopup> mPopupWindow;
 
     private int mPageNum = 1;
     private int mId;
     private boolean isLoadMore = false;
     private int mArticlePosition = 0;//点击的位置
     private Article mArticle;
+    private boolean isPress = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,14 +83,17 @@ public class WeChatsFragment extends BaseLoadFragment implements WeChatsContract
         initRefreshView();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initRecyclerView() {
         //项目列表
         rvWechats.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
         rvWechats.setAdapter(mArticlesAdapter);
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
-            Article article = mArticles.get(position);
-            ArticleActivity.startActicityForResultByFragment(mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
+            mArticlePosition = position;
+            mArticle =  mArticles.get(position);
+            ArticleBean articleBean = new ArticleBean(mArticle);
+            ArticleActivity.startActicityForResultByFragment(mActivity, this, articleBean, false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;
@@ -94,6 +105,19 @@ public class WeChatsFragment extends BaseLoadFragment implements WeChatsContract
             }
             collect();
             AnimUtil.scale(view, -1);
+        });
+        mArticlesAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            Article article = mArticles.get(position);
+            view.setOnTouchListener((v, event) -> {
+                if(event.getAction() == MotionEvent.ACTION_UP && isPress){
+                    mPopupWindow.get().show(srlWeChats, event.getRawX(), event.getRawY());
+                    mPopupWindow.get().setMessage(article.getTitle(), article.getLink());
+                    isPress = false;
+                }
+                return false;
+            });
+            isPress = true;
+            return true;
         });
     }
 

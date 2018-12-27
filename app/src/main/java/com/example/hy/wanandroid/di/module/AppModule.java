@@ -23,6 +23,7 @@ import com.example.hy.wanandroid.model.network.gson.CustomGsonConverterFactory;
 import com.example.hy.wanandroid.model.network.ssl.SSLSocketCompatFactory;
 import com.example.hy.wanandroid.model.network.ssl.TrustAllCert;
 import com.example.hy.wanandroid.model.prefs.PreferencesHelper;
+import com.example.hy.wanandroid.widget.popup.PressPopup;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -159,5 +160,11 @@ public class AppModule {
     @Singleton
     VersionApi provideVersionApi(@Named("version") Retrofit retrofit){
         return retrofit.create(VersionApi.class);
+    }
+
+    @Provides
+    @Singleton
+    PressPopup providePressPopup(){
+        return new PressPopup(App.getContext());
     }
 }

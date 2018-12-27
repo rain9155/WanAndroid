@@ -16,6 +16,7 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = AppComponent.class, modules = HierarchySecondActivityModule.class)
 public interface HierarchySecondActivityComponent {
+
     void inject(HierarchySecondActivity hierarchySecondActivity);
 
     HierarchySecondFragmentComponent getHierarchySecondFragmentComponent(HierarchySecondFragmentModule hierarchySecondFragmentModule);
