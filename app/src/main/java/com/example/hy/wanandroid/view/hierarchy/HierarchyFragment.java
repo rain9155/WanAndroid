@@ -33,7 +33,7 @@ import butterknife.BindView;
  * 体系tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class HierarchyFragment extends BaseLoadFragment implements HierarchyContract.View {
+public class HierarchyFragment extends BaseLoadFragment<HierarchyPresenter> implements HierarchyContract.View {
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
@@ -63,10 +63,19 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
     }
 
     @Override
-    protected void initView() {
+    protected HierarchyPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    protected void inject() {
         if (!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getHierarchyFragmentSubComponent(new HierarchyFragmentModule()).inject(this);
-        mPresenter.attachView(this);
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
         StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
         initToolBar();
         initRecyclerView();
@@ -160,12 +169,4 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
         return new HierarchyFragment();
     }
 
-    @Override
-    public void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
-    }
 }

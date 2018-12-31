@@ -40,7 +40,7 @@ import static android.app.Activity.RESULT_OK;
  * 项目详情列表Fragment
  * Created by 陈健宇 at 2018/10/29
  */
-public class ProjectsFragment extends BaseLoadFragment implements ProjectsContract.View {
+public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implements ProjectsContract.View {
 
     @BindView(R.id.rv_projects)
     RecyclerView rvProjectList;
@@ -71,10 +71,19 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
     }
 
     @Override
-    protected void initView() {
+    protected ProjectsPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    protected void inject() {
         if(!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getProjectFragmentComponent(new ProjectFragmentModule()).inject(this);
-        mPresenter.attachView(this);
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
         initRecyclerView();
         initRefreshView();
     }
@@ -163,15 +172,6 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
         if(bundle != null){
             mId = bundle.getInt(Constant.KEY_PROJECT_ID, -1);
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        if(mPresenter != null){
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
     }
 
     @Override

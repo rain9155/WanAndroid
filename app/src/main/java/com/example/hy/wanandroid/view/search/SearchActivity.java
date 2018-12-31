@@ -47,7 +47,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import dagger.Lazy;
 
-public class SearchActivity extends BaseLoadActivity implements SearchContract.View {
+public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements SearchContract.View {
 
     @BindView(R.id.tv_common_title)
     TextView tvCommonTitle;
@@ -107,15 +107,23 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     private boolean isPress = false;
 
     @Override
+    protected void inject() {
+        DaggerSearchActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_search;
     }
 
     @Override
+    protected SearchPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
     protected void initView() {
         super.initView();
-        DaggerSearchActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
-        mPresenter.attachView(this);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
         initToolBar();
@@ -272,15 +280,6 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
             finish();
         }
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
     }
 
     @Override

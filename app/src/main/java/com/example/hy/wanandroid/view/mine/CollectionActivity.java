@@ -36,7 +36,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import dagger.Lazy;
 
-public class CollectionActivity extends BaseLoadActivity implements CollectionContract.View {
+public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> implements CollectionContract.View {
 
 
     @BindView(R.id.tv_common_title)
@@ -72,15 +72,23 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     private Collection mCollection;
 
     @Override
+    protected void inject() {
+        DaggerCollectionActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+    }
+
+    @Override
     protected int getLayoutId(){
         return R.layout.activity_collection;
     }
 
     @Override
+    protected CollectionPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
     protected void initView( ) {
         super.initView();
-        DaggerCollectionActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
-        mPresenter.attachView(this);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
         initToolBar();
@@ -153,15 +161,6 @@ public class CollectionActivity extends BaseLoadActivity implements CollectionCo
     public void onBackPressed() {
         if(!CommonUtil.isEmptyList(mIds)) RxBus.getInstance().post(new CollectionEvent(mIds));
         finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
     }
 
     @Override

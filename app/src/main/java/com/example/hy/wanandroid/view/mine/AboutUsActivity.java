@@ -52,6 +52,11 @@ public class AboutUsActivity extends BaseActivity {
     TextView tvContent;
 
     @Override
+    protected void inject() {
+
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_about_us;
     }

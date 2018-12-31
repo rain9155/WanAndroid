@@ -14,6 +14,8 @@
     <!--sd卡读写-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--安装未知来源应用的权限-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
 
     <application

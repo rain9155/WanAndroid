@@ -9,15 +9,17 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import com.example.hy.wanandroid.R;
 import com.example.commonlib.utils.AnimUtil;
+import com.example.hy.wanandroid.base.presenter.IPresenter;
 
 import static com.example.hy.wanandroid.config.Constant.ERROR_STATE;
 import static com.example.hy.wanandroid.config.Constant.LOADING_STATE;
 import static com.example.hy.wanandroid.config.Constant.NORMAL_STATE;
 
 /**
+ * 具有布局切换能力的Activity
  * Created by 陈健宇 at 2018/11/4
  */
-public abstract  class BaseLoadActivity extends BaseActivity {
+public abstract class BaseLoadActivity<T extends IPresenter> extends BaseMvpActivity<T>{
 
     private View mErrorView;
     private View mLoadingView;
@@ -28,6 +30,7 @@ public abstract  class BaseLoadActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        super.initView();
         mNormalView =  findViewById(R.id.normal_view);
         if(mNormalView == null) throw new IllegalStateException("The subclass of BaseLoadActivity must contain a View it's id is named normal_view");
         if(!(mNormalView.getParent() instanceof ViewGroup)) throw new IllegalStateException("mNormalView's ParentView should be a ViewGroup");

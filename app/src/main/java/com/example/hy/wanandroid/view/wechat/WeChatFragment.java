@@ -30,7 +30,7 @@ import butterknife.BindView;
  * 微信公众号tab
  * Created by 陈健宇 at 2018/12/19
  */
-public class WeChatFragment extends BaseLoadFragment implements WeChatContract.View {
+public class WeChatFragment extends BaseLoadFragment<WeChatPresenter> implements WeChatContract.View {
 
     @BindView(R.id.tv_common_title)
     TextView tvCommonTitle;
@@ -53,10 +53,19 @@ public class WeChatFragment extends BaseLoadFragment implements WeChatContract.V
     List<Fragment> mFragments;
 
     @Override
-    protected void initView() {
+    protected WeChatPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    protected void inject() {
         if (!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getWeChatFragmentComponent(new WeChatFragmentModule()).inject(this);
-        mPresenter.attachView(this);
+    }
+
+    @Override
+    protected void initView() {
+       super.initView();
         StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
         initToolBar();
     }
@@ -100,14 +109,6 @@ public class WeChatFragment extends BaseLoadFragment implements WeChatContract.V
         mPresenter.loadWeChatTabs();
     }
 
-    @Override
-    public void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
-    }
 
     public static WeChatFragment newInstance() {
         return new WeChatFragment();

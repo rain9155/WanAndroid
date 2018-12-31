@@ -9,6 +9,7 @@ import com.example.commonlib.utils.AnimUtil;
 import com.example.commonlib.utils.CommonUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
+import com.example.hy.wanandroid.adapter.WeChatAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.bean.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
@@ -40,7 +41,7 @@ import static android.app.Activity.RESULT_OK;
  * WeChatsFragment
  * Created by 陈健宇 at 2018/12/19
  */
-public class WeChatsFragment extends BaseLoadFragment implements WeChatsContract.View {
+public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implements WeChatsContract.View {
 
     @BindView(R.id.rv_wechats)
     RecyclerView rvWechats;
@@ -52,7 +53,7 @@ public class WeChatsFragment extends BaseLoadFragment implements WeChatsContract
     @Inject
     LinearLayoutManager mLinearLayoutManager;
     @Inject
-    ArticlesAdapter mArticlesAdapter;
+    WeChatAdapter mArticlesAdapter;
     @Inject
     List<Article> mArticles;
     @Inject
@@ -75,10 +76,19 @@ public class WeChatsFragment extends BaseLoadFragment implements WeChatsContract
     }
 
     @Override
-    protected void initView() {
+    protected WeChatsPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    protected void inject() {
         if (!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getWeChatsFragmentComponent(new WeChatsFragmentModule()).inject(this);
-        mPresenter.attachView(this);
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
         initRecyclerView();
         initRefreshView();
     }
@@ -165,14 +175,6 @@ public class WeChatsFragment extends BaseLoadFragment implements WeChatsContract
         }
     }
 
-    @Override
-    public void onDestroy() {
-        if(mPresenter != null){
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
-    }
     @Override
     public void reLoad() {
         super.reLoad();

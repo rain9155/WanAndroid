@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.component.UpdataService;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
@@ -52,7 +53,7 @@ import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import dagger.Lazy;
 
-public class SettingsActivity extends BaseActivity
+public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         implements SettingsContract.View, CompoundButton.OnCheckedChangeListener {
 
 
@@ -149,15 +150,24 @@ public class SettingsActivity extends BaseActivity
     private String mCurrentVersionName;
 
     @Override
+    protected void inject() {
+        DaggerSettingsActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_settings;
+    }
+
+    @Override
+    protected SettingsPresenter getPresenter() {
+        return mPresenter;
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
-        DaggerSettingsActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
-        mPresenter.attachView(this);
+       super.initView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
         isEnableTip = false;
@@ -245,10 +255,6 @@ public class SettingsActivity extends BaseActivity
 
     @Override
     protected void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
         if(mClearCacheDialog != null)
             mClearCacheDialog = null;
         if(mVersionDialog != null)

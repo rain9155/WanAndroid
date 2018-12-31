@@ -60,14 +60,18 @@ public class HierarchySecondActivity extends BaseActivity {
     private String mTitle;
 
     @Override
+    protected void inject() {
+        mComponent = DaggerHierarchySecondActivityComponent.builder().appComponent(getAppComponent()).hierarchySecondActivityModule(new HierarchySecondActivityModule()).build();
+        mComponent.inject(this);
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_hierarchy_second;
     }
 
     @Override
     protected void initView() {
-        mComponent = DaggerHierarchySecondActivityComponent.builder().appComponent(getAppComponent()).hierarchySecondActivityModule(new HierarchySecondActivityModule()).build();
-        mComponent.inject(this);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
         Intent intent = getIntent();

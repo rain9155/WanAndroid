@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
+import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
@@ -35,7 +36,7 @@ import static android.app.Activity.RESULT_OK;
  * 我的tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class MineFragment extends BaseFragment implements MineContract.View {
+public class MineFragment extends BaseMvpFragment<MinePresenter> implements MineContract.View {
 
     @BindView(R.id.iv_face)
     CircleImageView ivFace;
@@ -85,11 +86,19 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     }
 
     @Override
-    protected void initView() {
+    protected void inject() {
         if (!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getMineFragmentComponent(new MineFragmentModule()).inject(this);
-        mPresenter.attachView(this);
+    }
 
+    @Override
+    protected MinePresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
         if (User.getInstance().isLoginStatus()) {
             showLoginView();
         } else {
@@ -122,13 +131,9 @@ public class MineFragment extends BaseFragment implements MineContract.View {
 
     @Override
     public void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
+        super.onDestroy();
         if(mDialog != null)
             mDialog = null;
-        super.onDestroy();
     }
 
     @Override

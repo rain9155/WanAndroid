@@ -58,7 +58,7 @@ import static android.app.Activity.RESULT_OK;
  * 首页tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class HomeFragment extends BaseLoadFragment implements HomeContract.View{
+public class HomeFragment extends BaseLoadFragment<HomePresenter> implements HomeContract.View{
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
@@ -103,12 +103,21 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View{
         return R.layout.fragment_homepager;
     }
 
+    @Override
+    protected HomePresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    protected void inject() {
+        if (!(getActivity() instanceof MainActivity)) return;
+        ((MainActivity) getActivity()).getComponent().getHomFragmentSubComponent(new HomeFragmentModule()).inject(this);
+    }
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void initView() {
-        if (!(getActivity() instanceof MainActivity)) return;
-        ((MainActivity) getActivity()).getComponent().getHomFragmentSubComponent(new HomeFragmentModule()).inject(this);
-        mPresenter.attachView(this);
+        super.initView();
         StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
         initToolBar();
         initRecyclerView();
@@ -334,14 +343,6 @@ public class HomeFragment extends BaseLoadFragment implements HomeContract.View{
         }
     }
 
-    @Override
-    public void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
-    }
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }

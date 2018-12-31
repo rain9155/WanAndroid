@@ -14,6 +14,8 @@
     <color name="translucence">#80FFFFFF</color>
     <color name="transparency">#00000000</color>
     <color name="colorCollected">#81ff0000</color>
+    <color name="colorTag1">#f50000</color>
+    <color name="colorTag2">#00BCD4</color>
     <color name="colorTip">#f50000</color>
     <color name="colorIndicator">#00BCD4</color>
     <color name="colorBorder">#00BCD4</color>

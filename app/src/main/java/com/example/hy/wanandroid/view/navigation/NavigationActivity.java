@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.NavigationTagsAdapter;
 import com.example.hy.wanandroid.adapter.NavigationTagsNameAdapter;
@@ -32,7 +31,7 @@ import butterknife.BindView;
 import q.rorbin.verticaltablayout.VerticalTabLayout;
 import q.rorbin.verticaltablayout.widget.TabView;
 
-public class NavigationActivity extends BaseLoadActivity implements NavigationContract.View {
+public class NavigationActivity extends BaseLoadActivity<NavigationPresenter> implements NavigationContract.View {
 
     @BindView(R.id.vtl_navigation)
     VerticalTabLayout vtlNavigation;
@@ -58,8 +57,13 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
 
     private NavigationTagsNameAdapter mNavigationTagsNameAdapter;
     private int mCurrentSelectedIndex;
-    private boolean isDownScroll;//RecyclerView是否向下滑动后
-    private boolean isTagUnSelected;//标签是否被选中
+    private boolean isDownScroll;//RecyclerView是否向下滑动状态
+    private boolean isTagSelected;//标签是否被选中
+
+    @Override
+    protected void inject() {
+        DaggerNavigationActivityComponent.builder().appComponent(getAppComponent()).navigationActivityModule(new NavigationActivityModule()).build().inject(this);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -67,10 +71,13 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
     }
 
     @Override
+    protected NavigationPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
     protected void initView() {
         super.initView();
-        DaggerNavigationActivityComponent.builder().appComponent(getAppComponent()).navigationActivityModule(new NavigationActivityModule()).build().inject(this);
-        mPresenter.attachView(this);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
         initToolBar();
@@ -86,11 +93,22 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(newState == RecyclerView.SCROLL_STATE_IDLE ){
+                if(newState == RecyclerView.SCROLL_STATE_IDLE){
                     int firstIndex = mLinearLayoutManager.findFirstVisibleItemPosition();
+
+                    //没有选中标签后，但是滚动RecyclerView了，需要同步，以第一个item设置给标签
+                    if(!isTagSelected && vtlNavigation != null){
+                        if(firstIndex != mCurrentSelectedIndex){
+                            vtlNavigation.setTabSelected(firstIndex);
+                            mCurrentSelectedIndex = firstIndex;
+                        }
+                    }
+                    isTagSelected = false;
+
                     //标签被选中，并且RecyclerView向下滑动， 需要同步，被选中的item置顶
                     if(isDownScroll){
                         isDownScroll = false;
+                        isTagSelected = true;
                         int indexInRecyclerView = mCurrentSelectedIndex - firstIndex;
                         //表示当前选中的位置在第一个可见item的下面
                         if(indexInRecyclerView >= 0 && indexInRecyclerView < recyclerView.getChildCount()){
@@ -98,15 +116,7 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
                             recyclerView.smoothScrollBy(0, view.getTop());
                         }
                     }
-                    //没有选中标签后，但是滚动RecyclerView了，需要同步，以第一个item设置给标签
-                    if(isTagUnSelected){
-                        if(firstIndex != mCurrentSelectedIndex){
-                            vtlNavigation.setTabSelected(firstIndex);
-                            mCurrentSelectedIndex = firstIndex;
-                        }
-                    }
-                    //重置标签选中状态
-                    isTagUnSelected = true;
+
                 }
             }
 
@@ -122,7 +132,7 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
         vtlNavigation.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
-                isTagUnSelected = false;
+                isTagSelected = true;
                 mCurrentSelectedIndex = position;
                 rvNavigation.stopScroll();
                 smoothScrollToPosition(position);
@@ -141,13 +151,13 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
     private void smoothScrollToPosition(int position) {
         int fistIndex = mLinearLayoutManager.findFirstVisibleItemPosition();
         int lastIndex = mLinearLayoutManager.findLastVisibleItemPosition();
-        if(position < fistIndex)
+        if(position < fistIndex)//RecyclerView准备向上滑动
             rvNavigation.smoothScrollToPosition(position);
-        else if(position < lastIndex)//此处position，调用RecyclerView.smoothScrollToPosition(position)不会滚动，要手动smoothScroll
+        else if(position < lastIndex)//此处position处于屏幕中间，调用RecyclerView.smoothScrollToPosition(position)不会滚动，要手动smoothScroll向上滑
             rvNavigation.smoothScrollBy(0, rvNavigation.getChildAt(mCurrentSelectedIndex - fistIndex).getTop());
-        else{
-            rvNavigation.smoothScrollToPosition(position);
+        else{//RecyclerView准备向下滑动
             isDownScroll = true;
+            rvNavigation.smoothScrollToPosition(position);
         }
     }
 
@@ -187,15 +197,6 @@ public class NavigationActivity extends BaseLoadActivity implements NavigationCo
     public void reLoad() {
         super.reLoad();
         mPresenter.loadTags();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
     }
 
 }

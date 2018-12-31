@@ -30,7 +30,7 @@ import butterknife.BindView;
  * 项目tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class ProjectFragment extends BaseLoadFragment implements ProjectContract.View {
+public class ProjectFragment extends BaseLoadFragment<ProjectPresenter> implements ProjectContract.View {
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
@@ -60,11 +60,19 @@ public class ProjectFragment extends BaseLoadFragment implements ProjectContract
     }
 
     @Override
-    protected void initView() {
+    protected ProjectPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    protected void inject() {
         if (!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getProjectFragmentComponent(new ProjectFragmentModule()).inject(this);
-        mPresenter.attachView(this);
+    }
 
+    @Override
+    protected void initView() {
+        super.initView();
         StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
         initToolBar();
     }
@@ -103,14 +111,6 @@ public class ProjectFragment extends BaseLoadFragment implements ProjectContract
         mPresenter.loadProjectList();
     }
 
-    @Override
-    public void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
-    }
 
     public static ProjectFragment newInstance() {
         return new ProjectFragment();

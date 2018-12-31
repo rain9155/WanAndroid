@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.component.NetWorkChangeReceiver;
 import com.example.hy.wanandroid.config.App;
@@ -31,6 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     private NetWorkChangeReceiver mNetWorkChangeReceiver;
     private TextView mTipView;
     protected boolean isEnableTip = true;
+    protected abstract void inject();//注入
     protected abstract int getLayoutId();//获取Activity的布局Id
     protected abstract void initView();//初始化控件
     protected abstract void initData();//初始化数据
@@ -42,6 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         setContentView(getLayoutId());
         mUnbinder = ButterKnife.bind(this);
         setStatusBarColor(getAppComponent().getDataModel().getStatusBarState());
+        inject();
         initView();
         initData();
     }

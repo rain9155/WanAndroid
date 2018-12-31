@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.contract.mine.LoginContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerLoginActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.LoginActivityModule;
@@ -35,7 +36,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends BaseActivity implements LoginContract.View{
+public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements LoginContract.View{
 
     @BindView(R.id.ib_back)
     ImageView ibBack;
@@ -68,18 +69,25 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     private static boolean isNeedResult = false;
 
     @Override
+    protected void inject() {
+        DaggerLoginActivityComponent.builder().appComponent(getAppComponent()).loginActivityModule(new LoginActivityModule()).build().inject(this);
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_login;
     }
 
     @Override
-    protected void initView() {
-        DaggerLoginActivityComponent.builder().appComponent(getAppComponent()).loginActivityModule(new LoginActivityModule()).build().inject(this);
-        mPresenter.attachView(this);
+    protected LoginPresenter getPresenter() {
+        return mPresenter;
+    }
 
+    @Override
+    protected void initView() {
+        super.initView();
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setPaddingSmart(this, rootView);
-
         ibBack.setOnClickListener(v -> finish());
         tvRegister.setOnClickListener(v -> RegisterActivity.startActivity(this));
         btnLogin.setOnClickListener(v -> {
@@ -100,13 +108,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
 
     @Override
     protected void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
+        super.onDestroy();
         if(mLoadingDialog != null)
             mLoadingDialog = null;
-        super.onDestroy();
     }
 
     @Override

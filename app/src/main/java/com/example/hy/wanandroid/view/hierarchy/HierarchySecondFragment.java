@@ -38,7 +38,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * Created by 陈健宇 at 2018/10/28
  */
-public class HierarchySecondFragment extends BaseLoadFragment implements HierarchySecondContract.View {
+public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPresenter> implements HierarchySecondContract.View {
 
     @BindView(R.id.rv_hierarchy)
     RecyclerView rvHierarchySecondList;
@@ -78,10 +78,18 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
     }
 
     @Override
-    protected void initView() {
-        if(!(getActivity() instanceof HierarchySecondActivity)) return;
+    protected HierarchySecondPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    protected void inject() {
         ((HierarchySecondActivity) getActivity()).getComponent().getHierarchySecondFragmentComponent(new HierarchySecondFragmentModule()).inject(this);
-        mPresenter.attachView(this);
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
         initRecyclerView();
         initRefreshView();
     }
@@ -142,14 +150,6 @@ public class HierarchySecondFragment extends BaseLoadFragment implements Hierarc
         mPresenter.loadArticles(0, mId);
     }
 
-    @Override
-    public void onDestroy() {
-        if(mPresenter != null){
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
-    }
 
     @Override
     public void showArticles(List<Article> articleList) {

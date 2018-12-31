@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.bean.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
@@ -44,7 +45,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 
-public class ArticleActivity extends BaseActivity implements ArticleContract.View {
+public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implements ArticleContract.View {
 
     private AgentWeb mAgentWeb;
     private String mAddress;
@@ -67,6 +68,11 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     ArticlePresenter mPresenter;
 
     @Override
+    protected void inject() {
+        DaggerArticleActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_article;
     }
@@ -86,9 +92,13 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     }
 
     @Override
+    protected ArticlePresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
     protected void initView() {
-        DaggerArticleActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
-        mPresenter.attachView(this);
+        super.initView();
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
         initToolBar();
@@ -196,10 +206,6 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     @Override
     protected void onDestroy() {
         mAgentWeb.getWebLifeCycle().onDestroy();
-        if(mPresenter != null){
-            mPresenter.detachView();
-            mPresenter = null;
-        }
         super.onDestroy();
     }
 
