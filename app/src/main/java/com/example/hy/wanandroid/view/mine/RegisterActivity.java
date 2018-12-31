@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.contract.mine.RegisterContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerRegisterActivityComponent;
 import com.example.hy.wanandroid.presenter.mine.RegisterPresenter;
@@ -26,9 +27,10 @@ import javax.inject.Inject;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.Lazy;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RegisterActivity extends BaseActivity implements RegisterContract.View {
+public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> implements RegisterContract.View {
 
     @BindView(R.id.iv_face)
     CircleImageView ivFace;
@@ -60,9 +62,14 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     @Inject
     RegisterPresenter mPresenter;
     @Inject
-    LoadingDialog mLoadingDialog;
+    Lazy<LoadingDialog> mLoadingDialog;
 
     private View focusView = null;
+
+    @Override
+    protected void inject() {
+        DaggerRegisterActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -70,11 +77,12 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     }
 
     @Override
+    protected RegisterPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
     protected void initView() {
-
-        DaggerRegisterActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
-        mPresenter.attachView(this);
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setPaddingSmart(this, rootView);
 
@@ -100,13 +108,9 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @Override
     protected void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
+        super.onDestroy();
         if(mLoadingDialog != null)
             mLoadingDialog = null;
-        super.onDestroy();
     }
 
     @Override
@@ -141,17 +145,17 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @Override
     public void showErrorView() {
-        mLoadingDialog.dismiss();
+        mLoadingDialog.get().dismiss();
     }
 
     @Override
     public void showNormalView() {
-        mLoadingDialog.dismiss();
+        mLoadingDialog.get().dismiss();
     }
 
     @Override
     public void showLoading() {
-        mLoadingDialog.show(getSupportFragmentManager(), "tag3");
+        mLoadingDialog.get().show(getSupportFragmentManager(), "tag3");
     }
 
     public static void startActivity(Context context) {

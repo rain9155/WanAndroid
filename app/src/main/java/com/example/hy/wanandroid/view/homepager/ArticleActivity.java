@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -23,6 +24,8 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
+import com.example.hy.wanandroid.bean.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
@@ -42,7 +45,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 
-public class ArticleActivity extends BaseActivity implements ArticleContract.View {
+public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implements ArticleContract.View {
 
     private AgentWeb mAgentWeb;
     private String mAddress;
@@ -65,28 +68,43 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     ArticlePresenter mPresenter;
 
     @Override
+    protected void inject() {
+        DaggerArticleActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_article;
     }
 
     @Override
-    protected void initView() {
-        DaggerArticleActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
-        mPresenter.attachView(this);
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
-            StatusBarUtil.setHeightAndPadding(this, tlCommon);
-
+    protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if(intent != null){
-            mAddress = intent.getStringExtra(Constant.KEY_ARTICLE_ADDRESS);
-            mTitle = intent.getStringExtra(Constant.KEY_ARTICLE_TITLE);
-            isCollection = intent.getBooleanExtra(Constant.KEY_ARTICLE_ISCOLLECTION, false);
+            ArticleBean articleBean = intent.getParcelableExtra(Constant.KEY_ARTICLE_BEAN);
+            mAddress = articleBean.getLink();
+            mTitle = articleBean.getTitle();
+            isCollection = articleBean.isCollect();
+            mArticleId = articleBean.getId();
             isHideCollection = intent.getBooleanExtra(Constant.KEY_ARTICLE_FLAG, false);
-            mArticleId = intent.getIntExtra(Constant.KEY_ARTICLE_ID, -1);
         }
+        super.onCreate(savedInstanceState);
+    }
 
-        //标题栏
+    @Override
+    protected ArticlePresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, tlCommon);
+        initToolBar();
+    }
+
+    private void initToolBar() {
         setSupportActionBar(tlCommon);
         tlCommon.setTitle("");
         tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
@@ -101,7 +119,6 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
 
     @Override
     protected void initData() {
-
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(flContainer, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator(getResources().getColor(R.color.colorPrimary))
@@ -189,10 +206,6 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     @Override
     protected void onDestroy() {
         mAgentWeb.getWebLifeCycle().onDestroy();
-        if(mPresenter != null){
-            mPresenter.detachView();
-            mPresenter = null;
-        }
         super.onDestroy();
     }
 
@@ -234,10 +247,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
      * 复制字符串
      */
     private void copy(Context context, String text) {
-        if(TextUtils.isEmpty(text)) return;
-        ClipboardManager mClipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        assert mClipboardManager != null;
-        mClipboardManager.setPrimaryClip(ClipData.newPlainText(null, text));
+        ShareUtil.copyString(context, text);
         showToast(getString(R.string.articleActivity_copy_success));
     }
 
@@ -313,42 +323,31 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
 
     /**
      * 启动活动
-     * @param address html地址
      */
-    public static void startActivity(Context context, String address, String title, int id, boolean isCollection, boolean isHideCollection){
+    public static void startActivity(Context context,  ArticleBean articleBean, boolean isHideCollection){
         Intent intent = new Intent(context, ArticleActivity.class);
-        intent.putExtra(Constant.KEY_ARTICLE_ADDRESS, address);
-        intent.putExtra(Constant.KEY_ARTICLE_TITLE, title);
-        intent.putExtra(Constant.KEY_ARTICLE_ISCOLLECTION, isCollection);
         intent.putExtra(Constant.KEY_ARTICLE_FLAG, isHideCollection);
-        intent.putExtra(Constant.KEY_ARTICLE_ID, id);
+        intent.putExtra(Constant.KEY_ARTICLE_BEAN, articleBean);
         context.startActivity(intent);
     }
 
     /**
      * 启动活动，使用Activity中的startActivityForResult（）
-     * @param address html地址
      */
-    public static void startActivityForResult(Activity activity, String address, String title, int id, boolean isCollection, boolean isHideCollection, int request){
+    public static void startActivityForResult(Activity activity, ArticleBean articleBean, boolean isHideCollection, int request){
         Intent intent = new Intent(activity, ArticleActivity.class);
-        intent.putExtra(Constant.KEY_ARTICLE_ADDRESS, address);
-        intent.putExtra(Constant.KEY_ARTICLE_TITLE, title);
-        intent.putExtra(Constant.KEY_ARTICLE_ISCOLLECTION, isCollection);
+        intent.putExtra(Constant.KEY_ARTICLE_BEAN, articleBean);
         intent.putExtra(Constant.KEY_ARTICLE_FLAG, isHideCollection);
-        intent.putExtra(Constant.KEY_ARTICLE_ID, id);
         activity.startActivityForResult(intent, request);
     }
 
     /**
      * 启动活动，使用Fragment中的startActivityForResult（）
      */
-    public static void startActicityForResultByFragment(Activity activity, Fragment fragment, String address, String title, int id, boolean isCollection, boolean isHideCollection, int request){
+    public static void startActicityForResultByFragment(Activity activity, Fragment fragment, ArticleBean articleBean, boolean isHideCollection, int request){
         Intent intent = new Intent(activity, ArticleActivity.class);
-        intent.putExtra(Constant.KEY_ARTICLE_ADDRESS, address);
-        intent.putExtra(Constant.KEY_ARTICLE_TITLE, title);
-        intent.putExtra(Constant.KEY_ARTICLE_ISCOLLECTION, isCollection);
+        intent.putExtra(Constant.KEY_ARTICLE_BEAN, articleBean);
         intent.putExtra(Constant.KEY_ARTICLE_FLAG, isHideCollection);
-        intent.putExtra(Constant.KEY_ARTICLE_ID, id);
         fragment.startActivityForResult(intent, request);
     }
 }

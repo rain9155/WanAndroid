@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.example.hy.wanandroid.R;
 import com.example.commonlib.utils.AnimUtil;
+import com.example.hy.wanandroid.base.presenter.IPresenter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,9 +22,10 @@ import static com.example.hy.wanandroid.config.Constant.LOADING_STATE;
 import static com.example.hy.wanandroid.config.Constant.NORMAL_STATE;
 
 /**
+ * 具有布局切换能力的Fragment
  * Created by 陈健宇 at 2018/11/4
  */
-public abstract class BaseLoadFragment extends BaseFragment {
+public abstract class BaseLoadFragment<T extends IPresenter> extends BaseMvpFragment<T> {
 
     private View mErrorView;
     private View mLoadingView;
@@ -40,7 +42,6 @@ public abstract class BaseLoadFragment extends BaseFragment {
         mNormalView = getView().findViewById(R.id.normal_view);
         if(mNormalView == null) throw new IllegalStateException("The subclass of BaseLoadFragment must contain a View it's id is named normal_view");
         if(!(mNormalView.getParent() instanceof ViewGroup)) throw new IllegalStateException("mNormalView's ParentView should be a ViewGroup");
-
         ViewGroup parent = (ViewGroup) mNormalView.getParent();
         View.inflate(mActivity, R.layout.error_view, parent);
         View.inflate(mActivity, R.layout.loaging_view, parent);

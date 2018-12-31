@@ -14,6 +14,11 @@
     <item name="android:windowAnimationStyle">@style/ActivityAnim</item>
     </style>
 
+    <style name="PopupAnim">
+        <item name="android:windowEnterAnimation">@anim/anim_popup_enter</item>
+        <item name="android:windowExitAnimation">@anim/anim_popup_exit</item>
+    </style>
+
     <style name="ActivityAnim">
         <item name="android:activityOpenEnterAnimation">@anim/anim_open_enter</item>
         <item name="android:activityOpenExitAnimation">@anim/anim_open_exit</item>

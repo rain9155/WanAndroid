@@ -14,6 +14,8 @@
     <color name="translucence">#80FFFFFF</color>
     <color name="transparency">#00000000</color>
     <color name="colorCollected">#81ff0000</color>
+    <color name="colorTag1">#f50000</color>
+    <color name="colorTag2">#00BCD4</color>
     <color name="colorTip">#f50000</color>
     <color name="colorIndicator">#00BCD4</color>
     <color name="colorBorder">#00BCD4</color>
@@ -27,6 +29,7 @@
     <color name="white">#FFFFFF</color>
     <color name="colorRipple">#B3E5FC</color>
     <color name="colorPress">#6abdbdbd</color>
+    <color name="colorElevation">#14bdbdbd</color>
     <color name="colorPressFg">#4fffffff</color>
     <color name="colorDialogBackground">#FFFFFF</color>
     <color name="toast_background">#c8535353</color>

@@ -10,6 +10,7 @@ import com.example.hy.wanandroid.model.network.api.NavigationApis;
 import com.example.hy.wanandroid.model.network.api.ProjectApis;
 import com.example.hy.wanandroid.model.network.api.SearchApis;
 import com.example.hy.wanandroid.model.network.api.WechatApis;
+import com.example.hy.wanandroid.widget.popup.PressPopup;
 
 import javax.inject.Singleton;
 import dagger.Component;
@@ -26,7 +27,7 @@ public interface AppComponent {
     void inject(App app);//注入App
 
     App getApp();
-
     DataModel getDataModel();
     Retrofit getRetrofit();
+    PressPopup getPressPopup();
 }

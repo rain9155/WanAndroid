@@ -36,6 +36,7 @@ public class Constant {
     public static final String KEY_ARTICLE_ISCOLLECTION = "articleIsCollection";
     public static final String KEY_ARTICLE_ID = "articleId";
     public static final String KEY_DATA_RETURN = "dataReturn";
+    public static final String KEY_ARTICLE_BEAN = "articleBean";
 
 
     //CollectionActivity

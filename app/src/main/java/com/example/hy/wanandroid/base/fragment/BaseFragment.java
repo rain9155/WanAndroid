@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.commonlib.utils.ToastUtil;
+import com.example.hy.wanandroid.config.App;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,7 @@ public abstract class BaseFragment extends AbstractLazyLoadFragment
     private Unbinder mUnbinder;
     protected Activity mActivity;
     protected View mView;
+    protected abstract void inject();
     protected abstract void initView();//初始化控件
     protected abstract void loadData();//加载数据
     protected abstract int getLayoutId();//获取Fragment的布局Id
@@ -42,6 +44,7 @@ public abstract class BaseFragment extends AbstractLazyLoadFragment
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
         mUnbinder = ButterKnife.bind(this, view);
+        inject();
         initView();
         return view;
     }
@@ -90,7 +93,7 @@ public abstract class BaseFragment extends AbstractLazyLoadFragment
 
     @Override
     public void showToast(String toast) {
-        ToastUtil.toastInBottom(mActivity, toast);
+        ToastUtil.toastInBottom(App.getContext(), toast);
     }
 
     @Override

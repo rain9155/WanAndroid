@@ -33,7 +33,7 @@ import butterknife.BindView;
  * 体系tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class HierarchyFragment extends BaseLoadFragment implements HierarchyContract.View {
+public class HierarchyFragment extends BaseLoadFragment<HierarchyPresenter> implements HierarchyContract.View {
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
@@ -63,23 +63,43 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
     }
 
     @Override
-    protected void initView() {
+    protected HierarchyPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    protected void inject() {
         if (!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getHierarchyFragmentSubComponent(new HierarchyFragmentModule()).inject(this);
-        mPresenter.attachView(this);
+    }
 
+    @Override
+    protected void initView() {
+        super.initView();
         StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
+        initToolBar();
+        initRecyclerView();
+        initRefreshView();
+    }
+
+    private void initToolBar() {
         ivCommonSearch.setVisibility(View.VISIBLE);
         tvCommonTitle.setText(R.string.homeFragment_hierarchy);
         tlCommon.setNavigationIcon(R.drawable.ic_navigation);
         tlCommon.setNavigationOnClickListener(v -> NavigationActivity.startActivity(mActivity));
         ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(mActivity));
         ivCommonSearch.setOnClickListener(v -> SearchActivity.startActivity(mActivity));
+    }
 
+    private void initRecyclerView() {
         rvHierarchy.setLayoutManager(mLayoutManager);
         mListAdapter.openLoadAnimation();
         rvHierarchy.setAdapter(mListAdapter);
         rvHierarchy.setHasFixedSize(true);
+        mListAdapter.setOnItemClickListener(((adapter, view, position) -> starHierarchyActivity(position)));
+    }
+
+    private void initRefreshView() {
         srlHierarchy.setOnLoadMoreListener(refreshLayout -> {
             mPresenter.loadMoreFirstHierarchyList();
             isLoadMore = true;
@@ -88,8 +108,6 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
             mPresenter.loadMoreFirstHierarchyList();
             isLoadMore = false;
         });
-        mListAdapter.setOnItemClickListener(((adapter, view, position) -> starHierarchyActivity(position)));
-
     }
 
     @Override
@@ -151,12 +169,4 @@ public class HierarchyFragment extends BaseLoadFragment implements HierarchyCont
         return new HierarchyFragment();
     }
 
-    @Override
-    public void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
-    }
 }

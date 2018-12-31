@@ -5,6 +5,7 @@ import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerFragment;
 import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.widget.popup.PressPopup;
 
 import java.util.ArrayList;
 import java.util.List;

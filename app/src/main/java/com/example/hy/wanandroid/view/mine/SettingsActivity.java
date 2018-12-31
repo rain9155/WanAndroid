@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.component.UpdataService;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
@@ -50,8 +51,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import butterknife.BindView;
+import dagger.Lazy;
 
-public class SettingsActivity extends BaseActivity
+public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         implements SettingsContract.View, CompoundButton.OnCheckedChangeListener {
 
 
@@ -139,53 +141,53 @@ public class SettingsActivity extends BaseActivity
     @Inject
     File mCacheFile;
     @Inject
-    VersionDialog mVersionDialog;
+    Lazy<VersionDialog> mVersionDialog;
     @Inject
-    ClearCacheDialog mClearCacheDialog;
+    Lazy<ClearCacheDialog> mClearCacheDialog;
 
     private ObjectAnimator mAnimator;
     private String mNewVersionName;
     private String mCurrentVersionName;
 
     @Override
+    protected void inject() {
+        DaggerSettingsActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_settings;
+    }
+
+    @Override
+    protected SettingsPresenter getPresenter() {
+        return mPresenter;
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
-        DaggerSettingsActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
-        mPresenter.attachView(this);
-
+       super.initView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
-
         isEnableTip = false;
+        initToolBar();
+        initSwitch();
+        initSettings();
 
-        //标题栏
-        ivCommonSearch.setVisibility(View.INVISIBLE);
-        tvCommonTitle.setText(R.string.mineFragment_tvSetting);
-        tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
-        tlCommon.setNavigationOnClickListener(v -> finish());
+    }
 
-        switchNoImage.setChecked(mPresenter.getNoImageState());
-        switchAutoCache.setChecked(mPresenter.getAutoCacheState());
-        switchNightMode.setChecked(mPresenter.getNightModeState());
-        switchStatusBar.setChecked(mPresenter.getStatusBarState());
-        switchAutoUpdata.setChecked(mPresenter.getAutoUpdataState());
-
+    private void initSettings() {
         mCurrentVersionName = DownloadUtil.getVersionName(this);
         tvCache.setText(FileUtil.getCacheSize(mCacheFile));
         tvVersion.setText(getString(R.string.settingsActivity_version_current) + mCurrentVersionName);
-
         clClearCache.setOnClickListener(v -> {
             String cache = FileUtil.getCacheSize(mCacheFile);
             if (cache.equals("0K"))
                 showToast(getString(R.string.settingsActivity_already_clear));
             else {
-                mClearCacheDialog.setContent(cache);
-                mClearCacheDialog.show(getSupportFragmentManager(), "tag8");
+                mClearCacheDialog.get().setContent(cache);
+                mClearCacheDialog.get().show(getSupportFragmentManager(), "tag8");
             }
         });
         clFeedBack.setOnClickListener(v -> ShareUtil.sendEmail(this, Constant.EMAIL_ADDRESS, getString(R.string.settingsActivity_email_to)));
@@ -197,12 +199,27 @@ public class SettingsActivity extends BaseActivity
             if (mAnimator != null && mAnimator.isRunning()) return;
             mPresenter.checkVersion(mCurrentVersionName);
         });
+    }
 
+    private void initSwitch() {
+        switchNoImage.setChecked(mPresenter.getNoImageState());
+        switchAutoCache.setChecked(mPresenter.getAutoCacheState());
+        switchNightMode.setChecked(mPresenter.getNightModeState());
+        switchStatusBar.setChecked(mPresenter.getStatusBarState());
+        switchAutoUpdata.setChecked(mPresenter.getAutoUpdataState());
         switchAutoCache.setOnCheckedChangeListener(this);
         switchNoImage.setOnCheckedChangeListener(this);
         switchNightMode.setOnCheckedChangeListener(this);
         switchStatusBar.setOnCheckedChangeListener(this);
         switchAutoUpdata.setOnCheckedChangeListener(this);
+    }
+
+    private void initToolBar() {
+        //标题栏
+        ivCommonSearch.setVisibility(View.INVISIBLE);
+        tvCommonTitle.setText(R.string.mineFragment_tvSetting);
+        tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
+        tlCommon.setNavigationOnClickListener(v -> finish());
     }
 
     @Override
@@ -238,10 +255,6 @@ public class SettingsActivity extends BaseActivity
 
     @Override
     protected void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
         if(mClearCacheDialog != null)
             mClearCacheDialog = null;
         if(mVersionDialog != null)
@@ -354,9 +367,9 @@ public class SettingsActivity extends BaseActivity
 
     @Override
     public void showUpdataDialog(String content) {
-        mVersionDialog.setContentText(content);
-        mVersionDialog.setIsMain(false);
-        mVersionDialog.show(getSupportFragmentManager(), "tag4");
+        mVersionDialog.get().setContentText(content);
+        mVersionDialog.get().setIsMain(false);
+        mVersionDialog.get().show(getSupportFragmentManager(), "tag4");
     }
 
     @Override

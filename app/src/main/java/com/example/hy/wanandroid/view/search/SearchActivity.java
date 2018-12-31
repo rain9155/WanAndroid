@@ -1,10 +1,12 @@
 package com.example.hy.wanandroid.view.search;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,6 +17,7 @@ import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.adapter.FlowTagsAdapter;
 import com.example.hy.wanandroid.adapter.HistoryAdapter;
 import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
+import com.example.hy.wanandroid.bean.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.search.SearchContract;
@@ -27,6 +30,7 @@ import com.example.commonlib.utils.CommonUtil;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
+import com.example.hy.wanandroid.widget.popup.PressPopup;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
@@ -41,8 +45,9 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import dagger.Lazy;
 
-public class SearchActivity extends BaseLoadActivity implements SearchContract.View {
+public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements SearchContract.View {
 
     @BindView(R.id.tv_common_title)
     TextView tvCommonTitle;
@@ -89,6 +94,8 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     List<String> mHistoryList;
     @Inject
     List<HotKey> mHotKeyList;
+    @Inject
+    Lazy<PressPopup> mPopupWindow;
 
     private SearchView mSearchView;
     private SearchView.SearchAutoComplete mSearchAutoComplete;
@@ -97,6 +104,12 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     private int mPageNum = 0;
     private int mArticlePosition = 0;//点击的位置
     private Article mArticle;
+    private boolean isPress = false;
+
+    @Override
+    protected void inject() {
+        DaggerSearchActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -104,15 +117,84 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
     }
 
     @Override
+    protected SearchPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
     protected void initView() {
         super.initView();
-
-        DaggerSearchActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
-        mPresenter.attachView(this);
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
+        initToolBar();
+        initHistoryView();
+        initSearchRequestView();
+        initRefreshView();
+    }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private void initSearchRequestView() {
+        //搜索结果
+        mSearchResquestAdapter.openLoadAnimation();
+        rvSearchRequest.setLayoutManager(mSearchRequestManager);
+        rvSearchRequest.setAdapter(mSearchResquestAdapter);
+        mSearchResquestAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+            mArticlePosition = position;
+            mArticle = mSearchResquestList.get(position);
+            ArticleBean articleBean = new ArticleBean(mArticle);
+            ArticleActivity.startActivityForResult(SearchActivity.this, articleBean, false, Constant.REQUEST_REFRESH_ARTICLE);
+        });
+        mSearchResquestAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
+            mArticlePosition = position;
+            mArticle =  mSearchResquestList.get(position);
+            if(!User.getInstance().isLoginStatus()){
+                LoginActivity.startActivityForResult(this, Constant.REQUEST_COLLECT_ARTICLE);
+                showToast(getString(R.string.first_login));
+                return;
+            }
+            collect();
+            AnimUtil.scale(view, -1);
+        });
+        mSearchResquestAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            Article article = mSearchResquestList.get(position);
+            view.setOnTouchListener((v, event) -> {
+                if(event.getAction() == MotionEvent.ACTION_UP && isPress){
+                    mPopupWindow.get().show(tlCommon, event.getRawX(), event.getRawY());
+                    mPopupWindow.get().setMessage(article.getTitle(), article.getLink());
+                    isPress = false;
+                }
+                return false;
+            });
+            isPress = true;
+            return true;
+        });
+    }
+
+    private void initHistoryView() {
+        //历史记录
+        mHistoryAdapter.openLoadAnimation();
+        rvHistory.setLayoutManager(mHistoriesManager);
+        rvHistory.setAdapter(mHistoryAdapter);
+        mHistoryAdapter.setOnItemClickListener((adapter, view, position) -> mSearchView.setQuery(mHistoryList.get(position), true));
+        mHistoryAdapter.setOnItemChildClickListener((adapter, view, position) -> mPresenter.deleteOneHistoryRecord(mHistoryList.get(position)));
+        tvClear.setOnClickListener(v -> mPresenter.deleteAllHistoryRecord());
+    }
+
+    private void initRefreshView() {
+        normalView.setOnRefreshListener(refreshLayout -> {
+            isLoadMore = false;
+            mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), 0);
+        });
+        normalView.setOnLoadMoreListener(refreshLayout -> {
+            isLoadMore = true;
+            mPageNum++;
+            mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), mPageNum);
+        });
+        normalView.setEnableLoadMore(false);
+        normalView.setEnableRefresh(false);
+    }
+
+    private void initToolBar() {
         //标题栏
         setSupportActionBar(tlCommon);
         tlCommon.setTitle("");
@@ -128,47 +210,6 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
                 finish();
             }
         });
-
-        //历史记录
-        mHistoryAdapter.openLoadAnimation();
-        rvHistory.setLayoutManager(mHistoriesManager);
-        rvHistory.setAdapter(mHistoryAdapter);
-        mHistoryAdapter.setOnItemClickListener((adapter, view, position) -> mSearchView.setQuery(mHistoryList.get(position), true));
-        mHistoryAdapter.setOnItemChildClickListener((adapter, view, position) -> mPresenter.deleteOneHistoryRecord(mHistoryList.get(position)));
-        tvClear.setOnClickListener(v -> mPresenter.deleteAllHistoryRecord());
-
-        //搜索结果
-        mSearchResquestAdapter.openLoadAnimation();
-        rvSearchRequest.setLayoutManager(mSearchRequestManager);
-        rvSearchRequest.setAdapter(mSearchResquestAdapter);
-        normalView.setOnRefreshListener(refreshLayout -> {
-            isLoadMore = false;
-            mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), 0);
-        });
-        normalView.setOnLoadMoreListener(refreshLayout -> {
-            isLoadMore = true;
-            mPageNum++;
-            mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), mPageNum);
-        });
-        mSearchResquestAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
-            mArticlePosition = position;
-            Article article = mSearchResquestList.get(position);
-            mArticle = article;
-            ArticleActivity.startActivityForResult(SearchActivity.this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
-        });
-        mSearchResquestAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
-            mArticlePosition = position;
-            mArticle =  mSearchResquestList.get(position);
-            if(!User.getInstance().isLoginStatus()){
-                LoginActivity.startActivityForResult(this, Constant.REQUEST_COLLECT_ARTICLE);
-                showToast(getString(R.string.first_login));
-                return;
-            }
-            collect();
-            AnimUtil.scale(view, -1);
-        });
-        normalView.setEnableLoadMore(false);
-        normalView.setEnableRefresh(false);
     }
 
     @Override
@@ -239,15 +280,6 @@ public class SearchActivity extends BaseLoadActivity implements SearchContract.V
             finish();
         }
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
     }
 
     @Override

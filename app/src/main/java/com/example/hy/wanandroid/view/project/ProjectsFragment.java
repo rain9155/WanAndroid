@@ -1,11 +1,14 @@
 package com.example.hy.wanandroid.view.project;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ProjectsAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
+import com.example.hy.wanandroid.bean.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
@@ -17,6 +20,7 @@ import com.example.commonlib.utils.CommonUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
+import com.example.hy.wanandroid.widget.popup.PressPopup;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -28,6 +32,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import dagger.Lazy;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -35,7 +40,7 @@ import static android.app.Activity.RESULT_OK;
  * 项目详情列表Fragment
  * Created by 陈健宇 at 2018/10/29
  */
-public class ProjectsFragment extends BaseLoadFragment implements ProjectsContract.View {
+public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implements ProjectsContract.View {
 
     @BindView(R.id.rv_projects)
     RecyclerView rvProjectList;
@@ -50,12 +55,15 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
     ProjectsAdapter mProjectsAdapter;
     @Inject
     List<Article> mArticles;
+    @Inject
+    Lazy<PressPopup> mPopupWindow;
 
     private int mPageNum = 1;
     private int mId;
     private boolean isLoadMore = false;
     private int mArticlePosition = 0;//点击的位置
     private Article mArticle;
+    private boolean isPress = false;
 
     @Override
     protected int getLayoutId() {
@@ -63,29 +71,34 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
     }
 
     @Override
-    protected void initView() {
+    protected ProjectsPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    protected void inject() {
         if(!(getActivity() instanceof MainActivity)) return;
         ((MainActivity) getActivity()).getComponent().getProjectFragmentComponent(new ProjectFragmentModule()).inject(this);
-        mPresenter.attachView(this);
+    }
 
+    @Override
+    protected void initView() {
+        super.initView();
+        initRecyclerView();
+        initRefreshView();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void initRecyclerView() {
         //项目列表
         rvProjectList.setLayoutManager(mLinearLayoutManager);
         mProjectsAdapter.openLoadAnimation();
         rvProjectList.setAdapter(mProjectsAdapter);
-        srlProjects.setOnLoadMoreListener(refreshLayout -> {
-           mPageNum++;
-           mPresenter.loadMoreProjects(mPageNum, mId);
-           isLoadMore = true;
-        });
-        srlProjects.setOnRefreshListener(refreshLayout -> {
-            mPresenter.loadMoreProjects(1, mId);
-            isLoadMore = false;
-        });
         mProjectsAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             mArticlePosition = position;
-            Article article = mArticles.get(position);
-            mArticle = article;
-            ArticleActivity.startActicityForResultByFragment(mActivity, this, article.getLink(), article.getTitle(), article.getId(), article.isCollect(), false, Constant.REQUEST_REFRESH_ARTICLE);
+            mArticle = mArticles.get(position);
+            ArticleBean articleBean = new ArticleBean(mArticle);
+            ArticleActivity.startActicityForResultByFragment(mActivity, this, articleBean, false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mProjectsAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
             mArticlePosition = position;
@@ -98,7 +111,31 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
             collect();
             AnimUtil.scale(view, -1);
         });
+        mProjectsAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            Article article = mArticles.get(position);
+            view.setOnTouchListener((v, event) -> {
+                if(event.getAction() == MotionEvent.ACTION_UP && isPress){
+                    mPopupWindow.get().show(srlProjects, event.getRawX(), event.getRawY());
+                    mPopupWindow.get().setMessage(article.getTitle(), article.getLink());
+                    isPress = false;
+                }
+                return false;
+            });
+            isPress = true;
+            return true;
+        });
+    }
 
+    private void initRefreshView() {
+        srlProjects.setOnLoadMoreListener(refreshLayout -> {
+            mPageNum++;
+            mPresenter.loadMoreProjects(mPageNum, mId);
+            isLoadMore = true;
+        });
+        srlProjects.setOnRefreshListener(refreshLayout -> {
+            mPresenter.loadMoreProjects(1, mId);
+            isLoadMore = false;
+        });
     }
 
     @Override
@@ -135,15 +172,6 @@ public class ProjectsFragment extends BaseLoadFragment implements ProjectsContra
         if(bundle != null){
             mId = bundle.getInt(Constant.KEY_PROJECT_ID, -1);
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        if(mPresenter != null){
-            mPresenter.detachView();
-            mPresenter = null;
-        }
-        super.onDestroy();
     }
 
     @Override

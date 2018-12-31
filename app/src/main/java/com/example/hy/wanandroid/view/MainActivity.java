@@ -13,6 +13,7 @@ import android.view.animation.BounceInterpolator;
 import android.widget.FrameLayout;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
+import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.MainContract;
@@ -33,6 +34,7 @@ import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.haha.perflib.Main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -42,13 +44,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import butterknife.BindView;
+import dagger.Lazy;
+
 import android.os.Handler;
 
 
 import javax.inject.Inject;
 
 
-public class MainActivity extends BaseActivity implements MainContract.View {
+public class MainActivity extends BaseMvpActivity<MainPresenter> implements MainContract.View {
 
     @BindView(R.id.fl_container)
     FrameLayout flContainer;
@@ -67,11 +71,19 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Inject
     Fragment[] mFragments;
     @Inject
-    VersionDialog mVersionDialog;
+    Lazy<VersionDialog> mVersionDialog;
     @Inject
     OpenBrowseDialog mOpenBrowseDialog;
 
     private String mNewVersionName;
+
+    @Override
+    protected void inject() {
+        mMainActivityComponent = DaggerMainActivityComponent.builder()
+                .appComponent(getAppComponent())
+                .build();
+        mMainActivityComponent.inject(this);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -102,12 +114,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     protected void initView() {
-        mMainActivityComponent = DaggerMainActivityComponent.builder()
-                .appComponent(getAppComponent())
-                .build();
-        mMainActivityComponent.inject(this);
-        mPresenter.attachView(this);
-
+        super.initView();
         bnvBtm.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()){
                 case R.id.item_home:
@@ -161,6 +168,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     @Override
+    protected MainPresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
     public void onBackPressed() {
         if(System.currentTimeMillis() - Constant.TOUCH_TIME < Constant.WAIT_TIME){
             finish();
@@ -186,10 +198,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     protected void onDestroy() {
-        if(mPresenter != null){
-            mPresenter.detachView();
-            mPresenter = null;
-        }
         if(mOpenBrowseDialog != null)
             mOpenBrowseDialog = null;
         if(mVersionDialog != null)
@@ -209,9 +217,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     public void showUpdataDialog(String content) {
-        mVersionDialog.setContentText(content);
-        mVersionDialog.setIsMain(true);
-        mVersionDialog.show(getSupportFragmentManager(), "tag5");
+        mVersionDialog.get().setContentText(content);
+        mVersionDialog.get().setIsMain(true);
+        mVersionDialog.get().show(getSupportFragmentManager(), "tag5");
     }
 
     @Override
