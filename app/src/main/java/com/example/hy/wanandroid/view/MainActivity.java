@@ -34,7 +34,6 @@ import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.squareup.haha.perflib.Main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
