@@ -2,3 +2,11 @@ file=J:\AndroidStudio\WanAndroid\app\build\outputs\mapping\release\mapping.txt
 sha1=9a34dfd11d4b7bee7ac80bc0be7f4b8c0114ef5b
 appId=a0768ddf34
 
+file=J:\AndroidStudio\WanAndroid\app\build\outputs\mapping\release\mapping.txt
+sha1=9a34dfd11d4b7bee7ac80bc0be7f4b8c0114ef5b
+appId=a0768ddf34
+
+file=J:\AndroidStudio\WanAndroid\app\build\outputs\mapping\release\mapping.txt
+sha1=9a34dfd11d4b7bee7ac80bc0be7f4b8c0114ef5b
+appId=a0768ddf34
+
