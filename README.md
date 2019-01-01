@@ -32,7 +32,6 @@
 - [ ] Dagger-Android
 - [ ] 自定义TabLayout
 - [ ] 优化app
-- [ ] 最新文章
 ### ChangeLog
 ```
 v1.3 2018-12-31
