@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.event.ClearCacheEvent;
 import com.example.hy.wanandroid.event.LoginEvent;
@@ -19,7 +20,7 @@ import androidx.fragment.app.DialogFragment;
 /**
  * Created by 陈健宇 at 2018/12/15
  */
-public class ClearCacheDialog extends DialogFragment {
+public class ClearCacheDialog extends BaseDialogFragment {
 
     private String mContent = "";
 

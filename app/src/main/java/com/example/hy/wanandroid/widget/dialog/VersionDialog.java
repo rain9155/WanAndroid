@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.event.UpdataEvent;
 
@@ -20,7 +21,7 @@ import androidx.fragment.app.DialogFragment;
 /**
  * Created by 陈健宇 at 2018/12/7
  */
-public class VersionDialog extends DialogFragment {
+public class VersionDialog extends BaseDialogFragment {
 
     private String mContentText = "";
     private boolean isMain;

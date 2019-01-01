@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +18,7 @@ import androidx.fragment.app.DialogFragment;
  * 获取版本等待loading
  * Created by 陈健宇 at 2018/12/7
  */
-public class UpDataLoadingDialog extends DialogFragment {
+public class UpDataLoadingDialog extends BaseDialogFragment {
 
     @NonNull
     @Override

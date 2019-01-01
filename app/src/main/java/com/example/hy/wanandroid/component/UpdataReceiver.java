@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.example.commonlib.utils.FileProvider7;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
@@ -77,8 +78,13 @@ public class UpdataReceiver extends BroadcastReceiver {
         File file = new File(Constant.PATH_APK_1);
         if (file.exists()) {
             Intent install = new Intent("android.intent.action.VIEW");
-            Uri downloadFileUri = Uri.fromFile(file);
-            install.setDataAndType(downloadFileUri, "application/vnd.android.package-archive");
+            FileProvider7.setIntentDataAndType(
+                    App.getContext(),
+                    install,
+                    "application/vnd.android.package-archive",
+                    file,
+                    false
+            );
             install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(install);
         }else {

@@ -10,6 +10,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -18,7 +20,7 @@ import androidx.fragment.app.DialogFragment;
  * 加载框
  * Created by 陈健宇 at 2018/11/17
  */
-public class LoadingDialog extends DialogFragment {
+public class LoadingDialog extends BaseDialogFragment {
 
     @NonNull
     @Override

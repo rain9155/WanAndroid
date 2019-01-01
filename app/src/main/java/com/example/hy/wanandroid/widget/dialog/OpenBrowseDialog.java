@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.commonlib.utils.LogUtil;
 import com.example.commonlib.utils.ShareUtil;
@@ -21,7 +22,7 @@ import androidx.fragment.app.DialogFragment;
 /**
  * Created by 陈健宇 at 2018/12/15
  */
-public class OpenBrowseDialog extends DialogFragment {
+public class OpenBrowseDialog extends BaseDialogFragment {
 
     @NonNull
     @Override
