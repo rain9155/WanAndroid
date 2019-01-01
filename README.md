@@ -26,7 +26,7 @@
  <br>![sc6](/screenshots/sc6.png) ![sc7](/screenshots/sc7.png)<br>
   <br>![sc8](/screenshots/sc8.png) ![sc9](/screenshots/sc9.png)<br>
 ### Download (Android 4.1 or above)
-[WanAndroid Apk](https://github.com/rain9155/WanAndroid/releases/download/v1.2/app-release.apk)
+[WanAndroid Apk](https://github.com/rain9155/WanAndroid/releases/download/v1.3/app-release.apk)
 ### TODO
 - [ ] 公众号模块
 - [ ] Dagger-Android
