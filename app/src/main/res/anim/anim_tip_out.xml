@@ -6,7 +6,7 @@
         android:fromYDelta="0"
         android:toYDelta="-50%p"
         android:toXDelta="0"
-        android:fromXDelta="0"/>
+        android:fromXDelta="0" />
 
     <alpha
         android:fromAlpha="1.0"

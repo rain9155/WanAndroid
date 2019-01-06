@@ -26,26 +26,23 @@ public class VersionDialog extends BaseDialogFragment {
     private String mContentText = "";
     private boolean isMain;
 
-    @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_version_new, null);
-        AlertDialog dialog = new AlertDialog.Builder(getActivity())
-                .setView(view)
-                .setCancelable(false)
-                .create();
-        dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
-        dialog.setOnKeyListener((dialog1, keyCode, event) -> keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0);
+    protected int getDialogViewId() {
+        return R.layout.dialog_version_new;
+    }
+
+    @Override
+    protected void initView(View view) {
         TextView updataLater = view.findViewById(R.id.tv_updata_later);
         TextView updataNow = view.findViewById(R.id.tv_updata_now);
         TextView content = view.findViewById(R.id.tv_version_content);
         content.setText(mContentText);
-        updataLater.setOnClickListener(v -> dialog.dismiss());
+        updataLater.setOnClickListener(v -> this.dismiss());
         updataNow.setOnClickListener(v -> {
-            dialog.dismiss();
+            this.dismiss();
             RxBus.getInstance().post(new UpdataEvent(isMain));
         });
-        return dialog;
+        CancelBackDismiss();
     }
 
     public void setContentText(String content){

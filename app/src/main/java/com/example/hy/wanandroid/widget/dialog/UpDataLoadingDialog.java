@@ -20,16 +20,14 @@ import androidx.fragment.app.DialogFragment;
  */
 public class UpDataLoadingDialog extends BaseDialogFragment {
 
-    @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_version_loading, null);
-        AlertDialog dialog = new AlertDialog.Builder(getActivity())
-                .setView(view)
-                .setCancelable(false)
-                .create();
-        dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
-        dialog.setOnKeyListener((dialog1, keyCode, event) -> keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0);
-        return dialog;
+    protected int getDialogViewId() {
+        return R.layout.dialog_version_loading;
     }
+
+    @Override
+    protected void initView(View view) {
+        CancelBackDismiss();
+    }
+
 }

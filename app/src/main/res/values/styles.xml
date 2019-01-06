@@ -19,11 +19,21 @@
         <item name="android:windowExitAnimation">@anim/anim_popup_exit</item>
     </style>
 
+    <style name="DialogAnim">
+        <item name="android:windowEnterAnimation">@anim/anim_dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/anim_dialog_exit</item>
+    </style>
+
     <style name="ActivityAnim">
         <item name="android:activityOpenEnterAnimation">@anim/anim_open_enter</item>
         <item name="android:activityOpenExitAnimation">@anim/anim_open_exit</item>
         <item name="android:activityCloseExitAnimation">@anim/anim_close_exit</item>
         <item name="android:activityCloseEnterAnimation">@anim/anim_close_enter</item>
+    </style>
+
+    <style name="TipWindowAnim">
+        <item name="android:windowEnterAnimation">@anim/anim_tip_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_tip_out</item>
     </style>
 
     <style name="LauncherTheme" parent="AppTheme">
@@ -37,9 +47,10 @@
     <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@color/colorNavBtmBackground</item>
+        <item name="android:windowBackground">@color/transparency</item>
     </style>
 
-
+    <!--SwitchButton轨迹style-->
     <style name="SwitchTrack" parent="Theme.AppCompat.Light">
         <!--开启时的颜色-->
         <item name="colorControlActivated">@color/colorTrackOpen</item>
@@ -67,6 +78,7 @@
         <item name="searchViewStyle">@style/SearchViewStyle</item>
     </style>
 
+    <!--SearchViewStyle-->
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
         <item name="searchIcon">@drawable/ic_search</item>
         <item name="goIcon">@drawable/ic_search</item>
@@ -96,12 +108,6 @@
         <item name="android:paddingBottom">@dimen/dp_10</item>
         <item name="android:paddingLeft">@dimen/dp_15</item>
         <item name="android:paddingRight">@dimen/dp_10</item>
-    </style>
-
-    <!-- tip窗口动画 -->
-    <style name="TipWindowAnim">
-        <item name="android:windowEnterAnimation">@anim/anim_tip_in</item>
-        <item name="android:windowExitAnimation">@anim/anim_tip_out</item>
     </style>
 
 </resources>

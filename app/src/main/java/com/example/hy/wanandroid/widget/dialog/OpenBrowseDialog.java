@@ -24,14 +24,13 @@ import androidx.fragment.app.DialogFragment;
  */
 public class OpenBrowseDialog extends BaseDialogFragment {
 
-    @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_open_browse, null);
-        AlertDialog dialog =  new AlertDialog.Builder(getActivity())
-                .setView(view)
-                .setCancelable(false)
-                .create();
+    protected int getDialogViewId() {
+        return R.layout.dialog_open_browse;
+    }
+
+    @Override
+    protected void initView(View view) {
         view.findViewById(R.id.btn_cancel).setOnClickListener(v -> this.dismiss());
         view.findViewById(R.id.btn_confirm).setOnClickListener(v -> {
             this.dismiss();
@@ -40,6 +39,6 @@ public class OpenBrowseDialog extends BaseDialogFragment {
             if(file.exists()) file.delete();
             ShareUtil.openBrowser(getContext(), Constant.NEW_VERSION_URL);
         });
-        return dialog;
     }
+
 }
