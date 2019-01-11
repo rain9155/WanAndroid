@@ -14,6 +14,7 @@ public interface MainContract {
         void setNewVersionName(String versionName);//设置最新版本号
         void upDataVersion();//更新
         void showOpenBrowseDialog();
+        void installApk();
     }
 
     interface Presenter extends IPresenter<MainContract.View>{

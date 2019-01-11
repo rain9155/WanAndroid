@@ -28,6 +28,7 @@ public class Constant {
     //MainActivity
     public static final long WAIT_TIME = 2000L; // 再点一次退出程序时间设置
     public static long TOUCH_TIME = 0;//第一次按下返回键的时间
+    public static final int REQUEST_CODE_UNKNOWN_APP = 3;
 
     //ArticleActivity
     public static final String KEY_ARTICLE_ADDRESS = "articleAddress";
@@ -38,13 +39,22 @@ public class Constant {
     public static final String KEY_DATA_RETURN = "dataReturn";
     public static final String KEY_ARTICLE_BEAN = "articleBean";
 
-
     //CollectionActivity
     public static final int REQUEST_SHOW_COLLECTIONS = 0;
 
     //HomeFragment
     public static final int REQUEST_COLLECT_ARTICLE = 1;
     public static final int REQUEST_REFRESH_ARTICLE = 2;
+
+    //MineFragment
+    public static final int REQUEST_PICK_IMAGE_CHOOSER = 5;
+    public static final int REQUEST_CROP_IMAGE_ACTIVITY = 6;
+
+    //CropperImageActivity
+    public static final String KEY_IMAGE_URI = "imageUri";
+    public static final String KEY_IMAGE_OPTIONS = "imageOptions";
+    public static final String KEY_CROP_BUNDLE = "cropBundle";
+    public static final String KEY_IS_FACE = "isFace";
 
     //BaseLoadState
     public static final int NORMAL_STATE = 0;

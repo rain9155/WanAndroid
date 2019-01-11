@@ -264,12 +264,10 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             DownloadUtil.downloadApk(this, mNewVersionName);
-        } else {
+        else
             showToast(getString(R.string.settingsActivity_permission_denied));
-        }
     }
 
     @Override

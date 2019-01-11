@@ -3,18 +3,27 @@ package com.example.hy.wanandroid.view;
 import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.widget.FrameLayout;
+
+import com.example.commonlib.utils.FileProvider7;
+import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
+import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityComponent;
@@ -47,6 +56,8 @@ import dagger.Lazy;
 
 import android.os.Handler;
 
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -206,12 +217,13 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if(requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             DownloadUtil.downloadApk(this, mNewVersionName);
-        }else {
+        else
             showToast(getString(R.string.settingsActivity_permission_denied));
-        }
+
+        if (requestCode == Constant.REQUEST_CODE_UNKNOWN_APP)
+            installApk(this);
     }
 
     @Override
@@ -242,6 +254,22 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     @Override
     public void showOpenBrowseDialog() {
         mOpenBrowseDialog.show(getSupportFragmentManager(), "tag10");
+    }
+
+    @Override
+    public void installApk() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            boolean hasInstallPermission = getPackageManager().canRequestPackageInstalls();
+            if (hasInstallPermission)
+                installApk(this);
+             else {
+                //跳转至“安装未知应用”权限界面，引导用户开启权限
+                Uri selfPackageUri = Uri.parse("package:" + this.getPackageName());
+                Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, selfPackageUri);
+                startActivityForResult(intent, Constant.REQUEST_CODE_UNKNOWN_APP);
+            }
+        }else
+            installApk(this);
     }
 
     public MainActivityComponent getComponent(){
@@ -353,6 +381,29 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         }
         if(!mShowNavAnimator.isRunning() && child.getTranslationY() >= child.getHeight()){
             mShowNavAnimator.start();
+        }
+    }
+
+    /**
+     * 安装应用
+     */
+    private void installApk(Context context) {
+        LogUtil.d(LogUtil.TAG_COMMON, "安装应用");
+        File file = new File(Constant.PATH_APK_1);
+        if (file.exists()) {
+            Intent install = new Intent("android.intent.action.VIEW");
+            FileProvider7.setIntentDataAndType(
+                    App.getContext(),
+                    install,
+                    "application/vnd.android.package-archive",
+                    file,
+                    false
+            );
+            install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(install);
+        }else {
+            LogUtil.d(LogUtil.TAG_COMMON, "应用路径不存在");
+            ToastUtil.toastInBottom(context, context.getString(R.string.setup_fail));
         }
     }
 

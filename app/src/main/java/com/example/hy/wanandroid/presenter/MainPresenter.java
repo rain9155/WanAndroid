@@ -7,6 +7,7 @@ import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.MainContract;
+import com.example.hy.wanandroid.event.InstallApkEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.OpenBrowseEvent;
 import com.example.hy.wanandroid.event.SettingsNightModeEvent;
@@ -75,6 +76,11 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
         addSubcriber(
                 RxBus.getInstance().toObservable(OpenBrowseEvent.class)
                 .subscribe(openBrowseEvent -> mView.showOpenBrowseDialog())
+        );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(InstallApkEvent.class)
+                .subscribe(installApkEvent -> mView.installApk())
         );
     }
 

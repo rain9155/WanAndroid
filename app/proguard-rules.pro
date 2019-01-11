@@ -271,3 +271,6 @@
 -keep class com.google.gson.stream.** { *; }
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.sunloto.shandong.bean.** { *; }
+
+### AndroidCropper
+-keep class android.support.v7.widget.** { *; }

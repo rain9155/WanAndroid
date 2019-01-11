@@ -33,7 +33,9 @@ public class LogoutDialog extends BaseDialogFragment {
 
     @Override
     protected void initView(View view) {
-        view.findViewById(R.id.btn_cancel).setOnClickListener(v -> this.dismiss());
+        view.findViewById(R.id.btn_cancel).setOnClickListener(v ->
+                this.dismiss()
+        );
         view.findViewById(R.id.btn_confirm).setOnClickListener(v -> {
             this.dismiss();
             RxBus.getInstance().post(new LoginEvent(false));

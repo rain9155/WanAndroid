@@ -1,13 +1,7 @@
 package com.example.hy.wanandroid.widget.popup;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +12,6 @@ import android.widget.TextView;
 import com.example.commonlib.utils.ShareUtil;
 import com.example.commonlib.utils.ToastUtil;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.config.App;
 
 import androidx.core.content.ContextCompat;
 
@@ -55,7 +48,7 @@ public class PressPopup extends PopupWindow {
 
     private void initPopup(Context context) {
         @SuppressLint("InflateParams")
-        View view = LayoutInflater.from(context).inflate(R.layout.popup_press, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.popup_long_press, null);
         this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         this.setContentView(view);

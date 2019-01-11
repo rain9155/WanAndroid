@@ -14,11 +14,11 @@
         android:gravity="left"
         android:clickable="true"
         android:focusable="true"
-        android:paddingTop="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
         android:paddingLeft="@dimen/dp_10"
         android:textColor="@color/primaryText"
         android:paddingRight="@dimen/dp_10"
-        android:background="@drawable/bg_popup_tv"
+        android:background="@drawable/bg_common_tv"
         android:paddingStart="@dimen/dp_10"
         tools:ignore="RtlSymmetry" />
 
@@ -31,8 +31,8 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="left"
-        android:background="@drawable/bg_popup_tv"
-        android:paddingTop="@dimen/dp_10"
+        android:background="@drawable/bg_common_tv"
+        android:layout_marginTop="@dimen/dp_10"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:textColor="@color/primaryText"
@@ -48,13 +48,13 @@
         android:gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:background="@drawable/bg_popup_tv"
-        android:paddingTop="@dimen/dp_10"
+        android:background="@drawable/bg_common_tv"
+        android:layout_marginTop="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:paddingLeft="@dimen/dp_10"
         android:textColor="@color/primaryText"
         android:paddingStart="@dimen/dp_10"
-        android:paddingBottom="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
         tools:ignore="RtlSymmetry" />
 
 </LinearLayout>

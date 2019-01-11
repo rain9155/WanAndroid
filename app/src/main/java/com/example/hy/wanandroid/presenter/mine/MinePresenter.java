@@ -6,6 +6,7 @@ import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
+import com.example.hy.wanandroid.event.ChangeFaceEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.SettingsNightModeEvent;
 import com.example.hy.wanandroid.model.DataModel;
@@ -59,6 +60,10 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
                             }
                         }));
 
+        addSubcriber(
+                RxBus.getInstance().toObservable(ChangeFaceEvent.class)
+                .subscribe(changeFaceEvent -> mView.changeFaceOrBackground(changeFaceEvent.isChangeFace()))
+        );
     }
 
     @Override

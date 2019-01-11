@@ -47,6 +47,7 @@ ext {
             WaveLoadingVersion : '0.3.5',
             TwinklingRefreshLayoutVersion : '1.0.7',
             MultiWaveHeaderVersion : '1.0.0-alpha-1',
+            ImageCropperVersion : '2.8.0',
 
             //test
             JunitVersion           : "4.12",
@@ -94,6 +95,7 @@ ext {
             "waveLoading" : "me.itangqi.waveloadingview:library:${version.WaveLoadingVersion}",
             "twinklingRefreshLayout" : "com.lcodecorex:tkrefreshlayout:${version.TwinklingRefreshLayoutVersion}",
             "multiWaveHeader" : "com.scwang.wave:MultiWaveHeader:${version.MultiWaveHeaderVersion}",
+            "imageCropper": "com.theartofdev.edmodo:android-image-cropper:${version.ImageCropperVersion}",
 
             //dagger2
             "dagger2" : "com.google.dagger:dagger:${version.Dagger2Version}",

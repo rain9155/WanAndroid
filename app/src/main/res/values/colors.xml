@@ -34,5 +34,7 @@
     <color name="colorDialogBackground">#FFFFFF</color>
     <color name="toast_background">#c8535353</color>
     <color name="colorTipBackground">#81fafafa</color>
+    <color name="colorCropViewBg">#616161</color>
+    <color name="colorCropViewToolBarBg">#424242</color>
 
 </resources>

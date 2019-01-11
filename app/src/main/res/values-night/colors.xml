@@ -32,5 +32,7 @@
     <color name="colorTipBackground">#81212121</color>
     <color name="colorTag1">#f50000</color>
     <color name="colorTag2">#00BCD4</color>
+    <color name="colorCropViewBg">#616161</color>
+    <color name="colorCropViewToolBarBg">#424242</color>
 
 </resources>

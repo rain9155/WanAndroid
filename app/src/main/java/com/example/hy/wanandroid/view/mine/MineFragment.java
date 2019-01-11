@@ -1,16 +1,24 @@
 package com.example.hy.wanandroid.view.mine;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
+import android.os.Parcelable;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.commonlib.utils.IntentUtil;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.fragment.BaseFragment;
-import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
@@ -20,16 +28,25 @@ import com.example.hy.wanandroid.presenter.mine.MinePresenter;
 import com.example.commonlib.utils.AnimUtil;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.MainActivity;
+import com.example.hy.wanandroid.widget.dialog.ChangeFaceDialog;
 import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.theartofdev.edmodo.cropper.CropImage;
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import butterknife.BindView;
 import dagger.Lazy;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -78,7 +95,12 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     @Inject
     MinePresenter mPresenter;
     @Inject
-    Lazy<LogoutDialog> mDialog;
+    Lazy<LogoutDialog> mLogoutDialog;
+    @Inject
+    Lazy<ChangeFaceDialog> mChangeFaceDialog;
+
+    private Uri mCropImageUri;
+    private boolean isChangeFace;
 
     @Override
     protected int getLayoutId() {
@@ -108,7 +130,9 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         if (mPresenter.getNightModeState())
             ivBack.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
+        ivFace.setOnClickListener(v -> mChangeFaceDialog.get().show(getChildFragmentManager(), ChangeFaceDialog.class.getSimpleName()));
         btnLogin.setOnClickListener(v -> LoginActivity.startActivity(mActivity));
+
         clSettings.setOnClickListener(v -> SettingsActivity.startActivity(mActivity));
         clCollection.setOnClickListener(v -> {
             if (!User.getInstance().isLoginStatus()) {
@@ -118,10 +142,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                 CollectionActivity.startActivity(mActivity);
         });
         clAboutus.setOnClickListener(v -> AboutUsActivity.startActivity(mActivity));
-        clLogout.setOnClickListener(v -> {
-            assert getFragmentManager() != null;
-            mDialog.get().show(getFragmentManager(), "tag7");
-        });
+        clLogout.setOnClickListener(v -> mLogoutDialog.get().show(getChildFragmentManager(), LogoutDialog.class.getSimpleName()));
     }
 
     @Override
@@ -132,14 +153,64 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mDialog != null)
-            mDialog = null;
+        if(mLogoutDialog != null) mLogoutDialog = null;
+        if(mChangeFaceDialog != null) mChangeFaceDialog = null;
+    }
+
+    @SuppressLint("InlinedApi")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != RESULT_OK) return;
+
+        //handle result of collection Activity
+        if(requestCode == Constant.REQUEST_SHOW_COLLECTIONS)
+            CollectionActivity.startActivity(mActivity);
+
+        // handle result of pick image chooser
+        if(requestCode == Constant.REQUEST_PICK_IMAGE_CHOOSER){
+            Uri imageUri = CropImage.getPickImageResultUri(mActivity, data);
+            // For API >= 23 we need to check specifically that we have permissions to read external storage.
+            if (CropImage.isReadExternalStoragePermissionsRequired(mActivity, imageUri)) {
+                mCropImageUri = imageUri;
+                ActivityCompat.requestPermissions(
+                        mActivity,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
+            } else {
+                CropImage.activity(imageUri).start(mActivity);
+                CropperImageActivity.startActivityByFragment(mActivity, this, imageUri, isChangeFace);
+            }
+        }
+
+        //handle result of Cropper Activity
+        if (requestCode == Constant.REQUEST_CROP_IMAGE_ACTIVITY) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            Uri resultUri = result.getUri();
+            try {
+                Bitmap bitmap = BitmapFactory.decodeStream(mActivity.getContentResolver().openInputStream(resultUri));
+                if(isChangeFace)
+                    ivFace.setImageBitmap(bitmap);
+                else
+                    ivBack.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_SHOW_COLLECTIONS)
-            CollectionActivity.startActivity(mActivity);
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE){
+            if (mCropImageUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                // required permissions granted, start crop image activity
+                //CropImage.activity(mCropImageUri).start(mActivity);
+                CropperImageActivity.startActivityByFragment(mActivity, this, mCropImageUri, isChangeFace);
+            else
+                showToast(getString(R.string.mineFragment_permissions_denied));
+        }
+
     }
 
     @Override
@@ -170,8 +241,39 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         AnimUtil.showByAlpha(btnLogin);
     }
 
-    public static MineFragment newInstance() {
+    @Override
+    public void changeFaceOrBackground(boolean isChangeFace) {
+        this.isChangeFace = isChangeFace;
 
+        List<Intent> allIntents = new ArrayList<>();
+        Intent chooserIntent;
+        Intent targerIntent;
+
+        //add All Camera Intents
+        allIntents.addAll(IntentUtil.getCameraIntents(mActivity));
+
+        //add All gallery Intents
+        List<Intent> allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_GET_CONTENT, true);
+        //部分机型会因为用用Intent.ACTION_GET_CONTENT获不到intents，用Intent.ACTION_PICK
+        if(allGalleryIntents.isEmpty())
+            allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_PICK, true);
+        allIntents.addAll(allGalleryIntents);
+
+        //create chooserIntent
+        if(allIntents.isEmpty()){
+            targerIntent = new Intent();
+        }else {
+            targerIntent = allIntents.get(allIntents.size() - 1);
+            allIntents.remove(allIntents.size() - 1);
+        }
+        chooserIntent = Intent.createChooser(targerIntent, getString(R.string.mineFragment_choose_intent));
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
+
+        startActivityForResult(chooserIntent, Constant.REQUEST_PICK_IMAGE_CHOOSER);
+       // CropImage.startPickImageActivity(mActivity);
+    }
+
+    public static MineFragment newInstance() {
         return new MineFragment();
     }
 }

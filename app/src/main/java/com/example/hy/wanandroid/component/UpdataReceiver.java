@@ -12,6 +12,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.event.InstallApkEvent;
 import com.example.hy.wanandroid.event.OpenBrowseEvent;
 import com.example.commonlib.utils.LogUtil;
 import com.example.commonlib.utils.ToastUtil;
@@ -54,7 +55,7 @@ public class UpdataReceiver extends BroadcastReceiver {
              switch (status) {
                 case DownloadManager.STATUS_SUCCESSFUL:
                     LogUtil.d(LogUtil.TAG_COMMON, "下载完成！");
-                    installApk(context);
+                    RxBus.getInstance().post(new InstallApkEvent());
                      break;
                 case DownloadManager.STATUS_FAILED://下载失败
                     ToastUtil.toastInBottom(context, context.getString(R.string.download_fail));
@@ -70,26 +71,4 @@ public class UpdataReceiver extends BroadcastReceiver {
          }
     }
 
-    /**
-     * 安装应用
-     */
-    private void installApk(Context context) {
-        LogUtil.d(LogUtil.TAG_COMMON, "安装应用");
-        File file = new File(Constant.PATH_APK_1);
-        if (file.exists()) {
-            Intent install = new Intent("android.intent.action.VIEW");
-            FileProvider7.setIntentDataAndType(
-                    App.getContext(),
-                    install,
-                    "application/vnd.android.package-archive",
-                    file,
-                    false
-            );
-            install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(install);
-        }else {
-            LogUtil.d(LogUtil.TAG_COMMON, "应用路径不存在");
-            ToastUtil.toastInBottom(context, context.getString(R.string.setup_fail));
-        }
-    }
 }

@@ -14,6 +14,7 @@ public interface MineContract {
     interface View extends BaseView {
         void showLoginView();
         void showLogoutView();
+        void changeFaceOrBackground(boolean isChangeFace);
     }
 
     interface Presenter extends IPresenter<MineContract.View> {
