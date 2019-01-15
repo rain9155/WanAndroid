@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="@dimen/dp_300"
-    android:layout_height="@dimen/dp_100"
+    android:layout_height="@dimen/dp_150"
     android:background="@drawable/bg_dialog">
 
     <TextView
@@ -35,5 +35,24 @@
         android:layout_marginBottom="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_5"
         android:text="@string/dialog_change_background"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/divier"/>
+
+    <TextView
+        android:id="@+id/tv_change_moren"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@drawable/bg_common_tv"
+        android:gravity="center"
+        android:text="@string/dialog_change_moren"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/sp_20" />
 
 </LinearLayout>

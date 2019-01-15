@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.widget.Button;
@@ -17,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.commonlib.utils.FileUtil;
 import com.example.commonlib.utils.IntentUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
@@ -33,6 +36,7 @@ import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +104,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     Lazy<ChangeFaceDialog> mChangeFaceDialog;
 
     private Uri mCropImageUri;
-    private boolean isChangeFace;
+    private int mChangeFlag;//更换头像标志
 
     @Override
     protected int getLayoutId() {
@@ -126,6 +130,11 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         } else {
             showLogoutView();
         }
+
+        Bitmap faceBitmap = FileUtil.loadBitmap(Constant.PATH_IMAGE_FACE, Constant.FACE);
+        Bitmap backBitmap = FileUtil.loadBitmap(Constant.PATH_IMAGE_BACKGROUND, Constant.BACK);
+        if(faceBitmap != null) ivFace.setImageBitmap(faceBitmap);
+        if(backBitmap != null) ivBack.setImageBitmap(backBitmap);
 
         if (mPresenter.getNightModeState())
             ivBack.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
@@ -177,8 +186,8 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
             } else {
-                CropImage.activity(imageUri).start(mActivity);
-                CropperImageActivity.startActivityByFragment(mActivity, this, imageUri, isChangeFace);
+                CropperImageActivity.startActivityByFragment(mActivity, this, imageUri, mChangeFlag);
+                //CropImage.activity(imageUri).start(mActivity);
             }
         }
 
@@ -188,10 +197,17 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
             Uri resultUri = result.getUri();
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(mActivity.getContentResolver().openInputStream(resultUri));
-                if(isChangeFace)
-                    ivFace.setImageBitmap(bitmap);
-                else
-                    ivBack.setImageBitmap(bitmap);
+                if(mChangeFlag == Constant.CHANGE_FACE){
+                    if(FileUtil.saveBitmap(Constant.PATH_IMAGE_FACE, Constant.FACE, bitmap))
+                        ivFace.setImageBitmap(bitmap);
+                    else
+                        showToast(getString(R.string.mineFragment_change_face_fail));
+                } else if(mChangeFlag == Constant.CHANGE_BACK){
+                    if(FileUtil.saveBitmap(Constant.PATH_IMAGE_BACKGROUND, Constant.BACK, bitmap))
+                        ivBack.setImageBitmap(bitmap);
+                    else
+                        showToast(getString(R.string.mineFragment_change_back_fail));
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -206,7 +222,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
             if (mCropImageUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 // required permissions granted, start crop image activity
                 //CropImage.activity(mCropImageUri).start(mActivity);
-                CropperImageActivity.startActivityByFragment(mActivity, this, mCropImageUri, isChangeFace);
+                CropperImageActivity.startActivityByFragment(mActivity, this, mCropImageUri, mChangeFlag);
             else
                 showToast(getString(R.string.mineFragment_permissions_denied));
         }
@@ -242,35 +258,41 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     }
 
     @Override
-    public void changeFaceOrBackground(boolean isChangeFace) {
-        this.isChangeFace = isChangeFace;
+    public void changeFaceOrBackground(int flag) {
+        this.mChangeFlag = flag;
 
-        List<Intent> allIntents = new ArrayList<>();
-        Intent chooserIntent;
-        Intent targerIntent;
-
-        //add All Camera Intents
-        allIntents.addAll(IntentUtil.getCameraIntents(mActivity));
-
-        //add All gallery Intents
-        List<Intent> allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_GET_CONTENT, true);
-        //部分机型会因为用用Intent.ACTION_GET_CONTENT获不到intents，用Intent.ACTION_PICK
-        if(allGalleryIntents.isEmpty())
-            allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_PICK, true);
-        allIntents.addAll(allGalleryIntents);
-
-        //create chooserIntent
-        if(allIntents.isEmpty()){
-            targerIntent = new Intent();
+        if(flag == Constant.CHANGE_NO){
+            ivBack.setImageResource(R.drawable.girl);
+            ivFace.setImageResource(R.drawable.girl);
+            FileUtil.deleteDir(new File(Constant.PATH_IMAGE_FACE));
         }else {
-            targerIntent = allIntents.get(allIntents.size() - 1);
-            allIntents.remove(allIntents.size() - 1);
-        }
-        chooserIntent = Intent.createChooser(targerIntent, getString(R.string.mineFragment_choose_intent));
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
+            List<Intent> allIntents = new ArrayList<>();
+            Intent chooserIntent;
+            Intent targerIntent;
 
-        startActivityForResult(chooserIntent, Constant.REQUEST_PICK_IMAGE_CHOOSER);
-       // CropImage.startPickImageActivity(mActivity);
+            //add All Camera Intents
+            allIntents.addAll(IntentUtil.getCameraIntents(mActivity));
+
+            //add All gallery Intents
+            List<Intent> allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_GET_CONTENT, true);
+            //部分机型会因为用用Intent.ACTION_GET_CONTENT获不到intents，用Intent.ACTION_PICK
+            if(allGalleryIntents.isEmpty())
+                allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_PICK, true);
+            allIntents.addAll(allGalleryIntents);
+
+            //create chooserIntent
+            if(allIntents.isEmpty()){
+                targerIntent = new Intent();
+            }else {
+                targerIntent = allIntents.get(allIntents.size() - 1);
+                allIntents.remove(allIntents.size() - 1);
+            }
+            chooserIntent = Intent.createChooser(targerIntent, getString(R.string.mineFragment_choose_intent));
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
+
+            startActivityForResult(chooserIntent, Constant.REQUEST_PICK_IMAGE_CHOOSER);
+            // CropImage.startPickImageActivity(mActivity);
+        }
     }
 
     public static MineFragment newInstance() {

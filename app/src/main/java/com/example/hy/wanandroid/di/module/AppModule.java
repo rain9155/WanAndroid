@@ -2,17 +2,10 @@ package com.example.hy.wanandroid.di.module;
 
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
-import com.example.hy.wanandroid.model.DataModel;
-import com.example.hy.wanandroid.model.db.DbHelper;
-import com.example.hy.wanandroid.model.network.NetworkHelper;
 import com.example.hy.wanandroid.model.network.api.VersionApi;
 import com.example.hy.wanandroid.model.network.api.WechatApis;
 import com.example.hy.wanandroid.model.network.cookie.CookieManger;
-import com.example.hy.wanandroid.model.network.entity.Version;
 import com.example.hy.wanandroid.model.network.interceptor.CacheInterceptor;
-import com.example.hy.wanandroid.model.network.interceptor.ReadCookiesInterceptor;
-import com.example.hy.wanandroid.model.network.interceptor.WriteCookiesInterceptor;
-import com.example.hy.wanandroid.di.scope.PerFragment;
 import com.example.hy.wanandroid.model.network.api.HierarchyApis;
 import com.example.hy.wanandroid.model.network.api.HomeApis;
 import com.example.hy.wanandroid.model.network.api.MineApis;
@@ -22,7 +15,6 @@ import com.example.hy.wanandroid.model.network.api.SearchApis;
 import com.example.hy.wanandroid.model.network.gson.CustomGsonConverterFactory;
 import com.example.hy.wanandroid.model.network.ssl.SSLSocketCompatFactory;
 import com.example.hy.wanandroid.model.network.ssl.TrustAllCert;
-import com.example.hy.wanandroid.model.prefs.PreferencesHelper;
 import com.example.hy.wanandroid.widget.popup.PressPopup;
 
 import java.io.File;
@@ -72,7 +64,7 @@ public class AppModule {
         builder.sslSocketFactory(new SSLSocketCompatFactory(trustAllCert), trustAllCert);
 
         //设置缓存
-        File cacheDir = new File(Constant.PATH_NETCACHE);
+        File cacheDir = new File(Constant.PATH_NET_CACHE);
         Cache cache = new Cache(cacheDir, 1024 * 1024 * 10);//缓存的最大尺寸10M
         builder.cache(cache);
         builder.addInterceptor(new CacheInterceptor());

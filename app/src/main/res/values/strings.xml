@@ -24,6 +24,7 @@
     <string name="dialog_versionContent">更新内容：</string>
     <string name="dialog_change_face">更换头像</string>
     <string name="dialog_change_background">更换背景</string>
+    <string name="dialog_change_moren">恢复默认</string>
     <string name="dialog_confirm_logout">确认退出登陆？</string>
     <string name="dialog_confirm_clear">确认清空缓存？</string>
     <string name="dialog_open_browse">新版本下载失败, 是否打开系统浏览器重新下载？</string>

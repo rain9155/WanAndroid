@@ -1,8 +1,12 @@
 package com.example.commonlib.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,6 +67,9 @@ public class FileUtil{
         }
     }
 
+    /**
+     * 获得应用关联缓存文件路径
+     */
     public static String getCachePath(Context context, String name) {
         String cachePath;
         if (!"mounted".equals(Environment.getExternalStorageState()) && Environment.isExternalStorageRemovable()) {
@@ -73,6 +80,73 @@ public class FileUtil{
 
         return cachePath + File.separator + name;
     }
+
+    /**
+     * 获得应用关联文件路径
+     */
+    public static String getFilePath(Context context, String name){
+        String filePath;
+        if (!"mounted".equals(Environment.getExternalStorageState()) && Environment.isExternalStorageRemovable()) {
+            filePath = context.getFilesDir().getPath();
+        } else {
+            filePath = context.getExternalFilesDir(null).getPath();
+        }
+
+        return filePath + File.separator + name;
+    }
+
+    /**
+     * 在本地文件保存图片
+     */
+    public static boolean saveBitmap(String file, String name, Bitmap bitmap){
+        BufferedOutputStream bufferedOutputStream = null;
+        FileOutputStream fileOutputStream = null;
+        File fileParent = new File(file);
+        File bitmapFile = new File(fileParent, name);
+        boolean result = false;
+        try {
+            if(!fileParent.exists())
+                fileParent.mkdirs();
+            if(bitmapFile.exists())
+                bitmapFile.delete();
+            bitmapFile.createNewFile();
+            fileOutputStream = new FileOutputStream(bitmapFile);
+            bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+            result = bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bufferedOutputStream);
+            bufferedOutputStream.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            close(bufferedOutputStream);
+            close(fileOutputStream);
+        }
+        return result;
+    }
+
+
+
+    /**
+     * 在本地文件取出保存的图片
+     */
+    public static Bitmap loadBitmap(String file, String name){
+        BufferedInputStream bufferedInputStream = null;
+        Bitmap bitmap = null;
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(new File(file, name));
+            bufferedInputStream = new BufferedInputStream(fileInputStream);
+            bitmap = BitmapFactory.decodeStream(bufferedInputStream);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            close(bufferedInputStream);
+            close(fileInputStream);
+        }
+        return bitmap;
+    }
+
 
     /**
      * 删除某个文件或某个文件夹下所有的文件

@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.config.Constant;
@@ -35,7 +37,7 @@ public class CropperImageActivity extends BaseActivity implements CropImageView.
 
     private Uri mCropImageUri;
     private CropImageOptions mOptions;
-    private boolean isChangeFace;
+    private int isChangeFace;
 
     @Override
     protected void inject() {
@@ -47,7 +49,7 @@ public class CropperImageActivity extends BaseActivity implements CropImageView.
         Bundle bundle = getIntent().getBundleExtra(Constant.KEY_CROP_BUNDLE);
         mCropImageUri = bundle.getParcelable(Constant.KEY_IMAGE_URI);
         mOptions = bundle.getParcelable(Constant.KEY_IMAGE_OPTIONS);
-        isChangeFace = bundle.getBoolean(Constant.KEY_IS_FACE);
+        isChangeFace = bundle.getInt(Constant.KEY_IS_FACE);
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null)
             cropImageView.setImageUriAsync(mCropImageUri);
@@ -60,6 +62,8 @@ public class CropperImageActivity extends BaseActivity implements CropImageView.
 
     @Override
     protected void initView() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+            StatusBarUtil.setHeightAndPadding(this, toolbar);
         toolbar.setNavigationOnClickListener(v -> setResultCancel());
         ivCrop.setOnClickListener(v -> {
             Uri outputUri = getOutputUri();
@@ -72,7 +76,7 @@ public class CropperImageActivity extends BaseActivity implements CropImageView.
                     mOptions.outputRequestSizeOptions);
         });
         cropImageView.setAutoZoomEnabled(true);
-        if(isChangeFace) cropImageView.setCropShape(CropImageView.CropShape.OVAL);
+        if(isChangeFace == Constant.CHANGE_FACE) cropImageView.setCropShape(CropImageView.CropShape.OVAL);
         else cropImageView.setCropShape(CropImageView.CropShape.RECTANGLE);
     }
 
@@ -141,8 +145,7 @@ public class CropperImageActivity extends BaseActivity implements CropImageView.
         Uri outputUri = mOptions.outputUri;
         if (outputUri == null || outputUri.equals(Uri.EMPTY)) {
             try {
-                String ext =
-                        mOptions.outputCompressFormat == Bitmap.CompressFormat.JPEG
+                String ext = mOptions.outputCompressFormat == Bitmap.CompressFormat.JPEG
                                 ? ".jpg"
                                 : mOptions.outputCompressFormat == Bitmap.CompressFormat.PNG ? ".png" : ".webp";
                 outputUri = Uri.fromFile(File.createTempFile("cropped", ext, getCacheDir()));
@@ -158,12 +161,12 @@ public class CropperImageActivity extends BaseActivity implements CropImageView.
      * @param uri 图片uri
      * @param isFace 是否改变背景图片
      */
-    public static void startActivityByFragment(Activity activity, Fragment fragment, Uri uri, boolean isFace) {
+    public static void startActivityByFragment(Activity activity, Fragment fragment, Uri uri, int isFace) {
         Intent intent = new Intent(activity, CropperImageActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constant.KEY_IMAGE_URI, uri);
         bundle.putParcelable(Constant.KEY_IMAGE_OPTIONS, new CropImageOptions());
-        bundle.putBoolean(Constant.KEY_IS_FACE, isFace);
+        bundle.putInt(Constant.KEY_IS_FACE, isFace);
         intent.putExtra(Constant.KEY_CROP_BUNDLE, bundle);
         fragment.startActivityForResult(intent, Constant.REQUEST_CROP_IMAGE_ACTIVITY);
     }

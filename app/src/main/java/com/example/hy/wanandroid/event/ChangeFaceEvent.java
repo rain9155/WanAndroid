@@ -6,13 +6,13 @@ package com.example.hy.wanandroid.event;
  */
 public class ChangeFaceEvent {
 
-    private boolean isChangeFace;
+    private int mFlag;
 
-    public ChangeFaceEvent(boolean isChangeFace) {
-        this.isChangeFace = isChangeFace;
+    public ChangeFaceEvent(int flag) {
+        this.mFlag = flag;
     }
 
-    public boolean isChangeFace() {
-        return isChangeFace;
+    public int isChangeFace() {
+        return mFlag;
     }
 }

@@ -3,6 +3,8 @@ import android.os.Environment;
 
 import com.example.commonlib.utils.FileUtil;
 
+import java.io.File;
+
 /**
  * 网路请求的base地址
  * Created by 陈健宇 at 2018/10/26
@@ -49,6 +51,9 @@ public class Constant {
     //MineFragment
     public static final int REQUEST_PICK_IMAGE_CHOOSER = 5;
     public static final int REQUEST_CROP_IMAGE_ACTIVITY = 6;
+    public static final int CHANGE_FACE = 0;
+    public static final int CHANGE_BACK = 1;
+    public static final int CHANGE_NO = 2;
 
     //CropperImageActivity
     public static final String KEY_IMAGE_URI = "imageUri";
@@ -79,9 +84,13 @@ public class Constant {
     public static final String BUGLY_ID = "a0768ddf34";
 
     //path
-    public static final String PATH_NETCACHE = FileUtil.getCachePath(App.getContext(), "netData");
+    public static final String PATH_NET_CACHE = FileUtil.getCachePath(App.getContext(), "netData");
+    public static final String PATH_IMAGE_FACE = FileUtil.getFilePath(App.getContext(), "image");
+    public static final String PATH_IMAGE_BACKGROUND = FileUtil.getFilePath(App.getContext(), "image");
     public static final String PATH_APK_1 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/WanAndroid.apk";
     public static final String PATH_APK_2 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/app-release.apk";
+    public static final String FACE = "face.jpeg";
+    public static final String BACK = "background.jpeg";
 
 
     //common
