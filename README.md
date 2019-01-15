@@ -25,16 +25,20 @@
  <br> ![sc4](/screenshots/sc4.png) ![sc5](/screenshots/sc5.png)<br>
  <br>![sc6](/screenshots/sc6.png) ![sc7](/screenshots/sc7.png)<br>
   <br>![sc8](/screenshots/sc8.png) ![sc9](/screenshots/sc9.png)<br>
-### Download (Android 4.1 or above)
-[WanAndroid Apk](https://github.com/rain9155/WanAndroid/releases/download/v1.2/app-release.apk)
+### Download (v1.3, Android 4.1 or above)
+[WanAndroid Apk](https://github.com/rain9155/WanAndroid/releases/download/v1.3.0/app-release.apk)
 ### TODO
 - [ ] 公众号模块
 - [ ] Dagger-Android
 - [ ] 自定义TabLayout
 - [ ] 优化app
-- [ ] 最新文章
 ### ChangeLog
 ```
+v1.3 2018-12-31
+1、添加文章长按
+1、修复一些bug
+1、添加文章标签
+
 v1.2 2018-12-24
 1、增加公众号模块
 2、集成bugly
