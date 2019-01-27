@@ -113,6 +113,7 @@
     <string name="settingsActivity_tvAutoUpadta">自动检查更新</string>
     <string name="settingsActivity_tvClearCache">清空缓存</string>
     <string name="settingsActivity_tvFeedback">意见反馈</string>
+    <string name="settingsActivity_tvMes">应用信息</string>
     <string name="settingsActivity_tvUpdata">检查更新</string>
     <string name="settingsActivity_email_to">发送给</string>
     <string name="settingsActivity_clear_cache">已清空缓存</string>

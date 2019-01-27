@@ -37,11 +37,12 @@
 
             <ImageView
                 android:id="@+id/iv_crop"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
+                android:layout_width="@dimen/dp_45"
+                android:layout_height="@dimen/dp_45"
                 android:background="@drawable/bg_search_rect"
                 android:focusable="true"
                 android:clickable="true"
+                android:padding="@dimen/dp_10"
                 app:srcCompat="@drawable/ic_crop_image"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"

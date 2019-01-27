@@ -1,6 +1,8 @@
 package com.example.hy.wanandroid.base.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -154,4 +156,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     }
 
+    @Override
+    public void showToast(Activity activity, String toast) {
+
+    }
 }

@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -23,8 +24,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.commonlib.utils.FileUtil;
+import com.example.commonlib.utils.ServiceUtil;
+import com.example.commonlib.utils.ShareUtil;
+import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.component.UpdataService;
 import com.example.hy.wanandroid.config.Constant;
@@ -32,10 +36,6 @@ import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSettingsActivityComponent;
 import com.example.hy.wanandroid.presenter.mine.SettingsPresenter;
 import com.example.hy.wanandroid.utlis.DownloadUtil;
-import com.example.commonlib.utils.FileUtil;
-import com.example.commonlib.utils.ServiceUtil;
-import com.example.commonlib.utils.ShareUtil;
-import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.widget.dialog.ClearCacheDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 
@@ -51,6 +51,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import dagger.Lazy;
 
 public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
@@ -135,6 +136,12 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     SwitchCompat switchAutoUpdata;
     @BindView(R.id.cl_auto_updata)
     ConstraintLayout clAutoUpdata;
+    @BindView(R.id.iv_mes)
+    ImageView ivMes;
+    @BindView(R.id.tv_mes)
+    TextView tvMes;
+    @BindView(R.id.cl_mes)
+    ConstraintLayout clMes;
 
     @Inject
     SettingsPresenter mPresenter;
@@ -167,7 +174,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
-       super.initView();
+        super.initView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
         isEnableTip = false;
@@ -191,6 +198,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
             }
         });
         clFeedBack.setOnClickListener(v -> ShareUtil.sendEmail(this, Constant.EMAIL_ADDRESS, getString(R.string.settingsActivity_email_to)));
+        clMes.setOnClickListener(v -> ShareUtil.gotoAppDetailIntent(this));
         clUpdata.setOnClickListener(v -> {
             if (ServiceUtil.isServiceRunning(this, UpdataService.class.getName())) {
                 showToast(getString(R.string.downloading));
@@ -255,9 +263,9 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
     @Override
     protected void onDestroy() {
-        if(mClearCacheDialog != null)
+        if (mClearCacheDialog != null)
             mClearCacheDialog = null;
-        if(mVersionDialog != null)
+        if (mVersionDialog != null)
             mVersionDialog = null;
         super.onDestroy();
     }
@@ -437,5 +445,11 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }
 

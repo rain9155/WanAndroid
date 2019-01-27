@@ -97,6 +97,11 @@ public abstract class BaseFragment extends AbstractLazyLoadFragment
     }
 
     @Override
+    public void showToast(Activity activity, String toast) {
+        ToastUtil.toastInBottom(activity, toast);
+    }
+
+    @Override
     public void showNormalView() {
 
     }

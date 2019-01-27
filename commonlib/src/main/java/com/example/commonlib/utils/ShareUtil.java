@@ -1,5 +1,6 @@
 package com.example.commonlib.utils;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -58,6 +59,16 @@ public class ShareUtil{
         }else {
             ToastUtil.showToast(context, context.getString(R.string.open_browser_unknown));
         }
+    }
+
+    /**
+     * 跳转到应用详情界面
+     */
+    public static void gotoAppDetailIntent(Context context) {
+        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse("package:" + context.getPackageName()));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     /**

@@ -344,6 +344,38 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_mes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        style="@style/MineFragmentConstaintStyle"
+                        app:layout_constraintTop_toBottomOf="@id/cl_feedBack">
+
+                        <ImageView
+                            android:id="@+id/iv_mes"
+                            android:layout_width="@dimen/dp_28"
+                            android:layout_height="@dimen/dp_28"
+                            app:srcCompat="@drawable/ic_settings_mes"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_mes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settingsActivity_tvMes"
+                            style="@style/MineFragmentTextStyle"
+                            app:layout_constraintLeft_toRightOf="@id/iv_mes"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cl_clearCache"
                         android:visibility="visible"
                         android:layout_width="match_parent"
@@ -353,7 +385,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:layout_marginTop="@dimen/dp_2"
-                        app:layout_constraintTop_toBottomOf="@id/cl_feedBack">
+                        app:layout_constraintTop_toBottomOf="@id/cl_mes">
 
                         <ImageView
                             android:id="@+id/iv_clearCache"

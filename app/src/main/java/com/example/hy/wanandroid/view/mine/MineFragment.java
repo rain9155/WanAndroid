@@ -12,6 +12,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Parcelable;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.commonlib.utils.FileUtil;
 import com.example.commonlib.utils.IntentUtil;
+import com.example.commonlib.utils.ShareUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
 import com.example.hy.wanandroid.config.Constant;
@@ -46,6 +48,7 @@ import javax.inject.Inject;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import dagger.Lazy;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -179,10 +182,11 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         if(requestCode == Constant.REQUEST_PICK_IMAGE_CHOOSER){
             Uri imageUri = CropImage.getPickImageResultUri(mActivity, data);
             // For API >= 23 we need to check specifically that we have permissions to read external storage.
-            if (CropImage.isReadExternalStoragePermissionsRequired(mActivity, imageUri)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                    && ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
                 mCropImageUri = imageUri;
-                ActivityCompat.requestPermissions(
-                        mActivity,
+                requestPermissions(
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
             } else {
@@ -223,9 +227,14 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                 // required permissions granted, start crop image activity
                 //CropImage.activity(mCropImageUri).start(mActivity);
                 CropperImageActivity.startActivityByFragment(mActivity, this, mCropImageUri, mChangeFlag);
-            else
-                showToast(getString(R.string.mineFragment_permissions_denied));
-        }
+            else{
+                if(ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)){
+                    ShareUtil.gotoAppDetailIntent(mActivity);
+                }else {
+                    showToast(mActivity, getString(R.string.mineFragment_permissions_denied));
+                }
+            }
+    }
 
     }
 

@@ -45,6 +45,14 @@ public abstract class BaseDialogFragment extends DialogFragment {
         return mDialog;
     }
 
+    @Override
+    public void show(FragmentManager manager, String tag) {
+        if(this.isAdded())
+            this.dismiss();
+        else
+            super.show(manager, tag);
+    }
+
     /**
      * 禁止按返回键取消dialog
      * 设置点击屏幕Dialog不消失

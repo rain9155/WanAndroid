@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.example.commonlib.R;
 public class ToastUtil{
 
     private static Toast mToastInBottom;
+    private static Toast mToastInBottomForFragment;
     @SuppressLint("StaticFieldLeak")
     private static TextView mTextView;
     private static Toast mShowToast;
@@ -67,6 +69,24 @@ public class ToastUtil{
             mTextView.setText(message);
         }
         mToastInBottom.show();
+    }
+
+    @SuppressLint({"ResourceAsColor"})
+    public static void toastInBottom(Activity activity, String message) {
+        if(mToastInBottomForFragment == null){
+            @SuppressLint("InflateParams")
+            View toastView = LayoutInflater.from(activity).inflate(R.layout.toast_bottom, null);
+            mTextView = toastView.findViewById(R.id.tv_toast);
+            mTextView.setText(message);
+
+            mToastInBottomForFragment = new Toast(activity);
+            mToastInBottomForFragment.setGravity(Gravity.BOTTOM, 0, DisplayUtil.dip2px(activity, 50));
+            mToastInBottomForFragment.setDuration(Toast.LENGTH_SHORT);
+            mToastInBottomForFragment.setView(toastView);
+        }else {
+            mTextView.setText(message);
+        }
+        mToastInBottomForFragment.show();
     }
 
     public static void toastMake(final TextView textView, final ViewGroup viewGroup, String s, int backgroundColor, int textColor) {

@@ -1,5 +1,8 @@
 package com.example.hy.wanandroid.base.view;
 
+import android.app.Activity;
+import android.content.Context;
+
 /**
  * View接口
  * Created by 陈健宇 at 2018/10/21
@@ -25,6 +28,9 @@ public interface BaseView {
 
     //显示Toast
     void showToast(String toast);
+
+    //显示Toast
+    void showToast(Activity activity, String toast);
 
     //禁止加载
     void unableRefresh();
