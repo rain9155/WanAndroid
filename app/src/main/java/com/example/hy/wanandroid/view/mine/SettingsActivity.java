@@ -155,6 +155,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     private ObjectAnimator mAnimator;
     private String mNewVersionName;
     private String mCurrentVersionName;
+    private boolean isPermissionDeniedRequest;
 
     @Override
     protected void inject() {
@@ -274,8 +275,18 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             DownloadUtil.downloadApk(this, mNewVersionName);
-        else
+        else{
+            if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
+                if(!isPermissionDeniedRequest){
+                    isPermissionDeniedRequest = true;
+                    return;
+                }
+                ShareUtil.gotoAppDetailIntent(this);
+                showToast(getString(R.string.settingsActivity_permission_denied_request));
+                return;
+            }
             showToast(getString(R.string.settingsActivity_permission_denied));
+        }
     }
 
     @Override

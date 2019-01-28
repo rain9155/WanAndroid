@@ -14,6 +14,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Parcelable;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.commonlib.utils.FileUtil;
 import com.example.commonlib.utils.IntentUtil;
+import com.example.commonlib.utils.LogUtil;
 import com.example.commonlib.utils.ShareUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
@@ -108,6 +110,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
     private Uri mCropImageUri;
     private int mChangeFlag;//更换头像标志
+    private boolean isPermissionDeniedRequest;
 
     @Override
     protected int getLayoutId() {
@@ -228,11 +231,18 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                 //CropImage.activity(mCropImageUri).start(mActivity);
                 CropperImageActivity.startActivityByFragment(mActivity, this, mCropImageUri, mChangeFlag);
             else{
-                if(ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)){
+                //当勾选了don’t ask again并且拒绝了权限，shouldShowRequestPermissionRationale会返回false，此时应该引导用户去开启此权限
+                if(!ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)){
+                    if(!isPermissionDeniedRequest){
+                        isPermissionDeniedRequest = true;
+                        return;
+                    }
                     ShareUtil.gotoAppDetailIntent(mActivity);
-                }else {
-                    showToast(mActivity, getString(R.string.mineFragment_permissions_denied));
+                    showToast(mActivity, getString(R.string.mineFragment_permissions_denied_request));
+                    return;
                 }
+                showToast(mActivity, getString(R.string.mineFragment_permissions_denied));
+                LogUtil.d(LogUtil.TAG_COMMON, ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE) + "");
             }
     }
 

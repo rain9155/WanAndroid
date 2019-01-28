@@ -21,7 +21,6 @@ import com.example.commonlib.R;
 public class ToastUtil{
 
     private static Toast mToastInBottom;
-    private static Toast mToastInBottomForFragment;
     @SuppressLint("StaticFieldLeak")
     private static TextView mTextView;
     private static Toast mShowToast;
@@ -73,20 +72,15 @@ public class ToastUtil{
 
     @SuppressLint({"ResourceAsColor"})
     public static void toastInBottom(Activity activity, String message) {
-        if(mToastInBottomForFragment == null){
-            @SuppressLint("InflateParams")
-            View toastView = LayoutInflater.from(activity).inflate(R.layout.toast_bottom, null);
-            mTextView = toastView.findViewById(R.id.tv_toast);
-            mTextView.setText(message);
-
-            mToastInBottomForFragment = new Toast(activity);
-            mToastInBottomForFragment.setGravity(Gravity.BOTTOM, 0, DisplayUtil.dip2px(activity, 50));
-            mToastInBottomForFragment.setDuration(Toast.LENGTH_SHORT);
-            mToastInBottomForFragment.setView(toastView);
-        }else {
-            mTextView.setText(message);
-        }
-        mToastInBottomForFragment.show();
+        @SuppressLint("InflateParams")
+        View toastView = LayoutInflater.from(activity).inflate(R.layout.toast_bottom, null);
+        TextView textView = toastView.findViewById(R.id.tv_toast);
+        textView.setText(message);
+        Toast toastInBottomForFragment = new Toast(activity);
+        toastInBottomForFragment.setGravity(Gravity.BOTTOM, 0, DisplayUtil.dip2px(activity, 50));
+        toastInBottomForFragment.setDuration(Toast.LENGTH_SHORT);
+        toastInBottomForFragment.setView(toastView);
+        toastInBottomForFragment.show();
     }
 
     public static void toastMake(final TextView textView, final ViewGroup viewGroup, String s, int backgroundColor, int textColor) {

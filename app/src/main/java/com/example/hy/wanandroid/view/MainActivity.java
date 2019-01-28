@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 
 import com.example.commonlib.utils.FileProvider7;
 import com.example.commonlib.utils.LogUtil;
+import com.example.commonlib.utils.ShareUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
@@ -76,6 +77,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     private MainActivityComponent mMainActivityComponent;
     private ObjectAnimator mShowNavAnimator;
     private ViewPropertyAnimator mHideFbtnAnimator, mShowFbtnAnimator;
+    private boolean isPermissionDeniedRequest;
 
     @Inject
     MainPresenter mPresenter;
@@ -228,8 +230,18 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         if(requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE
                 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             DownloadUtil.downloadApk(this, mNewVersionName);
-        else
+        else{
+            if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
+                if(!isPermissionDeniedRequest){
+                    isPermissionDeniedRequest = true;
+                    return;
+                }
+                ShareUtil.gotoAppDetailIntent(this);
+                showToast(getString(R.string.settingsActivity_permission_denied_request));
+                return;
+            }
             showToast(getString(R.string.settingsActivity_permission_denied));
+        }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
