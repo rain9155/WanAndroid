@@ -10,9 +10,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.3.1'
         //butterknife
-        classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-rc1'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:10.0.0'
         //bugly符号表插件
         //noinspection GradleDependency
         classpath 'com.tencent.bugly:symtabfileuploader:latest.release'

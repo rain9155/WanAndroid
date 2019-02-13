@@ -12,8 +12,8 @@ ext {
     version = [
 
             //androidx
-            LibraryCompatVersion   : "1.0.1",
-            ConstraintLayoutVersion: "2.0.0-alpha3",
+            LibraryCompatVersion   : "1.1.0-alpha02",
+            ConstraintLayoutVersion: "1.1.3",
             MarterialDesignVersion : "1.0.0",
 
             //db
@@ -29,7 +29,7 @@ ext {
 
             //dagger2
             Dagger2Version           : "2.18",
-            BufferKinfeVersion          : "9.0.0-rc1",
+            BufferKinfeVersion          : "10.0.0",
 
             //leakcanary
             LeakCanaryVersion : "1.6.2",
