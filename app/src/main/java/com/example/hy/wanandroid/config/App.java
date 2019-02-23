@@ -21,7 +21,7 @@ import org.litepal.LitePalApplication;
 /**
  * Created by 陈健宇 at 2018/10/20
  */
-public class App extends LitePalApplication {
+public class  App extends LitePalApplication {
 
     private static App mContext;
 
