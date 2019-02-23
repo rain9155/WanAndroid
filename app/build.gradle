@@ -119,7 +119,9 @@ dependencies {
     releaseImplementation rootProject.ext.dependencies["leakCanaryRelease"]
     debugImplementation rootProject.ext.dependencies["leakCanaryDebugSupport"]
 
+    //test
     testImplementation rootProject.ext.dependencies["junit"]
     androidTestImplementation rootProject.ext.dependencies["runner"]
     androidTestImplementation rootProject.ext.dependencies["espresso"]
+    testImplementation rootProject.ext.dependencies["mocktio"]
 }

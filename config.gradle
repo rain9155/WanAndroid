@@ -5,7 +5,7 @@ ext {
             buildToolsVersion       : "28.0.0",
             minSdkVersion           : 15,
             targetSdkVersion        : 28,
-            versionCode             :4,
+            versionCode             : 4,
             versionName             : "v1.3",
     ]
 
@@ -52,7 +52,8 @@ ext {
             //test
             JunitVersion           : "4.12",
             RunnerVersion          : "1.1.0",
-            EspressoVersion        : "3.1.0"
+            EspressoVersion        : "3.1.0",
+            MocktioVersion : "2.8.9"
 
     ]
 
@@ -109,6 +110,7 @@ ext {
             //test
             "junit"                 : "junit:junit:${version.JunitVersion}",
             "runner"                : "androidx.test:runner:${version.RunnerVersion}",
-            "espresso"              : "androidx.test.espresso:espresso-core:${version.EspressoVersion}"
+            "espresso"              : "androidx.test.espresso:espresso-core:${version.EspressoVersion}",
+            "mocktio" : "org.mockito:mockito-core:${version.MocktioVersion}"
     ]
 }
