@@ -25,7 +25,7 @@
  <br> ![sc4](/screenshots/sc4.png) ![sc5](/screenshots/sc5.png)<br>
  <br>![sc6](/screenshots/sc6.png) ![sc7](/screenshots/sc7.png)<br>
   <br>![sc8](/screenshots/sc8.png) ![sc9](/screenshots/sc9.png)<br>
-### Download (v1.3, Android 4.1 or above)
+### Download (v1.4, Android 4.1 or above)
 [WanAndroid Apk](https://github.com/rain9155/WanAndroid/releases/download/v1.4/app-release.apk)
 ### TODO
 - [ ] Dagger-Android
