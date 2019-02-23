@@ -26,14 +26,17 @@
  <br>![sc6](/screenshots/sc6.png) ![sc7](/screenshots/sc7.png)<br>
   <br>![sc8](/screenshots/sc8.png) ![sc9](/screenshots/sc9.png)<br>
 ### Download (v1.3, Android 4.1 or above)
-[WanAndroid Apk](https://github.com/rain9155/WanAndroid/releases/download/v1.3/app-release.apk)
+[WanAndroid Apk](https://github.com/rain9155/WanAndroid/releases/download/v1.4/app-release.apk)
 ### TODO
-- [ ] 公众号模块
 - [ ] Dagger-Android
 - [ ] 自定义TabLayout
 - [ ] 优化app
 ### ChangeLog
 ```
+v1.4 2019-2-23
+1、修复v1.3登陆失败问题
+2、添加更换头像背景功能
+
 v1.3 2018-12-31
 1、添加文章长按
 1、修复一些bug
