@@ -29,7 +29,7 @@
 1、[手动下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.4/app-release.apk) 
 <br> <br>
 2、二维码下载
-<br>
+<br> <br>
 ![二维码下载](/screenshots/无标题.png)
 ### TODO
 - [ ] Dagger-Android
