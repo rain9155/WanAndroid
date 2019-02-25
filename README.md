@@ -26,8 +26,11 @@
  <br>![sc6](/screenshots/sc6.png) ![sc7](/screenshots/sc7.png)<br>
   <br>![sc8](/screenshots/sc8.png) ![sc9](/screenshots/sc9.png)<br>
 ### Download (v1.4, Android 4.1 or above)
-1、[手动下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.4/app-release.apk)
-2、![二维码下载]()
+1、[手动下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.4/app-release.apk) 
+<br> <br>
+2、二维码下载
+<br>
+![二维码下载](/screenshots/无标题.png)
 ### TODO
 - [ ] Dagger-Android
 - [ ] 自定义TabLayout
