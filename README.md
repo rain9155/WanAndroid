@@ -33,8 +33,8 @@
 ![二维码下载](/screenshots/无标题.png)
 ### TODO
 - [ ] Dagger-Android
-- [ ] 自定义TabLayout
 - [ ] 优化app
+- [ ] 单元测试
 ### ChangeLog
 ```
 v1.4 2019-2-23
