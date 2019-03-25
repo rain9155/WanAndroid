@@ -25,12 +25,15 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
+import com.example.hy.wanandroid.bean.Permission;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityComponent;
 import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.event.ToppingEvent;
+import com.example.hy.wanandroid.permission.PermissionFragment;
+import com.example.hy.wanandroid.permission.PermissionHelper;
 import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utlis.DownloadUtil;
@@ -39,8 +42,10 @@ import com.example.commonlib.utils.ToastUtil;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
+import com.example.hy.wanandroid.view.mine.SettingsActivity;
 import com.example.hy.wanandroid.view.project.ProjectFragment;
 import com.example.hy.wanandroid.view.wechat.WeChatFragment;
+import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -76,9 +81,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     private int mPreFragmentPosition = 0;//上一个被选中的Fragment位置
     private MainActivityComponent mMainActivityComponent;
-    private ObjectAnimator mShowNavAnimator;
+    private ObjectAnimator  mShowNavAnimator;
     private ViewPropertyAnimator mHideFbtnAnimator, mShowFbtnAnimator;
-    private boolean isPermissionDeniedRequest;
 
     @Inject
     MainPresenter mPresenter;
@@ -88,6 +92,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     Lazy<VersionDialog> mVersionDialog;
     @Inject
     OpenBrowseDialog mOpenBrowseDialog;
+    @Inject
+    Lazy<GotoDetialDialog> mGotoDetialDialog;
 
     private String mNewVersionName;
 
@@ -214,8 +220,10 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     protected void onDestroy() {
         if(mOpenBrowseDialog != null)
             mOpenBrowseDialog = null;
-        if(mVersionDialog != null)
+        if(mVersionDialog.get() != null)
             mVersionDialog = null;
+        if(mGotoDetialDialog.get() != null)
+            mGotoDetialDialog = null;
         super.onDestroy();
     }
 
@@ -224,26 +232,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_CODE_UNKNOWN_APP)
             installApk(this);
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE
-                && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            DownloadUtil.downloadApk(this, mNewVersionName);
-        else{
-            if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
-                if(!isPermissionDeniedRequest){
-                    isPermissionDeniedRequest = true;
-                    return;
-                }
-                ShareUtil.gotoAppDetailIntent(this);
-                showToast(getString(R.string.settingsActivity_permission_denied_request));
-                return;
-            }
-            showToast(getString(R.string.settingsActivity_permission_denied));
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -260,16 +248,30 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public void upDataVersion() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE);
-        }else {
-            DownloadUtil.downloadApk(this, mNewVersionName);
-        }
+        PermissionHelper.getInstance(this).requestPermissions(
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
+                new PermissionFragment.IPermissomCallback() {
+                    @Override
+                    public void onAccepted(Permission permission) {
+                        DownloadUtil.downloadApk(MainActivity.this, mNewVersionName);
+                    }
+
+                    @Override
+                    public void onDenied(Permission permission) {
+                        showToast(getString(R.string.settingsActivity_permission_denied));
+                    }
+
+                    @Override
+                    public void onDeniedAndReject(Permission permission) {
+                        mGotoDetialDialog.get().show(getSupportFragmentManager(), "tag22");
+                    }
+
+                    @Override
+                    public void onAlreadyGranted() {
+                        DownloadUtil.downloadApk(MainActivity.this, mNewVersionName);
+                    }
+                });
     }
 
     @Override

@@ -2,40 +2,36 @@ package com.example.hy.wanandroid.view.mine;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Parcelable;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.commonlib.utils.FileUtil;
 import com.example.commonlib.utils.IntentUtil;
 import com.example.commonlib.utils.LogUtil;
-import com.example.commonlib.utils.ShareUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
+import com.example.hy.wanandroid.bean.Permission;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.di.module.fragment.MineFragmentModule;
+import com.example.hy.wanandroid.permission.PermissionFragment;
+import com.example.hy.wanandroid.permission.PermissionHelper;
 import com.example.hy.wanandroid.presenter.mine.MinePresenter;
 import com.example.commonlib.utils.AnimUtil;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.widget.dialog.ChangeFaceDialog;
+import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -47,15 +43,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import dagger.Lazy;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -107,10 +99,10 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     Lazy<LogoutDialog> mLogoutDialog;
     @Inject
     Lazy<ChangeFaceDialog> mChangeFaceDialog;
+    @Inject
+    Lazy<GotoDetialDialog> mGotoDetialDialog;
 
-    private Uri mCropImageUri;
     private int mChangeFlag;//更换头像标志
-    private boolean isPermissionDeniedRequest;
 
     @Override
     protected int getLayoutId() {
@@ -168,8 +160,9 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mLogoutDialog != null) mLogoutDialog = null;
-        if(mChangeFaceDialog != null) mChangeFaceDialog = null;
+        if(mLogoutDialog.get() != null) mLogoutDialog = null;
+        if(mChangeFaceDialog.get() != null) mChangeFaceDialog = null;
+        if(mGotoDetialDialog.get() != null) mGotoDetialDialog = null;
     }
 
     @SuppressLint("InlinedApi")
@@ -184,18 +177,37 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         // handle result of pick image chooser
         if(requestCode == Constant.REQUEST_PICK_IMAGE_CHOOSER){
             Uri imageUri = CropImage.getPickImageResultUri(mActivity, data);
-            // For API >= 23 we need to check specifically that we have permissions to read external storage.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                    && ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                mCropImageUri = imageUri;
-                requestPermissions(
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
-            } else {
-                CropperImageActivity.startActivityByFragment(mActivity, this, imageUri, mChangeFlag);
-                //CropImage.activity(imageUri).start(mActivity);
-            }
+
+            PermissionHelper.getInstance(mActivity).requestPermissions(
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE,
+                    new PermissionFragment.IPermissomCallback() {
+                @Override
+                public void onAccepted(Permission permission) {//同意了权限
+                    LogUtil.d(LogUtil.TAG_COMMON, " onAccepted()");
+                    if (imageUri != null)
+                        CropperImageActivity.startActivityByFragment(mActivity, MineFragment.this, imageUri, mChangeFlag);
+                }
+
+                @Override
+                public void onDenied(Permission permission) {//不同意了权限
+                    LogUtil.d(LogUtil.TAG_COMMON, " onDenied()");
+                    showToast(mActivity, getString(R.string.mineFragment_permissions_denied));
+                }
+
+                @Override
+                public void onDeniedAndReject(Permission permission) {//并勾选了don’t ask again并且拒绝了权限，shouldShowRequestPermissionRationale会返回false，此时应该引导用户去开启此权限
+                    LogUtil.d(LogUtil.TAG_COMMON, " onDeniedAndReject()");
+                    mGotoDetialDialog.get().show(getChildFragmentManager(), "tag20");
+                }
+
+                @Override
+                public void onAlreadyGranted() {///已经同意了无需再授权权限 或 版本小于M
+                    LogUtil.d(LogUtil.TAG_COMMON, "onGranted()");
+                    CropperImageActivity.startActivityByFragment(mActivity, MineFragment.this, imageUri, mChangeFlag);
+                    //CropImage.activity(imageUri).start(mActivity);
+                }
+            });
         }
 
         //handle result of Cropper Activity
@@ -219,32 +231,6 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                 e.printStackTrace();
             }
         }
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE){
-            if (mCropImageUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                // required permissions granted, start crop image activity
-                //CropImage.activity(mCropImageUri).start(mActivity);
-                CropperImageActivity.startActivityByFragment(mActivity, this, mCropImageUri, mChangeFlag);
-            else{
-                //当勾选了don’t ask again并且拒绝了权限，shouldShowRequestPermissionRationale会返回false，此时应该引导用户去开启此权限
-                if(!ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)){
-                    if(!isPermissionDeniedRequest){
-                        isPermissionDeniedRequest = true;
-                        return;
-                    }
-                    ShareUtil.gotoAppDetailIntent(mActivity);
-                    showToast(mActivity, getString(R.string.mineFragment_permissions_denied_request));
-                    return;
-                }
-                showToast(mActivity, getString(R.string.mineFragment_permissions_denied));
-                LogUtil.d(LogUtil.TAG_COMMON, ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE) + "");
-            }
-    }
 
     }
 

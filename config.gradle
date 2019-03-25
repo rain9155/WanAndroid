@@ -111,6 +111,6 @@ ext {
             "junit"                 : "junit:junit:${version.JunitVersion}",
             "runner"                : "androidx.test:runner:${version.RunnerVersion}",
             "espresso"              : "androidx.test.espresso:espresso-core:${version.EspressoVersion}",
-            "mocktio" : "org.mockito:mockito-core:${version.MocktioVersion}"
+            "mocktio"               : "org.mockito:mockito-core:${version.MocktioVersion}"
     ]
 }

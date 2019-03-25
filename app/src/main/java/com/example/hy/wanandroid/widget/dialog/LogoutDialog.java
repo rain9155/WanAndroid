@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 /**
+ * 退出登陆弹框
  * Created by 陈健宇 at 2018/12/11
  */
 public class LogoutDialog extends BaseDialogFragment {

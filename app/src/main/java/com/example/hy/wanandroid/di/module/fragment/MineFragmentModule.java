@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.di.module.fragment;
 
 import com.example.hy.wanandroid.di.scope.PerFragment;
 import com.example.hy.wanandroid.widget.dialog.ChangeFaceDialog;
+import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
 
 import dagger.Module;

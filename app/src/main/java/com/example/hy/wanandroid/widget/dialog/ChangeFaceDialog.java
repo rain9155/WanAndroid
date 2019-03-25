@@ -12,6 +12,7 @@ import com.example.hy.wanandroid.event.ChangeFaceEvent;
 import java.io.File;
 
 /**
+ * 改变背景弹框
  * Created by 陈健宇 at 2019/1/7
  */
 public class ChangeFaceDialog extends BaseDialogFragment {

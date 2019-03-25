@@ -33,11 +33,7 @@ public class Constant {
     public static final int REQUEST_CODE_UNKNOWN_APP = 3;
 
     //ArticleActivity
-    public static final String KEY_ARTICLE_ADDRESS = "articleAddress";
     public static final String KEY_ARTICLE_FLAG = "articleFlag";
-    public static final String KEY_ARTICLE_TITLE = "articleTitle";
-    public static final String KEY_ARTICLE_ISCOLLECTION = "articleIsCollection";
-    public static final String KEY_ARTICLE_ID = "articleId";
     public static final String KEY_DATA_RETURN = "dataReturn";
     public static final String KEY_ARTICLE_BEAN = "articleBean";
 
@@ -92,11 +88,11 @@ public class Constant {
     public static final String FACE = "face.jpeg";
     public static final String BACK = "background.jpeg";
 
-
     //common
     public static final int REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE = 4;
     public static final String KEY_URL_APK = "urlApk";
     public static final String KEY_DOWNLOAD_ID = "downloadId";
     public static String NEW_VERSION_URL = "";
+
 
 }

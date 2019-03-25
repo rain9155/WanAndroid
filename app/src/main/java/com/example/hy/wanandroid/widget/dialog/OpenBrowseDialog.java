@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 /**
+ * 打开浏览器弹框
  * Created by 陈健宇 at 2018/12/15
  */
 public class OpenBrowseDialog extends BaseDialogFragment {

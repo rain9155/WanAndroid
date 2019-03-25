@@ -30,13 +30,17 @@ import com.example.commonlib.utils.ShareUtil;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
+import com.example.hy.wanandroid.bean.Permission;
 import com.example.hy.wanandroid.component.UpdataService;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSettingsActivityComponent;
+import com.example.hy.wanandroid.permission.PermissionFragment;
+import com.example.hy.wanandroid.permission.PermissionHelper;
 import com.example.hy.wanandroid.presenter.mine.SettingsPresenter;
 import com.example.hy.wanandroid.utlis.DownloadUtil;
 import com.example.hy.wanandroid.widget.dialog.ClearCacheDialog;
+import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 
 import java.io.File;
@@ -151,11 +155,12 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     Lazy<VersionDialog> mVersionDialog;
     @Inject
     Lazy<ClearCacheDialog> mClearCacheDialog;
+    @Inject
+    Lazy<GotoDetialDialog> mGotoDetialDialog;
 
     private ObjectAnimator mAnimator;
     private String mNewVersionName;
     private String mCurrentVersionName;
-    private boolean isPermissionDeniedRequest;
 
     @Override
     protected void inject() {
@@ -264,29 +269,13 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
     @Override
     protected void onDestroy() {
-        if (mClearCacheDialog != null)
+        if (mClearCacheDialog.get() != null)
             mClearCacheDialog = null;
-        if (mVersionDialog != null)
+        if (mVersionDialog.get() != null)
             mVersionDialog = null;
+        if(mGotoDetialDialog.get() != null)
+            mGotoDetialDialog = null;
         super.onDestroy();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            DownloadUtil.downloadApk(this, mNewVersionName);
-        else{
-            if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
-                if(!isPermissionDeniedRequest){
-                    isPermissionDeniedRequest = true;
-                    return;
-                }
-                ShareUtil.gotoAppDetailIntent(this);
-                showToast(getString(R.string.settingsActivity_permission_denied_request));
-                return;
-            }
-            showToast(getString(R.string.settingsActivity_permission_denied));
-        }
     }
 
     @Override
@@ -331,6 +320,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         tvCache.setTextColor(primaryText);
         tvUpdata.setTextColor(primaryText);
         tvVersion.setTextColor(primaryText);
+        tvMes.setTextColor(primaryText);
         //动态改变波纹点击颜色
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ((RippleDrawable) clNoImage.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
@@ -341,6 +331,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
             ((RippleDrawable) clFeedBack.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
             ((RippleDrawable) clUpdata.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
             ((RippleDrawable) clAutoUpdata.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable) clMes.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
         }
     }
 
@@ -409,15 +400,30 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
     @Override
     public void upDataVersion() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE);
-        } else {
-            DownloadUtil.downloadApk(this, mNewVersionName);
-        }
+        PermissionHelper.getInstance(this).requestPermissions(
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
+                new PermissionFragment.IPermissomCallback() {
+            @Override
+            public void onAccepted(Permission permission) {
+                DownloadUtil.downloadApk(SettingsActivity.this, mNewVersionName);
+            }
+
+            @Override
+            public void onDenied(Permission permission) {
+                showToast(getString(R.string.settingsActivity_permission_denied));
+            }
+
+            @Override
+            public void onDeniedAndReject(Permission permission) {
+                mGotoDetialDialog.get().show(getSupportFragmentManager(), "tag21");
+            }
+
+            @Override
+            public void onAlreadyGranted() {
+                DownloadUtil.downloadApk(SettingsActivity.this, mNewVersionName);
+            }
+        });
     }
 
     public static void startActivity(Context context) {
@@ -455,12 +461,5 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         return bitmap;
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }
 
