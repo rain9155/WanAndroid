@@ -70,7 +70,7 @@
 * [那些年踩过的坑](https://www.jianshu.com/p/d9143a92ad94)
 * [ViewPager+TabLayout+Fragment懒加载机制完全解析](https://www.jianshu.com/p/eb81f3692229)
 
-10、使用Download实现应用更新
+10、使用DownloadManager实现应用更新
 * [DownloadManager 的使用 ](https://www.cnblogs.com/zhaoyanjun/p/4591960.html)
 * [Android:使用 DownloadManager 进行版本更新](https://www.cnblogs.com/liyiran/p/6393813.html)
 
