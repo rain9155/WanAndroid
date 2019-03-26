@@ -31,6 +31,60 @@
 2、二维码下载
 <br> <br>
 ![二维码下载](/screenshots/无标题.png)
+<br>
+### Points And Reference
+1、Rxjava2配合Retrofit进行网络请求
+* [给 Android 开发者的 RxJava 详解](https://gank.io/post/560e15be2dca930e00da1083)
+* [你真的会用Retrofit2吗?Retrofit2完全教程](https://www.jianshu.com/p/308f3c54abdd)
+* [Android 教你一步步搭建MVP+Retrofit+RxJava网络请求框架](https://www.jianshu.com/p/7b839b7c5884)
+
+2、Rxjava2与Retrofit的封装使用
+* [Rxjava2+Retrofit完美封装](https://blog.csdn.net/qq_20521573/article/details/70991850)
+* [Retrofit自定义GsonConverter处理所有请求错误情况](https://www.jianshu.com/p/5b8b1062866b)
+
+3、Retrofit配合Cookie实现免登陆与实现离线缓存
+* [Okhttp完美同步持久Cookie实现免登录](https://www.jianshu.com/p/1a5f14b63f47)
+* [给Retrofit添加离线缓存](https://www.jianshu.com/p/7aa8f3443e05)
+
+4、用Rxjava2实现轻量级的EventBus
+* [用RxJava实现事件总线(Event Bus)](https://www.jianshu.com/p/ca090f6e2fe2)
+
+5、依赖注入实现，配合MVP模式
+* [Android：dagger2让你爱不释手-基础依赖注入框架篇](https://www.jianshu.com/p/cd2c1c9f68d4)
+* [Dagger2 入门,以初学者角度.](https://www.jianshu.com/p/1d84ba23f4d2)
+
+6、使用了MD控件和动画
+* [MaterialDesign之SearchView全面解锁](https://www.jianshu.com/p/7c1e78e91506)
+* [Android 使用CardView轻松实现卡片式设计](https://blog.csdn.net/u013651026/article/details/79000205)
+* [聊聊Android5.0中的水波纹效果](https://blog.csdn.net/u012702547/article/details/52325418)
+
+
+7、自定义Behavior（俩种实现）
+* 具体参考[代码](https://github.com/rain9155/WanAndroid/tree/master/app/src/main/java/com/example/hy/wanandroid/widget/behaviour)
+
+8、使用原生的夜间模式,并切换自然
+* [简洁优雅地实现夜间模式](https://tonnyl.io/Night-Mode-on-Android/)
+* [知乎和简书的夜间模式实现套路](https://www.jianshu.com/p/3b55e84742e5)
+
+9、实现了Fragment的操作和懒加载
+* [那些年踩过的坑](https://www.jianshu.com/p/d9143a92ad94)
+* [ViewPager+TabLayout+Fragment懒加载机制完全解析](https://www.jianshu.com/p/eb81f3692229)
+
+10、使用Download实现应用更新
+* [DownloadManager 的使用 ](https://www.cnblogs.com/zhaoyanjun/p/4591960.html)
+* [Android:使用 DownloadManager 进行版本更新](https://www.cnblogs.com/liyiran/p/6393813.html)
+
+11、努力兼容Android版本
+* [Android 使用 Https问题解决（SSLHandshakeException）](http://www.mamicode.com/info-detail-1728871.html)
+* [Drawable 着色的后向兼容方案](https://www.race604.com/tint-drawable/)
+* [CardView在API 21以下的圆角效果处理](https://www.jianshu.com/p/07097b562acb)
+* [Android 6.0运行权限解析（高级篇）](https://www.jianshu.com/p/6a4dff744031)
+
+12、集成腾讯Bugly与LeakCanary，更容易找出bug与内存泄漏
+* 参考官方文档
+
+以上是项目中的主要亮点和我做项目时参考的文章，当然对于一些主流的框架官方文档中也有详细的介绍，更多细节可以查看具体代码。
+
 ### TODO
 - [ ] Dagger-Android
 - [ ] 优化app
@@ -66,7 +120,7 @@ v1.0 2018-12-1
 ```
 ### Thanks
 * **App** <br>
-[WanAndroid](https://github.com/rain9155/WanAndroid/releases/download/v1.1/app-release.apk) <br> 
+[WanAndroid](https://github.com/iceCola7/WanAndroid) <br> 
 [Awesome-WanAndroid](https://github.com/JsonChao/Awesome-WanAndroid) <br>
 [GeekNews](https://github.com/codeestX/GeekNews) <br>
 * **UI** <br>
@@ -79,20 +133,23 @@ v1.0 2018-12-1
 [Retrofit](https://github.com/square/retrofit) <br>
 * **Rx** <br>
 [RxJava2](https://github.com/ReactiveX/RxJava) <br>
-* **Dagger** <br>
+* **Injection** <br>
 [Dagger](https://github.com/google/dagger) <br>
+[Butterknife](https://github.com/JakeWharton/butterknife)
 * **ImageLoader** <br>
 [Glide](https://github.com/bumptech/glide)<br>
+* **Leak Check** <br>
+[LeakCanary](https://github.com/square/leakcanary)
 * **Other excellent open source library** <br>
 [WaveLoadingView](https://github.com/tangqi92/WaveLoadingView)<br>
 [MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)<br>
 [VerticalTabLayout](https://github.com/qstumn/VerticalTabLayout)<br>
 [BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)<br>
 [Banner](https://github.com/youth5201314/banner)<br>
-[Butterknife](https://github.com/JakeWharton/butterknife)<br>
 [FlowLayout](https://github.com/hongyangAndroid/FlowLayout)<br>
 [AgentWeb](https://github.com/Justson/AgentWeb)<br>
 [SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout)<br>
+[ImageCropper](https://github.com/ArthurHub/Android-Image-Cropper)
 ### End
 本项目只用作学习用途，不做其他用途 
 ### License
