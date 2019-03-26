@@ -24,8 +24,8 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.di.module.fragment.MineFragmentModule;
-import com.example.hy.wanandroid.permission.PermissionFragment;
-import com.example.hy.wanandroid.permission.PermissionHelper;
+import com.example.hy.wanandroid.proxy.PermissionFragment;
+import com.example.hy.wanandroid.proxy.PermissionHelper;
 import com.example.hy.wanandroid.presenter.mine.MinePresenter;
 import com.example.commonlib.utils.AnimUtil;
 import com.example.commonlib.utils.StatusBarUtil;
@@ -271,33 +271,37 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
             ivFace.setImageResource(R.drawable.girl);
             FileUtil.deleteDir(new File(Constant.PATH_IMAGE_FACE));
         }else {
-            List<Intent> allIntents = new ArrayList<>();
-            Intent chooserIntent;
-            Intent targerIntent;
-
-            //add All Camera Intents
-            allIntents.addAll(IntentUtil.getCameraIntents(mActivity));
-
-            //add All gallery Intents
-            List<Intent> allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_GET_CONTENT, true);
-            //部分机型会因为用用Intent.ACTION_GET_CONTENT获不到intents，用Intent.ACTION_PICK
-            if(allGalleryIntents.isEmpty())
-                allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_PICK, true);
-            allIntents.addAll(allGalleryIntents);
-
-            //create chooserIntent
-            if(allIntents.isEmpty()){
-                targerIntent = new Intent();
-            }else {
-                targerIntent = allIntents.get(allIntents.size() - 1);
-                allIntents.remove(allIntents.size() - 1);
-            }
-            chooserIntent = Intent.createChooser(targerIntent, getString(R.string.mineFragment_choose_intent));
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
-
+            Intent chooserIntent = getChooserIntent();
             startActivityForResult(chooserIntent, Constant.REQUEST_PICK_IMAGE_CHOOSER);
             // CropImage.startPickImageActivity(mActivity);
         }
+    }
+
+    private Intent getChooserIntent() {
+        List<Intent> allIntents = new ArrayList<>();
+        Intent chooserIntent;
+        Intent targerIntent;
+
+        //add All Camera Intents
+        allIntents.addAll(IntentUtil.getCameraIntents(mActivity));
+
+        //add All gallery Intents
+        List<Intent> allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_GET_CONTENT, true);
+        //部分机型会因为用用Intent.ACTION_GET_CONTENT获不到intents，用Intent.ACTION_PICK
+        if(allGalleryIntents.isEmpty())
+            allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_PICK, true);
+        allIntents.addAll(allGalleryIntents);
+
+        //create chooserIntent
+        if(allIntents.isEmpty()){
+            targerIntent = new Intent();
+        }else {
+            targerIntent = allIntents.get(allIntents.size() - 1);
+            allIntents.remove(allIntents.size() - 1);
+        }
+        chooserIntent = Intent.createChooser(targerIntent, getString(R.string.mineFragment_choose_intent));
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
+        return chooserIntent;
     }
 
     public static MineFragment newInstance() {

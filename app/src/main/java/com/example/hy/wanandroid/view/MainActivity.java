@@ -5,11 +5,9 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.View;
@@ -20,9 +18,7 @@ import android.widget.FrameLayout;
 
 import com.example.commonlib.utils.FileProvider7;
 import com.example.commonlib.utils.LogUtil;
-import com.example.commonlib.utils.ShareUtil;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.bean.Permission;
@@ -32,8 +28,10 @@ import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityComponent;
 import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.event.ToppingEvent;
-import com.example.hy.wanandroid.permission.PermissionFragment;
-import com.example.hy.wanandroid.permission.PermissionHelper;
+import com.example.hy.wanandroid.proxy.ActivityResultFragment;
+import com.example.hy.wanandroid.proxy.ActivityResultHelper;
+import com.example.hy.wanandroid.proxy.PermissionFragment;
+import com.example.hy.wanandroid.proxy.PermissionHelper;
 import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utlis.DownloadUtil;
@@ -42,7 +40,6 @@ import com.example.commonlib.utils.ToastUtil;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
-import com.example.hy.wanandroid.view.mine.SettingsActivity;
 import com.example.hy.wanandroid.view.project.ProjectFragment;
 import com.example.hy.wanandroid.view.wechat.WeChatFragment;
 import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
@@ -51,11 +48,8 @@ import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
@@ -228,13 +222,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_CODE_UNKNOWN_APP)
-            installApk(this);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
     public void showUpdataDialog(String content) {
         mVersionDialog.get().setContentText(content);
         mVersionDialog.get().setIsMain(true);
@@ -289,7 +276,20 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                 //跳转至“安装未知应用”权限界面，引导用户开启权限
                 Uri selfPackageUri = Uri.parse("package:" + this.getPackageName());
                 Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, selfPackageUri);
-                startActivityForResult(intent, Constant.REQUEST_CODE_UNKNOWN_APP);
+                ActivityResultHelper.getInstance(MainActivity.this).startActivityForResult(
+                        intent,
+                        Constant.REQUEST_CODE_UNKNOWN_APP,
+                        new ActivityResultFragment.IResultCallback() {
+                    @Override
+                    public void onResultOk(Intent data) {
+                        installApk(MainActivity.this);
+                    }
+
+                    @Override
+                    public void onResultCancel(Intent data) {
+
+                    }
+                });
             }
         }else
             installApk(this);

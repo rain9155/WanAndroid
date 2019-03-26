@@ -1,18 +1,11 @@
-package com.example.hy.wanandroid.permission;
+package com.example.hy.wanandroid.proxy;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import com.example.hy.wanandroid.bean.Permission;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;

@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.permission;
+package com.example.hy.wanandroid.proxy;
 
 
 import android.app.Activity;
@@ -6,12 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseArray;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.bean.Permission;
 
 import java.util.Random;
@@ -61,7 +56,7 @@ public class PermissionFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
        IPermissomCallback callback = mPermissomCallbacks.get(requestCode);
        if(callback == null) return;
-       boolean allGranted = true;
+
        mPermissomCallbacks.remove(requestCode);
        for(int i = 0; i < grantResults.length; i++){
            int grantResult = grantResults[i];

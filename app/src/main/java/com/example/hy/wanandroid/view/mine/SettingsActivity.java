@@ -8,14 +8,12 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -35,8 +33,8 @@ import com.example.hy.wanandroid.component.UpdataService;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSettingsActivityComponent;
-import com.example.hy.wanandroid.permission.PermissionFragment;
-import com.example.hy.wanandroid.permission.PermissionHelper;
+import com.example.hy.wanandroid.proxy.PermissionFragment;
+import com.example.hy.wanandroid.proxy.PermissionHelper;
 import com.example.hy.wanandroid.presenter.mine.SettingsPresenter;
 import com.example.hy.wanandroid.utlis.DownloadUtil;
 import com.example.hy.wanandroid.widget.dialog.ClearCacheDialog;
@@ -47,15 +45,11 @@ import java.io.File;
 
 import javax.inject.Inject;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import dagger.Lazy;
 
 public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
