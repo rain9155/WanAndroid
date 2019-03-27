@@ -41,11 +41,11 @@
         android:textSize="@dimen/sp_18"
         android:layout_marginTop="@dimen/dp_20"
         android:paddingEnd="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10"
-        android:text="@string/dialog_open_browse"
+        android:text="@string/dialog_goto_detail"
         app:layout_constraintLeft_toLeftOf="@id/iv_toast"
         app:layout_constraintTop_toBottomOf="@id/tv_toast"
-        app:layout_constraintBottom_toTopOf="@+id/btn_cancel" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_cancel"
+        android:paddingRight="@dimen/dp_10" />
 
 
     <Button

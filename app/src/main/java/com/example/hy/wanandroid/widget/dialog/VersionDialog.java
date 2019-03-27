@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 /**
+ * 获取版本信息弹框
  * Created by 陈健宇 at 2018/12/7
  */
 public class VersionDialog extends BaseDialogFragment {

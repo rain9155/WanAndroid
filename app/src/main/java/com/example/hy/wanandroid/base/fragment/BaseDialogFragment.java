@@ -15,6 +15,8 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.event.UpdataEvent;
 
+import java.lang.reflect.Field;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -49,8 +51,24 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public void show(FragmentManager manager, String tag) {
         if(this.isAdded())
             this.dismiss();
-        else
-            super.show(manager, tag);
+        else{
+            try {
+                Class dialogFragmentClass = this.getClass();
+                Field f1 = dialogFragmentClass.getDeclaredField("mDismissed");
+                Field f2 = dialogFragmentClass.getDeclaredField("mShownByMe");
+                f1.setAccessible(true);
+                f2.setAccessible(true);
+                f1.setBoolean(this, false);
+                f2.setBoolean(this, true);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.add(this, tag);
+            ft.commitNowAllowingStateLoss();
+        }
     }
 
     /**

@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 /**
+ * 清除缓存弹框
  * Created by 陈健宇 at 2018/12/15
  */
 public class ClearCacheDialog extends BaseDialogFragment {

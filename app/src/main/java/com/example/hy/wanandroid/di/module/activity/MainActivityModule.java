@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.di.module.activity;
 
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.di.scope.PerActivity;
+import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 
@@ -34,6 +35,10 @@ public class MainActivityModule {
         return new OpenBrowseDialog();
     }
 
-
+    @Provides
+    @PerActivity
+    GotoDetialDialog provideGotoDetialDialog(){
+        return new GotoDetialDialog();
+    }
 
 }

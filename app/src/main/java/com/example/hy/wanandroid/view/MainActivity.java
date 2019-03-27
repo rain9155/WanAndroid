@@ -5,11 +5,9 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.View;
@@ -20,17 +18,20 @@ import android.widget.FrameLayout;
 
 import com.example.commonlib.utils.FileProvider7;
 import com.example.commonlib.utils.LogUtil;
-import com.example.commonlib.utils.ShareUtil;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
+import com.example.hy.wanandroid.bean.Permission;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityComponent;
 import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.event.ToppingEvent;
+import com.example.hy.wanandroid.proxy.ActivityResultFragment;
+import com.example.hy.wanandroid.proxy.ActivityResultHelper;
+import com.example.hy.wanandroid.proxy.PermissionFragment;
+import com.example.hy.wanandroid.proxy.PermissionHelper;
 import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utlis.DownloadUtil;
@@ -41,16 +42,14 @@ import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
 import com.example.hy.wanandroid.view.project.ProjectFragment;
 import com.example.hy.wanandroid.view.wechat.WeChatFragment;
+import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
@@ -76,9 +75,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     private int mPreFragmentPosition = 0;//上一个被选中的Fragment位置
     private MainActivityComponent mMainActivityComponent;
-    private ObjectAnimator mShowNavAnimator;
+    private ObjectAnimator  mShowNavAnimator;
     private ViewPropertyAnimator mHideFbtnAnimator, mShowFbtnAnimator;
-    private boolean isPermissionDeniedRequest;
 
     @Inject
     MainPresenter mPresenter;
@@ -88,6 +86,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     Lazy<VersionDialog> mVersionDialog;
     @Inject
     OpenBrowseDialog mOpenBrowseDialog;
+    @Inject
+    Lazy<GotoDetialDialog> mGotoDetialDialog;
 
     private String mNewVersionName;
 
@@ -214,36 +214,11 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     protected void onDestroy() {
         if(mOpenBrowseDialog != null)
             mOpenBrowseDialog = null;
-        if(mVersionDialog != null)
+        if(mVersionDialog.get() != null)
             mVersionDialog = null;
+        if(mGotoDetialDialog.get() != null)
+            mGotoDetialDialog = null;
         super.onDestroy();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_CODE_UNKNOWN_APP)
-            installApk(this);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE
-                && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            DownloadUtil.downloadApk(this, mNewVersionName);
-        else{
-            if(!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
-                if(!isPermissionDeniedRequest){
-                    isPermissionDeniedRequest = true;
-                    return;
-                }
-                ShareUtil.gotoAppDetailIntent(this);
-                showToast(getString(R.string.settingsActivity_permission_denied_request));
-                return;
-            }
-            showToast(getString(R.string.settingsActivity_permission_denied));
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -260,16 +235,30 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public void upDataVersion() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE);
-        }else {
-            DownloadUtil.downloadApk(this, mNewVersionName);
-        }
+        PermissionHelper.getInstance(this).requestPermissions(
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
+                new PermissionFragment.IPermissomCallback() {
+                    @Override
+                    public void onAccepted(Permission permission) {
+                        DownloadUtil.downloadApk(MainActivity.this, mNewVersionName);
+                    }
+
+                    @Override
+                    public void onDenied(Permission permission) {
+                        showToast(getString(R.string.settingsActivity_permission_denied));
+                    }
+
+                    @Override
+                    public void onDeniedAndReject(Permission permission) {
+                        mGotoDetialDialog.get().show(getSupportFragmentManager(), "tag22");
+                    }
+
+                    @Override
+                    public void onAlreadyGranted() {
+                        DownloadUtil.downloadApk(MainActivity.this, mNewVersionName);
+                    }
+                });
     }
 
     @Override
@@ -287,7 +276,20 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                 //跳转至“安装未知应用”权限界面，引导用户开启权限
                 Uri selfPackageUri = Uri.parse("package:" + this.getPackageName());
                 Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, selfPackageUri);
-                startActivityForResult(intent, Constant.REQUEST_CODE_UNKNOWN_APP);
+                ActivityResultHelper.getInstance(MainActivity.this).startActivityForResult(
+                        intent,
+                        Constant.REQUEST_CODE_UNKNOWN_APP,
+                        new ActivityResultFragment.IResultCallback() {
+                    @Override
+                    public void onResultOk(Intent data) {
+                        installApk(MainActivity.this);
+                    }
+
+                    @Override
+                    public void onResultCancel(Intent data) {
+
+                    }
+                });
             }
         }else
             installApk(this);
