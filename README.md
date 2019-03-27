@@ -25,8 +25,8 @@
  <br> ![sc4](/screenshots/sc4.png) ![sc5](/screenshots/sc5.png)<br>
  <br>![sc6](/screenshots/sc6.png) ![sc7](/screenshots/sc7.png)<br>
   <br>![sc8](/screenshots/sc8.png) ![sc9](/screenshots/sc9.png)<br>
-### Download (v1.4, Android 4.1 or above)
-1、[手动下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.4/app-release.apk) 
+### Download (v1.5, Android 4.1 or above)
+1、[手动下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.5/app-release.apk) 
 <br> <br>
 2、二维码下载
 <br> <br>
@@ -94,6 +94,10 @@
 - [ ] 单元测试
 ### ChangeLog
 ```
+v1.5 2019-3-27
+1、Wnadroid接口从http转为https
+2、使用Fragment代理申请权限
+
 v1.4 2019-2-23
 1、修复v1.3登陆失败问题
 2、添加更换头像背景功能
