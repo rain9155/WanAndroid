@@ -18,3 +18,7 @@ file=J:\AndroidStudio\WanAndroid\app\build\outputs\mapping\release\mapping.txt
 sha1=b61cd4e35eff893b6971df1ee0ac668256ef14b9
 appId=a0768ddf34
 
+file=J:\AndroidStudio\WanAndroid\app\build\outputs\mapping\release\mapping.txt
+sha1=3ef125c537386a3f246e44a83f0f40a67fc63157
+appId=a0768ddf34
+
