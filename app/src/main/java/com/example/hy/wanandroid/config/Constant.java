@@ -12,7 +12,7 @@ import java.io.File;
 public class Constant {
 
     //Url
-    public final static String BASE_URL = "http://www.wanandroid.com/";
+    public final static String BASE_URL = "https://www.wanandroid.com/";
     public final static String BASE_APK_URL = "https://github.com/rain9155/WanAndroid/releases/download/";
 
     //HierarchyFragment
