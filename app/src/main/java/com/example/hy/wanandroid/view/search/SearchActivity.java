@@ -139,12 +139,14 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
         rvSearchRequest.setLayoutManager(mSearchRequestManager);
         rvSearchRequest.setAdapter(mSearchResquestAdapter);
         mSearchResquestAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+            if(CommonUtil.isEmptyList(mSearchResquestList)) return;
             mArticlePosition = position;
             mArticle = mSearchResquestList.get(position);
             ArticleBean articleBean = new ArticleBean(mArticle);
             ArticleActivity.startActivityForResult(SearchActivity.this, articleBean, false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mSearchResquestAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
+            if(CommonUtil.isEmptyList(mSearchResquestList)) return;
             mArticlePosition = position;
             mArticle =  mSearchResquestList.get(position);
             if(!User.getInstance().isLoginStatus()){
@@ -156,6 +158,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
             AnimUtil.scale(view, -1);
         });
         mSearchResquestAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            if(CommonUtil.isEmptyList(mSearchResquestList)) return false;
             Article article = mSearchResquestList.get(position);
             view.setOnTouchListener((v, event) -> {
                 if(event.getAction() == MotionEvent.ACTION_UP && isPress){
@@ -245,7 +248,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
         getMenuInflater().inflate(R.menu.search_tl_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.item_search);
         //得到SearchView
-        mSearchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        mSearchView = (SearchView)menuItem.getActionView();
         mSearchAutoComplete = mSearchView.findViewById(R.id.search_src_text);
         mSearchView.setMaxWidth(R.dimen.dp_400);//设置最大宽度
         mSearchView.setSubmitButtonEnabled(true);//设置是否显示搜索框展开时的提交按钮

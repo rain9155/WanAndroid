@@ -95,12 +95,14 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
         mProjectsAdapter.openLoadAnimation();
         rvProjectList.setAdapter(mProjectsAdapter);
         mProjectsAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+            if(CommonUtil.isEmptyList(mArticles)) return;
             mArticlePosition = position;
             mArticle = mArticles.get(position);
             ArticleBean articleBean = new ArticleBean(mArticle);
             ArticleActivity.startActicityForResultByFragment(mActivity, this, articleBean, false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mProjectsAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
+            if(CommonUtil.isEmptyList(mArticles)) return;
             mArticlePosition = position;
             mArticle =  mArticles.get(position);
             if(!User.getInstance().isLoginStatus()){
@@ -112,6 +114,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
             AnimUtil.scale(view, -1);
         });
         mProjectsAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            if(CommonUtil.isEmptyList(mArticles)) return false;
             Article article = mArticles.get(position);
             view.setOnTouchListener((v, event) -> {
                 if(event.getAction() == MotionEvent.ACTION_UP && isPress){

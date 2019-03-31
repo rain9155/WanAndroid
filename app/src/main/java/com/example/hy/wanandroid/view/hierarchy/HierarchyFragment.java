@@ -153,6 +153,7 @@ public class HierarchyFragment extends BaseLoadFragment<HierarchyPresenter> impl
      * @param position 一级分类id
      */
     private void starHierarchyActivity(int position) {
+        if(CommonUtil.isEmptyList(mFirstHierarchyList)) return;
         FirstHierarchy firstHierarchy = mFirstHierarchyList.get(position);
         if (firstHierarchy != null) {
             ArrayList<String> listName = new ArrayList<>(firstHierarchy.getChildren().size());

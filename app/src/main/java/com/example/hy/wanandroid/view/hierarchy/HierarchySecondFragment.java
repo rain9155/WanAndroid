@@ -101,12 +101,14 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
         rvHierarchySecondList.setLayoutManager(mLinearLayoutManager);
         rvHierarchySecondList.setAdapter(mArticlesAdapter);
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+            if(CommonUtil.isEmptyList(mArticleList)) return;
             mArticlePosition = position;
             mArticle = mArticleList.get(position);
             ArticleBean articleBean = new ArticleBean(mArticle);
             ArticleActivity.startActicityForResultByFragment(mActivity, this, articleBean, false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
+            if(CommonUtil.isEmptyList(mArticleList)) return;
             mArticlePosition = position;
             mArticle = mArticleList.get(position);
             if(!User.getInstance().isLoginStatus()) {
@@ -118,6 +120,7 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
             AnimUtil.scale(view, -1);
         });
         mArticlesAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            if(CommonUtil.isEmptyList(mArticleList)) return false;
             Article article = mArticleList.get(position);
             view.setOnTouchListener((v, event) -> {
                 if(event.getAction() == MotionEvent.ACTION_UP && isPress){
