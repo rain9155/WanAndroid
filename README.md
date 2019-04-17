@@ -77,11 +77,12 @@
 11、使用Fragment代理权限申请
 * [Android Fragment 的妙用 - 优雅地申请权限](https://blog.csdn.net/gdutxiaoxu/article/details/86498647)
 
-12、努力兼容Android版本
+12、努力兼容与适配Android版本
 * [Android 使用 Https问题解决（SSLHandshakeException）](http://www.mamicode.com/info-detail-1728871.html)
 * [Drawable 着色的后向兼容方案](https://www.race604.com/tint-drawable/)
 * [CardView在API 21以下的圆角效果处理](https://www.jianshu.com/p/07097b562acb)
 * [Android 6.0运行权限解析（高级篇）](https://www.jianshu.com/p/6a4dff744031)
+* [Android 7.0 行为变更 通过FileProvider在应用间共享文件吧](https://blog.csdn.net/lmj623565791/article/details/72859156)
 
 13、集成腾讯Bugly与LeakCanary，更容易找出bug与内存泄漏
 * 参考官方文档
