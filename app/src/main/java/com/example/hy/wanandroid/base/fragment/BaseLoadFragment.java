@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -13,6 +12,8 @@ import android.widget.ImageView;
 import com.example.hy.wanandroid.R;
 import com.example.commonlib.utils.AnimUtil;
 import com.example.hy.wanandroid.base.presenter.IPresenter;
+import com.example.loading.Loading;
+import com.example.loading.StatusView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,63 +36,80 @@ public abstract class BaseLoadFragment<T extends IPresenter> extends BaseMvpFrag
     private ImageView mIvReload;
     private ObjectAnimator mReloadAnimator;
     private int mCurrentState = NORMAL_STATE;
+    private StatusView mStatusView;
+    private Runnable mReloadTask;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         if(getView() == null) return;
-        mNormalView = getView().findViewById(R.id.normal_view);
-        if(mNormalView == null) throw new IllegalStateException("The subclass of BaseLoadFragment must contain a View it's id is named normal_view");
-        if(!(mNormalView.getParent() instanceof ViewGroup)) throw new IllegalStateException("mNormalView's ParentView should be a ViewGroup");
-        ViewGroup parent = (ViewGroup) mNormalView.getParent();
-        View.inflate(mActivity, R.layout.error_view, parent);
-        View.inflate(mActivity, R.layout.loaging_view, parent);
-        mErrorView = parent.findViewById(R.id.cl_reload);
-        mLoadingView = parent.findViewById(R.id.rl_loading);
-        mIvReload = mErrorView.findViewById(R.id.iv_reload);
+//        mNormalView = getView().findViewById(R.id.normal_view);
+//        if(mNormalView == null) throw new IllegalStateException("The subclass of BaseLoadFragment must contain a View it's id is named normal_view");
+//        if(!(mNormalView.getParent() instanceof ViewGroup)) throw new IllegalStateException("mNormalView's ParentView should be a ViewGroup");
+//        ViewGroup parent = (ViewGroup) mNormalView.getParent();
+//        View.inflate(mActivity, R.layout.error_view, parent);
+//        View.inflate(mActivity, R.layout.loading_view, parent);
+//        mErrorView = parent.findViewById(R.id.cl_reload);
+//        mLoadingView = parent.findViewById(R.id.rl_loading);
+//        mIvReload = mErrorView.findViewById(R.id.iv_reload);
+//
+//        mErrorView.setOnClickListener(v -> reLoad());
+//
+//        mNormalView.setVisibility(View.VISIBLE);
+//        mErrorView.setVisibility(View.INVISIBLE);
+//        mLoadingView.setVisibility(View.INVISIBLE);
 
-        mErrorView.setOnClickListener(v -> reLoad());
-
-        mNormalView.setVisibility(View.VISIBLE);
-        mErrorView.setVisibility(View.INVISIBLE);
-        mLoadingView.setVisibility(View.INVISIBLE);
+        mReloadTask = () -> reLoad();
+        mStatusView = Loading.beginBuildStatusView(mActivity)
+                .warp(getView())
+                .withReload(mReloadTask, R.id.cl_reload)
+                .create();
 
         super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
     public void showLoading() {
-        if(mCurrentState == LOADING_STATE) return;
-        hideCurrentViewByState();
-        mCurrentState = LOADING_STATE;
-        showCurrentViewByState();
+//        if(mCurrentState == LOADING_STATE) return;
+//        hideCurrentViewByState();
+//        mCurrentState = LOADING_STATE;
+//        showCurrentViewByState();
+        mStatusView.showLoading();
     }
 
     @Override
     public void showErrorView() {
-        if(mReloadAnimator != null) mReloadAnimator.cancel();
-        if(mCurrentState == ERROR_STATE) return;
-        hideCurrentViewByState();
-        mCurrentState = ERROR_STATE;
-        showCurrentViewByState();
+//        if(mReloadAnimator != null) mReloadAnimator.cancel();
+//        if(mCurrentState == ERROR_STATE) return;
+//        hideCurrentViewByState();
+//        mCurrentState = ERROR_STATE;
+//        showCurrentViewByState();
+        mStatusView.showError();
     }
 
     @Override
     public void showNormalView() {
-        if(mCurrentState == NORMAL_STATE) return;
-        hideCurrentViewByState();
-        mCurrentState = NORMAL_STATE;
-        showCurrentViewByState();
+//        if(mCurrentState == NORMAL_STATE) return;
+//        hideCurrentViewByState();
+//        mCurrentState = NORMAL_STATE;
+//        showCurrentViewByState();
+        mStatusView.showSuccess();
     }
 
     @Override
     public void reLoad() {
-        startReloadAnimator();
+        //startReloadAnimator();
     }
 
     @Override
     public void onStop() {
         if(mReloadAnimator != null) mReloadAnimator.cancel();
         super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        mReloadTask = null;
+        super.onDestroyView();
     }
 
     /**

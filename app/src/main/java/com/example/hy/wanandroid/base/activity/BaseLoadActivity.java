@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import com.example.hy.wanandroid.R;
 import com.example.commonlib.utils.AnimUtil;
 import com.example.hy.wanandroid.base.presenter.IPresenter;
+import com.example.loading.Loading;
+import com.example.loading.StatusView;
 
 import static com.example.hy.wanandroid.config.Constant.ERROR_STATE;
 import static com.example.hy.wanandroid.config.Constant.LOADING_STATE;
@@ -27,57 +29,68 @@ public abstract class BaseLoadActivity<T extends IPresenter> extends BaseMvpActi
     private ImageView mIvReload;
     private ObjectAnimator mReloadAnimator;
     private int mCurrentState = NORMAL_STATE;
+    private StatusView mStatusView;
+    private Runnable mReloadTask;
 
     @Override
     protected void initView() {
         super.initView();
-        mNormalView =  findViewById(R.id.normal_view);
-        if(mNormalView == null) throw new IllegalStateException("The subclass of BaseLoadActivity must contain a View it's id is named normal_view");
-        if(!(mNormalView.getParent() instanceof ViewGroup)) throw new IllegalStateException("mNormalView's ParentView should be a ViewGroup");
+//        mNormalView =  findViewById(R.id.normal_view);
+//        if(mNormalView == null) throw new IllegalStateException("The subclass of BaseLoadActivity must contain a View it's id is named normal_view");
+//        if(!(mNormalView.getParent() instanceof ViewGroup)) throw new IllegalStateException("mNormalView's ParentView should be a ViewGroup");
+//
+//        ViewGroup parent = (ViewGroup) mNormalView.getParent();
+//        View.inflate(this, R.layout.error_view, parent);//把错误布局加载进正常布局的父布局中
+//        View.inflate(this, R.layout.loaging_view, parent);//把加载布局加载进正常布局的父布局中
+//        mErrorView = parent.findViewById(R.id.cl_reload);//从父布局找到错误布局实例
+//        mLoadingView = parent.findViewById(R.id.rl_loading);//从父布局找到加载布局实例
+//        mIvReload = mErrorView.findViewById(R.id.iv_reload);
+//
+//        mErrorView.setOnClickListener(v -> reLoad());
+//
+//        //初始化View状态
+//        mNormalView.setVisibility(View.VISIBLE);
+//        mErrorView.setVisibility(View.INVISIBLE);
+//        mLoadingView.setVisibility(View.INVISIBLE);
 
-        ViewGroup parent = (ViewGroup) mNormalView.getParent();
-        View.inflate(this, R.layout.error_view, parent);//把错误布局加载进正常布局的父布局中
-        View.inflate(this, R.layout.loaging_view, parent);//把加载布局加载进正常布局的父布局中
-        mErrorView = parent.findViewById(R.id.cl_reload);//从父布局找到错误布局实例
-        mLoadingView = parent.findViewById(R.id.rl_loading);//从父布局找到加载布局实例
-        mIvReload = mErrorView.findViewById(R.id.iv_reload);
-
-        mErrorView.setOnClickListener(v -> reLoad());
-
-        //初始化View状态
-        mNormalView.setVisibility(View.VISIBLE);
-        mErrorView.setVisibility(View.INVISIBLE);
-        mLoadingView.setVisibility(View.INVISIBLE);
+        mReloadTask = () -> reLoad();
+        mStatusView = Loading.beginBuildStatusView(this)
+                .warp(this)
+                .withReload(mReloadTask, R.id.cl_reload)
+                .create();
     }
 
     @Override
     public void showLoading() {
-        if(mCurrentState == LOADING_STATE) return;
-        hideCurrentViewByState();
-        mCurrentState = LOADING_STATE;
-        showCurrentViewByState();
+//        if(mCurrentState == LOADING_STATE) return;
+//        hideCurrentViewByState();
+//        mCurrentState = LOADING_STATE;
+//        showCurrentViewByState();
+        mStatusView.showLoading();
     }
 
     @Override
     public void showErrorView() {
-        if(mReloadAnimator != null) mReloadAnimator.cancel();
-        if(mCurrentState == ERROR_STATE) return;
-        hideCurrentViewByState();
-        mCurrentState = ERROR_STATE;
-        showCurrentViewByState();
+//        if(mReloadAnimator != null) mReloadAnimator.cancel();
+//        if(mCurrentState == ERROR_STATE) return;
+//        hideCurrentViewByState();
+//        mCurrentState = ERROR_STATE;
+//        showCurrentViewByState();
+        mStatusView.showError();
     }
 
     @Override
     public void showNormalView() {
-        if(mCurrentState == NORMAL_STATE) return;
-        hideCurrentViewByState();
-        mCurrentState = NORMAL_STATE;
-        showCurrentViewByState();
+//        if(mCurrentState == NORMAL_STATE) return;
+//        hideCurrentViewByState();
+//        mCurrentState = NORMAL_STATE;
+//        showCurrentViewByState();
+        mStatusView.showSuccess();
     }
 
     @Override
     public void reLoad() {
-        startReloadAnimator();
+        //startReloadAnimator();
         super.reLoad();
     }
 
@@ -85,6 +98,12 @@ public abstract class BaseLoadActivity<T extends IPresenter> extends BaseMvpActi
     protected void onStop() {
         if(mReloadAnimator != null) mReloadAnimator.cancel();
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mReloadTask = null;
+        super.onDestroy();
     }
 
     /**

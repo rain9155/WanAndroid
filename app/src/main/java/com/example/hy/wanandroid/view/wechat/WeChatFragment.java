@@ -8,6 +8,7 @@ import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
+import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
 import com.example.hy.wanandroid.contract.wechat.WeChatContract;
 import com.example.hy.wanandroid.di.module.fragment.WeChatFragmentModule;
 import com.example.hy.wanandroid.model.network.entity.Tab;
@@ -30,7 +31,7 @@ import butterknife.BindView;
  * 微信公众号tab
  * Created by 陈健宇 at 2018/12/19
  */
-public class WeChatFragment extends BaseLoadFragment<WeChatPresenter> implements WeChatContract.View {
+public class WeChatFragment extends BaseMvpFragment<WeChatPresenter> implements WeChatContract.View {
 
     @BindView(R.id.tv_common_title)
     TextView tvCommonTitle;

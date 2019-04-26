@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
+import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
 import com.example.hy.wanandroid.contract.project.ProjectContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
 import com.example.hy.wanandroid.model.network.entity.Tab;
@@ -30,7 +31,7 @@ import butterknife.BindView;
  * 项目tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class ProjectFragment extends BaseLoadFragment<ProjectPresenter> implements ProjectContract.View {
+public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implements ProjectContract.View {
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;

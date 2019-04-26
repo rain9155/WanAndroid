@@ -30,8 +30,7 @@ public abstract class AbstractLazyLoadFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(isFragmentVisible(this) && this.isAdded()){
-            if ((this.getParentFragment() != null && isFragmentVisible(this.getParentFragment()))
-                    || this.getParentFragment() == null) {
+            if (this.getParentFragment() == null || isFragmentVisible(this.getParentFragment())) {
                 onLazyLoadData();
                 isLoadData = true;
                 if(isFirstVisible)

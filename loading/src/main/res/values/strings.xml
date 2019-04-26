@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">loading</string>
+    <string name="error_reload">出错啦！点击空白处刷新</string>
+    <string name="loading">加载中...</string>
+    <string name="empty">这里啥都没有！</string>
 </resources>

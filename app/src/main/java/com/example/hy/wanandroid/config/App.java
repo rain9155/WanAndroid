@@ -2,13 +2,12 @@ package com.example.hy.wanandroid.config;
 
 import android.content.ComponentCallbacks2;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.di.component.DaggerAppComponent;
 import com.example.hy.wanandroid.di.module.AppModule;
 import com.example.commonlib.utils.CommonUtil;
+import com.example.loading.Loading;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -47,6 +46,10 @@ public class App extends LitePalApplication {
         initLitepal();
         initBugly();
         initLeakCanary();
+        Loading.beginBuildStatusView(this)
+                .addErrorView(R.layout.error_view)
+                .addLoadingView(R.layout.loading_view)
+                .commit();
     }
 
     @Override

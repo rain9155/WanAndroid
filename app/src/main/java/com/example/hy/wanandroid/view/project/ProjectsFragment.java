@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ProjectsAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
+import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
 import com.example.hy.wanandroid.bean.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
@@ -40,7 +41,7 @@ import static android.app.Activity.RESULT_OK;
  * 项目详情列表Fragment
  * Created by 陈健宇 at 2018/10/29
  */
-public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implements ProjectsContract.View {
+public class ProjectsFragment extends BaseMvpFragment<ProjectsPresenter> implements ProjectsContract.View {
 
     @BindView(R.id.rv_projects)
     RecyclerView rvProjectList;
