@@ -75,8 +75,6 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
     RecyclerView rvSearchRequest;
     @BindView(R.id.normal_view)
     SmartRefreshLayout normalView;
-    @BindView(R.id.tv_no_data)
-    TextView tvNoData;
     @BindView(R.id.rl_container)
     RelativeLayout rlContainer;
 
@@ -354,12 +352,10 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
 
     @Override
     public void showEmptyLayout() {
-        tvNoData.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideEmptyLayout() {
-        tvNoData.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -406,6 +402,11 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
     }
 
     @Override
+    public void hideHotHintLayout() {
+        tvHotHint.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
     public void collectArticleSuccess() {
         showToast(getString(R.string.common_collection_success));
         mSearchResquestList.get(mArticlePosition).setCollect(true);
@@ -421,7 +422,6 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
 
     @Override
     public void reLoad() {
-        super.reLoad();
         mPresenter.loadSearchResquest(mSearchView.getQuery().toString(), 0);
         mPresenter.loadHotkey();
     }
@@ -432,11 +432,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
         super.showLoading();
     }
 
-    @Override
-    public void showErrorView() {
-        showSearchRequestLayout();
-        super.showErrorView();
-    }
+
 
     @Override
     public void unableRefresh() {

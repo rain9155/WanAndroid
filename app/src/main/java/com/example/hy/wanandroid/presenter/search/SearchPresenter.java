@@ -2,7 +2,7 @@ package com.example.hy.wanandroid.presenter.search;
 
 import android.text.TextUtils;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.entity.Collection;
@@ -21,7 +21,7 @@ import javax.inject.Inject;
 /**
  * Created by 陈健宇 at 2018/11/2
  */
-public class SearchPresenter extends BasePresenter<SearchContract.View> implements SearchContract.Presenter {
+public class SearchPresenter extends BaseMvpPresenter<SearchContract.View> implements SearchContract.Presenter {
 
 
     @Inject
@@ -39,8 +39,12 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
                     @Override
                     public void onNext(List<HotKey> hotKeys) {
                         super.onNext(hotKeys);
-                        if(CommonUtil.isEmptyList(hotKeys)) mView.showHotHintLayout();
-                        else  mView.showHotKey(hotKeys);
+                        if(CommonUtil.isEmptyList(hotKeys))
+                            mView.showHotHintLayout();
+                        else{
+                            mView.hideHotHintLayout();
+                            mView.showHotKey(hotKeys);
+                        }
                     }
 
                     @Override
@@ -66,7 +70,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
                         if(articles.getDatas().size() != 0){
                             mView.showSearchResquest(articles.getDatas());
                         }else {
-                            mView.showEmptyLayout();
+                            mView.showEmptyView();
                         }
                         mView.hideHistoryHotLayout();
                         mView.showSearchRequestLayout();

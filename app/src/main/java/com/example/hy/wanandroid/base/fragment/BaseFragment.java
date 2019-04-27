@@ -12,6 +12,8 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.commonlib.utils.ToastUtil;
 import com.example.hy.wanandroid.config.App;
+import com.example.loading.Loading;
+import com.example.loading.StatusView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,10 +45,15 @@ public abstract class BaseFragment extends AbstractLazyLoadFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mUnbinder = ButterKnife.bind(this, view);
         inject();
         initView();
-        return view;
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -63,17 +70,12 @@ public abstract class BaseFragment extends AbstractLazyLoadFragment
     }
 
     @Override
-    public void setStatusBarColor(boolean isSet){
-
-    }
-
-    @Override
     public void showErrorView() {
 
     }
 
     @Override
-    public void showErrorMes() {
+    public void showEmptyView() {
 
     }
 
@@ -84,6 +86,22 @@ public abstract class BaseFragment extends AbstractLazyLoadFragment
 
     @Override
     public void showLoading() {
+
+    }
+
+    @Override
+    public void showNormalView() {
+
+    }
+
+    @Override
+    public void setStatusBarColor(boolean isSet){
+
+    }
+
+
+    @Override
+    public void showErrorMes() {
 
     }
 
@@ -99,11 +117,6 @@ public abstract class BaseFragment extends AbstractLazyLoadFragment
     @Override
     public void showToast(Activity activity, String toast) {
         ToastUtil.toastInBottom(activity, toast);
-    }
-
-    @Override
-    public void showNormalView() {
-
     }
 
     @Override

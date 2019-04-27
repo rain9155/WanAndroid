@@ -1,6 +1,6 @@
 package com.example.hy.wanandroid.contract.mine;
 
-import com.example.hy.wanandroid.base.presenter.IPresenter;
+import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
 
 /**
@@ -18,7 +18,7 @@ public interface SettingsContract {
         void showChangeAnimation();//显示一个夜间模式切换动画
     }
 
-    interface Presenter extends IPresenter<View>{
+    interface Presenter extends BasePresenter<View> {
         void setNoImageState(boolean isNight);
         void setAutoCacheState(boolean isNight);
         void setNightModeState(boolean isNight);

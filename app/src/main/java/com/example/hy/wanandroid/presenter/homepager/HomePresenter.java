@@ -1,6 +1,6 @@
 package com.example.hy.wanandroid.presenter.homepager;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
@@ -24,7 +24,7 @@ import javax.inject.Inject;
  * 首页的Presenter
  * Created by 陈健宇 at 2018/10/23
  */
-public class HomePresenter extends BasePresenter<HomeContract.View> implements HomeContract.Presenter{
+public class HomePresenter extends BaseMvpPresenter<HomeContract.View> implements HomeContract.Presenter{
 
 
     @Inject
@@ -34,6 +34,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
     @Override
     public void subscribleEvent() {
+        super.subscribleEvent();
         addSubcriber(
                 RxBus.getInstance().toObservable(ToppingEvent.class)
                         .subscribe(toppingEvent -> mView.topping())

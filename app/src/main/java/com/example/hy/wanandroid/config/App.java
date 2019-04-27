@@ -46,9 +46,10 @@ public class App extends LitePalApplication {
         initLitepal();
         initBugly();
         initLeakCanary();
-        Loading.beginBuildStatusView(this)
+        Loading.beginBuildStatusView()
                 .addErrorView(R.layout.error_view)
                 .addLoadingView(R.layout.loading_view)
+                .addEmptyView(R.layout.empty_view)
                 .commit();
     }
 

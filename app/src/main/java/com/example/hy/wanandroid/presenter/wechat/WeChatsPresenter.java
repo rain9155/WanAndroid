@@ -1,8 +1,7 @@
 package com.example.hy.wanandroid.presenter.wechat;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.config.RxBus;
-import com.example.hy.wanandroid.contract.project.ProjectsContract;
 import com.example.hy.wanandroid.contract.wechat.WeChatsContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.CollectionEvent;
@@ -22,7 +21,7 @@ import javax.inject.Inject;
  * 详细项目分类的Presenter
  * Created by 陈健宇 at 2018/10/30
  */
-public class WeChatsPresenter extends BasePresenter<WeChatsContract.View> implements WeChatsContract.Presenter {
+public class WeChatsPresenter extends BaseMvpPresenter<WeChatsContract.View> implements WeChatsContract.Presenter {
 
 
     @Inject
@@ -32,7 +31,6 @@ public class WeChatsPresenter extends BasePresenter<WeChatsContract.View> implem
 
     @Override
     public void subscribleEvent() {
-        super.subscribleEvent();
         addSubcriber(
                 RxBus.getInstance().toObservable(ToppingEvent.class)
                 .subscribe(toppingEvent -> mView.topping())

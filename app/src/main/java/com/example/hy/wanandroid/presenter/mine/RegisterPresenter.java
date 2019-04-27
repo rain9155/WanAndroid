@@ -3,7 +3,7 @@ package com.example.hy.wanandroid.presenter.mine;
 import android.text.TextUtils;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.contract.mine.RegisterContract;
 import com.example.hy.wanandroid.model.DataModel;
@@ -17,7 +17,7 @@ import javax.inject.Inject;
  * Register的Presenter
  * Created by 陈健宇 at 2018/11/19
  */
-public class RegisterPresenter extends BasePresenter<RegisterContract.View> implements RegisterContract.Presenter {
+public class RegisterPresenter extends BaseMvpPresenter<RegisterContract.View> implements RegisterContract.Presenter {
 
     @Inject
     public RegisterPresenter(DataModel dataModel) {

@@ -1,6 +1,6 @@
 package com.example.hy.wanandroid.presenter.hierarchy;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchySecondContract;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
@@ -18,7 +18,7 @@ import javax.inject.Inject;
 /**
  * Created by 陈健宇 at 2018/10/29
  */
-public class HierarchySecondPresenter extends BasePresenter<HierarchySecondContract.View> implements HierarchySecondContract.Presenter {
+public class HierarchySecondPresenter extends BaseMvpPresenter<HierarchySecondContract.View> implements HierarchySecondContract.Presenter {
 
     @Inject
     public HierarchySecondPresenter(DataModel dataModel) {

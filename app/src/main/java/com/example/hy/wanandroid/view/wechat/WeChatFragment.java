@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.commonlib.utils.CommonUtil;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
@@ -31,7 +32,7 @@ import butterknife.BindView;
  * 微信公众号tab
  * Created by 陈健宇 at 2018/12/19
  */
-public class WeChatFragment extends BaseMvpFragment<WeChatPresenter> implements WeChatContract.View {
+public class WeChatFragment extends BaseLoadFragment<WeChatPresenter> implements WeChatContract.View {
 
     @BindView(R.id.tv_common_title)
     TextView tvCommonTitle;
@@ -81,6 +82,7 @@ public class WeChatFragment extends BaseMvpFragment<WeChatPresenter> implements 
 
     @Override
     protected void loadData() {
+        mPresenter.subscribleEvent();
         mPresenter.loadWeChatTabs();
     }
 
@@ -91,6 +93,10 @@ public class WeChatFragment extends BaseMvpFragment<WeChatPresenter> implements 
 
     @Override
     public void showWeChatTabs(List<Tab> tabs) {
+        if(!CommonUtil.isEmptyList(mIds)) mIds.clear();
+        if(!CommonUtil.isEmptyList(mTitles)) mTitles.clear();
+        if(!CommonUtil.isEmptyList(mFragments)) mFragments.clear();
+        vpWeChats.notifyAll();
         for (Tab tab : tabs) {
             mIds.add(tab.getId());
             mTitles.add(tab.getName());

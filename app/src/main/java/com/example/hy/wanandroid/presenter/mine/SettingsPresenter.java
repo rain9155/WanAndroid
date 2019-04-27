@@ -3,7 +3,7 @@ package com.example.hy.wanandroid.presenter.mine;
 import android.content.res.Resources;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
@@ -29,7 +29,7 @@ import io.reactivex.functions.Predicate;
  * Settings的Presenter
  * Created by 陈健宇 at 2018/11/26
  */
-public class SettingsPresenter extends BasePresenter<SettingsContract.View> implements SettingsContract.Presenter{
+public class SettingsPresenter extends BaseMvpPresenter<SettingsContract.View> implements SettingsContract.Presenter{
 
     private boolean isUpdata = false;
 

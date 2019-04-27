@@ -42,7 +42,7 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
 
     @BindView(R.id.rv_hierarchy)
     RecyclerView rvHierarchySecondList;
-    @BindView(R.id.normal_view)
+    @BindView(R.id.srl_hierarchy_second)
     SmartRefreshLayout srlHierarchyList;
 
     @Inject

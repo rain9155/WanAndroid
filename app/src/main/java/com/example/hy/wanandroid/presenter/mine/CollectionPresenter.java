@@ -1,6 +1,6 @@
 package com.example.hy.wanandroid.presenter.mine;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
@@ -18,7 +18,7 @@ import javax.inject.Inject;
  * Collection的Presenter
  * Created by 陈健宇 at 2018/11/22
  */
-public class CollectionPresenter extends BasePresenter<CollectionContract.View> implements CollectionContract.Presenter{
+public class CollectionPresenter extends BaseMvpPresenter<CollectionContract.View> implements CollectionContract.Presenter{
 
     @Inject
     public CollectionPresenter(DataModel model) {

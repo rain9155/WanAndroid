@@ -18,18 +18,18 @@ public class StatusView extends RelativeLayout {
 
     private static final String TAG = "StatusView";
 
-    public static final int STATUS_LOADING = 0X00;
-    public static final int STATUS_SUCCESS = 0X01;
+    public static final int STATUS_SUCCESS = 0X00;
+    public static final int STATUS_LOADING = 0X01;
     public static final int STATUS_ERROR = 0X02;
     public static final int STATUS_EMPTY = 0x03;
+    private static int mCurrentStatus = STATUS_SUCCESS;
 
     protected View loadingView;
     protected View contentView;
     protected View errorView;
     protected View emptyView;
-    private View mShowView;
-    private View mHideView;
-    private static int mCurrentStatus = STATUS_SUCCESS;
+    protected View.OnClickListener reloadClick;
+    protected View wrappedView;
     private static final RelativeLayout.LayoutParams DEFAULT_LP = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
 
     public StatusView(Context context) {
@@ -47,6 +47,7 @@ public class StatusView extends RelativeLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        if(reloadClick != null) reloadClick = null;
         clear(contentView, loadingView, emptyView, errorView);
     }
 
@@ -64,6 +65,10 @@ public class StatusView extends RelativeLayout {
 
     public void showEmpty(){
         showView(STATUS_EMPTY);
+    }
+
+    public View getWrappedView() {
+        return wrappedView;
     }
 
     /**
@@ -84,56 +89,13 @@ public class StatusView extends RelativeLayout {
      */
     private void changeViewByStatus(int status){
         if(mCurrentStatus == status) return;
-        getShowView(status);
-        getHideView(mCurrentStatus);
-        AnimUtil.hideByAlpha(mHideView);
-        AnimUtil.showByAlpha(mShowView);
+        if(loadingView != null) if(status == STATUS_LOADING ) {loadingView.setVisibility(VISIBLE); loadingView.bringToFront();} else loadingView.setVisibility(GONE);
+        if(errorView != null) if(status == STATUS_ERROR) {errorView.setVisibility(VISIBLE);loadingView.bringToFront();} else errorView.setVisibility(GONE);
+        if(emptyView != null) if(status == STATUS_EMPTY) {emptyView.setVisibility(VISIBLE);emptyView.bringToFront();} else emptyView.setVisibility(GONE);
+        if(status == STATUS_SUCCESS) {contentView.setVisibility(VISIBLE); contentView.bringToFront();} else contentView.setVisibility(GONE);
         mCurrentStatus = status;
     }
 
-    /**
-     * 获取将要隐藏的View视图
-     * @param status 将要隐藏的View视图的status
-     */
-    private void getHideView(int status) {
-        switch (status) {
-            case STATUS_SUCCESS:
-                mHideView = contentView;
-                break;
-            case STATUS_LOADING:
-                mHideView = loadingView;
-                break;
-            case STATUS_ERROR:
-                mHideView = errorView;
-                break;
-            case STATUS_EMPTY:
-                mHideView = emptyView;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * 获取将要显示的View视图
-     * @param status 将要显示的View视图的status
-     */
-    private void getShowView(int status) {
-        switch (status) {
-            case STATUS_SUCCESS:
-                mShowView = contentView;
-                break;
-            case STATUS_LOADING:
-                mShowView = loadingView;
-                break;
-            case STATUS_ERROR:
-                mShowView = errorView;
-                break;
-            case STATUS_EMPTY:
-                mShowView = emptyView;
-            default:
-                break;
-        }
-    }
 
     /**
      * 把StatusView中的View全部移除
@@ -182,6 +144,11 @@ public class StatusView extends RelativeLayout {
             return this;
         }
 
+        public Builder setReloadClick(View.OnClickListener click){
+            mStatusView.reloadClick = click;
+            return this;
+        }
+
         /**
          * 把emptyView添加到StatusView中，
          */
@@ -196,6 +163,7 @@ public class StatusView extends RelativeLayout {
          * 把contentView添加到StatusView中，并且把StatusView添加到contentView的父布局
          */
         public Builder setContentView(View warppedView){
+            mStatusView.wrappedView = warppedView;
             //Loading中已经做了包装，这里一定是ViewGroup
             ViewGroup warpped  = (ViewGroup)warppedView;
             //从warpped(warrped是Farmelayout, 里面包裹着Activity或Fragment或View)中第一个View，是加载成功后显示的View

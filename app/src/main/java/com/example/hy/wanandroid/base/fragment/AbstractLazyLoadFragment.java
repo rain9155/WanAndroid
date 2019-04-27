@@ -19,6 +19,7 @@ public abstract class AbstractLazyLoadFragment extends Fragment {
     private boolean isViewCreated = false;//布局是否被创建
     private boolean isLoadData = false;//数据是否加载
     private boolean isFirstVisible = true;//是否第一次可见
+    abstract protected void onLazyLoadData();
     private String TAG = "baselazy";
 
     @Override
@@ -71,8 +72,6 @@ public abstract class AbstractLazyLoadFragment extends Fragment {
             isFirstVisible = false;
         }
     }
-
-    protected void onLazyLoadData(){}
 
     @Override
     public void onDestroyView() {

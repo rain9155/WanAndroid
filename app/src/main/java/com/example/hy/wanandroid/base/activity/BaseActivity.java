@@ -2,21 +2,20 @@ package com.example.hy.wanandroid.base.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.presenter.IPresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.hy.wanandroid.component.NetWorkChangeReceiver;
 import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.commonlib.utils.ToastUtil;
+import com.example.hy.wanandroid.event.ReLoadEvent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -85,11 +84,16 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     @Override
     public void showTipsView(boolean isConnection) {
-        if (!isEnableTip) return;
-        if(mTipView == null) mTipView = new TextView(this);
+
+        if (!isEnableTip)
+            return;
+        if(mTipView == null)
+            mTipView = new TextView(this);
+
         if (isConnection){
-            if(mTipView.getParent() != null) ((ViewGroup)getWindow().getDecorView()).removeView(mTipView);
-            reLoad();
+            if(mTipView.getParent() != null)
+                ((ViewGroup)getWindow().getDecorView()).removeView(mTipView);
+            RxBus.getInstance().post(new ReLoadEvent());
         }
         else{
             if(mTipView.getParent() != null) return;
@@ -106,13 +110,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         return ((App)getApplication()).getAppComponent();
     }
 
+
     @Override
     public void showErrorView() {
-
-    }
-
-    @Override
-    public void showErrorMes() {
 
     }
 
@@ -123,6 +123,21 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     @Override
     public void showLoading() {
+
+    }
+
+    @Override
+    public void showEmptyView() {
+
+    }
+
+    @Override
+    public void showNormalView() {
+
+    }
+
+    @Override
+    public void showErrorMes() {
 
     }
 
@@ -139,11 +154,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     public void showToast(String toast) {
         ToastUtil.toastInBottom(App.getContext(), toast);
-    }
-
-    @Override
-    public void showNormalView() {
-
     }
 
     @Override

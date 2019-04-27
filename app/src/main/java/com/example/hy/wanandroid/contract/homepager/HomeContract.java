@@ -1,16 +1,11 @@
 package com.example.hy.wanandroid.contract.homepager;
 
-import com.example.hy.wanandroid.base.presenter.IPresenter;
+import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.Article;
-import com.example.hy.wanandroid.model.network.entity.Articles;
 import com.example.hy.wanandroid.model.network.entity.BannerData;
-import com.example.hy.wanandroid.model.network.entity.Collection;
 
 import java.util.List;
-
-import io.reactivex.Observable;
 
 /**
  * Created by 陈健宇 at 2018/10/23
@@ -29,7 +24,7 @@ public interface HomeContract {
         void autoRefresh();//自动刷新
     }
 
-    interface Presenter extends IPresenter<HomeContract.View> {
+    interface Presenter extends BasePresenter<View> {
         void loadBannerDatas();//加载首页banner数据
         void loadArticles(int pageNum);//加载首页文章数据
         void loadMoreArticles(int pageNum);//加载更多首页文章数据

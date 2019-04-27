@@ -1,11 +1,7 @@
 package com.example.hy.wanandroid.contract.homepager;
 
-import com.example.hy.wanandroid.base.presenter.IPresenter;
+import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.Collection;
-
-import io.reactivex.Observable;
 
 /**
  * 文章详情的Contract
@@ -19,7 +15,7 @@ public interface ArticleContract {
         void collect();
     }
 
-    interface Presenter extends IPresenter<View>{
+    interface Presenter extends BasePresenter<View> {
         void collectArticle(int id);//收藏文章
         void unCollectArticle(int id);//取消收藏
     }

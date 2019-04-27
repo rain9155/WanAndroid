@@ -1,8 +1,7 @@
 package com.example.hy.wanandroid.contract.wechat;
 
-import com.example.hy.wanandroid.base.presenter.IPresenter;
+import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
-import com.example.hy.wanandroid.contract.project.ProjectsContract;
 import com.example.hy.wanandroid.model.network.entity.Article;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public interface WeChatsContract {
         void autoRefresh();//自动刷新
     }
 
-    interface Presenter extends IPresenter<View> {
+    interface Presenter extends BasePresenter<View> {
         void loadWeChats(int pageNum, int id);//加载项目列表
         void loadMoreMoreWeChats(int pageNum, int id);//加载更多项目列表
         void collectArticle(int id);//收藏文章

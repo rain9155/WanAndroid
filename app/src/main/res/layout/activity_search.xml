@@ -6,7 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/common_toolbal" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/common_toolbal" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <RelativeLayout
         android:id="@+id/rl_container"
@@ -22,22 +29,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_search_request"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:scrollbars="vertical">
 
             </androidx.recyclerview.widget.RecyclerView>
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-        <TextView
-            android:id="@+id/tv_no_data"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:text="@string/searchActivity_no_data"
-            android:textColor="@color/secondaryText"
-            android:textSize="@dimen/dp_20"
-            android:gravity="center"/>
 
     </RelativeLayout>
 

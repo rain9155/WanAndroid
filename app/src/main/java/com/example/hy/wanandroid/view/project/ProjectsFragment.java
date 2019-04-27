@@ -41,11 +41,11 @@ import static android.app.Activity.RESULT_OK;
  * 项目详情列表Fragment
  * Created by 陈健宇 at 2018/10/29
  */
-public class ProjectsFragment extends BaseMvpFragment<ProjectsPresenter> implements ProjectsContract.View {
+public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implements ProjectsContract.View {
 
     @BindView(R.id.rv_projects)
     RecyclerView rvProjectList;
-    @BindView(R.id.normal_view)
+    @BindView(R.id.srl_projects)
     SmartRefreshLayout srlProjects;
 
     @Inject

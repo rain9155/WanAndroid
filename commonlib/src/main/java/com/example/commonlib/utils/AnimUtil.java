@@ -35,7 +35,7 @@ public class AnimUtil{
         int shortAnimTime = 200;
         view.animate().alpha(0.0F).setDuration((long)shortAnimTime).setListener(new AnimatorListenerAdapter() {
             public void onAnimationEnd(Animator animation) {
-                view.setVisibility(View.INVISIBLE);
+                view.setVisibility(View.GONE);
             }
         }).start();
     }

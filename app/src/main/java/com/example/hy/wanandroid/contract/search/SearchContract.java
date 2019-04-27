@@ -1,16 +1,11 @@
 package com.example.hy.wanandroid.contract.search;
 
-import com.example.hy.wanandroid.base.presenter.IPresenter;
+import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.entity.Article;
-import com.example.hy.wanandroid.model.network.entity.Articles;
-import com.example.hy.wanandroid.model.network.entity.Collection;
 import com.example.hy.wanandroid.model.network.entity.HotKey;
 
 import java.util.List;
-
-import io.reactivex.Observable;
 
 /**
  * 搜索的Contract
@@ -28,6 +23,7 @@ public interface SearchContract {
         void showHistoryHintLayout();//显示搜索提示布局
         void hideHistoryHintLayout();//隐藏搜索提示布局
         void showHotHintLayout();//显示热词提示布局
+        void hideHotHintLayout();//隐藏热词提示布局
         void showSearchResquest(List<Article> searchRequestList);//显示搜索请求
         void showSearchMoreResquest(List<Article> searchRequestList);//显示更多搜索请求
         void showHistoryHotLayout();//显示搜索热词布局
@@ -41,7 +37,7 @@ public interface SearchContract {
         void collect();
     }
 
-    interface Presenter extends IPresenter<View>{
+    interface Presenter extends BasePresenter<View> {
         void loadHotkey();//加载搜索热词
         void loadSearchResquest(String key, int pageNum);//加载搜索请求
         void loadSearchMoreResquest(String key, int pageNum);//加载更多搜索请求

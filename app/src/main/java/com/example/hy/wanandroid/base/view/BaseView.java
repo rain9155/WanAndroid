@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 /**
- * View接口
+ * 通用View接口
  * Created by 陈健宇 at 2018/10/21
  */
 public interface BaseView {
@@ -12,16 +12,20 @@ public interface BaseView {
     //显示加载错误布局
     void showErrorView();
 
-    //显示错误信息
-    void showErrorMes();
-
     //重新加载
     void reLoad();
 
     //显示加载中布局
     void showLoading();
 
+    //显示空布局
+    void showEmptyView();
+
+    //显示内容布局
     void showNormalView();
+
+    //显示错误信息
+    void showErrorMes();
 
     //显示dialog
     void showDialog();

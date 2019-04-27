@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.commonlib.utils.CommonUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
@@ -31,7 +32,7 @@ import butterknife.BindView;
  * 项目tab
  * Created by 陈健宇 at 2018/10/23
  */
-public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implements ProjectContract.View {
+public class ProjectFragment extends BaseLoadFragment<ProjectPresenter> implements ProjectContract.View {
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
@@ -88,11 +89,16 @@ public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implement
 
     @Override
     protected void loadData() {
+        mPresenter.subscribleEvent();
         mPresenter.loadProjectList();
     }
 
     @Override
     public void showProjectList(List<Tab> projectList) {
+        if(!CommonUtil.isEmptyList(mIds)) mIds.clear();
+        if(!CommonUtil.isEmptyList(mTitles)) mTitles.clear();
+        if(!CommonUtil.isEmptyList(mFragments)) mFragments.clear();
+        vpProject.notifyAll();
         for (Tab project : projectList) {
             mIds.add(project.getId());
             mTitles.add(project.getName());
@@ -108,7 +114,6 @@ public class ProjectFragment extends BaseMvpFragment<ProjectPresenter> implement
 
     @Override
     public void reLoad() {
-        super.reLoad();
         mPresenter.loadProjectList();
     }
 

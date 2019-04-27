@@ -1,6 +1,6 @@
 package com.example.hy.wanandroid.contract;
 
-import com.example.hy.wanandroid.base.presenter.IPresenter;
+import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
 
 /**
@@ -17,7 +17,7 @@ public interface MainContract {
         void installApk();
     }
 
-    interface Presenter extends IPresenter<MainContract.View>{
+    interface Presenter extends BasePresenter<View> {
         void setCurrentItem(int position);
         int getCurrentItem();
         void checkVersion(String currentVersion);

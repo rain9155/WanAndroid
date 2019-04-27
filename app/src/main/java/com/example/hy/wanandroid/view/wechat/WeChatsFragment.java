@@ -11,6 +11,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.adapter.WeChatAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
+import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
 import com.example.hy.wanandroid.bean.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
@@ -45,7 +46,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
 
     @BindView(R.id.rv_wechats)
     RecyclerView rvWechats;
-    @BindView(R.id.normal_view)
+    @BindView(R.id.srl_wechats)
     SmartRefreshLayout srlWeChats;
 
     @Inject
