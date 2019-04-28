@@ -3,12 +3,9 @@ package com.example.loading;
 import android.content.Context;
 import android.os.Looper;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-
-import com.example.commonlib.utils.AnimUtil;
 
 /**
  * 一种可以根据状态切换布局视图的View

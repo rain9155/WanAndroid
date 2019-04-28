@@ -27,7 +27,7 @@ public class Loading {
        mStatusViews.put(StatusView.STATUS_EMPTY, -1);
     }
 
-    public static Loading getInstance(){
+    private static Loading getInstance(){
         if(sintance == null){
             Loading loading;
             synchronized (Loading.class){
@@ -89,11 +89,6 @@ public class Loading {
             return this;
         }
 
-        private void removeParent(ViewParent parent, View removeView) {
-            if(parent != null)
-                ((ViewGroup)parent).removeView(removeView);
-        }
-
         /**
          * 取出Activity中的包裹着contentView的ViewGroup
          */
@@ -149,10 +144,9 @@ public class Loading {
          */
         public StatusView create(){
 
-            if(mWarppedView == null) throw new NullPointerException("must warp Activity or Fragment or View");
+            verify();
 
             StatusView.Builder builder = new StatusView.Builder(mContext);
-
             builder.setContentView(mWarppedView);
 
             if((mLoadingView = getView(mLoadingViewId, StatusView.STATUS_LOADING)) != null){
@@ -177,6 +171,16 @@ public class Loading {
             }
 
             return builder.create();
+        }
+
+        private void verify() {
+            if(mWarppedView == null) throw new NullPointerException("must warp Activity or Fragment or View");
+            if(mInflater == null) throw new NullPointerException("can't call Loading.beginBuildStatusView() before create()");
+        }
+
+        private void removeParent(ViewParent parent, View removeView) {
+            if(parent != null)
+                ((ViewGroup)parent).removeView(removeView);
         }
 
         private View getView(int builderStatus, int cacheStatus){

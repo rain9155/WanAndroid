@@ -82,7 +82,6 @@ public class WeChatFragment extends BaseLoadFragment<WeChatPresenter> implements
 
     @Override
     protected void loadData() {
-        mPresenter.subscribleEvent();
         mPresenter.loadWeChatTabs();
     }
 
@@ -93,10 +92,6 @@ public class WeChatFragment extends BaseLoadFragment<WeChatPresenter> implements
 
     @Override
     public void showWeChatTabs(List<Tab> tabs) {
-        if(!CommonUtil.isEmptyList(mIds)) mIds.clear();
-        if(!CommonUtil.isEmptyList(mTitles)) mTitles.clear();
-        if(!CommonUtil.isEmptyList(mFragments)) mFragments.clear();
-        vpWeChats.notifyAll();
         for (Tab tab : tabs) {
             mIds.add(tab.getId());
             mTitles.add(tab.getName());

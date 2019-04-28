@@ -2,6 +2,8 @@ package com.example.hy.wanandroid.config;
 
 import android.content.ComponentCallbacks2;
 import android.content.Context;
+
+import com.example.hy.wanandroid.BuildConfig;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.di.component.DaggerAppComponent;
@@ -73,6 +75,7 @@ public class App extends LitePalApplication {
     }
 
     private void initBugly() {
+        if(BuildConfig.DEBUG) return;
         Context context = getApplicationContext();
         // 获取当前包名
         String packageName = context.getPackageName();
