@@ -1,6 +1,6 @@
 package com.example.hy.wanandroid.model.network.api;
 
-import com.example.hy.wanandroid.model.network.entity.Version;
+import com.example.hy.wanandroid.entity.Version;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

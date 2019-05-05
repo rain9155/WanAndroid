@@ -1,8 +1,6 @@
-package com.example.hy.wanandroid.model.network.entity;
+package com.example.hy.wanandroid.entity;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 /**
  * 文章实体类

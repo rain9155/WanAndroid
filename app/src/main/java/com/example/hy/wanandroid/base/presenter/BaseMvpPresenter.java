@@ -87,4 +87,9 @@ public class BaseMvpPresenter<T extends BaseView> implements BasePresenter<T> {
     public boolean getAutoUpdataState() {
         return mModel.getAutoUpdataState();
     }
+
+    @Override
+    public String getSelectedLanguage() {
+        return mModel.getSelectedLanguage();
+    }
 }

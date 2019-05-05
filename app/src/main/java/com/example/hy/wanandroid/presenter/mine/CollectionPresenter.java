@@ -5,10 +5,10 @@ import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.Collection;
-import com.example.hy.wanandroid.model.network.entity.CollectionRequest;
+import com.example.hy.wanandroid.entity.Collection;
+import com.example.hy.wanandroid.entity.CollectionRequest;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
 

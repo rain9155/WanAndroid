@@ -1,9 +1,9 @@
 package com.example.hy.wanandroid.model.network.api;
 
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.Articles;
-import com.example.hy.wanandroid.model.network.entity.BannerData;
-import com.example.hy.wanandroid.model.network.entity.Collection;
+import com.example.hy.wanandroid.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.Articles;
+import com.example.hy.wanandroid.entity.BannerData;
+import com.example.hy.wanandroid.entity.Collection;
 
 import java.util.List;
 

@@ -5,11 +5,11 @@ import android.text.TextUtils;
 import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.model.DataModel;
-import com.example.hy.wanandroid.model.network.entity.Collection;
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.Collection;
+import com.example.hy.wanandroid.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.Articles;
-import com.example.hy.wanandroid.model.network.entity.HotKey;
+import com.example.hy.wanandroid.entity.Articles;
+import com.example.hy.wanandroid.entity.HotKey;
 import com.example.commonlib.utils.CommonUtil;
 import com.example.hy.wanandroid.utlis.RxUtils;
 

@@ -9,6 +9,7 @@ import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.ClearCacheEvent;
+import com.example.hy.wanandroid.event.LanguageEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
 import com.example.hy.wanandroid.event.SettingsNightModeEvent;
@@ -16,7 +17,7 @@ import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.event.UpdataEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.Version;
+import com.example.hy.wanandroid.entity.Version;
 import com.example.commonlib.utils.FileUtil;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
@@ -71,6 +72,14 @@ public class SettingsPresenter extends BaseMvpPresenter<SettingsContract.View> i
         addSubcriber(
                 RxBus.getInstance().toObservable(ClearCacheEvent.class)
                 .subscribe(clearCacheEvent -> mView.clearCache())
+        );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(LanguageEvent.class)
+                .subscribe(languageEvent -> {
+                    mModel.setSelectedLanguage(languageEvent.getLanguage());
+                    mView.hadleLanguage();
+                })
         );
     }
 

@@ -1,9 +1,9 @@
-package com.example.hy.wanandroid.bean;
+package com.example.hy.wanandroid.entity;
 
 import androidx.annotation.Nullable;
 
 /**
- * 权限
+ * 权限实体类
  * Created by 陈健宇 at 2019/3/24
  */
 public class Permission {

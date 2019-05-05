@@ -4,18 +4,18 @@ import com.example.hy.wanandroid.model.db.DbHelper;
 import com.example.hy.wanandroid.model.db.DbHelperImp;
 import com.example.hy.wanandroid.model.network.NetworkHelper;
 import com.example.hy.wanandroid.model.network.NetworkHelperImp;
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.FirstHierarchy;
-import com.example.hy.wanandroid.model.network.entity.SecondHierarchy;
-import com.example.hy.wanandroid.model.network.entity.Articles;
-import com.example.hy.wanandroid.model.network.entity.BannerData;
-import com.example.hy.wanandroid.model.network.entity.Collection;
-import com.example.hy.wanandroid.model.network.entity.CollectionRequest;
-import com.example.hy.wanandroid.model.network.entity.Login;
-import com.example.hy.wanandroid.model.network.entity.Tag;
-import com.example.hy.wanandroid.model.network.entity.Tab;
-import com.example.hy.wanandroid.model.network.entity.HotKey;
-import com.example.hy.wanandroid.model.network.entity.Version;
+import com.example.hy.wanandroid.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.FirstHierarchy;
+import com.example.hy.wanandroid.entity.SecondHierarchy;
+import com.example.hy.wanandroid.entity.Articles;
+import com.example.hy.wanandroid.entity.BannerData;
+import com.example.hy.wanandroid.entity.Collection;
+import com.example.hy.wanandroid.entity.CollectionRequest;
+import com.example.hy.wanandroid.entity.Login;
+import com.example.hy.wanandroid.entity.Tag;
+import com.example.hy.wanandroid.entity.Tab;
+import com.example.hy.wanandroid.entity.HotKey;
+import com.example.hy.wanandroid.entity.Version;
 import com.example.hy.wanandroid.model.prefs.PreferencesHelper;
 import com.example.hy.wanandroid.model.prefs.PreferencesHelperImp;
 import java.util.List;
@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 
 /**
+ * Model层，管理着所有的数据来源
  * Created by 陈健宇 at 2018/11/26
  */
 public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
@@ -238,5 +239,15 @@ public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
     @Override
     public boolean getAutoUpdataState() {
         return mPreferencesHelper.getAutoUpdataState();
+    }
+
+    @Override
+    public String getSelectedLanguage() {
+        return mPreferencesHelper.getSelectedLanguage();
+    }
+
+    @Override
+    public void setSelectedLanguage(String lan) {
+        mPreferencesHelper.setSelectedLanguage(lan);
     }
 }

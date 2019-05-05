@@ -4,14 +4,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.commonlib.utils.CommonUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
-import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
 import com.example.hy.wanandroid.contract.project.ProjectContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
-import com.example.hy.wanandroid.model.network.entity.Tab;
+import com.example.hy.wanandroid.entity.Tab;
 import com.example.hy.wanandroid.presenter.project.ProjectPresenter;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.MainActivity;

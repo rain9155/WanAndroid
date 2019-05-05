@@ -3,6 +3,7 @@ package com.example.hy.wanandroid.model.prefs;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.commonlib.utils.LanguageUtil;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.model.prefs.PreferencesHelper;
@@ -101,4 +102,16 @@ public class PreferencesHelperImp implements PreferencesHelper {
     public boolean getAutoUpdataState() {
         return mPreferences.getBoolean(Constant.KEY_PREFS_AUTOUPDATA, true);
     }
+
+    @Override
+    public String getSelectedLanguage() {
+        return mPreferences.getString(Constant.KEY_PREFS_LAN, LanguageUtil.SYSTEM);
+    }
+
+    @Override
+    public void setSelectedLanguage(String lan) {
+        mPreferences.edit().putString(Constant.KEY_PREFS_LAN, lan).apply();
+    }
+
+
 }

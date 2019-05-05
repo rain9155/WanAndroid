@@ -1,8 +1,8 @@
 package com.example.hy.wanandroid.model.network.api;
 
-import com.example.hy.wanandroid.model.network.entity.Articles;
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.Tab;
+import com.example.hy.wanandroid.entity.Articles;
+import com.example.hy.wanandroid.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.Tab;
 
 import java.util.List;
 

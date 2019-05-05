@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.base.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.ViewGroup;

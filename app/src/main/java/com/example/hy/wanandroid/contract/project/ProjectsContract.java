@@ -2,7 +2,7 @@ package com.example.hy.wanandroid.contract.project;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
-import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.entity.Article;
 
 import java.util.List;
 

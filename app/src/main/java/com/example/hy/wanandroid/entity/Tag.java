@@ -1,6 +1,4 @@
-package com.example.hy.wanandroid.model.network.entity;
-
-import com.example.hy.wanandroid.model.network.entity.Article;
+package com.example.hy.wanandroid.entity;
 
 import java.util.List;
 

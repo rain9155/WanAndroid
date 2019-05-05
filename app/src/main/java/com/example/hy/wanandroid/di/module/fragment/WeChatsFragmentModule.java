@@ -1,12 +1,10 @@
 package com.example.hy.wanandroid.di.module.fragment;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.adapter.ArticlesAdapter;
-import com.example.hy.wanandroid.adapter.ProjectsAdapter;
 import com.example.hy.wanandroid.adapter.WeChatAdapter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerFragment;
-import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.entity.Article;
 
 import java.util.ArrayList;
 import java.util.List;

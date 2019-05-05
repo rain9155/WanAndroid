@@ -1,14 +1,10 @@
-package com.example.hy.wanandroid.bean;
+package com.example.hy.wanandroid.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.hy.wanandroid.model.network.entity.Article;
-import com.example.hy.wanandroid.model.network.entity.Collection;
-
-import java.io.Serializable;
-
 /**
+ * 一个封装了一些信息的传输实体类
  * Created by 陈健宇 at 2018/12/26
  */
 public class ArticleBean implements Parcelable {

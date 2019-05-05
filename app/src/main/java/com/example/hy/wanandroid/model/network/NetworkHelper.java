@@ -1,17 +1,17 @@
 package com.example.hy.wanandroid.model.network;
 
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.FirstHierarchy;
-import com.example.hy.wanandroid.model.network.entity.SecondHierarchy;
-import com.example.hy.wanandroid.model.network.entity.Articles;
-import com.example.hy.wanandroid.model.network.entity.BannerData;
-import com.example.hy.wanandroid.model.network.entity.Collection;
-import com.example.hy.wanandroid.model.network.entity.CollectionRequest;
-import com.example.hy.wanandroid.model.network.entity.Login;
-import com.example.hy.wanandroid.model.network.entity.Tag;
-import com.example.hy.wanandroid.model.network.entity.Tab;
-import com.example.hy.wanandroid.model.network.entity.HotKey;
-import com.example.hy.wanandroid.model.network.entity.Version;
+import com.example.hy.wanandroid.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.FirstHierarchy;
+import com.example.hy.wanandroid.entity.SecondHierarchy;
+import com.example.hy.wanandroid.entity.Articles;
+import com.example.hy.wanandroid.entity.BannerData;
+import com.example.hy.wanandroid.entity.Collection;
+import com.example.hy.wanandroid.entity.CollectionRequest;
+import com.example.hy.wanandroid.entity.Login;
+import com.example.hy.wanandroid.entity.Tag;
+import com.example.hy.wanandroid.entity.Tab;
+import com.example.hy.wanandroid.entity.HotKey;
+import com.example.hy.wanandroid.entity.Version;
 
 import java.util.List;
 

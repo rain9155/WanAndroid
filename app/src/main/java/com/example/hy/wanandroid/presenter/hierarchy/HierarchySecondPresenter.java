@@ -4,12 +4,12 @@ import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchySecondContract;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.Collection;
+import com.example.hy.wanandroid.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.Collection;
 import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.SecondHierarchy;
+import com.example.hy.wanandroid.entity.SecondHierarchy;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utlis.RxUtils;
 

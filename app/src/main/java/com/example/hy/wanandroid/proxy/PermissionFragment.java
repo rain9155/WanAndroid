@@ -7,7 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseArray;
 
-import com.example.hy.wanandroid.bean.Permission;
+import com.example.hy.wanandroid.entity.Permission;
 
 import java.util.Random;
 

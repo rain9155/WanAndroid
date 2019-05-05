@@ -1,6 +1,5 @@
 package com.example.hy.wanandroid.adapter;
 
-import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.entity.Article;
 import com.example.commonlib.utils.CommonUtil;
 
 import java.util.List;

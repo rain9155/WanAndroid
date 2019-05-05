@@ -4,15 +4,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.commonlib.utils.CommonUtil;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
-import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
 import com.example.hy.wanandroid.contract.wechat.WeChatContract;
 import com.example.hy.wanandroid.di.module.fragment.WeChatFragmentModule;
-import com.example.hy.wanandroid.model.network.entity.Tab;
+import com.example.hy.wanandroid.entity.Tab;
 import com.example.hy.wanandroid.presenter.wechat.WeChatPresenter;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;

@@ -12,30 +12,26 @@ import android.widget.FrameLayout;
 
 import androidx.viewpager.widget.ViewPager;
 
+import java.util.Arrays;
+
 /**
  * 一个控制视图切换逻辑的帮助类
  * Created by 陈健宇 at 2019/4/26
  */
 public class Loading {
 
-    private final SparseIntArray mStatusViews = new SparseIntArray(3);
+    private final SparseIntArray mStatusViews = new SparseIntArray(3){{
+        put(StatusView.STATUS_LOADING, -1);
+        put(StatusView.STATUS_ERROR, -1);
+        put(StatusView.STATUS_EMPTY, -1);
+    }};
     private static volatile Loading sintance = null;
 
-    private Loading(){
-       mStatusViews.put(StatusView.STATUS_LOADING, -1);
-       mStatusViews.put(StatusView.STATUS_ERROR, -1);
-       mStatusViews.put(StatusView.STATUS_EMPTY, -1);
-    }
+    private Loading(){}
 
     private static Loading getInstance(){
         if(sintance == null){
-            Loading loading;
-            synchronized (Loading.class){
-                if(sintance == null){
-                    loading = new Loading();
-                    sintance = loading;
-                }
-            }
+            sintance = new Loading();
         }
         return sintance;
     }
@@ -44,7 +40,7 @@ public class Loading {
         return new Builder(context);
     }
 
-    public static Builder beginBuildStatusView(){
+    public static Builder beginBuildCommit(){
         return new Builder();
     }
 
@@ -175,7 +171,7 @@ public class Loading {
 
         private void verify() {
             if(mWarppedView == null) throw new NullPointerException("must warp Activity or Fragment or View");
-            if(mInflater == null) throw new NullPointerException("can't call Loading.beginBuildStatusView() before create()");
+            if(mInflater == null) throw new NullPointerException("can't call Loading.beginBuildCommit() before create()");
         }
 
         private void removeParent(ViewParent parent, View removeView) {

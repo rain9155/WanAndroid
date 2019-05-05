@@ -4,7 +4,7 @@ import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.contract.navigation.NavigationContract;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.Tag;
+import com.example.hy.wanandroid.entity.Tag;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
 import java.util.ArrayList;

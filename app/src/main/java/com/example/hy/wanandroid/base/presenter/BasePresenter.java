@@ -30,5 +30,6 @@ public interface BasePresenter<T extends BaseView>{
     boolean getNightModeState();
     boolean getStatusBarState();
     boolean getAutoUpdataState();
+    String getSelectedLanguage();
 
 }

@@ -1,22 +1,22 @@
-package com.example.hy.wanandroid.model.network.entity;
+package com.example.hy.wanandroid.entity;
 
 import java.util.List;
 
 /**
- * 第一级体系的实体类
- * Created by 陈健宇 at 2018/10/28
+ * 项目实体类
+ * Created by 陈健宇 at 2018/10/29
  */
-public class FirstHierarchy{
+public class Tab {
 
     /**
      * children : []
      * courseId : 13
-     * id : 150
-     * name : 开发环境
-     * order : 1
-     * parentChapterId : 0
+     * id : 294
+     * name : 完整项目
+     * order : 145000
+     * parentChapterId : 293
      * userControlSetTop : false
-     * visible : 1
+     * visible : 0
      */
 
     private int courseId;
@@ -26,7 +26,7 @@ public class FirstHierarchy{
     private int parentChapterId;
     private boolean userControlSetTop;
     private int visible;
-    private List<Tab> children;
+    private List<?> children;
 
     public int getCourseId() {
         return courseId;
@@ -84,11 +84,11 @@ public class FirstHierarchy{
         this.visible = visible;
     }
 
-    public List<Tab> getChildren() {
+    public List<?> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Tab> children) {
+    public void setChildren(List<?> children) {
         this.children = children;
     }
 }

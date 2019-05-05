@@ -2,8 +2,8 @@ package com.example.hy.wanandroid.contract.homepager;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
-import com.example.hy.wanandroid.model.network.entity.Article;
-import com.example.hy.wanandroid.model.network.entity.BannerData;
+import com.example.hy.wanandroid.entity.Article;
+import com.example.hy.wanandroid.entity.BannerData;
 
 import java.util.List;
 

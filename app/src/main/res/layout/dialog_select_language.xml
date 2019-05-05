@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_300"
+    android:layout_height="@dimen/dp_150"
+    android:padding="@dimen/dp_5"
+    android:background="@drawable/bg_dialog">
+
+    <RadioGroup
+        android:id="@+id/rg_lan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:checkedButton="@id/rb_lan_system">
+
+        <RadioButton
+            android:id="@+id/rb_lan_system"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_lan_system"
+            android:layout_marginTop="@dimen/dp_5"/>
+
+        <RadioButton
+            android:id="@+id/rb_lan_china"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_lan_china"
+            android:layout_marginTop="@dimen/dp_5"/>
+
+        <RadioButton
+            android:id="@+id/rb_lan_english"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_lan_english"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_5"/>
+
+    </RadioGroup>
+
+</RelativeLayout>

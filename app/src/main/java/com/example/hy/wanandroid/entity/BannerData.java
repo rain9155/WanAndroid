@@ -1,6 +1,4 @@
-package com.example.hy.wanandroid.model.network.entity;
-
-import javax.inject.Inject;
+package com.example.hy.wanandroid.entity;
 
 /**
  * 首页banner的数据

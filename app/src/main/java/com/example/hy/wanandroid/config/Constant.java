@@ -71,6 +71,7 @@ public class Constant {
     public static final String KEY_PREFS_STATUSBAR = "statusBar";
     public static final String KEY_PREFS_NETWORK = "netWork";
     public static final String KEY_PREFS_AUTOUPDATA = "autoUpdata";
+    public static final String KEY_PREFS_LAN = "language";
 
 
     //utils

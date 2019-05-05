@@ -4,7 +4,7 @@ import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.contract.wechat.WeChatContract;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.Tab;
+import com.example.hy.wanandroid.entity.Tab;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
 import java.util.List;

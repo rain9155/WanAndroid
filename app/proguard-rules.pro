@@ -266,7 +266,7 @@
 -dontwarn io.reactivex.internal.util.unsafe.**
 
 ### gson
--keep class com.example.hy.wanandroid.model.network.entity.** { *; }
+-keep class com.example.hy.wanandroid.entity.** { *; }
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.stream.** { *; }
 # Application classes that will be serialized/deserialized over Gson

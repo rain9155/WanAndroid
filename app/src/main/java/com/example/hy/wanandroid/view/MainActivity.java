@@ -21,7 +21,7 @@ import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
-import com.example.hy.wanandroid.bean.Permission;
+import com.example.hy.wanandroid.entity.Permission;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.MainContract;
@@ -48,7 +48,6 @@ import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;

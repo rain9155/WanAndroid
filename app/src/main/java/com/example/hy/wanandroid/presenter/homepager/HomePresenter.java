@@ -6,13 +6,13 @@ import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.Collection;
+import com.example.hy.wanandroid.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.Collection;
 import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.Articles;
-import com.example.hy.wanandroid.model.network.entity.BannerData;
+import com.example.hy.wanandroid.entity.Articles;
+import com.example.hy.wanandroid.entity.BannerData;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
@@ -34,7 +34,6 @@ public class HomePresenter extends BaseMvpPresenter<HomeContract.View> implement
 
     @Override
     public void subscribleEvent() {
-        super.subscribleEvent();
         addSubcriber(
                 RxBus.getInstance().toObservable(ToppingEvent.class)
                         .subscribe(toppingEvent -> mView.topping())

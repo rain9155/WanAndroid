@@ -2,7 +2,7 @@ package com.example.hy.wanandroid.contract.navigation;
 
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
-import com.example.hy.wanandroid.model.network.entity.Tag;
+import com.example.hy.wanandroid.entity.Tag;
 
 import java.util.List;
 

@@ -1,23 +1,20 @@
-package com.example.hy.wanandroid.model.network.entity;
-
-import com.example.hy.wanandroid.model.network.entity.Collection;
+package com.example.hy.wanandroid.entity;
 
 import java.util.List;
 
 /**
- * 收藏的实体类
- * Created by 陈健宇 at 2018/11/19
+ * 文章实体类
+ * Created by 陈健宇 at 2018/10/27
  */
-public class CollectionRequest {
+public class Articles {
 
     /**
      * curPage : 1
      * datas : []
-     * offset : 0
-     * over : true
-     * pageCount : 1
+     * over : false
+     * pageCount : 281
      * size : 20
-     * total : 3
+     * total : 5601
      */
 
     private int curPage;
@@ -26,7 +23,7 @@ public class CollectionRequest {
     private int pageCount;
     private int size;
     private int total;
-    private List<Collection> datas;
+    private List<Article> datas;
 
     public int getCurPage() {
         return curPage;
@@ -76,13 +73,11 @@ public class CollectionRequest {
         this.total = total;
     }
 
-    public List<Collection> getDatas() {
+    public List<Article> getDatas() {
         return datas;
     }
 
-    public void setDatas(List<Collection> datas) {
+    public void setDatas(List<Article> datas) {
         this.datas = datas;
     }
-
-
 }
