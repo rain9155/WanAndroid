@@ -1,5 +1,6 @@
 package com.example.hy.wanandroid.widget.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -31,13 +32,6 @@ import androidx.fragment.app.Fragment;
 public class ClearCacheDialog extends BaseDialogFragment {
 
     private String mContent = "";
-    private Context mContext;
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mContext = context;
-    }
 
     @Override
     protected int getDialogViewId() {
@@ -45,8 +39,9 @@ public class ClearCacheDialog extends BaseDialogFragment {
     }
 
     @Override
+    @SuppressLint("SetTextI18n")
     protected void initView(View view) {
-        ((TextView)view.findViewById(R.id.tv_clear)).setText(mContent);
+        ((TextView)view.findViewById(R.id.tv_clear)).setText(getString(R.string.dialog_clear_cache1) + mContent + getString(R.string.dialog_clear_cache2));
         view.findViewById(R.id.btn_cancel).setOnClickListener(v -> this.dismiss());
         view.findViewById(R.id.btn_confirm).setOnClickListener(v -> {
             this.dismiss();
@@ -55,7 +50,7 @@ public class ClearCacheDialog extends BaseDialogFragment {
     }
 
     public void setContent(String content) {
-        mContent = mContext.getString(R.string.dialog_clear_cache1) + content + mContext.getString(R.string.dialog_clear_cache2);
+        this.mContent = content;
     }
 
 }

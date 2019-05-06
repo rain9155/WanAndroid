@@ -14,6 +14,8 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -199,9 +201,10 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     }
 
     private void initSettings() {
+
         mCurrentVersionName = DownloadUtil.getVersionName(this);
-        tvCache.setText(FileUtil.getCacheSize(mCacheFile));
         tvVersion.setText(getString(R.string.settingsActivity_version_current) + mCurrentVersionName);
+
         clClearCache.setOnClickListener(v -> {
             String cache = FileUtil.getCacheSize(mCacheFile);
             if (cache.equals("0K"))
@@ -211,14 +214,15 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
                 mClearCacheDialog.get().show(getSupportFragmentManager(), ClearCacheDialog.class.getName());
             }
         });
-        String language = mPresenter.getSelectedLanguage();
-        clLanguage.setOnClickListener(v -> {
-            mLanguageDialog.get().setSelectedId(getLanguageSelectedId(language));
-            mLanguageDialog.get().show(getSupportFragmentManager(), LanguageDialog.class.getName());
-        });
-        tvLanguageHint.setText(getLanguageHint(language));
+        tvCache.setText(FileUtil.getCacheSize(mCacheFile));
+
+        clLanguage.setOnClickListener(v -> mLanguageDialog.get().show(getSupportFragmentManager(), LanguageDialog.class.getName()));
+        tvLanguageHint.setText(getLanguageHint(mPresenter.getSelectedLanguage()));
+
         clFeedBack.setOnClickListener(v -> ShareUtil.sendEmail(this, Constant.EMAIL_ADDRESS, getString(R.string.settingsActivity_email_to)));
+
         clMes.setOnClickListener(v -> ShareUtil.gotoAppDetailIntent(this));
+
         clUpdata.setOnClickListener(v -> {
             if (ServiceUtil.isServiceRunning(this, UpdataService.class.getName())) {
                 showToast(getString(R.string.downloading));
@@ -227,6 +231,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
             if (mAnimator != null && mAnimator.isRunning()) return;
             mPresenter.checkVersion(mCurrentVersionName);
         });
+
     }
 
 
@@ -425,8 +430,12 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     @Override
     public void hadleLanguage() {
         finish();
-        startActivity(new Intent(this, MainActivity.class));
-//        recreate();
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }, 200);
+
     }
 
     @Override
@@ -499,27 +508,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         return bitmap;
     }
 
-    /**
-     * 获取当前的语言设置对应的单选控件按钮id
-     * @return
-     */
-    private int getLanguageSelectedId(String lan) {
-        int ret = -1;
-        switch (lan){
-            case LanguageUtil.SYSTEM:
-                ret = R.id.rb_lan_system;
-                break;
-            case LanguageUtil.SIMPLIFIED_CHINESE:
-                ret = R.id.rb_lan_china;
-                break;
-            case LanguageUtil.ENGLISH:
-                ret = R.id.rb_lan_english;
-                break;
-            default:
-                break;
-        }
-        return ret;
-    }
 
     /**
      * 获取当前的语言设置
@@ -528,15 +516,16 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         String ret = "";
         switch (lan){
             case LanguageUtil.SYSTEM:
-                ret = "跟随系统";
+                ret = getString(R.string.dialog_lan_system);
                 break;
             case LanguageUtil.SIMPLIFIED_CHINESE:
-                ret = "简体中文";
+                ret = getString(R.string.dialog_lan_china);
                 break;
             case LanguageUtil.ENGLISH:
-                ret = "English";
+                ret = getString(R.string.dialog_lan_english);
                 break;
             default:
+                ret = getString(R.string.dialog_lan_system);
                 break;
         }
         return ret;
