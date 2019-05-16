@@ -8,12 +8,12 @@ import android.view.MotionEvent;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ProjectsAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
-import com.example.hy.wanandroid.bean.ArticleBean;
+import com.example.hy.wanandroid.entity.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
 import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
-import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.entity.Article;
 import com.example.hy.wanandroid.presenter.project.ProjectsPresenter;
 import com.example.commonlib.utils.AnimUtil;
 import com.example.commonlib.utils.CommonUtil;
@@ -44,7 +44,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
 
     @BindView(R.id.rv_projects)
     RecyclerView rvProjectList;
-    @BindView(R.id.normal_view)
+    @BindView(R.id.srl_projects)
     SmartRefreshLayout srlProjects;
 
     @Inject
@@ -95,12 +95,14 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
         mProjectsAdapter.openLoadAnimation();
         rvProjectList.setAdapter(mProjectsAdapter);
         mProjectsAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+            if(CommonUtil.isEmptyList(mArticles)) return;
             mArticlePosition = position;
             mArticle = mArticles.get(position);
             ArticleBean articleBean = new ArticleBean(mArticle);
             ArticleActivity.startActicityForResultByFragment(mActivity, this, articleBean, false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mProjectsAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
+            if(CommonUtil.isEmptyList(mArticles)) return;
             mArticlePosition = position;
             mArticle =  mArticles.get(position);
             if(!User.getInstance().isLoginStatus()){
@@ -112,6 +114,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
             AnimUtil.scale(view, -1);
         });
         mProjectsAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            if(CommonUtil.isEmptyList(mArticles)) return false;
             Article article = mArticles.get(position);
             view.setOnTouchListener((v, event) -> {
                 if(event.getAction() == MotionEvent.ACTION_UP && isPress){

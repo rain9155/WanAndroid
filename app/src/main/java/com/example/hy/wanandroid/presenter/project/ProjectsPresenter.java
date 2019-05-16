@@ -1,17 +1,17 @@
 package com.example.hy.wanandroid.presenter.project;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.Collection;
+import com.example.hy.wanandroid.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.Collection;
 import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.Articles;
+import com.example.hy.wanandroid.entity.Articles;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
@@ -21,7 +21,7 @@ import javax.inject.Inject;
  * 详细项目分类的Presenter
  * Created by 陈健宇 at 2018/10/30
  */
-public class ProjectsPresenter extends BasePresenter<ProjectsContract.View> implements ProjectsContract.Presenter {
+public class ProjectsPresenter extends BaseMvpPresenter<ProjectsContract.View> implements ProjectsContract.Presenter {
 
 
     @Inject
@@ -31,7 +31,6 @@ public class ProjectsPresenter extends BasePresenter<ProjectsContract.View> impl
 
     @Override
     public void subscribleEvent() {
-        super.subscribleEvent();
         addSubcriber(
                 RxBus.getInstance().toObservable(ToppingEvent.class)
                 .subscribe(toppingEvent -> mView.topping())

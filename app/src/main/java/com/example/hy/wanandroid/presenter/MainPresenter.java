@@ -3,7 +3,7 @@ package com.example.hy.wanandroid.presenter;
 import android.content.res.Resources;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.MainContract;
@@ -15,7 +15,7 @@ import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.event.UpdataEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.Version;
+import com.example.hy.wanandroid.entity.Version;
 import com.example.commonlib.utils.FileUtil;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
@@ -28,7 +28,7 @@ import io.reactivex.functions.Predicate;
  * MainActivity的Presenter
  * Created by 陈健宇 at 2018/10/23
  */
-public class MainPresenter extends BasePresenter<MainContract.View> implements MainContract.Presenter{
+public class MainPresenter extends BaseMvpPresenter<MainContract.View> implements MainContract.Presenter{
 
     @Inject
     public MainPresenter(DataModel dataModel) {

@@ -10,7 +10,7 @@ import com.example.hy.wanandroid.adapter.VpAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.contract.wechat.WeChatContract;
 import com.example.hy.wanandroid.di.module.fragment.WeChatFragmentModule;
-import com.example.hy.wanandroid.model.network.entity.Tab;
+import com.example.hy.wanandroid.entity.Tab;
 import com.example.hy.wanandroid.presenter.wechat.WeChatPresenter;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;

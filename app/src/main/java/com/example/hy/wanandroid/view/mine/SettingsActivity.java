@@ -14,6 +14,8 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -21,6 +23,11 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.example.commonlib.utils.LanguageUtil;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.commonlib.utils.FileUtil;
 import com.example.commonlib.utils.ServiceUtil;
@@ -28,27 +35,25 @@ import com.example.commonlib.utils.ShareUtil;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
-import com.example.hy.wanandroid.bean.Permission;
+import com.example.hy.wanandroid.entity.Permission;
 import com.example.hy.wanandroid.component.UpdataService;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSettingsActivityComponent;
+import com.example.hy.wanandroid.presenter.mine.SettingsPresenter;
 import com.example.hy.wanandroid.proxy.PermissionFragment;
 import com.example.hy.wanandroid.proxy.PermissionHelper;
-import com.example.hy.wanandroid.presenter.mine.SettingsPresenter;
 import com.example.hy.wanandroid.utlis.DownloadUtil;
+import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.widget.dialog.ClearCacheDialog;
 import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
+import com.example.hy.wanandroid.widget.dialog.LanguageDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 
 import java.io.File;
 
 import javax.inject.Inject;
 
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import dagger.Lazy;
 
@@ -62,8 +67,8 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     ImageView ivCommonSearch;
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
-    @BindView(R.id.tv_settings_common)
-    TextView tvSettingsCommon;
+    @BindView(R.id.tv_settings_base)
+    TextView tvSettingsBase;
     @BindView(R.id.iv_noImage)
     ImageView ivNoImage;
     @BindView(R.id.tv_noImage)
@@ -140,6 +145,14 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     TextView tvMes;
     @BindView(R.id.cl_mes)
     ConstraintLayout clMes;
+    @BindView(R.id.tv_language)
+    TextView tvLanguage;
+    @BindView(R.id.tv_language_hint)
+    TextView tvLanguageHint;
+    @BindView(R.id.cd_common_settings)
+    CardView cdCommonSettings;
+    @BindView(R.id.cl_language)
+    ConstraintLayout clLanguage;
 
     @Inject
     SettingsPresenter mPresenter;
@@ -151,6 +164,9 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     Lazy<ClearCacheDialog> mClearCacheDialog;
     @Inject
     Lazy<GotoDetialDialog> mGotoDetialDialog;
+    @Inject
+    Lazy<LanguageDialog> mLanguageDialog;
+
 
     private ObjectAnimator mAnimator;
     private String mNewVersionName;
@@ -185,20 +201,28 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     }
 
     private void initSettings() {
+
         mCurrentVersionName = DownloadUtil.getVersionName(this);
-        tvCache.setText(FileUtil.getCacheSize(mCacheFile));
         tvVersion.setText(getString(R.string.settingsActivity_version_current) + mCurrentVersionName);
+
         clClearCache.setOnClickListener(v -> {
             String cache = FileUtil.getCacheSize(mCacheFile);
             if (cache.equals("0K"))
                 showToast(getString(R.string.settingsActivity_already_clear));
             else {
                 mClearCacheDialog.get().setContent(cache);
-                mClearCacheDialog.get().show(getSupportFragmentManager(), "tag8");
+                mClearCacheDialog.get().show(getSupportFragmentManager(), ClearCacheDialog.class.getName());
             }
         });
+        tvCache.setText(FileUtil.getCacheSize(mCacheFile));
+
+        clLanguage.setOnClickListener(v -> mLanguageDialog.get().show(getSupportFragmentManager(), LanguageDialog.class.getName()));
+        tvLanguageHint.setText(getLanguageHint(mPresenter.getSelectedLanguage()));
+
         clFeedBack.setOnClickListener(v -> ShareUtil.sendEmail(this, Constant.EMAIL_ADDRESS, getString(R.string.settingsActivity_email_to)));
+
         clMes.setOnClickListener(v -> ShareUtil.gotoAppDetailIntent(this));
+
         clUpdata.setOnClickListener(v -> {
             if (ServiceUtil.isServiceRunning(this, UpdataService.class.getName())) {
                 showToast(getString(R.string.downloading));
@@ -207,7 +231,9 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
             if (mAnimator != null && mAnimator.isRunning()) return;
             mPresenter.checkVersion(mCurrentVersionName);
         });
+
     }
+
 
     private void initSwitch() {
         switchNoImage.setChecked(mPresenter.getNoImageState());
@@ -267,13 +293,16 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
             mClearCacheDialog = null;
         if (mVersionDialog.get() != null)
             mVersionDialog = null;
-        if(mGotoDetialDialog.get() != null)
+        if (mGotoDetialDialog.get() != null)
             mGotoDetialDialog = null;
+        if(mLanguageDialog.get() != null)
+            mLanguageDialog = null;
         super.onDestroy();
     }
 
     @Override
     public void useNightNode(boolean isNight) {
+
         int background, primaryText, foreground, colorPrimary, colorPrimaryDark, colorRipple;
         if (isNight) {
             colorPrimary = Color.parseColor("#212121");
@@ -296,11 +325,14 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
             primaryText = Color.parseColor("#212121");
             colorRipple = Color.parseColor("#B3E5FC");
         }
+
         //动态改变颜色
         StatusBarUtil.immersive(this, colorPrimaryDark, 1f);
         tlCommon.setBackgroundColor(colorPrimary);
         rootView.setBackgroundColor(background);
-        tvSettingsCommon.setTextColor(primaryText);
+        tvSettingsBase.setTextColor(primaryText);
+
+        //base settings
         cdBaseSettings.setCardBackgroundColor(foreground);
         tvNoImage.setTextColor(primaryText);
         tvNightMode.setTextColor(primaryText);
@@ -308,13 +340,21 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         tvStatusBar.setTextColor(primaryText);
         tvAutoUpdata.setTextColor(primaryText);
         tvSettingsOther.setTextColor(primaryText);
-        cdOtherSettings.setCardBackgroundColor(foreground);
-        tvFeedBack.setTextColor(primaryText);
+
+        //common settings
+        cdCommonSettings.setCardBackgroundColor(foreground);
         tvClearCache.setTextColor(primaryText);
         tvCache.setTextColor(primaryText);
+        tvMes.setTextColor(primaryText);
+        tvLanguage.setTextColor(primaryText);
+        tvLanguageHint.setTextColor(primaryText);
+
+        //other settings
+        cdOtherSettings.setCardBackgroundColor(foreground);
+        tvFeedBack.setTextColor(primaryText);
         tvUpdata.setTextColor(primaryText);
         tvVersion.setTextColor(primaryText);
-        tvMes.setTextColor(primaryText);
+
         //动态改变波纹点击颜色
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ((RippleDrawable) clNoImage.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
@@ -326,9 +366,11 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
             ((RippleDrawable) clUpdata.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
             ((RippleDrawable) clAutoUpdata.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
             ((RippleDrawable) clMes.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
+            ((RippleDrawable) clLanguage.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
         }
     }
 
+    @Override
     public void showChangeAnimation() {
         final View decorView = getWindow().getDecorView();
         Bitmap cacheBitmap = getCacheBitmapFromView(decorView);
@@ -371,7 +413,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     public void showUpdataDialog(String content) {
         mVersionDialog.get().setContentText(content);
         mVersionDialog.get().setIsMain(false);
-        mVersionDialog.get().show(getSupportFragmentManager(), "tag4");
+        mVersionDialog.get().show(getSupportFragmentManager(), VersionDialog.class.getName());
     }
 
     @Override
@@ -383,6 +425,17 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     public void showAlareadNewToast(String content) {
         mAnimator.cancel();
         showToast(content);
+    }
+
+    @Override
+    public void hadleLanguage() {
+        finish();
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }, 200);
+
     }
 
     @Override
@@ -398,26 +451,26 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
                 new PermissionFragment.IPermissomCallback() {
-            @Override
-            public void onAccepted(Permission permission) {
-                DownloadUtil.downloadApk(SettingsActivity.this, mNewVersionName);
-            }
+                    @Override
+                    public void onAccepted(Permission permission) {
+                        DownloadUtil.downloadApk(SettingsActivity.this, mNewVersionName);
+                    }
 
-            @Override
-            public void onDenied(Permission permission) {
-                showToast(getString(R.string.settingsActivity_permission_denied));
-            }
+                    @Override
+                    public void onDenied(Permission permission) {
+                        showToast(getString(R.string.settingsActivity_permission_denied));
+                    }
 
-            @Override
-            public void onDeniedAndReject(Permission permission) {
-                mGotoDetialDialog.get().show(getSupportFragmentManager(), "tag21");
-            }
+                    @Override
+                    public void onDeniedAndReject(Permission permission) {
+                        mGotoDetialDialog.get().show(getSupportFragmentManager(), GotoDetialDialog.class.getName());
+                    }
 
-            @Override
-            public void onAlreadyGranted() {
-                DownloadUtil.downloadApk(SettingsActivity.this, mNewVersionName);
-            }
-        });
+                    @Override
+                    public void onAlreadyGranted() {
+                        DownloadUtil.downloadApk(SettingsActivity.this, mNewVersionName);
+                    }
+                });
     }
 
     public static void startActivity(Context context) {
@@ -453,6 +506,29 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
             bitmap = null;
         }
         return bitmap;
+    }
+
+
+    /**
+     * 获取当前的语言设置
+     */
+    private String getLanguageHint(String lan) {
+        String ret = "";
+        switch (lan){
+            case LanguageUtil.SYSTEM:
+                ret = getString(R.string.dialog_lan_system);
+                break;
+            case LanguageUtil.SIMPLIFIED_CHINESE:
+                ret = getString(R.string.dialog_lan_china);
+                break;
+            case LanguageUtil.ENGLISH:
+                ret = getString(R.string.dialog_lan_english);
+                break;
+            default:
+                ret = getString(R.string.dialog_lan_system);
+                break;
+        }
+        return ret;
     }
 
 }

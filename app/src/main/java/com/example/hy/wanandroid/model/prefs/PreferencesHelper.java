@@ -38,4 +38,8 @@ public interface PreferencesHelper {
     void setAutoUpdataState(boolean isAuto);
     //获得自动更新状态
     boolean getAutoUpdataState();
+    //获取选择的语言
+    String getSelectedLanguage();
+    //设置选择的语言
+    void setSelectedLanguage(String lan);
 }

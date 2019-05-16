@@ -17,13 +17,13 @@ import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.adapter.FlowTagsAdapter;
 import com.example.hy.wanandroid.adapter.HistoryAdapter;
 import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
-import com.example.hy.wanandroid.bean.ArticleBean;
+import com.example.hy.wanandroid.entity.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSearchActivityComponent;
-import com.example.hy.wanandroid.model.network.entity.Article;
-import com.example.hy.wanandroid.model.network.entity.HotKey;
+import com.example.hy.wanandroid.entity.Article;
+import com.example.hy.wanandroid.entity.HotKey;
 import com.example.hy.wanandroid.presenter.search.SearchPresenter;
 import com.example.commonlib.utils.AnimUtil;
 import com.example.commonlib.utils.CommonUtil;
@@ -41,7 +41,6 @@ import javax.inject.Inject;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -75,8 +74,6 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
     RecyclerView rvSearchRequest;
     @BindView(R.id.normal_view)
     SmartRefreshLayout normalView;
-    @BindView(R.id.tv_no_data)
-    TextView tvNoData;
     @BindView(R.id.rl_container)
     RelativeLayout rlContainer;
 
@@ -139,12 +136,14 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
         rvSearchRequest.setLayoutManager(mSearchRequestManager);
         rvSearchRequest.setAdapter(mSearchResquestAdapter);
         mSearchResquestAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+            if(CommonUtil.isEmptyList(mSearchResquestList)) return;
             mArticlePosition = position;
             mArticle = mSearchResquestList.get(position);
             ArticleBean articleBean = new ArticleBean(mArticle);
             ArticleActivity.startActivityForResult(SearchActivity.this, articleBean, false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mSearchResquestAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
+            if(CommonUtil.isEmptyList(mSearchResquestList)) return;
             mArticlePosition = position;
             mArticle =  mSearchResquestList.get(position);
             if(!User.getInstance().isLoginStatus()){
@@ -156,6 +155,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
             AnimUtil.scale(view, -1);
         });
         mSearchResquestAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            if(CommonUtil.isEmptyList(mSearchResquestList)) return false;
             Article article = mSearchResquestList.get(position);
             view.setOnTouchListener((v, event) -> {
                 if(event.getAction() == MotionEvent.ACTION_UP && isPress){
@@ -245,7 +245,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
         getMenuInflater().inflate(R.menu.search_tl_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.item_search);
         //得到SearchView
-        mSearchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        mSearchView = (SearchView)menuItem.getActionView();
         mSearchAutoComplete = mSearchView.findViewById(R.id.search_src_text);
         mSearchView.setMaxWidth(R.dimen.dp_400);//设置最大宽度
         mSearchView.setSubmitButtonEnabled(true);//设置是否显示搜索框展开时的提交按钮
@@ -351,12 +351,10 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
 
     @Override
     public void showEmptyLayout() {
-        tvNoData.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideEmptyLayout() {
-        tvNoData.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -403,6 +401,11 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
     }
 
     @Override
+    public void hideHotHintLayout() {
+        tvHotHint.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
     public void collectArticleSuccess() {
         showToast(getString(R.string.common_collection_success));
         mSearchResquestList.get(mArticlePosition).setCollect(true);
@@ -418,7 +421,6 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
 
     @Override
     public void reLoad() {
-        super.reLoad();
         mPresenter.loadSearchResquest(mSearchView.getQuery().toString(), 0);
         mPresenter.loadHotkey();
     }
@@ -429,11 +431,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
         super.showLoading();
     }
 
-    @Override
-    public void showErrorView() {
-        showSearchRequestLayout();
-        super.showErrorView();
-    }
+
 
     @Override
     public void unableRefresh() {

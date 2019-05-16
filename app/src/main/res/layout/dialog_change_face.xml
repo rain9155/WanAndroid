@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="@dimen/dp_300"
     android:layout_height="@dimen/dp_150"
+    android:padding="@dimen/dp_5"
     android:background="@drawable/bg_dialog">
 
     <TextView

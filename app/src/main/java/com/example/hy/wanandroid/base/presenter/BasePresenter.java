@@ -1,86 +1,35 @@
 package com.example.hy.wanandroid.base.presenter;
 
 import com.example.hy.wanandroid.base.view.BaseView;
-import com.example.hy.wanandroid.config.RxBus;
-import com.example.hy.wanandroid.event.NetWorkChangeEvent;
-import com.example.hy.wanandroid.model.DataModel;
 
-import javax.inject.Inject;
-
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Presenter的基类
+ * presenter接口
  * Created by 陈健宇 at 2018/10/21
  */
-public class BasePresenter<T extends BaseView> implements IPresenter<T> {
+public interface BasePresenter<T extends BaseView>{
 
-    protected T mView;
-    protected DataModel mModel;
-    private CompositeDisposable mCompositeDisposable;
+    //注入View
+    void attachView(T view);
 
-    @Inject
-    public BasePresenter(DataModel dataModel) {
-        mModel = dataModel;
-    }
+    //判断是否注入了View
+    boolean isAttachView();
 
-    @Override
-    public void attachView(T view) {
-        this.mView = view;
-    }
+    //解除View
+    void detachView();
 
-    @Override
-    public boolean isAttachView() {
-        return this.mView != null;
-    }
+    //订阅事件，管理事件生命周期
+    void addSubcriber(Disposable disposable);
 
-    @Override
-    public void detachView() {
-        this.mView = null;
-        if(mCompositeDisposable != null){
-            mCompositeDisposable.clear();
-        }
-    }
+    //订阅事件
+    void subscribleEvent();
 
-    @Override
-    public void addSubcriber(Disposable disposable){
-        if(mCompositeDisposable == null){
-            mCompositeDisposable = new CompositeDisposable();
-        }
-        mCompositeDisposable.add(disposable);
-    }
+    boolean getNoImageState();
+    boolean getAutoCacheState();
+    boolean getNightModeState();
+    boolean getStatusBarState();
+    boolean getAutoUpdataState();
+    String getSelectedLanguage();
 
-    @Override
-    public void subscribleEvent() {
-        addSubcriber(
-                RxBus.getInstance().toObservable(NetWorkChangeEvent.class)
-                .subscribe(netWorkChangeEvent -> mView.showTipsView(netWorkChangeEvent.isConnection()))
-        );
-    }
-
-    @Override
-    public boolean getNoImageState() {
-        return mModel.getNoImageState();
-    }
-
-    @Override
-    public boolean getAutoCacheState() {
-        return mModel.getAutoCacheState();
-    }
-
-    @Override
-    public boolean getNightModeState() {
-        return mModel.getNightModeState();
-    }
-
-    @Override
-    public boolean getStatusBarState() {
-        return mModel.getStatusBarState();
-    }
-
-    @Override
-    public boolean getAutoUpdataState() {
-        return mModel.getAutoUpdataState();
-    }
 }

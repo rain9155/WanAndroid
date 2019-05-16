@@ -9,7 +9,7 @@ import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
-import com.example.hy.wanandroid.model.network.entity.Login;
+import com.example.hy.wanandroid.entity.Login;
 import com.example.hy.wanandroid.model.network.gson.ApiException;
 import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.utlis.RxUtils;

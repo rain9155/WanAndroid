@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.model.network.gson;
 
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.Version;
+import com.example.hy.wanandroid.entity.BaseResponse;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import java.io.IOException;

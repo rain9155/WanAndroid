@@ -49,26 +49,26 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
     @Override
     public void show(FragmentManager manager, String tag) {
-        if(this.isAdded())
-            this.dismiss();
-        else{
-            try {
-                Class dialogFragmentClass = this.getClass();
-                Field f1 = dialogFragmentClass.getDeclaredField("mDismissed");
-                Field f2 = dialogFragmentClass.getDeclaredField("mShownByMe");
-                f1.setAccessible(true);
-                f2.setAccessible(true);
-                f1.setBoolean(this, false);
-                f2.setBoolean(this, true);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            FragmentTransaction ft = manager.beginTransaction();
-            ft.add(this, tag);
-            ft.commitNowAllowingStateLoss();
+        //防止重复添加
+        if(this.isAdded()) this.dismiss();
+        //防止Activity将要销毁时不能添加而导致报错
+        try {
+            Class dialogFragmentClass = this.getClass();
+            Field f1 = dialogFragmentClass.getDeclaredField("mDismissed");
+            Field f2 = dialogFragmentClass.getDeclaredField("mShownByMe");
+            f1.setAccessible(true);
+            f2.setAccessible(true);
+            f1.setBoolean(this, false);
+            f2.setBoolean(this, true);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.add(this, tag);
+        ft.commitNowAllowingStateLoss();
+
     }
 
     /**

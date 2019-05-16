@@ -1,23 +1,19 @@
 package com.example.hy.wanandroid.adapter;
 
 import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
 import android.text.Html;
-import android.view.View;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.commonlib.utils.CommonUtil;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.entity.Article;
 
 import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 
 /**
  * Created by 陈健宇 at 2018/12/31

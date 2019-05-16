@@ -1,8 +1,8 @@
 package com.example.hy.wanandroid.model.network.api;
 
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.Articles;
-import com.example.hy.wanandroid.model.network.entity.HotKey;
+import com.example.hy.wanandroid.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.Articles;
+import com.example.hy.wanandroid.entity.HotKey;
 
 import java.util.List;
 

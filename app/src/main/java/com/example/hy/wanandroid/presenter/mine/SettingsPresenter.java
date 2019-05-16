@@ -3,12 +3,13 @@ package com.example.hy.wanandroid.presenter.mine;
 import android.content.res.Resources;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.ClearCacheEvent;
+import com.example.hy.wanandroid.event.LanguageEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
 import com.example.hy.wanandroid.event.SettingsNightModeEvent;
@@ -16,7 +17,7 @@ import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.event.UpdataEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.Version;
+import com.example.hy.wanandroid.entity.Version;
 import com.example.commonlib.utils.FileUtil;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
@@ -29,7 +30,7 @@ import io.reactivex.functions.Predicate;
  * Settings的Presenter
  * Created by 陈健宇 at 2018/11/26
  */
-public class SettingsPresenter extends BasePresenter<SettingsContract.View> implements SettingsContract.Presenter{
+public class SettingsPresenter extends BaseMvpPresenter<SettingsContract.View> implements SettingsContract.Presenter{
 
     private boolean isUpdata = false;
 
@@ -71,6 +72,14 @@ public class SettingsPresenter extends BasePresenter<SettingsContract.View> impl
         addSubcriber(
                 RxBus.getInstance().toObservable(ClearCacheEvent.class)
                 .subscribe(clearCacheEvent -> mView.clearCache())
+        );
+
+        addSubcriber(
+                RxBus.getInstance().toObservable(LanguageEvent.class)
+                .subscribe(languageEvent -> {
+                    mModel.setSelectedLanguage(languageEvent.getLanguage());
+                    mView.hadleLanguage();
+                })
         );
     }
 

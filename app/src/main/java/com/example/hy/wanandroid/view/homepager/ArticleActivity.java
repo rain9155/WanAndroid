@@ -2,8 +2,6 @@ package com.example.hy.wanandroid.view.homepager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,9 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
-import com.example.hy.wanandroid.bean.ArticleBean;
+import com.example.hy.wanandroid.entity.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
@@ -70,6 +67,7 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
     @Override
     protected void inject() {
         DaggerArticleActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+
     }
 
     @Override

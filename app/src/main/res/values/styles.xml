@@ -29,6 +29,14 @@
         <item name="android:activityOpenExitAnimation">@anim/anim_open_exit</item>
         <item name="android:activityCloseExitAnimation">@anim/anim_close_exit</item>
         <item name="android:activityCloseEnterAnimation">@anim/anim_close_enter</item>
+        <item name="android:taskOpenEnterAnimation">@anim/anim_open_enter</item>
+        <item name="android:taskOpenExitAnimation">@anim/anim_open_exit</item>
+        <item name="android:taskCloseExitAnimation">@anim/anim_close_exit</item>
+        <item name="android:taskCloseEnterAnimation">@anim/anim_close_enter</item>
+        <item name="android:taskToFrontEnterAnimation">@anim/anim_open_enter</item>
+        <item name="android:taskToFrontExitAnimation">@anim/anim_open_exit</item>
+        <item name="android:taskToBackExitAnimation">@anim/anim_close_exit</item>
+        <item name="android:taskToBackEnterAnimation">@anim/anim_close_enter</item>
     </style>
 
     <style name="TipWindowAnim">

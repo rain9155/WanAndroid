@@ -1,6 +1,6 @@
 package com.example.hy.wanandroid.utlis;
 
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.gson.ApiException;
 
 import io.reactivex.Observable;

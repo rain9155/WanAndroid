@@ -20,6 +20,7 @@ import androidx.annotation.RequiresApi;
 public class AnimUtil{
 
     public static void showByAlpha(final View view) {
+        if(view == null) return;
         int shortAnimTime = 200;
         view.setVisibility(View.VISIBLE);
         view.animate().alpha(1.0F).setDuration((long)shortAnimTime).setListener(new AnimatorListenerAdapter() {
@@ -30,10 +31,11 @@ public class AnimUtil{
     }
 
     public static void hideByAlpha(final View view) {
+        if(view == null) return;
         int shortAnimTime = 200;
         view.animate().alpha(0.0F).setDuration((long)shortAnimTime).setListener(new AnimatorListenerAdapter() {
             public void onAnimationEnd(Animator animation) {
-                view.setVisibility(View.INVISIBLE);
+                view.setVisibility(View.GONE);
             }
         }).start();
     }

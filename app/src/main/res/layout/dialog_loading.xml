@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dp_200"
     android:layout_height="@dimen/dp_200"
+    android:padding="@dimen/dp_5"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_dialog">
 

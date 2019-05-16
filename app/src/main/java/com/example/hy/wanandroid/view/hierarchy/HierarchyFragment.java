@@ -9,8 +9,8 @@ import com.example.hy.wanandroid.adapter.FirstHierarchyAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchyContract;
 import com.example.hy.wanandroid.di.module.fragment.HierarchyFragmentModule;
-import com.example.hy.wanandroid.model.network.entity.FirstHierarchy;
-import com.example.hy.wanandroid.model.network.entity.Tab;
+import com.example.hy.wanandroid.entity.FirstHierarchy;
+import com.example.hy.wanandroid.entity.Tab;
 import com.example.hy.wanandroid.presenter.hierarchy.HierarchyPresenter;
 import com.example.commonlib.utils.CommonUtil;
 import com.example.commonlib.utils.StatusBarUtil;
@@ -153,6 +153,7 @@ public class HierarchyFragment extends BaseLoadFragment<HierarchyPresenter> impl
      * @param position 一级分类id
      */
     private void starHierarchyActivity(int position) {
+        if(CommonUtil.isEmptyList(mFirstHierarchyList)) return;
         FirstHierarchy firstHierarchy = mFirstHierarchyList.get(position);
         if (firstHierarchy != null) {
             ArrayList<String> listName = new ArrayList<>(firstHierarchy.getChildren().size());

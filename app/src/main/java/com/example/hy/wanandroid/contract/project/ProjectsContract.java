@@ -1,15 +1,10 @@
 package com.example.hy.wanandroid.contract.project;
 
-import com.example.hy.wanandroid.base.presenter.IPresenter;
+import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.base.view.BaseView;
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
-import com.example.hy.wanandroid.model.network.entity.Article;
-import com.example.hy.wanandroid.model.network.entity.Articles;
-import com.example.hy.wanandroid.model.network.entity.Collection;
+import com.example.hy.wanandroid.entity.Article;
 
 import java.util.List;
-
-import io.reactivex.Observable;
 
 /**
  * 项目列表的Contract
@@ -28,7 +23,7 @@ public interface ProjectsContract {
         void autoRefresh();//自动刷新
     }
 
-    interface Presenter extends IPresenter<ProjectsContract.View> {
+    interface Presenter extends BasePresenter<View> {
         void loadProjects(int pageNum, int id);//加载项目列表
         void loadMoreProjects(int pageNum, int id);//加载更多项目列表
         void collectArticle(int id);//收藏文章

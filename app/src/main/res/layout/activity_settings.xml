@@ -18,15 +18,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
-                android:id="@+id/tv_settings_common"
+                android:id="@+id/tv_settings_base"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/secondaryText"
                 android:textSize="@dimen/dp_18"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginLeft="@dimen/dp_20"
-                android:text="@string/settingsActivity_tvSettingsCommon"/>
+                android:text="@string/settingsActivity_tvSettingsBase"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cd_base_settings"
@@ -276,6 +277,170 @@
 
             </androidx.cardview.widget.CardView>
 
+            <TextView
+                android:id="@+id/tv_settings_common"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondaryText"
+                android:textSize="@dimen/dp_18"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:text="@string/settingsActivity_tvSettingsCommon"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cd_common_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/bg_ripple"
+                app:cardBackgroundColor="@color/foreground"
+                app:cardElevation="@dimen/dp_5"
+                app:cardCornerRadius="@dimen/dp_8"
+                app:cardUseCompatPadding="true"
+                app:cardPreventCornerOverlap="false">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_10">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_mes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        style="@style/MineFragmentConstaintStyle"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/iv_mes"
+                            android:layout_width="@dimen/dp_28"
+                            android:layout_height="@dimen/dp_28"
+                            app:srcCompat="@drawable/ic_settings_mes"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_mes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settingsActivity_tvMes"
+                            style="@style/MineFragmentTextStyle"
+                            app:layout_constraintLeft_toRightOf="@id/iv_mes"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_clearCache"
+                        android:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/MineFragmentConstaintStyle"
+                        android:background="@drawable/bg_rect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_marginTop="@dimen/dp_2"
+                        app:layout_constraintTop_toBottomOf="@id/cl_mes">
+
+                        <ImageView
+                            android:id="@+id/iv_clearCache"
+                            android:layout_width="@dimen/dp_28"
+                            android:layout_height="@dimen/dp_28"
+                            app:srcCompat="@drawable/ic_settings_deleteall"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_clearCache"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settingsActivity_tvClearCache"
+                            style="@style/MineFragmentTextStyle"
+                            app:layout_constraintLeft_toRightOf="@id/iv_clearCache"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_cache"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:gravity="center"
+                            android:textColor="@color/secondaryText"
+                            android:textSize="@dimen/sp_16"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            tools:ignore="ContentDescription"
+                            tools:text="10k"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_language"
+                        android:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/MineFragmentConstaintStyle"
+                        android:background="@drawable/bg_rect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_marginTop="@dimen/dp_2"
+                        app:layout_constraintTop_toBottomOf="@id/cl_clearCache">
+
+                        <ImageView
+                            android:id="@+id/iv_language"
+                            android:layout_width="@dimen/dp_28"
+                            android:layout_height="@dimen/dp_28"
+                            app:srcCompat="@drawable/ic_settings_language"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_language"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settingsActivity_tvSettingsLan"
+                            style="@style/MineFragmentTextStyle"
+                            app:layout_constraintLeft_toRightOf="@id/iv_language"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_language_hint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:gravity="center"
+                            android:textColor="@color/secondaryText"
+                            android:textSize="@dimen/sp_16"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            tools:ignore="ContentDescription"
+                            tools:text="跟随系统"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
 
             <TextView
                 android:id="@+id/tv_settings_other"
@@ -340,87 +505,6 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toTopOf="parent"/>
 
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_mes"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_rect"
-                        android:clickable="true"
-                        android:focusable="true"
-                        style="@style/MineFragmentConstaintStyle"
-                        app:layout_constraintTop_toBottomOf="@id/cl_feedBack">
-
-                        <ImageView
-                            android:id="@+id/iv_mes"
-                            android:layout_width="@dimen/dp_28"
-                            android:layout_height="@dimen/dp_28"
-                            app:srcCompat="@drawable/ic_settings_mes"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:id="@+id/tv_mes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/settingsActivity_tvMes"
-                            style="@style/MineFragmentTextStyle"
-                            app:layout_constraintLeft_toRightOf="@id/iv_mes"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_clearCache"
-                        android:visibility="visible"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/MineFragmentConstaintStyle"
-                        android:background="@drawable/bg_rect"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_marginTop="@dimen/dp_2"
-                        app:layout_constraintTop_toBottomOf="@id/cl_mes">
-
-                        <ImageView
-                            android:id="@+id/iv_clearCache"
-                            android:layout_width="@dimen/dp_28"
-                            android:layout_height="@dimen/dp_28"
-                            app:srcCompat="@drawable/ic_settings_deleteall"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:id="@+id/tv_clearCache"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/settingsActivity_tvClearCache"
-                            style="@style/MineFragmentTextStyle"
-                            app:layout_constraintLeft_toRightOf="@id/iv_clearCache"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/tv_cache"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_28"
-                            android:src="@drawable/ic_mine_next"
-                            android:gravity="center"
-                            android:textColor="@color/secondaryText"
-                            android:textSize="@dimen/sp_16"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            tools:ignore="ContentDescription"
-                            tools:text="10k"/>
-
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -431,7 +515,7 @@
                         android:background="@drawable/bg_rect"
                         android:clickable="true"
                         android:focusable="true"
-                        app:layout_constraintTop_toBottomOf="@id/cl_clearCache">
+                        app:layout_constraintTop_toBottomOf="@id/cl_feedBack">
 
                         <ImageView
                             android:id="@+id/iv_updata"

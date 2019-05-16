@@ -31,8 +31,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".view.MainActivity"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" />
         <activity
             android:name=".view.hierarchy.HierarchySecondActivity"
             android:launchMode="singleTask" />
@@ -49,15 +48,14 @@
         <activity
             android:name=".view.mine.LoginActivity"
             android:label="@string/title_activity_login"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTask" />
         <activity
             android:name=".view.mine.RegisterActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTask" />
         <activity
             android:name=".view.mine.AboutUsActivity"
             android:label="@string/title_activity_about_us"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.mine.CollectionActivity"
             android:launchMode="singleTask" />
@@ -66,7 +64,7 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".view.LaunchActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:theme="@style/LauncherTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -98,7 +96,9 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".view.mine.CropperImageActivity"></activity>
+        <activity
+            android:name=".view.mine.CropperImageActivity"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

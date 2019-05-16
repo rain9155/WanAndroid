@@ -1,18 +1,17 @@
 package com.example.hy.wanandroid.presenter.mine;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.event.ChangeFaceEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
-import com.example.hy.wanandroid.event.SettingsNightModeEvent;
 import com.example.hy.wanandroid.model.DataModel;
-import com.example.hy.wanandroid.model.network.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.Login;
+import com.example.hy.wanandroid.entity.Login;
 import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
@@ -22,7 +21,7 @@ import javax.inject.Inject;
  * 我的界面的Presenter
  * Created by 陈健宇 at 2018/10/23
  */
-public class MinePresenter extends BasePresenter<MineContract.View> implements MineContract.Presenter{
+public class MinePresenter extends BaseMvpPresenter<MineContract.View> implements MineContract.Presenter{
 
     @Inject
     public MinePresenter(DataModel dataModel) {

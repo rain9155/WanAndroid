@@ -1,12 +1,12 @@
 package com.example.hy.wanandroid.presenter.hierarchy;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
+import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchyContract;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.NetworkHelper;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
-import com.example.hy.wanandroid.model.network.entity.FirstHierarchy;
+import com.example.hy.wanandroid.entity.FirstHierarchy;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
@@ -18,7 +18,7 @@ import javax.inject.Inject;
  * 体系的Presenter
  * Created by 陈健宇 at 2018/10/23
  */
-public class HierarchyPresenter extends BasePresenter<HierarchyContract.View> implements HierarchyContract.Presenter{
+public class HierarchyPresenter extends BaseMvpPresenter<HierarchyContract.View> implements HierarchyContract.Presenter{
 
 
     private NetworkHelper mNetworkHelper;

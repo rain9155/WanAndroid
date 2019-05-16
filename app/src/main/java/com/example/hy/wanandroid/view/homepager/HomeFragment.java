@@ -2,28 +2,22 @@ package com.example.hy.wanandroid.view.homepager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.example.commonlib.utils.LogUtil;
-import com.example.commonlib.utils.ShareUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
-import com.example.hy.wanandroid.bean.ArticleBean;
+import com.example.hy.wanandroid.entity.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
 import com.example.hy.wanandroid.di.module.fragment.HomeFragmentModule;
-import com.example.hy.wanandroid.model.network.entity.Article;
-import com.example.hy.wanandroid.model.network.entity.BannerData;
+import com.example.hy.wanandroid.entity.Article;
+import com.example.hy.wanandroid.entity.BannerData;
 import com.example.hy.wanandroid.presenter.homepager.HomePresenter;
 import com.example.commonlib.utils.AnimUtil;
 import com.example.hy.wanandroid.utlis.BannerImageLoader;
@@ -43,14 +37,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.inject.Provider;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import dagger.Lazy;
-import dagger.Provides;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -135,6 +127,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
         rvArticles.setAdapter(mArticlesAdapter);
 
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+            if(CommonUtil.isEmptyList(mArticles)) return;
             mArticlePosition = position;
             mArticle = mArticles.get(position);
             ArticleBean articleBean = new ArticleBean(mArticle);
@@ -142,6 +135,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
         });
         mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
+            if(CommonUtil.isEmptyList(mArticles)) return;
             mArticlePosition = position;
             mArticle = mArticles.get(position);
             if(!User.getInstance().isLoginStatus()){
@@ -153,6 +147,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
             AnimUtil.scale(view, -1);
         });
         mArticlesAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            if(CommonUtil.isEmptyList(mArticles)) return false;
             Article article = mArticles.get(position);
             view.setOnTouchListener((v, event) -> {
                 if(event.getAction() == MotionEvent.ACTION_UP && isPress){

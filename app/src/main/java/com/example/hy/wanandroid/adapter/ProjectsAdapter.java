@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.model.network.entity.Article;
+import com.example.hy.wanandroid.entity.Article;
 import com.example.commonlib.utils.CommonUtil;
 import com.example.hy.wanandroid.utlis.ImageUtil;
 
