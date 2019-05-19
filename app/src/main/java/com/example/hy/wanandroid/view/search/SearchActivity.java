@@ -222,6 +222,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode != RESULT_OK) return;
+        if(CommonUtil.isEmptyList(mSearchResquestList)) return;
         Article article = mSearchResquestList.get(mArticlePosition);
         switch (requestCode){
             case Constant.REQUEST_COLLECT_ARTICLE:

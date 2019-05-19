@@ -494,9 +494,8 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
      * 获取一个View的缓存视图
      */
     private Bitmap getCacheBitmapFromView(View view) {
-        final boolean drawingCacheEnabled = true;
-        view.setDrawingCacheEnabled(drawingCacheEnabled);
-        view.buildDrawingCache(drawingCacheEnabled);
+        view.setDrawingCacheEnabled(true);
+        //view.buildDrawingCache(true);
         final Bitmap drawingCache = view.getDrawingCache();
         Bitmap bitmap;
         if (drawingCache != null) {

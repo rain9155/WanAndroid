@@ -304,6 +304,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode != RESULT_OK) return;
+        if(CommonUtil.isEmptyList(mArticles)) return;
         Article article = mArticles.get(mArticlePosition);
         switch (requestCode){
             case Constant.REQUEST_COLLECT_ARTICLE:
