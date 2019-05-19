@@ -1,7 +1,7 @@
 # WanAndroid
 ### WanAndroid，一款基于MVP + Rxjava2 + Dagger2 + Retrofit + Material Design的应用, 欢迎大家start、fork。
 ### Pre
-本人小白一个，一直以来都想自己做一个完整的app，所以本项目就在我的闲暇时间中形成，参考了几个WanAndroid开源应用，一开始遇到很多不懂的，也靠自己解决了，所以会一直添加新的功能，解决bug，不断打造成一款持续稳定, 功能完善的WanAndroid应用。
+本人小白一个，一直以来都想自己做一个完整的app，所以本项目就在我的闲暇时间中形成，一开始遇到很多不懂的，也靠自己解决了，所以会一直添加新的功能，解决bug，不断打造成一款持续稳定, 功能完善的WanAndroid应用。
 ### Features
 - [x] 首页
 - [x] 知识体系
@@ -14,6 +14,7 @@
 - [x] 文章内容，分享文章
 - [x] 夜间模式，沉浸式切换，清除缓存
 - [x] 应用内检查更新
+- [X] ...
 ### Tips
 * 本人能力有限，可能会在bug，如有任何问题，欢迎[issues](https://github.com/rain9155/WanAndroid/issues)
 * 项目中所用到的api均由[WanAndroid网站](http://www.wanandroid.com/blog/show/2)提供 
