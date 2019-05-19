@@ -17,6 +17,7 @@
 ### Tips
 * 本人能力有限，可能会在bug，如有任何问题，欢迎[issues](https://github.com/rain9155/WanAndroid/issues)
 * 项目中所用到的api均由[WanAndroid网站](http://www.wanandroid.com/blog/show/2)提供 
+* 项目中使用的[MVP开发模板](https://github.com/rain9155/AndroidTemplate)
 ### Preview
 <br> ![wan1](/screenshots/wan1.gif) ![wan2](/screenshots/wan2.gif) <br>
  <br> ![wan3](/screenshots/wan3.gif) ![wan4](/screenshots/wan4.gif) <br>
