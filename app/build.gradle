@@ -89,6 +89,7 @@ dependencies {
 
     implementation project(':commonlib')
     implementation project(':loading')
+    implementation project(':permission')
 
     //android support
     implementation rootProject.ext.supportDependency

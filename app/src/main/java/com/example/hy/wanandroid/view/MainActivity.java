@@ -21,7 +21,7 @@ import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
-import com.example.hy.wanandroid.entity.Permission;
+import com.example.permission.Permission;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.MainContract;
@@ -30,8 +30,6 @@ import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.proxy.ActivityResultFragment;
 import com.example.hy.wanandroid.proxy.ActivityResultHelper;
-import com.example.hy.wanandroid.proxy.PermissionFragment;
-import com.example.hy.wanandroid.proxy.PermissionHelper;
 import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utlis.DownloadUtil;
@@ -45,6 +43,8 @@ import com.example.hy.wanandroid.view.wechat.WeChatFragment;
 import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
+import com.example.permission.PermissionFragment;
+import com.example.permission.PermissionHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -123,6 +123,31 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             mFragments[4] = findFragmentByTag(MineFragment.class.getName());
             bnvBtm.setSelectedItemId(getSelectedId(mPresenter.getCurrentItem()));
         }
+
+        PermissionHelper.getInstance(this).requestPermissions(
+                new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+        new PermissionFragment.IPermissomCallback(){
+
+            @Override
+            public void onAccepted(Permission permission) {
+                LogUtil.d(LogUtil.TAG_COMMON, permission.name);
+            }
+
+            @Override
+            public void onDenied(Permission permission) {
+                LogUtil.d(LogUtil.TAG_COMMON, permission.name + " denied");
+            }
+
+            @Override
+            public void onDeniedAndReject(Permission permission) {
+                LogUtil.d(LogUtil.TAG_COMMON, permission.name + " deniedAndReject");
+            }
+
+            @Override
+            public void onAlreadyGranted() {
+                LogUtil.d(LogUtil.TAG_COMMON, " alreadyGranted");
+            }
+        });
     }
 
     @Override

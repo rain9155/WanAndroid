@@ -1,6 +1,11 @@
 package com.example.hy.wanandroid.view.hierarchy;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +29,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +41,8 @@ import butterknife.BindView;
  * Created by 陈健宇 at 2018/10/23
  */
 public class HierarchyFragment extends BaseLoadFragment<HierarchyPresenter> implements HierarchyContract.View {
+
+    private final String TAG = HierarchyFragment.class.getSimpleName();
 
     @BindView(R.id.tl_common)
     Toolbar tlCommon;

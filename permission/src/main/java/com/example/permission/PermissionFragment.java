@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.proxy;
+package com.example.permission;
 
 
 import android.app.Activity;
@@ -6,8 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseArray;
-
-import com.example.hy.wanandroid.entity.Permission;
 
 import java.util.Random;
 

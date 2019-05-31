@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.proxy;
+package com.example.permission;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -29,8 +29,16 @@ public class PermissionHelper {
     }
 
     public static PermissionHelper getInstance(Activity activity){
-        if(sinstance == null)
+        if(sinstance == null){
+            synchronized (PermissionHelper.class){
+                PermissionHelper permissionHelper;
+                if(sinstance == null){
+                    permissionHelper = new PermissionHelper(activity);
+                    sinstance = permissionHelper;
+                }
+            }
             sinstance = new PermissionHelper(activity);
+        }
         return sinstance;
     }
 
@@ -49,6 +57,8 @@ public class PermissionHelper {
         else
             getPermissionFragment(mActivity).requestPermissions(permissions, requestCode, callback);
     }
+
+
 
     /**
      * 检查是否符合申请条件
@@ -69,8 +79,7 @@ public class PermissionHelper {
     }
 
     private PermissionFragment getPermissionFragment(Activity activity){
-        if(!(activity instanceof FragmentActivity))
-            throw new IllegalArgumentException("The argument passed must be FragmentActivity or it's sub class");
+        if(!(activity instanceof FragmentActivity)) throw new IllegalArgumentException("The argument passed must be FragmentActivity or it's sub class");
 
         FragmentManager manager = ((FragmentActivity)activity).getSupportFragmentManager();
         PermissionFragment fragment = (PermissionFragment) manager.findFragmentByTag(TAG_PERMISSION_FRAGMENT);

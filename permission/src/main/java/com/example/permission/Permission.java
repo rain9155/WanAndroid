@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.entity;
+package com.example.permission;
 
 import androidx.annotation.Nullable;
 
