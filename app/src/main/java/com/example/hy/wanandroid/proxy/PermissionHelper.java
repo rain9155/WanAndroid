@@ -1,16 +1,16 @@
-package com.example.permission;
+package com.example.hy.wanandroid.proxy;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+
+import java.util.ArrayList;
 
 /**
  * 申请权限帮助类

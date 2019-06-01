@@ -19,7 +19,7 @@ import com.example.commonlib.utils.IntentUtil;
 import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
-import com.example.permission.Permission;
+import com.example.permission.bean.Permission;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;

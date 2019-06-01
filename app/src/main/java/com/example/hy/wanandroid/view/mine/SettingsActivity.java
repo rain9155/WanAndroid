@@ -34,7 +34,7 @@ import com.example.commonlib.utils.ShareUtil;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
-import com.example.permission.Permission;
+import com.example.permission.bean.Permission;
 import com.example.hy.wanandroid.component.UpdataService;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;

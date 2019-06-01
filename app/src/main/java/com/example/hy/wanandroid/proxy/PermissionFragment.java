@@ -1,4 +1,4 @@
-package com.example.permission;
+package com.example.hy.wanandroid.proxy;
 
 
 import android.app.Activity;
@@ -7,14 +7,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseArray;
 
-import java.util.Random;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.permission.bean.Permission;
+import java.util.Random;
 
 /**
  * 申请权限的代理Fragment
@@ -88,6 +86,14 @@ public class PermissionFragment extends Fragment {
             tryCount++;
         }while (mPermissomCallbacks.indexOfKey(requestCode) >= 0 && tryCount < 10);
         return requestCode;
+    }
+
+    //回调
+    public interface IPermissomCallback{
+        void onAccepted(Permission permission);//授权
+        void onDenied(Permission permission);//没有授权
+        void onDeniedAndReject(Permission permission);//没有授权并勾选了don’t ask again
+        void onAlreadyGranted();//已经同意了无需再授权权限 或 版本小于M
     }
 
 }
