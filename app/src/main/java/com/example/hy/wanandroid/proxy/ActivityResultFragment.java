@@ -46,9 +46,9 @@ public class ActivityResultFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         IResultCallback callback = mResultCallbacks.get(requestCode);
         if(callback == null) return;
-
         mResultCallbacks.remove(requestCode);
         if(resultCode == Activity.RESULT_OK)
+
             callback.onResultOk(data);
         else if (requestCode == Activity.RESULT_CANCELED)
             callback.onResultCancel(data);

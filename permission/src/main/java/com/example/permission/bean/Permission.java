@@ -13,6 +13,10 @@ public class Permission {
     public final boolean granted;
     public final boolean shouldShowRequestPermissionRationable;
 
+    public Permission(boolean granted){
+        this("特殊权限", granted);
+    }
+
     public Permission(String name){
         this(name, false);
     }

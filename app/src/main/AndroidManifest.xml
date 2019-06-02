@@ -31,6 +31,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".view.MainActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" />
         <activity
             android:name=".view.hierarchy.HierarchySecondActivity"

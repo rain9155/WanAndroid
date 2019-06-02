@@ -33,6 +33,7 @@ import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
 import com.example.permission.PermissionFragment;
 import com.example.permission.PermissionHelper;
+import com.example.permission.callback.IPermissionCallback;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -177,37 +178,25 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         // handle result of pick image chooser
         if(requestCode == Constant.REQUEST_PICK_IMAGE_CHOOSER){
             Uri imageUri = CropImage.getPickImageResultUri(mActivity, data);
-
-            PermissionHelper.getInstance(mActivity).requestPermissions(
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+            PermissionHelper.getInstance(mActivity).requestPermission(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
                     CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE,
-                    new PermissionFragment.IPermissomCallback() {
-                @Override
-                public void onAccepted(Permission permission) {//同意了权限
-                    LogUtil.d(LogUtil.TAG_COMMON, " onAccepted()");
-                    if (imageUri != null)
-                        CropperImageActivity.startActivityByFragment(mActivity, MineFragment.this, imageUri, mChangeFlag);
-                }
+                    new IPermissionCallback() {
+                        @Override
+                        public void onAccepted(Permission permission) {
+                            if (imageUri != null) CropperImageActivity.startActivityByFragment(mActivity, MineFragment.this, imageUri, mChangeFlag);
+                        }
 
-                @Override
-                public void onDenied(Permission permission) {//不同意了权限
-                    LogUtil.d(LogUtil.TAG_COMMON, " onDenied()");
-                    showToast(mActivity, getString(R.string.mineFragment_permissions_denied));
-                }
+                        @Override
+                        public void onDenied(Permission permission) {
+                            showToast(mActivity, getString(R.string.mineFragment_permissions_denied));
+                        }
 
-                @Override
-                public void onDeniedAndReject(Permission permission) {//并勾选了don’t ask again并且拒绝了权限，shouldShowRequestPermissionRationale会返回false，此时应该引导用户去开启此权限
-                    LogUtil.d(LogUtil.TAG_COMMON, " onDeniedAndReject()");
-                    mGotoDetialDialog.get().show(getChildFragmentManager(), "tag20");
-                }
-
-                @Override
-                public void onAlreadyGranted() {///已经同意了无需再授权权限 或 版本小于M
-                    LogUtil.d(LogUtil.TAG_COMMON, "onGranted()");
-                    CropperImageActivity.startActivityByFragment(mActivity, MineFragment.this, imageUri, mChangeFlag);
-                    //CropImage.activity(imageUri).start(mActivity);
-                }
-            });
+                        @Override
+                        public void onDeniedAndReject(Permission permission) {
+                            mGotoDetialDialog.get().show(getChildFragmentManager(), GotoDetialDialog.class.getName());
+                        }
+                    });
         }
 
         //handle result of Cropper Activity

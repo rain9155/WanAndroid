@@ -48,6 +48,7 @@ import com.example.hy.wanandroid.widget.dialog.LanguageDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 import com.example.permission.PermissionFragment;
 import com.example.permission.PermissionHelper;
+import com.example.permission.callback.IPermissionCallback;
 
 import java.io.File;
 
@@ -446,13 +447,14 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
     @Override
     public void upDataVersion() {
-        PermissionHelper.getInstance(this).requestPermissions(
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+        PermissionHelper.getInstance(this).requestPermission(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
-                new PermissionFragment.IPermissomCallback() {
+                new IPermissionCallback() {
                     @Override
                     public void onAccepted(Permission permission) {
                         DownloadUtil.downloadApk(SettingsActivity.this, mNewVersionName);
+
                     }
 
                     @Override
@@ -463,11 +465,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
                     @Override
                     public void onDeniedAndReject(Permission permission) {
                         mGotoDetialDialog.get().show(getSupportFragmentManager(), GotoDetialDialog.class.getName());
-                    }
-
-                    @Override
-                    public void onAlreadyGranted() {
-                        DownloadUtil.downloadApk(SettingsActivity.this, mNewVersionName);
                     }
                 });
     }

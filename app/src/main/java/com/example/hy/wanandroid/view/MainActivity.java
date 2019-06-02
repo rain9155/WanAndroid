@@ -5,10 +5,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
@@ -28,8 +25,6 @@ import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityComponent;
 import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.event.ToppingEvent;
-import com.example.hy.wanandroid.proxy.ActivityResultFragment;
-import com.example.hy.wanandroid.proxy.ActivityResultHelper;
 import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.utlis.DownloadUtil;
@@ -43,8 +38,10 @@ import com.example.hy.wanandroid.view.wechat.WeChatFragment;
 import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
-import com.example.permission.PermissionFragment;
 import com.example.permission.PermissionHelper;
+import com.example.permission.bean.SpecialPermission;
+import com.example.permission.callback.IPermissionCallback;
+import com.example.permission.callback.ISpecialPermissionCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -76,6 +73,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     private MainActivityComponent mMainActivityComponent;
     private ObjectAnimator  mShowNavAnimator;
     private ViewPropertyAnimator mHideFbtnAnimator, mShowFbtnAnimator;
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Inject
     MainPresenter mPresenter;
@@ -123,31 +122,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             mFragments[4] = findFragmentByTag(MineFragment.class.getName());
             bnvBtm.setSelectedItemId(getSelectedId(mPresenter.getCurrentItem()));
         }
-
-        PermissionHelper.getInstance(this).requestPermissions(
-                new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-        new PermissionFragment.IPermissomCallback(){
-
-            @Override
-            public void onAccepted(Permission permission) {
-                LogUtil.d(LogUtil.TAG_COMMON, permission.name);
-            }
-
-            @Override
-            public void onDenied(Permission permission) {
-                LogUtil.d(LogUtil.TAG_COMMON, permission.name + " denied");
-            }
-
-            @Override
-            public void onDeniedAndReject(Permission permission) {
-                LogUtil.d(LogUtil.TAG_COMMON, permission.name + " deniedAndReject");
-            }
-
-            @Override
-            public void onAlreadyGranted() {
-                LogUtil.d(LogUtil.TAG_COMMON, " alreadyGranted");
-            }
-        });
     }
 
     @Override
@@ -259,10 +233,10 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public void upDataVersion() {
-        PermissionHelper.getInstance(this).requestPermissions(
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+        PermissionHelper.getInstance(this).requestPermission(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
-                new PermissionFragment.IPermissomCallback() {
+                new IPermissionCallback() {
                     @Override
                     public void onAccepted(Permission permission) {
                         DownloadUtil.downloadApk(MainActivity.this, mNewVersionName);
@@ -276,11 +250,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                     @Override
                     public void onDeniedAndReject(Permission permission) {
                         mGotoDetialDialog.get().show(getSupportFragmentManager(), "tag22");
-                    }
 
-                    @Override
-                    public void onAlreadyGranted() {
-                        DownloadUtil.downloadApk(MainActivity.this, mNewVersionName);
                     }
                 });
     }
@@ -292,31 +262,45 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public void installApk() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            boolean hasInstallPermission = getPackageManager().canRequestPackageInstalls();
-            if (hasInstallPermission)
-                installApk(this);
-             else {
-                //跳转至“安装未知应用”权限界面，引导用户开启权限
-                Uri selfPackageUri = Uri.parse("package:" + this.getPackageName());
-                Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, selfPackageUri);
-                ActivityResultHelper.getInstance(MainActivity.this).startActivityForResult(
-                        intent,
-                        Constant.REQUEST_CODE_UNKNOWN_APP,
-                        new ActivityResultFragment.IResultCallback() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+////            boolean hasInstallPermission = getPackageManager().canRequestPackageInstalls();
+////            if (hasInstallPermission)
+////                installApk(this);
+////             else {
+////                //跳转至“安装未知应用”权限界面，引导用户开启权限
+////                Uri selfPackageUri = Uri.parse("package:" + this.getPackageName());
+////                Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, selfPackageUri);
+////                ActivityResultHelper.getInstance(MainActivity.this).startActivityForResult(
+////                        intent,
+////                        Constant.REQUEST_CODE_UNKNOWN_APP,
+////                        new ActivityResultFragment.IResultCallback() {
+////                    @Override
+////                    public void onResultOk(Intent data) {
+////                        installApk(MainActivity.this);
+////                    }
+////
+////                    @Override
+////                    public void onResultCancel(Intent data) {
+////
+////                    }
+////                });
+////            }
+////        }else
+////            installApk(this);
+        PermissionHelper.getInstance(this).requestSpecialPermission(
+                SpecialPermission.INSTALL_UNKNOWN_APP,
+                new ISpecialPermissionCallback() {
                     @Override
-                    public void onResultOk(Intent data) {
+                    public void onAccepted(Permission permission) {
                         installApk(MainActivity.this);
                     }
 
                     @Override
-                    public void onResultCancel(Intent data) {
-
+                    public void onDenied(Permission permission) {
+                        LogUtil.d(TAG, "onDenied(): " + permission.toString());
                     }
-                });
-            }
-        }else
-            installApk(this);
+                }
+        );
     }
 
     public MainActivityComponent getComponent(){
