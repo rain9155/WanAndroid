@@ -3,6 +3,7 @@ package com.example.permission.callback;
 import android.content.Intent;
 
 import com.example.permission.bean.Permission;
+import com.example.permission.bean.SpecialPermission;
 
 /**
  * 特殊权限申请回调接口
@@ -10,8 +11,10 @@ import com.example.permission.bean.Permission;
  */
 public interface ISpecialPermissionCallback {
 
-    void onAccepted(Permission permission);//setResult(OK)
+    void onAccepted(SpecialPermission permission);
 
-    void onDenied(Permission permission);//setResult(CANCEL)
+    void onDenied(SpecialPermission permission);
+
+    default void onError(String error){}
 
 }

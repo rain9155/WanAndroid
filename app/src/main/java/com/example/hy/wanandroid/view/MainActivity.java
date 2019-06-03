@@ -122,6 +122,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             mFragments[4] = findFragmentByTag(MineFragment.class.getName());
             bnvBtm.setSelectedItemId(getSelectedId(mPresenter.getCurrentItem()));
         }
+
     }
 
     @Override
@@ -223,7 +224,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     public void showUpdataDialog(String content) {
         mVersionDialog.get().setContentText(content);
         mVersionDialog.get().setIsMain(true);
-        mVersionDialog.get().show(getSupportFragmentManager(), "tag5");
+        mVersionDialog.get().show(getSupportFragmentManager(), VersionDialog.class.getName());
     }
 
     @Override
@@ -233,7 +234,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public void upDataVersion() {
-        PermissionHelper.getInstance(this).requestPermission(
+        PermissionHelper.getInstance().with(this).requestPermission(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
                 new IPermissionCallback() {
@@ -249,7 +250,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
                     @Override
                     public void onDeniedAndReject(Permission permission) {
-                        mGotoDetialDialog.get().show(getSupportFragmentManager(), "tag22");
+                        mGotoDetialDialog.get().show(getSupportFragmentManager(), GotoDetialDialog.class.getSimpleName());
 
                     }
                 });
@@ -262,41 +263,17 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public void installApk() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-////            boolean hasInstallPermission = getPackageManager().canRequestPackageInstalls();
-////            if (hasInstallPermission)
-////                installApk(this);
-////             else {
-////                //跳转至“安装未知应用”权限界面，引导用户开启权限
-////                Uri selfPackageUri = Uri.parse("package:" + this.getPackageName());
-////                Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, selfPackageUri);
-////                ActivityResultHelper.getInstance(MainActivity.this).startActivityForResult(
-////                        intent,
-////                        Constant.REQUEST_CODE_UNKNOWN_APP,
-////                        new ActivityResultFragment.IResultCallback() {
-////                    @Override
-////                    public void onResultOk(Intent data) {
-////                        installApk(MainActivity.this);
-////                    }
-////
-////                    @Override
-////                    public void onResultCancel(Intent data) {
-////
-////                    }
-////                });
-////            }
-////        }else
-////            installApk(this);
-        PermissionHelper.getInstance(this).requestSpecialPermission(
+        PermissionHelper.getInstance().with(this).requestSpecialPermission(
                 SpecialPermission.INSTALL_UNKNOWN_APP,
                 new ISpecialPermissionCallback() {
                     @Override
-                    public void onAccepted(Permission permission) {
+                    public void onAccepted(SpecialPermission permission) {
+                        LogUtil.d(TAG, "onAccepted(): " + permission.toString());
                         installApk(MainActivity.this);
                     }
 
                     @Override
-                    public void onDenied(Permission permission) {
+                    public void onDenied(SpecialPermission permission) {
                         LogUtil.d(TAG, "onDenied(): " + permission.toString());
                     }
                 }

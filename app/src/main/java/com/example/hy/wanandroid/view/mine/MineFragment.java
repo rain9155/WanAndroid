@@ -178,7 +178,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         // handle result of pick image chooser
         if(requestCode == Constant.REQUEST_PICK_IMAGE_CHOOSER){
             Uri imageUri = CropImage.getPickImageResultUri(mActivity, data);
-            PermissionHelper.getInstance(mActivity).requestPermission(
+            PermissionHelper.getInstance().with(mActivity).requestPermission(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE,
                     new IPermissionCallback() {

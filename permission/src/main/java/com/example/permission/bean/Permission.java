@@ -12,23 +12,30 @@ public class Permission {
     public final String name;
     public final boolean granted;
     public final boolean shouldShowRequestPermissionRationable;
+    public final SpecialPermission specialPermission;
 
-    public Permission(boolean granted){
-        this("特殊权限", granted);
-    }
 
     public Permission(String name){
         this(name, false);
     }
 
     public Permission(String name, boolean granted){
-        this(name, granted, true);
+        this(name, granted, true, null);
     }
 
     public Permission(String name, boolean granted, boolean shouldShowRequestPermissionRationable){
+        this(name, granted, shouldShowRequestPermissionRationable, null);
+    }
+
+    public Permission(boolean granted, SpecialPermission specialPermission){
+        this(specialPermission.name(), granted, true, specialPermission);
+    }
+
+    public Permission(String name, boolean granted, boolean shouldShowRequestPermissionRationable, SpecialPermission specialPermission){
         this.name = name;
         this.granted = granted;
         this.shouldShowRequestPermissionRationable = shouldShowRequestPermissionRationable;
+        this.specialPermission = specialPermission;
     }
 
     @Override
@@ -38,6 +45,7 @@ public class Permission {
         final Permission permission = (Permission)obj;
         if(this.granted != permission.granted) return false;
         if(this.shouldShowRequestPermissionRationable != permission.shouldShowRequestPermissionRationable) return false;
+        if(this.specialPermission != permission.specialPermission) return false;
         return this.name.equals(permission.name);
     }
 
@@ -55,6 +63,6 @@ public class Permission {
         return "[PermissonName = " + name
                 + ", Granted = " + granted
                 + ", ShouldShowRequestPermissionRationable = " + shouldShowRequestPermissionRationable
-                + "]";
+                + ", SpecialPermission = " + specialPermission.name() + "]";
     }
 }

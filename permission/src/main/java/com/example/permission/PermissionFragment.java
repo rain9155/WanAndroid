@@ -101,21 +101,19 @@ public class PermissionFragment extends Fragment {
         IPermissionsResultCallback callback = mPermissionsResult.get(requestCode);
         if(callback != null){
             mPermissionsResult.remove(requestCode);
-                SpecialPermission special = mSpecialPermissions.get(requestCode);
-                mSpecialPermissions.remove(requestCode);
-                if(requestCode == RESULT_OK){
-                boolean isGranted = false;
-                Permission permission;
-                switch (special){
-                    case INSTALL_UNKNOWN_APP:
-                        isGranted = PermissionUtil.checkSpecialInstallUnkownApp(mActivity);
-                        break;
-                    default:
-                        break;
-                }
-                permission = new Permission(isGranted);
-                callback.OnPermissionsResult(new Permission[]{permission});
+            SpecialPermission special = mSpecialPermissions.get(requestCode);
+            mSpecialPermissions.remove(requestCode);
+            boolean isGranted = false;
+            Permission permission = null;
+            switch (special){
+                case INSTALL_UNKNOWN_APP:
+                    isGranted = PermissionUtil.checkSpecialInstallUnkownApp(mActivity);
+                    permission = new Permission(isGranted, special);
+                    break;
+                default:
+                    break;
             }
+            callback.OnPermissionsResult(new Permission[]{permission});
         }
     }
 

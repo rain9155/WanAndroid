@@ -14,12 +14,15 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.commonlib.utils.LogUtil;
 import com.example.permission.bean.Permission;
 import com.example.permission.bean.SpecialPermission;
 import com.example.permission.callback.IPermissionCallback;
 import com.example.permission.callback.IPermissionsCallback;
 import com.example.permission.callback.ISpecialPermissionCallback;
 import com.example.permission.utils.PermissionUtil;
+
+import static com.example.permission.bean.SpecialPermission.INSTALL_UNKNOWN_APP;
 
 /**
  * 申请权限帮助类
@@ -28,25 +31,29 @@ import com.example.permission.utils.PermissionUtil;
 public class PermissionHelper {
 
     private static final String TAG_PERMISSION_FRAGMENT = PermissionFragment.class.getName();
-    private final Activity mActivity;
+    private static final String TAG = PermissionHelper.class.getSimpleName();
     private static PermissionHelper sinstance = null;
+    private  Activity mActivity;
 
-    private PermissionHelper(Activity activity){
-        mActivity = activity;
-    }
+    private PermissionHelper(){}
 
-    public static PermissionHelper getInstance(Activity activity){
+    public static PermissionHelper getInstance(){
         if(sinstance == null){
             synchronized (PermissionHelper.class){
                 PermissionHelper permissionHelper;
                 if(sinstance == null){
-                    permissionHelper = new PermissionHelper(activity);
+                    permissionHelper = new PermissionHelper();
                     sinstance = permissionHelper;
                 }
             }
-            sinstance = new PermissionHelper(activity);
+            sinstance = new PermissionHelper();
         }
         return sinstance;
+    }
+
+    public PermissionHelper with(Activity activity){
+        mActivity = activity;
+        return this;
     }
 
     /**
@@ -88,10 +95,14 @@ public class PermissionHelper {
     @SuppressLint("NewApi")
     public void requestSpecialPermission(@NonNull SpecialPermission specialPermission, @NonNull ISpecialPermissionCallback callback){
         if(checkSpecialPermission(specialPermission)){
-            callback.onAccepted(new Permission(true));
+            callback.onAccepted(specialPermission);
             return;
         }
-        getPermissionFragment(mActivity).requestSpecialPermission(specialPermission, (permissionsResult) -> {
+        getPermissionFragment(mActivity).requestSpecialPermission(specialPermission, (permissionsResult) ->{
+            if(permissionsResult == null || permissionsResult[0] == null){
+                callback.onError("permissionResult is null!");
+                return;
+            }
             handleSpecialPermissionResult(permissionsResult[0], callback);
         });
     }
@@ -206,12 +217,11 @@ public class PermissionHelper {
         callback.onDeniedAndReject(deniedAndRejectedAndPermissions);
     }
 
-    private void handleSpecialPermissionResult(Permission permission1, ISpecialPermissionCallback callback) {
-        Permission permission = permission1;
+    private void handleSpecialPermissionResult(Permission permission, ISpecialPermissionCallback callback) {
         if(permission.granted){
-            callback.onAccepted(new Permission(true));
+            callback.onAccepted(permission.specialPermission);
         }else {
-            callback.onDenied(new Permission(false));
+            callback.onDenied(permission.specialPermission);
         }
     }
 

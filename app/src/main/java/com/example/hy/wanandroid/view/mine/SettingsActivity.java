@@ -447,7 +447,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
     @Override
     public void upDataVersion() {
-        PermissionHelper.getInstance(this).requestPermission(
+        PermissionHelper.getInstance().with(this).requestPermission(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
                 new IPermissionCallback() {
