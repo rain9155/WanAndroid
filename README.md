@@ -14,6 +14,7 @@
 - [x] 文章内容，分享文章
 - [x] 夜间模式，沉浸式切换，清除缓存
 - [x] 应用内检查更新
+- [x] 多语言支持
 - [X] ...
 ### Tips
 * 本人能力有限，可能会在bug，如有任何问题，欢迎[issues](https://github.com/rain9155/WanAndroid/issues)
@@ -76,17 +77,20 @@
 * [DownloadManager 的使用 ](https://www.cnblogs.com/zhaoyanjun/p/4591960.html)
 * [Android:使用 DownloadManager 进行版本更新](https://www.cnblogs.com/liyiran/p/6393813.html)
 
-11、使用Fragment代理权限申请
-* [Android Fragment 的妙用 - 优雅地申请权限](https://blog.csdn.net/gdutxiaoxu/article/details/86498647)
+11、使用Fragment代理权限申请，减少重复代码的编写
+* [PermissionHelper](https://github.com/rain9155/PermissionHelper)
 
-12、努力兼容与适配Android版本
+12、封装视图状态逻辑切换，让视图状态切换更简单
+* [Loading](https://github.com/rain9155/Loading)
+
+13、努力兼容与适配Android版本
 * [Android 使用 Https问题解决（SSLHandshakeException）](http://www.mamicode.com/info-detail-1728871.html)
 * [Drawable 着色的后向兼容方案](https://www.race604.com/tint-drawable/)
 * [CardView在API 21以下的圆角效果处理](https://www.jianshu.com/p/07097b562acb)
 * [Android 6.0运行权限解析（高级篇）](https://www.jianshu.com/p/6a4dff744031)
 * [Android 7.0 行为变更 通过FileProvider在应用间共享文件吧](https://blog.csdn.net/lmj623565791/article/details/72859156)
 
-13、集成腾讯Bugly与LeakCanary，更容易找出bug与内存泄漏
+14、集成腾讯Bugly与LeakCanary，更容易找出bug与内存泄漏
 * 参考官方文档
 
 > 以上是项目中的主要亮点和我做项目时参考的文章，当然对于一些主流的框架官方文档中也有详细的介绍，更多细节可以查看项目具体代码。
