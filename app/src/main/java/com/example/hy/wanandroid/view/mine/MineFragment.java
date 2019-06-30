@@ -259,10 +259,9 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
             ivBack.setImageResource(R.drawable.girl);
             ivFace.setImageResource(R.drawable.girl);
             FileUtil.deleteDir(new File(Constant.PATH_IMAGE_FACE));
-        }else {
+        }else{
             Intent chooserIntent = getChooserIntent();
             startActivityForResult(chooserIntent, Constant.REQUEST_PICK_IMAGE_CHOOSER);
-            // CropImage.startPickImageActivity(mActivity);
         }
     }
 

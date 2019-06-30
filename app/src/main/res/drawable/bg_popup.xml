@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:dither="true"
-    android:shape="rectangle">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <corners android:radius="@dimen/dp_8"/>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/colorElevation"/>
+            <corners android:radius="@dimen/dp_8"/>
+        </shape>
+    </item>
 
-    <solid android:color="@color/foreground"/>
+    <item
+        android:top="@dimen/dp_2"
+        android:right="@dimen/dp_2"
+        android:bottom="@dimen/dp_2"
+        android:left="@dimen/dp_2">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/foreground"/>
+            <corners android:radius="@dimen/dp_8"/>
+        </shape>
+    </item>
 
-    <stroke
-        android:width="@dimen/dp_2"
-        android:color="@color/colorElevation"/>
-
-</shape>
+</layer-list>
