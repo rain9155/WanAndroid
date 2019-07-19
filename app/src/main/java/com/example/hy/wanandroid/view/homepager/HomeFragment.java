@@ -149,15 +149,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
         mArticlesAdapter.setOnItemLongClickListener((adapter, view, position) -> {
             if(CommonUtil.isEmptyList(mArticles)) return false;
             Article article = mArticles.get(position);
-            view.setOnTouchListener((v, event) -> {
-                if(event.getAction() == MotionEvent.ACTION_UP && isPress){
-                    mPopupWindow.get().show(tlCommon, event.getRawX(), event.getRawY());
-                    mPopupWindow.get().setMessage(article.getTitle(), article.getLink());
-                    isPress = false;
-                }
-                return false;
-            });
-            isPress = true;
+            mPopupWindow.get().show(srlHome, view, article);
             return true;
         });
     }

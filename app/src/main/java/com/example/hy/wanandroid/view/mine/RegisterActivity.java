@@ -19,6 +19,7 @@ import com.example.hy.wanandroid.contract.mine.RegisterContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerRegisterActivityComponent;
 import com.example.hy.wanandroid.presenter.mine.RegisterPresenter;
 import com.example.commonlib.utils.StatusBarUtil;
+import com.example.hy.wanandroid.widget.customView.ShapeImageView;
 import com.example.hy.wanandroid.widget.dialog.LoadingDialog;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -26,14 +27,12 @@ import javax.inject.Inject;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import dagger.Lazy;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> implements RegisterContract.View {
 
     @BindView(R.id.iv_face)
-    CircleImageView ivFace;
+    ShapeImageView ivFace;
     @BindView(R.id.at_account)
     AutoCompleteTextView atAccount;
     @BindView(R.id.tl_account)

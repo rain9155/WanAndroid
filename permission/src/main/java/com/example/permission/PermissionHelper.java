@@ -14,15 +14,12 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.commonlib.utils.LogUtil;
 import com.example.permission.bean.Permission;
 import com.example.permission.bean.SpecialPermission;
 import com.example.permission.callback.IPermissionCallback;
 import com.example.permission.callback.IPermissionsCallback;
 import com.example.permission.callback.ISpecialPermissionCallback;
 import com.example.permission.utils.PermissionUtil;
-
-import static com.example.permission.bean.SpecialPermission.INSTALL_UNKNOWN_APP;
 
 /**
  * 申请权限帮助类

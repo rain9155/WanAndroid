@@ -23,9 +23,9 @@ public abstract class BaseLoadActivity<T extends BasePresenter> extends BaseMvpA
         View contentView = findViewById(R.id.normal_view);
         Loading.Builder builder = Loading.beginBuildStatusView(this);
         if(contentView == null)
-            builder.warp(this);
+            builder.warpActivity(this);
         else
-            builder.warp(contentView);
+            builder.warpView(contentView);
         mStatusView = builder.withReload(() -> reLoad(), R.id.cl_reload).create();
     }
 

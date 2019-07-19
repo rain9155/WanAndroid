@@ -157,15 +157,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
         mSearchResquestAdapter.setOnItemLongClickListener((adapter, view, position) -> {
             if(CommonUtil.isEmptyList(mSearchResquestList)) return false;
             Article article = mSearchResquestList.get(position);
-            view.setOnTouchListener((v, event) -> {
-                if(event.getAction() == MotionEvent.ACTION_UP && isPress){
-                    mPopupWindow.get().show(tlCommon, event.getRawX(), event.getRawY());
-                    mPopupWindow.get().setMessage(article.getTitle(), article.getLink());
-                    isPress = false;
-                }
-                return false;
-            });
-            isPress = true;
+            mPopupWindow.get().show(getWindow().getDecorView(), view, article);
             return true;
         });
     }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <declare-styleable name="ShapeImageView">
+        <attr name="format" format="enum">
+            <enum name="circle" value="0"/>
+            <enum name="roundRect" value="1"/>
+        </attr>
+        <attr name="radius" format="dimension"/>
+        <attr name="corners" format="dimension"/>
+    </declare-styleable>
+
+</resources>

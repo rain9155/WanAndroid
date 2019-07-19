@@ -21,6 +21,7 @@ import com.example.hy.wanandroid.di.module.activity.LoginActivityModule;
 import com.example.hy.wanandroid.presenter.mine.LoginPresenter;
 import com.example.commonlib.utils.KeyBoardUtil;
 import com.example.commonlib.utils.StatusBarUtil;
+import com.example.hy.wanandroid.widget.customView.ShapeImageView;
 import com.example.hy.wanandroid.widget.dialog.LoadingDialog;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -31,7 +32,6 @@ import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.Lazy;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A login screen that offers login via email/password.
@@ -41,7 +41,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     @BindView(R.id.ib_back)
     ImageView ibBack;
     @BindView(R.id.iv_face)
-    CircleImageView ivFace;
+    ShapeImageView ivFace;
     @BindView(R.id.at_account)
     AutoCompleteTextView atAccount;
     @BindView(R.id.tl_account)

@@ -5,19 +5,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 
-import com.example.commonlib.utils.FileProvider7;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.RxBus;
 import com.example.hy.wanandroid.event.InstallApkEvent;
 import com.example.hy.wanandroid.event.OpenBrowseEvent;
 import com.example.commonlib.utils.LogUtil;
 import com.example.commonlib.utils.ToastUtil;
-
-import java.io.File;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 

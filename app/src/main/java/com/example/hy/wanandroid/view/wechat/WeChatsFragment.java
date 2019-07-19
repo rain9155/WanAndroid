@@ -117,15 +117,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
         });
         mArticlesAdapter.setOnItemLongClickListener((adapter, view, position) -> {
             Article article = mArticles.get(position);
-            view.setOnTouchListener((v, event) -> {
-                if(event.getAction() == MotionEvent.ACTION_UP && isPress){
-                    mPopupWindow.get().show(srlWeChats, event.getRawX(), event.getRawY());
-                    mPopupWindow.get().setMessage(article.getTitle(), article.getLink());
-                    isPress = false;
-                }
-                return false;
-            });
-            isPress = true;
+            mPopupWindow.get().show(srlWeChats, view, article);
             return true;
         });
     }

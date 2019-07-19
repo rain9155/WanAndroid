@@ -29,9 +29,9 @@ public abstract class BaseLoadFragment<T extends BasePresenter> extends BaseMvpF
         View contentView = view.findViewById(R.id.normal_view);
         Loading.Builder builder = Loading.beginBuildStatusView(mActivity);
         if(contentView == null)
-             builder.warp(view);
+             builder.warpView(view);
         else
-            builder.warp(contentView);
+            builder.warpView(contentView);
         mStatusView = builder.withReload(() -> reLoad(), R.id.cl_reload).create();
         return contentView == null ? mStatusView.getWrappedView() : view;
     }

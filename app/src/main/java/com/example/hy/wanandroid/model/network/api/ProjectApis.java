@@ -19,14 +19,14 @@ public interface ProjectApis {
 
     /**
      * 获得大概项目列表
-     * http://www.wanandroid.com/project/tree/json
+     * https://www.wanandroid.com/project/tree/json
      */
     @GET("project/tree/json")
     Observable<BaseResponse<List<Tab>>> getProjectList();
 
     /**
      * 获得详细项目列表
-     * http://www.wanandroid.com/project/list/1/json?cid=294
+     * https://www.wanandroid.com/project/list/1/json?cid=294
      */
     @GET("project/list/{pageNum}/json")
     Observable<BaseResponse<Articles>> getProjects(@Path("pageNum") int pageNum,//页数

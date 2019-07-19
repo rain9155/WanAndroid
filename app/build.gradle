@@ -88,7 +88,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':commonlib')
-    implementation project(':loading')
     implementation project(':permission')
 
     //android support
@@ -111,6 +110,9 @@ dependencies {
 
     //other
     annotationProcessor rootProject.ext.otherDependency
+
+    //custom
+    implementation rootProject.ext.customDependency
 
     //bugly
     //noinspection GradleDependency

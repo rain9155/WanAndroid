@@ -122,15 +122,7 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
         mArticlesAdapter.setOnItemLongClickListener((adapter, view, position) -> {
             if(CommonUtil.isEmptyList(mArticleList)) return false;
             Article article = mArticleList.get(position);
-            view.setOnTouchListener((v, event) -> {
-                if(event.getAction() == MotionEvent.ACTION_UP && isPress){
-                    mPopupWindow.get().show(srlHierarchyList, event.getRawX(), event.getRawY());
-                    mPopupWindow.get().setMessage(article.getTitle(), article.getLink());
-                    isPress = false;
-                }
-                return false;
-            });
-            isPress = true;
+            mPopupWindow.get().show(srlHierarchyList, view, article);
             return true;
         });
     }

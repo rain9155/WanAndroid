@@ -24,11 +24,13 @@
 
         </com.scwang.wave.MultiWaveHeader>
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.example.hy.wanandroid.widget.customView.ShapeImageView
             android:id="@+id/iv_face"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
             android:src="@drawable/girl"
+            android:scaleType="fitXY"
+            app:format="circle"
             android:layout_marginTop="@dimen/dp_120"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

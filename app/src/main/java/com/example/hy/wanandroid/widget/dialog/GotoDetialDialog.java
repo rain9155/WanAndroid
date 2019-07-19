@@ -1,16 +1,11 @@
 package com.example.hy.wanandroid.widget.dialog;
 
-import android.os.Environment;
 import android.view.View;
 
-import com.example.commonlib.utils.LogUtil;
 import com.example.commonlib.utils.ShareUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.config.Constant;
-
-import java.io.File;
 
 /**
  * 前往应用信息弹框

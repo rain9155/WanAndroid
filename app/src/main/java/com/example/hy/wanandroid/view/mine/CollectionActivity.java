@@ -117,7 +117,7 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
             Collection collection = mCollections.get(position);
             view.setOnTouchListener((v, event) -> {
                 if(event.getAction() == MotionEvent.ACTION_UP && isPress){
-                    mPopupWindow.get().show(tlCommon, event.getRawX(), event.getRawY());
+                   // mPopupWindow.get().show(tlCommon, event.getRawX(), event.getRawY());
                     mPopupWindow.get().setMessage(collection.getTitle(), collection.getLink());
                     isPress = false;
                 }

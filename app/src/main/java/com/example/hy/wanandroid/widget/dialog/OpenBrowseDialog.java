@@ -1,10 +1,6 @@
 package com.example.hy.wanandroid.widget.dialog;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.os.Bundle;
 import android.os.Environment;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.hy.wanandroid.R;
@@ -14,10 +10,6 @@ import com.example.commonlib.utils.LogUtil;
 import com.example.commonlib.utils.ShareUtil;
 
 import java.io.File;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 /**
  * 打开浏览器弹框

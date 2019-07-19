@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 import com.example.commonlib.utils.FileUtil;
 import com.example.commonlib.utils.IntentUtil;
-import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
+import com.example.hy.wanandroid.widget.customView.ShapeImageView;
 import com.example.permission.bean.Permission;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
@@ -31,7 +31,6 @@ import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.widget.dialog.ChangeFaceDialog;
 import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
-import com.example.permission.PermissionFragment;
 import com.example.permission.PermissionHelper;
 import com.example.permission.callback.IPermissionCallback;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -47,7 +46,6 @@ import javax.inject.Inject;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import dagger.Lazy;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -58,7 +56,7 @@ import static android.app.Activity.RESULT_OK;
 public class MineFragment extends BaseMvpFragment<MinePresenter> implements MineContract.View {
 
     @BindView(R.id.iv_face)
-    CircleImageView ivFace;
+    ShapeImageView ivFace;
     @BindView(R.id.btn_login)
     Button btnLogin;
     @BindView(R.id.tv_username)

@@ -2,9 +2,11 @@ package com.example.hy.wanandroid.view.project;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
+import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ProjectsAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
@@ -41,6 +43,8 @@ import static android.app.Activity.RESULT_OK;
  * Created by 陈健宇 at 2018/10/29
  */
 public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implements ProjectsContract.View {
+
+    private static final String TAG = ProjectsFragment.class.getSimpleName();
 
     @BindView(R.id.rv_projects)
     RecyclerView rvProjectList;
@@ -99,6 +103,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
             mArticlePosition = position;
             mArticle = mArticles.get(position);
             ArticleBean articleBean = new ArticleBean(mArticle);
+            articleBean.setLink(getHttps(articleBean.getLink()));
             ArticleActivity.startActicityForResultByFragment(mActivity, this, articleBean, false, Constant.REQUEST_REFRESH_ARTICLE);
         });
         mProjectsAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
@@ -116,15 +121,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
         mProjectsAdapter.setOnItemLongClickListener((adapter, view, position) -> {
             if(CommonUtil.isEmptyList(mArticles)) return false;
             Article article = mArticles.get(position);
-            view.setOnTouchListener((v, event) -> {
-                if(event.getAction() == MotionEvent.ACTION_UP && isPress){
-                    mPopupWindow.get().show(srlProjects, event.getRawX(), event.getRawY());
-                    mPopupWindow.get().setMessage(article.getTitle(), article.getLink());
-                    isPress = false;
-                }
-                return false;
-            });
-            isPress = true;
+            mPopupWindow.get().show(srlProjects, view, article);
             return true;
         });
     }
@@ -259,5 +256,11 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
         Fragment fragment = new ProjectsFragment();
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    private String getHttps(String http){
+        StringBuilder builder = new StringBuilder("https");
+        builder.append(http.substring(http.indexOf(':')));
+        return builder.toString();
     }
 }

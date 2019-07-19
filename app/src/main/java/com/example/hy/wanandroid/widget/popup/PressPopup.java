@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.example.commonlib.utils.ShareUtil;
 import com.example.commonlib.utils.ToastUtil;
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.entity.Article;
 
 import androidx.core.content.ContextCompat;
 
@@ -24,7 +26,7 @@ public class PressPopup extends PopupWindow {
     private OnClickListener mClickListener;
     private String mTitle;
     private String mLink;
-    private Context mContext;
+    private boolean isPress;
 
     public PressPopup(Context context) {
         super(context);
@@ -33,8 +35,18 @@ public class PressPopup extends PopupWindow {
         mLink = "";
     }
 
-    public void show(View view, float x, float y) {
-        this.showAtLocation(view, Gravity.NO_GRAVITY, (int) x, (int) y);
+    @SuppressLint("ClickableViewAccessibility")
+    public void show(View parentView, View view, Article article) {
+        view.setOnTouchListener((v, event) -> {
+            if((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) && isPress){
+                this.showAtLocation(parentView, Gravity.NO_GRAVITY, (int) event.getRawX(), (int) event.getRawY());
+                this.mTitle = article.getTitle();
+                this.mLink = article.getLink();
+                isPress = false;
+            }
+            return false;
+        });
+        isPress = true;
     }
 
     public void setOnClickListener(OnClickListener onClickListener){
@@ -42,8 +54,7 @@ public class PressPopup extends PopupWindow {
     }
 
     public void setMessage(String title, String link){
-        this.mTitle = title;
-        this.mLink = link;
+
     }
 
     private void initPopup(Context context) {

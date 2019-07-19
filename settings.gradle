@@ -1,1 +1,1 @@
-include ':app', ':commonlib', ':loading', ':permission'
+include ':app', ':commonlib', ':permission', ':baseadapter'
