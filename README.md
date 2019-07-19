@@ -1,7 +1,7 @@
 # WanAndroid
 ### WanAndroid，一款基于MVP + Rxjava2 + Dagger2 + Retrofit + Material Design的应用, 欢迎大家start、fork。
 ### Pre
-本人小白一个，一直以来都想自己做一个完整的app，所以本项目就在我的闲暇时间中形成，参考了几个WanAndroid开源应用，一开始遇到很多不懂的，也靠自己解决了，所以会一直添加新的功能，解决bug，不断打造成一款持续稳定, 功能完善的WanAndroid应用。
+本人小白一个，一直以来都想自己做一个完整的app，所以本项目就在我的闲暇时间中形成，一开始遇到很多不懂的，也靠自己解决了，所以会一直添加新的功能，解决bug，不断打造成一款持续稳定, 功能完善的WanAndroid应用。
 ### Features
 - [x] 首页
 - [x] 知识体系
@@ -14,9 +14,12 @@
 - [x] 文章内容，分享文章
 - [x] 夜间模式，沉浸式切换，清除缓存
 - [x] 应用内检查更新
+- [x] 多语言支持
+- [X] ...
 ### Tips
 * 本人能力有限，可能会在bug，如有任何问题，欢迎[issues](https://github.com/rain9155/WanAndroid/issues)
 * 项目中所用到的api均由[WanAndroid网站](http://www.wanandroid.com/blog/show/2)提供 
+* 项目中使用的[MVP开发模板](https://github.com/rain9155/AndroidTemplate)
 ### Preview
 <br> ![wan1](/screenshots/wan1.gif) ![wan2](/screenshots/wan2.gif) <br>
  <br> ![wan3](/screenshots/wan3.gif) ![wan4](/screenshots/wan4.gif) <br>
@@ -74,17 +77,20 @@
 * [DownloadManager 的使用 ](https://www.cnblogs.com/zhaoyanjun/p/4591960.html)
 * [Android:使用 DownloadManager 进行版本更新](https://www.cnblogs.com/liyiran/p/6393813.html)
 
-11、使用Fragment代理权限申请
-* [Android Fragment 的妙用 - 优雅地申请权限](https://blog.csdn.net/gdutxiaoxu/article/details/86498647)
+11、使用Fragment代理权限申请，减少重复代码的编写
+* [PermissionHelper](https://github.com/rain9155/PermissionHelper)
 
-12、努力兼容与适配Android版本
+12、封装视图状态逻辑切换，让视图状态切换更简单
+* [Loading](https://github.com/rain9155/Loading)
+
+13、努力兼容与适配Android版本
 * [Android 使用 Https问题解决（SSLHandshakeException）](http://www.mamicode.com/info-detail-1728871.html)
 * [Drawable 着色的后向兼容方案](https://www.race604.com/tint-drawable/)
 * [CardView在API 21以下的圆角效果处理](https://www.jianshu.com/p/07097b562acb)
 * [Android 6.0运行权限解析（高级篇）](https://www.jianshu.com/p/6a4dff744031)
 * [Android 7.0 行为变更 通过FileProvider在应用间共享文件吧](https://blog.csdn.net/lmj623565791/article/details/72859156)
 
-13、集成腾讯Bugly与LeakCanary，更容易找出bug与内存泄漏
+14、集成腾讯Bugly与LeakCanary，更容易找出bug与内存泄漏
 * 参考官方文档
 
 > 以上是项目中的主要亮点和我做项目时参考的文章，当然对于一些主流的框架官方文档中也有详细的介绍，更多细节可以查看项目具体代码。
