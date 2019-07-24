@@ -21,6 +21,7 @@
     <color name="colorBorder">#00BCD4</color>
     <color name="colorNavBtmBackground">#FFFFFF</color>
     <color name="colorNavBtmIconTint">#00BCD4</color>
+    <color name="colorFill">#00BCD4</color>
     <color name="colorNavBtmText">#9E9E9E</color>
     <color name="colorEtHint">#b59e9e9e</color>
     <color name="colorTrackOpen">#03A9F4</color>

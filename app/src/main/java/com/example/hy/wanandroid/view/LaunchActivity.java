@@ -21,6 +21,6 @@ public class LaunchActivity extends AppCompatActivity {
             startActivity(new Intent(LaunchActivity.this, MainActivity.class));
             overridePendingTransition(R.anim.anim_launch_enter, 0);
             finish();
-        }, 2000);
+        }, 3000);
     }
 }
