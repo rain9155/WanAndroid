@@ -12,7 +12,6 @@ import com.example.hy.wanandroid.event.ClearCacheEvent;
 import com.example.hy.wanandroid.event.LanguageEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
-import com.example.hy.wanandroid.event.SettingsNightModeEvent;
 import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.event.UpdataEvent;
 import com.example.hy.wanandroid.model.DataModel;
@@ -61,11 +60,19 @@ public class SettingsPresenter extends BaseMvpPresenter<SettingsContract.View> i
         );
 
         addSubcriber(
-                RxBus.getInstance().toObservable(SettingsNightModeEvent.class)
-                .subscribe(
-                        settingsNightModeEvent -> {
-                            mView.showChangeAnimation();
-                            mView.useNightNode(settingsNightModeEvent.isNightMode());
+                RxBus.getInstance().toObservable(NightModeEvent.class)
+                        .compose(RxUtils.switchSchedulers())
+                        .subscribeWith(new DefaultObserver<NightModeEvent>(mView, false, false){
+                            @Override
+                            public void onNext(NightModeEvent nightModeEvent) {
+                                mView.showChangeAnimation();
+                                mView.useNightNode(nightModeEvent.isNight());
+                            }
+
+                            @Override
+                            protected void unknown() {
+                                mView.showToast(App.getContext().getString(R.string.error_switch_fail));
+                            }
                         })
         );
 

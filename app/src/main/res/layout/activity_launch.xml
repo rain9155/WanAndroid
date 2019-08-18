@@ -36,6 +36,6 @@
         app:amplitude="80"
         app:text="@string/app_name"
         app:size="@dimen/sp_26"
-        app:color="@color/black"/>
+        app:color="@color/colorLaunchText"/>
 
 </RelativeLayout>

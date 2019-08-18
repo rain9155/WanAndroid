@@ -11,14 +11,17 @@
     <color name="foreground">#FFFFFF</color>
     <color name="background">#fafafa</color>
     <color name="divier">#1ebdbdbd</color>
+    <color name="white">#FFFFFF</color>
     <color name="translucence">#80FFFFFF</color>
     <color name="transparency">#00000000</color>
+    <color name="colorLaunchText">#000000</color>
     <color name="colorCollected">#81ff0000</color>
     <color name="colorTag1">#f50000</color>
     <color name="colorTag2">#00BCD4</color>
     <color name="colorTip">#f50000</color>
     <color name="colorIndicator">#00BCD4</color>
-    <color name="colorBorder">#00BCD4</color>
+    <color name="colorWave">#00BCD4</color>
+    <color name="colorWaveBackground">#fafafa</color>
     <color name="colorNavBtmBackground">#FFFFFF</color>
     <color name="colorNavBtmIconTint">#00BCD4</color>
     <color name="colorFill">#00BCD4</color>
@@ -27,7 +30,6 @@
     <color name="colorTrackOpen">#03A9F4</color>
     <color name="colorTrackClose">#757575</color>
     <color name="colorSwitchButton">#9E9E9E</color>
-    <color name="white">#FFFFFF</color>
     <color name="colorRipple">#B3E5FC</color>
     <color name="colorPress">#6abdbdbd</color>
     <color name="colorElevation">#14bdbdbd</color>

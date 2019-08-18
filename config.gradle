@@ -43,13 +43,9 @@ ext {
             BannerVersion : '1.4.10',
             VerticalTabLayoutVersion : '1.2.5',
             YViewPagerDemoVersion : '0.4',
-            WaveLoadingVersion : '0.3.5',
             TwinklingRefreshLayoutVersion : '1.0.7',
             MultiWaveHeaderVersion : '1.0.0-alpha-1',
             ImageCropperVersion : '2.8.0',
-
-            //custom
-            loadingVersion : "1.0.1",
 
             //test
             JunitVersion           : "4.12",
@@ -105,14 +101,14 @@ ext {
             "flowLayout" : "com.hyman:flowlayout-lib:${version.FlowLayout}",
             "banner" : "com.youth.banner:banner:${version.BannerVersion}",
             "verticalTablayout" : "q.rorbin:VerticalTabLayout:${version.VerticalTabLayoutVersion}",
-            "waveLoading" : "me.itangqi.waveloadingview:library:${version.WaveLoadingVersion}",
             "twinklingRefreshLayout" : "com.lcodecorex:tkrefreshlayout:${version.TwinklingRefreshLayoutVersion}",
             "multiWaveHeader" : "com.scwang.wave:MultiWaveHeader:${version.MultiWaveHeaderVersion}",
             "imageCropper": "com.theartofdev.edmodo:android-image-cropper:${version.ImageCropperVersion}",
     ]
 
     custom = [
-            "loading" : "com.github.rain9155:Loading:1.0.1"
+            "loading" : "com.github.rain9155:Loading:1.0.1",
+            "waveloading" : "com.jianyu:waveloadingview:1.0.0"
     ]
 
     test = [

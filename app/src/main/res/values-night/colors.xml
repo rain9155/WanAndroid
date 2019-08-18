@@ -13,9 +13,11 @@
     <color name="divier">#1ebdbdbd</color>
     <color name="translucence">#80FFFFFF</color>
     <color name="transparency">#00000000</color>
+    <color name="colorLaunchText">#FFFFFF</color>
     <color name="colorCollected">#65ff0000</color>
     <color name="colorIndicator">#424242</color>
-    <color name="colorBorder">#424242</color>
+    <color name="colorWave">#424242</color>
+    <color name="colorWaveBackground">#EEEEEE</color>
     <color name="colorNavBtmBackground">#424242</color>
     <color name="colorNavBtmIconTint">#FAFAFA</color>
     <color name="colorFill">#00BCD4</color>

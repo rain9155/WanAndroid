@@ -10,7 +10,6 @@ import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.event.InstallApkEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.OpenBrowseEvent;
-import com.example.hy.wanandroid.event.SettingsNightModeEvent;
 import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.event.UpdataEvent;
 import com.example.hy.wanandroid.model.DataModel;
@@ -52,7 +51,6 @@ public class MainPresenter extends BaseMvpPresenter<MainContract.View> implement
                             @Override
                             public void onNext(NightModeEvent nightModeEvent) {
                                 mView.useNightNode(nightModeEvent.isNight());
-                                RxBus.getInstance().post(new SettingsNightModeEvent(nightModeEvent.isNight()));
                             }
 
                             @Override
