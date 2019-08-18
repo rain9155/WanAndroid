@@ -156,7 +156,6 @@ v1.0 2018-12-1
 * **Leak Check** <br>
 [LeakCanary](https://github.com/square/leakcanary)
 * **Other excellent open source library** <br>
-[WaveLoadingView](https://github.com/tangqi92/WaveLoadingView)<br>
 [MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)<br>
 [VerticalTabLayout](https://github.com/qstumn/VerticalTabLayout)<br>
 [BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)<br>
