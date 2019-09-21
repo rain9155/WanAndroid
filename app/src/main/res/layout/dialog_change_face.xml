@@ -10,7 +10,7 @@
         android:id="@+id/tv_change_face"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/colorPrimaryText"
         android:background="@drawable/bg_common_tv"
         android:textSize="@dimen/sp_20"
         android:gravity="center"
@@ -29,7 +29,7 @@
         android:id="@+id/tv_change_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/sp_20"
         android:background="@drawable/bg_common_tv"
         android:gravity="center"
@@ -53,7 +53,7 @@
         android:background="@drawable/bg_common_tv"
         android:gravity="center"
         android:text="@string/dialog_change_moren"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/sp_20" />
 
 </LinearLayout>

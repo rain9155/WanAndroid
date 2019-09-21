@@ -9,7 +9,7 @@
     android:layout_margin="@dimen/dp_5"
     android:gravity="center"
     android:textSize="@dimen/sp_16"
-    android:textColor="@color/primaryText"
+    android:textColor="@color/colorPrimaryText"
     android:focusable="true"
     android:clickable="true"
     tools:text="Google">

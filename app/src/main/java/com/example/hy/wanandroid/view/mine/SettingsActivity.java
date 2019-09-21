@@ -46,7 +46,6 @@ import com.example.hy.wanandroid.widget.dialog.ClearCacheDialog;
 import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.LanguageDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
-import com.example.permission.PermissionFragment;
 import com.example.permission.PermissionHelper;
 import com.example.permission.callback.IPermissionCallback;
 
@@ -256,10 +255,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         tlCommon.setNavigationOnClickListener(v -> finish());
     }
 
-    @Override
-    protected void initData() {
-        mPresenter.subscribleEvent();
-    }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -449,7 +444,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     public void upDataVersion() {
         PermissionHelper.getInstance().with(this).requestPermission(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
+                Constant.REQUEST_WRITE_EXTERNAL,
                 new IPermissionCallback() {
                     @Override
                     public void onAccepted(Permission permission) {

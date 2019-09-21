@@ -3,9 +3,9 @@ package com.example.hy.wanandroid.presenter;
 import android.content.res.Resources;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
+import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.event.InstallApkEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
@@ -27,7 +27,7 @@ import io.reactivex.functions.Predicate;
  * MainActivity的Presenter
  * Created by 陈健宇 at 2018/10/23
  */
-public class MainPresenter extends BaseMvpPresenter<MainContract.View> implements MainContract.Presenter{
+public class MainPresenter extends BaseActivityPresenter<MainContract.View> implements MainContract.Presenter{
 
     @Inject
     public MainPresenter(DataModel dataModel) {
@@ -35,16 +35,16 @@ public class MainPresenter extends BaseMvpPresenter<MainContract.View> implement
     }
 
     @Override
-    public void subscribleEvent() {
-        super.subscribleEvent();
+    public void subscribeEvent() {
+        super.subscribeEvent();
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(StatusBarEvent.class)
                         .compose(RxUtils.switchSchedulers())
                         .subscribe(statusBarEvent -> mView.setStatusBarColor(statusBarEvent.isSet()))
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(NightModeEvent.class)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<NightModeEvent>(mView, false, false){
@@ -60,7 +60,7 @@ public class MainPresenter extends BaseMvpPresenter<MainContract.View> implement
                         })
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(UpdataEvent.class)
                 .filter(new Predicate<UpdataEvent>() {
                     @Override
@@ -71,12 +71,12 @@ public class MainPresenter extends BaseMvpPresenter<MainContract.View> implement
                 .subscribe(updataEvent -> mView.upDataVersion())
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(OpenBrowseEvent.class)
                 .subscribe(openBrowseEvent -> mView.showOpenBrowseDialog())
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(InstallApkEvent.class)
                 .subscribe(installApkEvent -> mView.installApk())
         );
@@ -93,8 +93,24 @@ public class MainPresenter extends BaseMvpPresenter<MainContract.View> implement
     }
 
     @Override
+    public boolean getNightModeState() {
+        return mModel.getNightModeState();
+    }
+
+    @Override
+    public boolean getStatusBarState() {
+        return mModel.getStatusBarState();
+    }
+
+    @Override
+    public boolean getAutoUpdataState() {
+        return mModel.getAutoUpdataState();
+    }
+
+
+    @Override
     public void checkVersion(String currentVersion) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getVersionDetails()
                         .compose(RxUtils.switchSchedulers())
                         .filter(new Predicate<Version>() {

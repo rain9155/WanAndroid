@@ -1,9 +1,14 @@
 package com.example.hy.wanandroid.model.network.api;
 
 import com.example.hy.wanandroid.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.Coin;
+import com.example.hy.wanandroid.entity.Coins;
 import com.example.hy.wanandroid.entity.Collection;
 import com.example.hy.wanandroid.entity.CollectionRequest;
 import com.example.hy.wanandroid.entity.Login;
+import com.example.hy.wanandroid.entity.UserCoin;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -64,5 +69,19 @@ public interface MineApis {
     Observable<BaseResponse<Collection>> getUnCollectionRequest(@Path("id") int id,//收藏在我的收藏列表的id
                                                                 @Field("originId") int originId//收藏在原始文章列表的id
     );
+
+    /**
+     * 获得个人积分
+     * https://www.wanandroid.com/lg/coin/userinfo/json
+     */
+    @GET("lg/coin/userinfo/json")
+    Observable<BaseResponse<UserCoin>> getUserCoin();
+
+    /**
+     * 获得个人积分列表
+     * https://www.wanandroid.com/lg/coin/list/1/json
+     */
+    @GET("lg/coin/list/{pageNum}/json")
+    Observable<BaseResponse<Coins>> getCoins(@Path("pageNum") int pageNum);
 
 }

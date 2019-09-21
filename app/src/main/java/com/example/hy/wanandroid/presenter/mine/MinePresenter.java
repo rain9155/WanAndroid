@@ -1,9 +1,9 @@
 package com.example.hy.wanandroid.presenter.mine;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
+import com.example.hy.wanandroid.base.presenter.BaseFragmentPresenter;
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.event.ChangeFaceEvent;
@@ -21,7 +21,7 @@ import javax.inject.Inject;
  * 我的界面的Presenter
  * Created by 陈健宇 at 2018/10/23
  */
-public class MinePresenter extends BaseMvpPresenter<MineContract.View> implements MineContract.Presenter{
+public class MinePresenter extends BaseFragmentPresenter<MineContract.View> implements MineContract.Presenter{
 
     @Inject
     public MinePresenter(DataModel dataModel) {
@@ -29,22 +29,22 @@ public class MinePresenter extends BaseMvpPresenter<MineContract.View> implement
     }
 
     @Override
-    public void subscribleEvent() {
-        super.subscribleEvent();
+    public void subscribeEvent() {
+        super.subscribeEvent();
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(LoginEvent.class)
                         .filter(loginEvent -> loginEvent.isLogin())
                         .subscribe(loginEvent -> mView.showLoginView())
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(LoginEvent.class)
                 .filter(loginEvent -> !loginEvent.isLogin())
                 .subscribe(loginEvent -> logout())
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(NightModeEvent.class)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<NightModeEvent>(mView, false, false){
@@ -59,7 +59,7 @@ public class MinePresenter extends BaseMvpPresenter<MineContract.View> implement
                             }
                         }));
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(ChangeFaceEvent.class)
                 .subscribe(changeFaceEvent -> mView.changeFaceOrBackground(changeFaceEvent.isChangeFace()))
         );
@@ -67,7 +67,7 @@ public class MinePresenter extends BaseMvpPresenter<MineContract.View> implement
 
     @Override
     public void logout() {
-        addSubcriber(
+        addSubscriber(
                 mModel.getLogoutRequest()
                 .compose(RxUtils.switchSchedulers())
                 .subscribeWith(new DefaultObserver<BaseResponse<Login>>(mView, false, false){
@@ -80,5 +80,10 @@ public class MinePresenter extends BaseMvpPresenter<MineContract.View> implement
                     }
                 })
         );
+    }
+
+    @Override
+    public boolean getNightModeState() {
+        return mModel.getNightModeState();
     }
 }

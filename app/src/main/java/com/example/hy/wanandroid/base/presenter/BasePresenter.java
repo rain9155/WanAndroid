@@ -1,35 +1,58 @@
 package com.example.hy.wanandroid.base.presenter;
 
-import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.base.view.IView;
+import com.example.hy.wanandroid.model.DataModel;
 
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
- * presenter接口
+ * 实现了MVP的Presenter基类
  * Created by 陈健宇 at 2018/10/21
  */
-public interface BasePresenter<T extends BaseView>{
+public abstract class BasePresenter<T extends IView> {
 
-    //注入View
-    void attachView(T view);
+    protected T mView;
+    protected DataModel mModel;
+    private CompositeDisposable mCompositeDisposable;
+    public abstract void subscribeEvent();//订阅事件
 
-    //判断是否注入了View
-    boolean isAttachView();
+    public BasePresenter(DataModel dataModel) {
+        mModel = dataModel;
+    }
 
-    //解除View
-    void detachView();
+    /**
+     * 注入View
+     */
+    public void attachView(T view) {
+        this.mView = view;
+    }
 
-    //订阅事件，管理事件生命周期
-    void addSubcriber(Disposable disposable);
+    /**
+     * 判断是否注入了View
+     */
+    public boolean isAttachView() {
+        return this.mView != null;
+    }
 
-    //订阅事件
-    void subscribleEvent();
+    /**
+     * 解除View
+     */
+    public void detachView() {
+        this.mView = null;
+        if(mCompositeDisposable != null){
+            mCompositeDisposable.clear();
+        }
+    }
 
-    boolean getNoImageState();
-    boolean getAutoCacheState();
-    boolean getNightModeState();
-    boolean getStatusBarState();
-    boolean getAutoUpdataState();
-    String getSelectedLanguage();
+    /**
+     * 订阅事件，管理事件生命周期
+     */
+    public void addSubscriber(Disposable disposable){
+        if(mCompositeDisposable == null){
+            mCompositeDisposable = new CompositeDisposable();
+        }
+        mCompositeDisposable.add(disposable);
+    }
 
 }

@@ -18,7 +18,6 @@ import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
-import com.example.library.WaveLoadingView;
 import com.example.permission.bean.Permission;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
@@ -27,7 +26,7 @@ import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityCompone
 import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.presenter.MainPresenter;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.utlis.DownloadUtil;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.commonlib.utils.ToastUtil;
@@ -177,11 +176,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     }
 
     @Override
-    protected void initData() {
-        mPresenter.subscribleEvent();
-    }
-
-    @Override
     protected MainPresenter getPresenter() {
         return mPresenter;
     }
@@ -237,7 +231,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     public void upDataVersion() {
         PermissionHelper.getInstance().with(this).requestPermission(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
+                Constant.REQUEST_WRITE_EXTERNAL,
                 new IPermissionCallback() {
                     @Override
                     public void onAccepted(Permission permission) {

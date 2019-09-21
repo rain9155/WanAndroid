@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.contract.mine;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.base.view.IView;
 
 /**
  * 登陆界面的Contract
@@ -9,7 +8,7 @@ import com.example.hy.wanandroid.base.view.BaseView;
  */
 public interface LoginContract {
 
-    interface View extends BaseView {
+    interface View extends IView {
 
         void setAccountErrorView(String error);//设置用户名错误提示
         void setPasswordErrorView(String error);//设置密码错误提示
@@ -18,7 +17,7 @@ public interface LoginContract {
 
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter {
         void login(String account, String password);//登陆
     }
 

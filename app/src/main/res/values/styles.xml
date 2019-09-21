@@ -11,7 +11,7 @@
     </style>
 
     <style name="AppTheme" parent="@style/BaseTheme">
-    <item name="android:windowAnimationStyle">@style/ActivityAnim</item>
+        <item name="android:windowAnimationStyle">@style/ActivityAnim</item>
     </style>
 
     <style name="PopupAnim">
@@ -48,6 +48,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">false</item>
         <!--<item name="android:windowBackground">@mipmap/ic_launcher</item>-->
     </style>
 
@@ -108,14 +109,29 @@
     <style name="MineFragmentTextStyle">
         <item name="android:layout_marginLeft">@dimen/dp_15</item>
         <item name="android:textSize">@dimen/sp_16</item>
-        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
 
-    <style name="MineFragmentConstaintStyle">
+    <style name="MineFragmentConstraintStyle">
         <item name="android:paddingTop">@dimen/dp_10</item>
         <item name="android:paddingBottom">@dimen/dp_10</item>
         <item name="android:paddingLeft">@dimen/dp_15</item>
         <item name="android:paddingRight">@dimen/dp_10</item>
+    </style>
+
+    <style name="CardViewStyle">
+        <item name="android:layout_marginLeft">@dimen/dp_10</item>
+        <item name="android:layout_marginRight">@dimen/dp_10</item>
+        <item name="android:layout_marginTop">@dimen/dp_5</item>
+        <item name="android:layout_marginBottom">@dimen/dp_5</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">@drawable/fg_card_rect</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

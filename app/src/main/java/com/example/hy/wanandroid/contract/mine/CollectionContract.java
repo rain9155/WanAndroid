@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.contract.mine;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.entity.Collection;
 
 import java.util.List;
@@ -12,14 +11,14 @@ import java.util.List;
  */
 public interface CollectionContract {
 
-    interface View extends BaseView {
+    interface View extends IView {
         void showCollections(List<Collection> collections);
         void showMoreCollections(List<Collection> collections);
         void showEmptyLayout();
         void unCollectArticleSuccess();//取消收藏成功
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter {
         void loadCollections(int pageNum);
         void loadMoreCollections(int pageNum);
         void unCollectArticle(int id, int original);//取消收藏

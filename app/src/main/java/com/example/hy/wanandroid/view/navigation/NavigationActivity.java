@@ -171,7 +171,7 @@ public class NavigationActivity extends BaseLoadActivity<NavigationPresenter> im
 
     @Override
     protected void initData() {
-        mPresenter.subscribleEvent();
+        super.initData();
         mPresenter.loadTags();
     }
 

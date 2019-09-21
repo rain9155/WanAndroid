@@ -1,7 +1,7 @@
 package com.example.hy.wanandroid.presenter.wechat;
 
-import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.base.presenter.BaseFragmentPresenter;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.contract.wechat.WeChatsContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.CollectionEvent;
@@ -21,7 +21,7 @@ import javax.inject.Inject;
  * 详细项目分类的Presenter
  * Created by 陈健宇 at 2018/10/30
  */
-public class WeChatsPresenter extends BaseMvpPresenter<WeChatsContract.View> implements WeChatsContract.Presenter {
+public class WeChatsPresenter extends BaseFragmentPresenter<WeChatsContract.View> implements WeChatsContract.Presenter {
 
 
     @Inject
@@ -30,24 +30,24 @@ public class WeChatsPresenter extends BaseMvpPresenter<WeChatsContract.View> imp
     }
 
     @Override
-    public void subscribleEvent() {
-        addSubcriber(
+    public void subscribeEvent() {
+        addSubscriber(
                 RxBus.getInstance().toObservable(ToppingEvent.class)
                 .subscribe(toppingEvent -> mView.topping())
         );
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(CollectionEvent.class)
                         .subscribe(collectionEvent -> mView.refreshCollections(collectionEvent.getIds()))
         );
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(NoImageEvent.class)
                         .subscribe(noImageEvent -> mView.autoRefresh())
         );
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(AutoCacheEvent.class)
                         .subscribe(noImageEvent -> mView.autoRefresh())
         );
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(TokenExpiresEvent.class)
                 .subscribe(tokenExpiresEvent -> mView.collect())
         );
@@ -55,7 +55,7 @@ public class WeChatsPresenter extends BaseMvpPresenter<WeChatsContract.View> imp
 
     @Override
     public void loadWeChats(int pageNum, int id) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getWeChats(pageNum, id)
                         .compose(RxUtils.switchSchedulers())
                         .compose(RxUtils.handleRequest2())
@@ -70,7 +70,7 @@ public class WeChatsPresenter extends BaseMvpPresenter<WeChatsContract.View> imp
 
     @Override
     public void loadMoreMoreWeChats(int pageNum, int id) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getWeChats(pageNum, id)
                         .compose(RxUtils.switchSchedulers())
                         .compose(RxUtils.handleRequest2())
@@ -85,7 +85,7 @@ public class WeChatsPresenter extends BaseMvpPresenter<WeChatsContract.View> imp
 
     @Override
     public void collectArticle(int id) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
@@ -100,7 +100,7 @@ public class WeChatsPresenter extends BaseMvpPresenter<WeChatsContract.View> imp
 
     @Override
     public void unCollectArticle(int id) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getUnCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){

@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.contract.homepager;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.entity.Article;
 import com.example.hy.wanandroid.entity.BannerData;
 
@@ -12,7 +11,7 @@ import java.util.List;
  */
 public interface HomeContract {
 
-    interface View extends BaseView {
+    interface View extends IView {
         void showBannerDatas(List<BannerData> bannerDataList);//展示banner数据
         void showArticles(List<Article> articleList);//展示首页文章数据
         void showMoreArticles(List<Article> articleList);//加载更多文章数据
@@ -24,7 +23,7 @@ public interface HomeContract {
         void autoRefresh();//自动刷新
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter {
         void loadBannerDatas();//加载首页banner数据
         void loadArticles(int pageNum);//加载首页文章数据
         void loadMoreArticles(int pageNum);//加载更多首页文章数据

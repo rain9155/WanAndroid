@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.config;
+package com.example.hy.wanandroid.utlis;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;

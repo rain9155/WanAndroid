@@ -2,13 +2,11 @@ package com.example.hy.wanandroid.base.activity;
 
 import android.content.Context;
 
+import androidx.annotation.CallSuper;
+
 import com.example.commonlib.utils.LanguageUtil;
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.config.Constant;
-import com.example.hy.wanandroid.di.component.AppComponent;
-
-import java.util.Locale;
 
 /**
  * 封装了获取Presenter的Activity基类
@@ -26,9 +24,20 @@ public abstract class BaseMvpActivity<T extends BasePresenter> extends BaseActiv
     }
 
     @Override
+    @CallSuper
     protected void initView() {
         mPresenter = getPresenter();
-        mPresenter.attachView(this);
+        if(mPresenter != null){
+            mPresenter.attachView(this);
+        }
+    }
+
+    @Override
+    @CallSuper
+    protected void initData() {
+        if(mPresenter != null){
+            mPresenter.subscribeEvent();
+        }
     }
 
     @Override

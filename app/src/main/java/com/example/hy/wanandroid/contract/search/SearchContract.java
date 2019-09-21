@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.contract.search;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.entity.Article;
 import com.example.hy.wanandroid.entity.HotKey;
 
@@ -14,7 +13,7 @@ import java.util.List;
 public interface SearchContract {
 
 
-    interface View extends BaseView {
+    interface View extends IView {
         void showHotKey(List<HotKey> hotKeyList);//显示搜索热词
         void showHistories(List<String> histories);//显示搜索历史
         void addOneHistorySuccess(String record);//添加一条搜索历史成功
@@ -37,7 +36,7 @@ public interface SearchContract {
         void collect();
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter {
         void loadHotkey();//加载搜索热词
         void loadSearchResquest(String key, int pageNum);//加载搜索请求
         void loadSearchMoreResquest(String key, int pageNum);//加载更多搜索请求

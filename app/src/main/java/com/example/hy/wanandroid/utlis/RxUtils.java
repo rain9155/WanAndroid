@@ -84,6 +84,10 @@ public class RxUtils {
         return Observable.create(new ObservableOnSubscribe<T>() {
             @Override
             public void subscribe(ObservableEmitter<T> emitter) throws Exception {
+                if(data == null){
+                    emitter.onError(new NullPointerException("data is null！"));
+                    return;
+                }
                 emitter.onNext(data);
                 emitter.onComplete();
             }

@@ -1,5 +1,7 @@
 package com.example.hy.wanandroid.base.fragment;
 
+import androidx.annotation.CallSuper;
+
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 
 /**
@@ -11,10 +13,20 @@ public abstract class BaseMvpFragment<T extends BasePresenter> extends BaseFragm
     protected T mPresenter;
 
     @Override
+    @CallSuper
     protected void initView() {
         mPresenter = getPresenter();
-        mPresenter.attachView(this);
+        if(mPresenter != null){
+            mPresenter.attachView(this);
+        }
+    }
 
+    @Override
+    @CallSuper
+    protected void loadData() {
+        if(mPresenter != null){
+            mPresenter.subscribeEvent();
+        }
     }
 
     @Override

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.base.view.BaseView;
 import com.example.loading.Loading;
 import com.example.loading.StatusView;
 

@@ -2,11 +2,8 @@ package com.example.hy.wanandroid.view.project;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.MotionEvent;
 
-import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ProjectsAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
@@ -111,7 +108,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
             mArticlePosition = position;
             mArticle =  mArticles.get(position);
             if(!User.getInstance().isLoginStatus()){
-                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
+                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_LOGIN);
                 showToast(getString(R.string.first_login));
                 return;
             }
@@ -133,6 +130,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
             isLoadMore = true;
         });
         srlProjects.setOnRefreshListener(refreshLayout -> {
+            mPageNum = 1;
             mPresenter.loadMoreProjects(1, mId);
             isLoadMore = false;
         });
@@ -140,7 +138,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
 
     @Override
     protected void loadData() {
-        mPresenter.subscribleEvent();
+        super.loadData();
         mPresenter.loadProjects(1, mId);
     }
 
@@ -149,7 +147,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
         if(resultCode != RESULT_OK) return;
         Article article = mArticles.get(mArticlePosition);
         switch (requestCode){
-            case Constant.REQUEST_COLLECT_ARTICLE:
+            case Constant.REQUEST_LOGIN:
                 if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
                 else mPresenter.collectArticle(article.getId());
                 break;
@@ -209,14 +207,14 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
 
     @Override
     public void collectArticleSuccess() {
-        showToast(getString(R.string.common_collection_success));
+        showToast(getString(R.string.toast_collection_success));
         mArticles.get(mArticlePosition).setCollect(true);
         mProjectsAdapter.notifyItemChanged(mArticlePosition + mProjectsAdapter.getHeaderLayoutCount());
     }
 
     @Override
     public void unCollectArticleSuccess() {
-        showToast(getString(R.string.common_uncollection_success));
+        showToast(getString(R.string.toast_uncollection_success));
         mArticles.get(mArticlePosition).setCollect(false);
         mProjectsAdapter.notifyItemChanged(mArticlePosition + mProjectsAdapter.getHeaderLayoutCount());
     }

@@ -5,9 +5,9 @@
     <color name="colorPrimaryDark">#0097A7</color>
     <color name="colorAccent">#03A9F4</color>
     <color name="colorPrimaryLight">#B2EBF2</color>
-    <color name="primaryText">#212121</color>
-    <color name="secondaryText">#757575</color>
-    <color name="thirdText">#b9757575</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorThirdText">#b9757575</color>
     <color name="foreground">#FFFFFF</color>
     <color name="background">#fafafa</color>
     <color name="divier">#1ebdbdbd</color>
@@ -39,5 +39,6 @@
     <color name="colorTipBackground">#81fafafa</color>
     <color name="colorCropViewBg">#616161</color>
     <color name="colorCropViewToolBarBg">#424242</color>
+    <color name="colorAddCoin">#00BCD4</color>
 
 </resources>

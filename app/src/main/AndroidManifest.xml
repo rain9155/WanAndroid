@@ -9,13 +9,10 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission
         android:name="android.permission.READ_LOGS"
-        tools:ignore="ProtectedPermissions" />
-    <!-- 读取手机状态 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- sd卡读写 -->
+        tools:ignore="ProtectedPermissions" /> <!-- 读取手机状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- sd卡读写 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- 安装未知来源应用的权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 安装未知来源应用的权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
@@ -24,15 +21,19 @@
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:largeHeap="true"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <activity
+            android:name=".view.mine.CoinActivity"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.MainActivity"
-            android:launchMode="singleTask"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" />
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:launchMode="singleTask" />
         <activity
             android:name=".view.hierarchy.HierarchySecondActivity"
             android:launchMode="singleTask" />
@@ -48,15 +49,13 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".view.mine.LoginActivity"
-            android:label="@string/title_activity_login"
             android:launchMode="singleTask" />
         <activity
             android:name=".view.mine.RegisterActivity"
             android:launchMode="singleTask" />
         <activity
             android:name=".view.mine.AboutUsActivity"
-            android:label="@string/title_activity_about_us"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask" />
         <activity
             android:name=".view.mine.CollectionActivity"
             android:launchMode="singleTask" />
@@ -76,7 +75,6 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" /> <!-- optional (needed if default theme has no action bar) -->
-
         <service
             android:name=".component.UpdataService"
             android:enabled="true"
@@ -99,7 +97,7 @@
 
         <activity
             android:name=".view.mine.CropperImageActivity"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>

@@ -3,9 +3,9 @@ package com.example.hy.wanandroid.presenter.mine;
 import android.text.TextUtils;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
+import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.LoginContract;
 import com.example.hy.wanandroid.event.LoginEvent;
@@ -19,7 +19,7 @@ import javax.inject.Inject;
 /**
  * Created by 陈健宇 at 2018/11/16
  */
-public class LoginPresenter extends BaseMvpPresenter<LoginContract.View> implements LoginContract.Presenter {
+public class LoginPresenter extends BaseActivityPresenter<LoginContract.View> implements LoginContract.Presenter {
 
     @Inject
     public LoginPresenter(DataModel dataModel) {
@@ -47,7 +47,7 @@ public class LoginPresenter extends BaseMvpPresenter<LoginContract.View> impleme
             return;
         }
 
-        addSubcriber(
+        addSubscriber(
                 mModel.getLoginRequest(account, password)
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())

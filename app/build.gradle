@@ -110,6 +110,8 @@ dependencies {
     implementation rootProject.ext.injectDependency
 
     //other
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.google.android.material:material:1.0.0'
     annotationProcessor rootProject.ext.otherDependency
 
     //custom

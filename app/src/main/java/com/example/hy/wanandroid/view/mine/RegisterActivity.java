@@ -101,10 +101,6 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
 
     }
 
-    @Override
-    protected void initData() {
-
-    }
 
     @Override
     protected void onDestroy() {

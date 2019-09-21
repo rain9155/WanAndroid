@@ -3,7 +3,6 @@ package com.example.hy.wanandroid.view.wechat;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 
 import com.example.commonlib.utils.AnimUtil;
 import com.example.commonlib.utils.CommonUtil;
@@ -108,7 +107,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
             mArticlePosition = position;
             mArticle =  mArticles.get(position);
             if(!User.getInstance().isLoginStatus()){
-                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
+                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_LOGIN);
                 showToast(getString(R.string.first_login));
                 return;
             }
@@ -129,6 +128,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
             isLoadMore = true;
         });
         srlWeChats.setOnRefreshListener(refreshLayout -> {
+            mPageNum = 1;
             mPresenter.loadMoreMoreWeChats(1, mId);
             isLoadMore = false;
         });
@@ -136,7 +136,8 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
 
     @Override
     protected void loadData() {
-        mPresenter.subscribleEvent();
+        super.loadData();
+        mPresenter.subscribeEvent();
         mPresenter.loadWeChats(1, mId);
     }
 
@@ -150,7 +151,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
         if(resultCode != RESULT_OK) return;
         Article article = mArticles.get(mArticlePosition);
         switch (requestCode){
-            case Constant.REQUEST_COLLECT_ARTICLE:
+            case Constant.REQUEST_LOGIN:
                 if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
                 else mPresenter.collectArticle(article.getId());
                 break;
@@ -198,14 +199,14 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
 
     @Override
     public void collectArticleSuccess() {
-        showToast(getString(R.string.common_collection_success));
+        showToast(getString(R.string.toast_collection_success));
         mArticles.get(mArticlePosition).setCollect(true);
         mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
     }
 
     @Override
     public void unCollectArticleSuccess() {
-        showToast(getString(R.string.common_uncollection_success));
+        showToast(getString(R.string.toast_uncollection_success));
         mArticles.get(mArticlePosition).setCollect(false);
         mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
     }

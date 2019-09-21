@@ -3,9 +3,9 @@ package com.example.hy.wanandroid.presenter.mine;
 import android.content.res.Resources;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
+import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.ClearCacheEvent;
@@ -29,7 +29,7 @@ import io.reactivex.functions.Predicate;
  * Settings的Presenter
  * Created by 陈健宇 at 2018/11/26
  */
-public class SettingsPresenter extends BaseMvpPresenter<SettingsContract.View> implements SettingsContract.Presenter{
+public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.View> implements SettingsContract.Presenter{
 
     private boolean isUpdata = false;
 
@@ -39,16 +39,16 @@ public class SettingsPresenter extends BaseMvpPresenter<SettingsContract.View> i
     }
 
     @Override
-    public void subscribleEvent() {
-        super.subscribleEvent();
+    public void subscribeEvent() {
+        super.subscribeEvent();
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(StatusBarEvent.class)
                         .compose(RxUtils.switchSchedulers())
                         .subscribe(statusBarEvent -> mView.setStatusBarColor(statusBarEvent.isSet()))
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(UpdataEvent.class)
                         .filter(new Predicate<UpdataEvent>() {
                             @Override
@@ -59,7 +59,7 @@ public class SettingsPresenter extends BaseMvpPresenter<SettingsContract.View> i
                         .subscribe(updataEvent -> mView.upDataVersion())
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(NightModeEvent.class)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<NightModeEvent>(mView, false, false){
@@ -76,12 +76,12 @@ public class SettingsPresenter extends BaseMvpPresenter<SettingsContract.View> i
                         })
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(ClearCacheEvent.class)
                 .subscribe(clearCacheEvent -> mView.clearCache())
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(LanguageEvent.class)
                 .subscribe(languageEvent -> {
                     mModel.setSelectedLanguage(languageEvent.getLanguage());
@@ -115,8 +115,38 @@ public class SettingsPresenter extends BaseMvpPresenter<SettingsContract.View> i
     }
 
     @Override
+    public boolean getNoImageState() {
+        return mModel.getNoImageState();
+    }
+
+    @Override
+    public boolean getAutoCacheState() {
+        return mModel.getAutoCacheState();
+    }
+
+    @Override
+    public boolean getNightModeState() {
+        return mModel.getNightModeState();
+    }
+
+    @Override
+    public boolean getStatusBarState() {
+        return mModel.getStatusBarState();
+    }
+
+    @Override
+    public boolean getAutoUpdataState() {
+        return mModel.getAutoUpdataState();
+    }
+
+    @Override
+    public String getSelectedLanguage() {
+        return mModel.getSelectedLanguage();
+    }
+
+    @Override
     public void checkVersion(String currentVersion) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getVersionDetails()
                 .compose(RxUtils.switchSchedulers())
                 .filter(new Predicate<Version>() {

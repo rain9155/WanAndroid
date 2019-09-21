@@ -9,11 +9,8 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.config.RxBus;
-import com.example.hy.wanandroid.event.UpdataEvent;
 
 import java.lang.reflect.Field;
 

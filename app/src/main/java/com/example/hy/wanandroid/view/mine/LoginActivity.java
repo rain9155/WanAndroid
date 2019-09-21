@@ -103,7 +103,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @Override
     protected void initData() {
-
+        super.initData();
     }
 
     @Override

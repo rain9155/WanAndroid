@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_25"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/sp_18"
         tools:text="常用网站"/>
 

@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.commonlib.utils.CommonUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
@@ -87,11 +88,14 @@ public class ProjectFragment extends BaseLoadFragment<ProjectPresenter> implemen
 
     @Override
     protected void loadData() {
+        super.loadData();
         mPresenter.loadProjectList();
     }
 
     @Override
     public void showProjectList(List<Tab> projectList) {
+        if(!CommonUtil.isEmptyList(mIds)) mIds.clear();
+        if(!CommonUtil.isEmptyList(mTitles)) mTitles.clear();
         for (Tab project : projectList) {
             mIds.add(project.getId());
             mTitles.add(project.getName());

@@ -2,7 +2,8 @@ package com.example.hy.wanandroid.presenter.search;
 
 import android.text.TextUtils;
 
-import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
+import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
+import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.search.SearchContract;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.entity.Collection;
@@ -21,7 +22,7 @@ import javax.inject.Inject;
 /**
  * Created by 陈健宇 at 2018/11/2
  */
-public class SearchPresenter extends BaseMvpPresenter<SearchContract.View> implements SearchContract.Presenter {
+public class SearchPresenter extends BaseActivityPresenter<SearchContract.View> implements SearchContract.Presenter {
 
 
     @Inject
@@ -31,7 +32,7 @@ public class SearchPresenter extends BaseMvpPresenter<SearchContract.View> imple
 
     @Override
     public void loadHotkey() {
-        addSubcriber(
+        addSubscriber(
                 mModel.getHotKey()
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
@@ -59,7 +60,7 @@ public class SearchPresenter extends BaseMvpPresenter<SearchContract.View> imple
     @Override
     public void loadSearchResquest(String key, int pageNum) {
         if(TextUtils.isEmpty(key.trim())) return;
-        addSubcriber(
+        addSubscriber(
                 mModel.getSearchResquest(key, pageNum)
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
@@ -82,7 +83,7 @@ public class SearchPresenter extends BaseMvpPresenter<SearchContract.View> imple
     @Override
     public void loadSearchMoreResquest(String key, int pageNum) {
         if(TextUtils.isEmpty(key.trim())) return;
-        addSubcriber(
+        addSubscriber(
                 mModel.getSearchResquest(key, pageNum)
                         .compose(RxUtils.switchSchedulers())
                         .compose(RxUtils.handleRequest2())
@@ -138,7 +139,7 @@ public class SearchPresenter extends BaseMvpPresenter<SearchContract.View> imple
 
     @Override
     public void collectArticle(int id) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
@@ -153,7 +154,7 @@ public class SearchPresenter extends BaseMvpPresenter<SearchContract.View> imple
 
     @Override
     public void unCollectArticle(int id) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getUnCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){

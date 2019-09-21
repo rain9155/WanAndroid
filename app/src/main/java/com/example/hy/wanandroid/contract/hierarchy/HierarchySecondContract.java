@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.contract.hierarchy;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.entity.Article;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
  */
 public interface HierarchySecondContract {
 
-    interface View extends BaseView {
+    interface View extends IView {
         void showArticles(List<Article> articleList);
         void showMoreArticles(List<Article> articleList);
         void topping();//置顶
@@ -22,7 +21,7 @@ public interface HierarchySecondContract {
         void refreshCollections(List<Integer> ids);//刷新文章列表中的收藏
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter{
         void loadArticles(int pageNum, int id);
         void loadMoreArticles(int pageNum, int id);
         void collectArticle(int id);//收藏文章

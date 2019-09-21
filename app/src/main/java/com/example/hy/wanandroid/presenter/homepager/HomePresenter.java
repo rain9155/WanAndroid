@@ -1,6 +1,6 @@
 package com.example.hy.wanandroid.presenter.homepager;
 
-import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
+import com.example.hy.wanandroid.base.presenter.BaseFragmentPresenter;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
 import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
@@ -13,7 +13,7 @@ import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
 import com.example.hy.wanandroid.entity.Articles;
 import com.example.hy.wanandroid.entity.BannerData;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
 import java.util.List;
@@ -24,7 +24,7 @@ import javax.inject.Inject;
  * 首页的Presenter
  * Created by 陈健宇 at 2018/10/23
  */
-public class HomePresenter extends BaseMvpPresenter<HomeContract.View> implements HomeContract.Presenter{
+public class HomePresenter extends BaseFragmentPresenter<HomeContract.View> implements HomeContract.Presenter{
 
 
     @Inject
@@ -33,36 +33,37 @@ public class HomePresenter extends BaseMvpPresenter<HomeContract.View> implement
     }
 
     @Override
-    public void subscribleEvent() {
-        addSubcriber(
+    public void subscribeEvent() {
+        super.subscribeEvent();
+        addSubscriber(
                 RxBus.getInstance().toObservable(ToppingEvent.class)
                         .subscribe(toppingEvent -> mView.topping())
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(CollectionEvent.class)
-                .subscribe(collectionEvent -> mView.refreshCollections(collectionEvent.getIds()))
+                        .subscribe(collectionEvent -> mView.refreshCollections(collectionEvent.getIds()))
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(NoImageEvent.class)
-                .subscribe(noImageEvent -> mView.autoRefresh())
+                        .subscribe(noImageEvent -> mView.autoRefresh())
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(AutoCacheEvent.class)
                         .subscribe(noImageEvent -> mView.autoRefresh())
         );
 
-        addSubcriber(
+        addSubscriber(
                 RxBus.getInstance().toObservable(TokenExpiresEvent.class)
-                .subscribe(tokenExpiresEvent -> mView.collect())
+                        .subscribe(tokenExpiresEvent -> mView.collect())
         );
     }
 
     @Override
     public void loadBannerDatas() {
-        addSubcriber(
+        addSubscriber(
                 mModel.getBannerDatas()
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
@@ -78,7 +79,7 @@ public class HomePresenter extends BaseMvpPresenter<HomeContract.View> implement
 
     @Override
     public void loadArticles(int pageNum) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getArticles(pageNum)
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
@@ -93,7 +94,7 @@ public class HomePresenter extends BaseMvpPresenter<HomeContract.View> implement
 
     @Override
     public void loadMoreArticles(int pageNum) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getArticles(pageNum)
                         .compose(RxUtils.switchSchedulers())
                         .compose(RxUtils.handleRequest2())
@@ -108,7 +109,7 @@ public class HomePresenter extends BaseMvpPresenter<HomeContract.View> implement
 
     @Override
     public void collectArticle(int id) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getCollectRequest(id)
                 .compose(RxUtils.switchSchedulers())
                 .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
@@ -124,7 +125,7 @@ public class HomePresenter extends BaseMvpPresenter<HomeContract.View> implement
 
     @Override
     public void unCollectArticle(int id) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getUnCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){

@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.hy.wanandroid.view.mine.CoinActivity">
+
+    <item
+        android:id="@+id/item_coin_rank"
+        android:title="@string/coinActivity_about_coin"
+        android:icon="@drawable/ic_coin_rank"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/item_coin_about"
+        android:title="@string/coinActivity_about_coin"
+        android:icon="@drawable/ic_coin_about"
+        app:showAsAction="always" />
+
+
+</menu>
