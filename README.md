@@ -28,7 +28,7 @@
  <br> ![sc4](/screenshots/sc4.png) ![sc5](/screenshots/sc5.png)<br>
  <br>![sc6](/screenshots/sc6.png) ![sc7](/screenshots/sc7.png)<br>
   <br>![sc8](/screenshots/sc8.png) ![sc9](/screenshots/sc9.png)<br>
-### Download (v1.5, Android 4.1 or above)
+### Download (v1.5, Android 4.4 or above)
 1、[手动下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.5/app-release.apk) 
 <br> <br>
 2、二维码下载
@@ -156,7 +156,6 @@ v1.0 2018-12-1
 * **Leak Check** <br>
 [LeakCanary](https://github.com/square/leakcanary)
 * **Other excellent open source library** <br>
-[WaveLoadingView](https://github.com/tangqi92/WaveLoadingView)<br>
 [MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)<br>
 [VerticalTabLayout](https://github.com/qstumn/VerticalTabLayout)<br>
 [BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)<br>
