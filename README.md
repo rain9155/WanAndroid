@@ -147,10 +147,6 @@ v1.0 2018-12-1
 第一版发布
 ```
 ### Thanks
-* **App** <br>
-[WanAndroid](https://github.com/iceCola7/WanAndroid) <br> 
-[Awesome-WanAndroid](https://github.com/JsonChao/Awesome-WanAndroid) <br>
-[GeekNews](https://github.com/codeestX/GeekNews) <br>
 * **UI** <br>
 [阿里巴巴图标](http://www.iconfont.cn/home/index) <br> 
 [Material Design Palette](http://huaban.com/)<br>
