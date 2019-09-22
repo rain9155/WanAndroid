@@ -3,7 +3,6 @@ package com.example.hy.wanandroid.view.hierarchy;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.ArticlesAdapter;
@@ -70,11 +69,11 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if(bundle != null){
             mId = bundle.getInt(Constant.KEY_HIERARCHY_PAGENUM, -1);
         }
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -112,7 +111,7 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
             mArticlePosition = position;
             mArticle = mArticleList.get(position);
             if(!User.getInstance().isLoginStatus()) {
-                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
+                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_LOGIN);
                 showToast(getString(R.string.first_login));
                 return;
             }
@@ -129,6 +128,7 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
 
     private void initRefreshView() {
         srlHierarchyList.setOnRefreshListener(refreshLayout -> {
+            mPageNum = 0;
             mPresenter.loadMoreArticles(0, mId);
             isLoadMore = false;
         });
@@ -141,7 +141,7 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
 
     @Override
     protected void loadData() {
-        mPresenter.subscribleEvent();
+        super.loadData();
         mPresenter.loadArticles(0, mId);
     }
 
@@ -172,14 +172,14 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
 
     @Override
     public void collectArticleSuccess() {
-        showToast(getString(R.string.common_collection_success));
+        showToast(getString(R.string.toast_collection_success));
         mArticleList.get(mArticlePosition).setCollect(true);
         mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
     }
 
     @Override
     public void unCollectArticleSuccess() {
-        showToast(getString(R.string.common_uncollection_success));
+        showToast(getString(R.string.toast_uncollection_success));
         mArticleList.get(mArticlePosition).setCollect(false);
         mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
     }
@@ -208,7 +208,7 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
 
     @Override
     public void reLoad() {
-        super.reLoad();
+        mPageNum = 0;
         mPresenter.loadArticles(0, mId);
     }
 
@@ -222,7 +222,7 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
         if(resultCode != RESULT_OK) return;
         Article article = mArticleList.get(mArticlePosition);
         switch (requestCode){
-            case Constant.REQUEST_COLLECT_ARTICLE:
+            case Constant.REQUEST_LOGIN:
                 if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
                 else mPresenter.collectArticle(article.getId());
                 break;

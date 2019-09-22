@@ -14,24 +14,26 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.example.commonlib.utils.AnimUtil;
 import com.example.commonlib.utils.FileUtil;
 import com.example.commonlib.utils.IntentUtil;
+import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
-import com.example.hy.wanandroid.widget.customView.ShapeImageView;
-import com.example.permission.bean.Permission;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.di.module.fragment.MineFragmentModule;
 import com.example.hy.wanandroid.presenter.mine.MinePresenter;
-import com.example.commonlib.utils.AnimUtil;
-import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.view.MainActivity;
+import com.example.hy.wanandroid.widget.customView.ShapeImageView;
 import com.example.hy.wanandroid.widget.dialog.ChangeFaceDialog;
 import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
 import com.example.permission.PermissionHelper;
+import com.example.permission.bean.Permission;
 import com.example.permission.callback.IPermissionCallback;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -43,7 +45,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import dagger.Lazy;
 
@@ -91,6 +92,9 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     RelativeLayout rlLogout;
     @BindView(R.id.cl_logout)
     ConstraintLayout clLogout;
+    @BindView(R.id.cl_coin)
+    ConstraintLayout clCoin;
+
 
     @Inject
     MinePresenter mPresenter;
@@ -130,8 +134,8 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
         Bitmap faceBitmap = FileUtil.loadBitmap(Constant.PATH_IMAGE_FACE, Constant.FACE);
         Bitmap backBitmap = FileUtil.loadBitmap(Constant.PATH_IMAGE_BACKGROUND, Constant.BACK);
-        if(faceBitmap != null) ivFace.setImageBitmap(faceBitmap);
-        if(backBitmap != null) ivBack.setImageBitmap(backBitmap);
+        if (faceBitmap != null) ivFace.setImageBitmap(faceBitmap);
+        if (backBitmap != null) ivBack.setImageBitmap(backBitmap);
 
         if (mPresenter.getNightModeState())
             ivBack.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
@@ -139,42 +143,39 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         ivFace.setOnClickListener(v -> mChangeFaceDialog.get().show(getChildFragmentManager(), ChangeFaceDialog.class.getSimpleName()));
         btnLogin.setOnClickListener(v -> LoginActivity.startActivity(mActivity));
 
-        clSettings.setOnClickListener(v -> SettingsActivity.startActivity(mActivity));
-        clCollection.setOnClickListener(v -> {
-            if (!User.getInstance().isLoginStatus()) {
-                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_SHOW_COLLECTIONS);
-                showToast(getString(R.string.first_login));
-            } else
-                CollectionActivity.startActivity(mActivity);
+        clCoin.setOnClickListener(v -> {
+            if (!isLogin()) return;
+            CoinsActivity.startActivity(mActivity);
         });
+        clCollection.setOnClickListener(v -> {
+            if (!isLogin()) return;
+            CollectionActivity.startActivity(mActivity);
+        });
+        clSettings.setOnClickListener(v -> SettingsActivity.startActivity(mActivity));
+
         clAboutus.setOnClickListener(v -> AboutUsActivity.startActivity(mActivity));
         clLogout.setOnClickListener(v -> mLogoutDialog.get().show(getChildFragmentManager(), LogoutDialog.class.getSimpleName()));
     }
 
     @Override
-    protected void loadData() {
-        mPresenter.subscribleEvent();
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mLogoutDialog.get() != null) mLogoutDialog = null;
-        if(mChangeFaceDialog.get() != null) mChangeFaceDialog = null;
-        if(mGotoDetialDialog.get() != null) mGotoDetialDialog = null;
+        if (mLogoutDialog.get() != null) mLogoutDialog = null;
+        if (mChangeFaceDialog.get() != null) mChangeFaceDialog = null;
+        if (mGotoDetialDialog.get() != null) mGotoDetialDialog = null;
     }
 
     @SuppressLint("InlinedApi")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode != RESULT_OK) return;
+        if (resultCode != RESULT_OK) return;
 
         //handle result of collection Activity
-        if(requestCode == Constant.REQUEST_SHOW_COLLECTIONS)
+        if (requestCode == Constant.REQUEST_LOGIN)
             CollectionActivity.startActivity(mActivity);
 
         // handle result of pick image chooser
-        if(requestCode == Constant.REQUEST_PICK_IMAGE_CHOOSER){
+        if (requestCode == Constant.REQUEST_PICK_IMAGE_CHOOSER) {
             Uri imageUri = CropImage.getPickImageResultUri(mActivity, data);
             PermissionHelper.getInstance().with(mActivity).requestPermission(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -182,7 +183,8 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                     new IPermissionCallback() {
                         @Override
                         public void onAccepted(Permission permission) {
-                            if (imageUri != null) CropperImageActivity.startActivityByFragment(mActivity, MineFragment.this, imageUri, mChangeFlag);
+                            if (imageUri != null)
+                                CropperImageActivity.startActivityByFragment(mActivity, MineFragment.this, imageUri, mChangeFlag);
                         }
 
                         @Override
@@ -203,13 +205,13 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
             Uri resultUri = result.getUri();
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(mActivity.getContentResolver().openInputStream(resultUri));
-                if(mChangeFlag == Constant.CHANGE_FACE){
-                    if(FileUtil.saveBitmap(Constant.PATH_IMAGE_FACE, Constant.FACE, bitmap))
+                if (mChangeFlag == Constant.CHANGE_FACE) {
+                    if (FileUtil.saveBitmap(Constant.PATH_IMAGE_FACE, Constant.FACE, bitmap))
                         ivFace.setImageBitmap(bitmap);
                     else
                         showToast(getString(R.string.mineFragment_change_face_fail));
-                } else if(mChangeFlag == Constant.CHANGE_BACK){
-                    if(FileUtil.saveBitmap(Constant.PATH_IMAGE_BACKGROUND, Constant.BACK, bitmap))
+                } else if (mChangeFlag == Constant.CHANGE_BACK) {
+                    if (FileUtil.saveBitmap(Constant.PATH_IMAGE_BACKGROUND, Constant.BACK, bitmap))
                         ivBack.setImageBitmap(bitmap);
                     else
                         showToast(getString(R.string.mineFragment_change_back_fail));
@@ -253,11 +255,11 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     public void changeFaceOrBackground(int flag) {
         this.mChangeFlag = flag;
 
-        if(flag == Constant.CHANGE_NO){
+        if (flag == Constant.CHANGE_NO) {
             ivBack.setImageResource(R.drawable.girl);
             ivFace.setImageResource(R.drawable.girl);
             FileUtil.deleteDir(new File(Constant.PATH_IMAGE_FACE));
-        }else{
+        } else {
             Intent chooserIntent = getChooserIntent();
             startActivityForResult(chooserIntent, Constant.REQUEST_PICK_IMAGE_CHOOSER);
         }
@@ -274,20 +276,29 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         //add All gallery Intents
         List<Intent> allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_GET_CONTENT, true);
         //部分机型会因为用用Intent.ACTION_GET_CONTENT获不到intents，用Intent.ACTION_PICK
-        if(allGalleryIntents.isEmpty())
+        if (allGalleryIntents.isEmpty())
             allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_PICK, true);
         allIntents.addAll(allGalleryIntents);
 
         //create chooserIntent
-        if(allIntents.isEmpty()){
+        if (allIntents.isEmpty()) {
             targerIntent = new Intent();
-        }else {
+        } else {
             targerIntent = allIntents.get(allIntents.size() - 1);
             allIntents.remove(allIntents.size() - 1);
         }
         chooserIntent = Intent.createChooser(targerIntent, getString(R.string.mineFragment_choose_intent));
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
         return chooserIntent;
+    }
+
+    private boolean isLogin() {
+        if (!User.getInstance().isLoginStatus()) {
+            LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_LOGIN);
+            showToast(getString(R.string.first_login));
+            return false;
+        }
+        return true;
     }
 
     public static MineFragment newInstance() {

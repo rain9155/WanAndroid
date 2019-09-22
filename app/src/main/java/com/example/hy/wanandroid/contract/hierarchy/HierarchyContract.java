@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.contract.hierarchy;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.entity.FirstHierarchy;
 
 import java.util.List;
@@ -11,13 +10,13 @@ import java.util.List;
  */
 public interface HierarchyContract {
 
-    interface View extends BaseView {
+    interface View extends IView {
         void showFirstHierarchyList(List<FirstHierarchy> firstHierarchyList);
         void showMoreFirstHierarchyList(List<FirstHierarchy> firstHierarchyList);
         void topping();//置顶
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter{
         void loadFirstHierarchyList();
         void loadMoreFirstHierarchyList();
     }

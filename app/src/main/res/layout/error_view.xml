@@ -31,7 +31,7 @@
         android:text="@string/loading_error"
         android:layout_marginTop="@dimen/dp_15"
         android:textSize="@dimen/sp_18"
-        android:textColor="@color/secondaryText"
+        android:textColor="@color/colorSecondaryText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/gl_horizontal"/>

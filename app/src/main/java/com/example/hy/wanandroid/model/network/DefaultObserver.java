@@ -3,9 +3,9 @@ package com.example.hy.wanandroid.model.network;
 import android.net.ParseException;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
@@ -20,6 +20,7 @@ import org.json.JSONException;
 
 import java.net.UnknownHostException;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.ResourceObserver;
@@ -33,22 +34,22 @@ import static com.example.commonlib.utils.LogUtil.TAG_ERROR;
  */
 public abstract class DefaultObserver<T> extends ResourceObserver<T>{
 
-    private BaseView mView;
+    private IView mView;
     private boolean isShowErrorView = true;
     private boolean isShowProgress = true;
     private Disposable mDisposable;
 
     private DefaultObserver() {}
 
-    protected DefaultObserver(BaseView view) {
+    protected DefaultObserver(IView view) {
         this(view, true, true);
     }
 
-    protected DefaultObserver(BaseView view, boolean isShowErrorView) {
+    protected DefaultObserver(IView view, boolean isShowErrorView) {
        this(view, isShowErrorView, true);
     }
 
-    protected DefaultObserver(BaseView view, boolean isShowErrorView, boolean isShowProgress) {
+    protected DefaultObserver(IView view, boolean isShowErrorView, boolean isShowProgress) {
         mView = view;
         this.isShowErrorView = isShowErrorView;
         this.isShowProgress = isShowProgress;
@@ -115,6 +116,9 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
             }else if(e instanceof InterruptedException){
                 LogUtil.e(TAG_ERROR, "timeout：" + e.getMessage());
                 timeoutError();
+            }else if(e instanceof NullPointerException){
+                LogUtil.e(TAG_ERROR, "空异常：" + e.getMessage());
+                nullError();
             }else if (e instanceof HttpException){
                 LogUtil.e(TAG_ERROR, "http错误：" + e.getMessage());
                 httpError();
@@ -155,6 +159,15 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
     }
 
     /**
+     * 空异常
+     */
+    protected void nullError(){
+        mView.showToast(App.getContext().getString(R.string.error_nothing));
+        mView.unableRefresh();
+        if (isShowErrorView) mView.showErrorView();
+    }
+
+    /**
      * 网络超时异常
      */
     protected void timeoutError() {
@@ -173,7 +186,7 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
     }
 
     /**
-     * 空数据异常
+     * 其他异常
      */
     protected void otherError(String error) {
         mView.showToast(error);

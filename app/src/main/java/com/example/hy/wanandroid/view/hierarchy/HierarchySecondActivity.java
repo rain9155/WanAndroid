@@ -3,7 +3,6 @@ package com.example.hy.wanandroid.view.hierarchy;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +15,7 @@ import com.example.hy.wanandroid.di.component.activity.DaggerHierarchySecondActi
 import com.example.hy.wanandroid.di.component.activity.HierarchySecondActivityComponent;
 import com.example.hy.wanandroid.di.module.activity.HierarchySecondActivityModule;
 import com.example.hy.wanandroid.event.ToppingEvent;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -31,7 +30,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class HierarchySecondActivity extends BaseActivity {
 
@@ -84,6 +82,11 @@ public class HierarchySecondActivity extends BaseActivity {
         fbtnUp.setOnClickListener(v -> RxBus.getInstance().post(new ToppingEvent()));
     }
 
+    @Override
+    protected void initData() {
+
+    }
+
     private void initViewPager() {
         for (int i = 0; i < mTitles.size(); i++) {
             commonTablayout.addTab(commonTablayout.newTab().setText(mTitles.get(i)));
@@ -103,9 +106,6 @@ public class HierarchySecondActivity extends BaseActivity {
         tlCommon.setNavigationOnClickListener(v -> finish());
     }
 
-    @Override
-    protected void initData() {
-    }
 
     public HierarchySecondActivityComponent getComponent() {
         return mComponent;

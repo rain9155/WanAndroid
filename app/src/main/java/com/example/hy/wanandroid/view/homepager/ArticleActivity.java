@@ -117,6 +117,7 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
 
     @Override
     protected void initData() {
+        super.initData();
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(flContainer, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator(getResources().getColor(R.color.colorPrimary))
@@ -140,7 +141,7 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.article_tl_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_article, menu);
         mCollectionItem = menu.findItem(R.id.item_collection);
         if(isHideCollection) mCollectionItem.setVisible(false);
         if(isCollection) mCollectionItem.setTitle(getString(R.string.articleActivity_cancel_collection));
@@ -171,7 +172,7 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK && requestCode == Constant.REQUEST_COLLECT_ARTICLE){
+        if(resultCode == RESULT_OK && requestCode == Constant.REQUEST_LOGIN){
             if(isCollection) mPresenter.unCollectArticle(mArticleId);
             else mPresenter.collectArticle(mArticleId);
         }
@@ -211,14 +212,14 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
     public void collectArticleSuccess() {
         mCollectionItem.setTitle(R.string.articleActivity_cancel_collection);
         isCollection = true;
-        showToast(getString(R.string.common_collection_success));
+        showToast(getString(R.string.toast_collection_success));
     }
 
     @Override
     public void unCollectArticleSuccess() {
         mCollectionItem.setTitle(R.string.articleActivity_collection);
         isCollection = false;
-        showToast(getString(R.string.common_uncollection_success));
+        showToast(getString(R.string.toast_uncollection_success));
     }
 
     @Override
@@ -234,7 +235,7 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
      */
     private void collection() {
         if(!User.getInstance().isLoginStatus()){
-            LoginActivity.startActivityForResult(this, Constant.REQUEST_COLLECT_ARTICLE);
+            LoginActivity.startActivityForResult(this, Constant.REQUEST_LOGIN);
             showToast(getString(R.string.first_login));
             return;
         }

@@ -45,7 +45,7 @@
             app:itemIconTint="@drawable/nav_btm_color"
             app:itemTextColor="@drawable/nav_btm_color"
             app:layout_behavior="@string/behaviour_bottom_nav"
-            app:menu="@menu/home_btm_menu"
+            app:menu="@menu/menu_home"
             app:elevation="@dimen/dp_5">
 
         </com.google.android.material.bottomnavigation.BottomNavigationView>

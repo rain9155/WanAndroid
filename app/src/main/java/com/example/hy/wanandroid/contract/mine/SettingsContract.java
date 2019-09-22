@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.contract.mine;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.base.view.IView;
 
 /**
  * 设置的Contract
@@ -9,21 +8,27 @@ import com.example.hy.wanandroid.base.view.BaseView;
  */
 public interface SettingsContract {
 
-    interface View extends BaseView {
+    interface View extends IView {
         void showUpdataDialog(String content);//显示更新弹窗
         void setNewVersionName(String versionName);//设置最新版本号
-        void showAlareadNewToast(String content);//已经是最新版本
-        void hadleLanguage();//处理更换语言事件
+        void showAlreadyNewToast(String content);//已经是最新版本
+        void handleLanguage();//处理更换语言事件
         void clearCache();//清空缓存
         void upDataVersion();//更新
-        void showChangeAnimation();//显示一个夜间模式切换动画
+        void showNightChangeAnim(boolean isNight);//显示一个夜间模式切换动画
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter {
         void setNoImageState(boolean isNight);
         void setAutoCacheState(boolean isNight);
         void setNightModeState(boolean isNight);
         void setStatusBarState(boolean isStatusBar);
+        boolean getNoImageState();
+        boolean getAutoCacheState();
+        boolean getNightModeState();
+        boolean getStatusBarState();
+        boolean getAutoUpdataState();
+        String getSelectedLanguage();
         void checkVersion(String currentVersion);
     }
 }

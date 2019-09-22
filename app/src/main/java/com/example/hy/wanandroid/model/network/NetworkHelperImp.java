@@ -1,5 +1,8 @@
 package com.example.hy.wanandroid.model.network;
 
+import com.example.hy.wanandroid.entity.CoinRanks;
+import com.example.hy.wanandroid.entity.Coins;
+import com.example.hy.wanandroid.entity.UserCoin;
 import com.example.hy.wanandroid.model.network.api.HierarchyApis;
 import com.example.hy.wanandroid.model.network.api.HomeApis;
 import com.example.hy.wanandroid.model.network.api.MineApis;
@@ -147,5 +150,20 @@ public class NetworkHelperImp implements NetworkHelper{
     @Override
     public Observable<BaseResponse<Collection>> getUnCollectRequest(int id) {
         return mHomeApis.getUnCollectRequest(id);
+    }
+
+    @Override
+    public Observable<BaseResponse<UserCoin>> getUserCoin() {
+        return mMineApis.getUserCoin();
+    }
+
+    @Override
+    public Observable<BaseResponse<Coins>> getCoins(int pageNum) {
+        return mMineApis.getCoins(pageNum);
+    }
+
+    @Override
+    public Observable<BaseResponse<CoinRanks>> getCoinRanks(int pageNum) {
+        return mMineApis.getCoinRanks(pageNum);
     }
 }

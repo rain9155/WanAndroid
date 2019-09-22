@@ -1,7 +1,7 @@
 package com.example.hy.wanandroid.presenter.mine;
 
-import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
@@ -18,7 +18,7 @@ import javax.inject.Inject;
  * Collection的Presenter
  * Created by 陈健宇 at 2018/11/22
  */
-public class CollectionPresenter extends BaseMvpPresenter<CollectionContract.View> implements CollectionContract.Presenter{
+public class CollectionPresenter extends BaseActivityPresenter<CollectionContract.View> implements CollectionContract.Presenter{
 
     @Inject
     public CollectionPresenter(DataModel model) {
@@ -27,9 +27,9 @@ public class CollectionPresenter extends BaseMvpPresenter<CollectionContract.Vie
 
 
     @Override
-    public void subscribleEvent() {
-        super.subscribleEvent();
-        addSubcriber(
+    public void subscribeEvent() {
+        super.subscribeEvent();
+        addSubscriber(
                 RxBus.getInstance().toObservable(TokenExpiresEvent.class)
                         .subscribe(tokenExpiresEvent -> loadCollections(0))
         );
@@ -37,7 +37,7 @@ public class CollectionPresenter extends BaseMvpPresenter<CollectionContract.Vie
 
     @Override
     public void loadCollections(int pageNum) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getCollectionRequest(pageNum)
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())
@@ -53,7 +53,7 @@ public class CollectionPresenter extends BaseMvpPresenter<CollectionContract.Vie
 
     @Override
     public void loadMoreCollections(int pageNum) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getCollectionRequest(pageNum)
                         .compose(RxUtils.switchSchedulers())
                         .compose(RxUtils.handleRequest2())
@@ -69,7 +69,7 @@ public class CollectionPresenter extends BaseMvpPresenter<CollectionContract.Vie
 
     @Override
     public void unCollectArticle(int id, int originalId) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getUnCollectRequest(id, originalId)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){

@@ -1,7 +1,7 @@
 package com.example.hy.wanandroid.presenter.homepager;
 
-import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
@@ -16,7 +16,7 @@ import javax.inject.Inject;
  * 文章详情的Presenter
  * Created by 陈健宇 at 2018/11/8
  */
-public class ArticlePresenter extends BaseMvpPresenter<ArticleContract.View> implements ArticleContract.Presenter {
+public class ArticlePresenter extends BaseActivityPresenter<ArticleContract.View> implements ArticleContract.Presenter {
 
 
     @Inject
@@ -25,9 +25,9 @@ public class ArticlePresenter extends BaseMvpPresenter<ArticleContract.View> imp
     }
 
     @Override
-    public void subscribleEvent() {
-        super.subscribleEvent();
-        addSubcriber(
+    public void subscribeEvent() {
+        super.subscribeEvent();
+        addSubscriber(
                 RxBus.getInstance().toObservable(TokenExpiresEvent.class)
                 .subscribe(tokenExpiresEvent -> mView.collect())
         );
@@ -35,7 +35,7 @@ public class ArticlePresenter extends BaseMvpPresenter<ArticleContract.View> imp
 
     @Override
     public void collectArticle(int id) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
@@ -50,7 +50,7 @@ public class ArticlePresenter extends BaseMvpPresenter<ArticleContract.View> imp
 
     @Override
     public void unCollectArticle(int id) {
-        addSubcriber(
+        addSubscriber(
                 mModel.getUnCollectRequest(id)
                         .compose(RxUtils.switchSchedulers())
                         .subscribeWith(new DefaultObserver<BaseResponse<Collection>>(mView, false, false){
@@ -61,5 +61,15 @@ public class ArticlePresenter extends BaseMvpPresenter<ArticleContract.View> imp
                             }
                         })
         );
+    }
+
+    @Override
+    public boolean getNoImageState() {
+        return mModel.getNoImageState();
+    }
+
+    @Override
+    public boolean getAutoCacheState() {
+        return mModel.getAutoCacheState();
     }
 }

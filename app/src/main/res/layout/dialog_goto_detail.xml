@@ -24,7 +24,7 @@
         android:id="@+id/tv_toast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/sp_20"
         android:layout_marginLeft="@dimen/dp_10"
         android:text="@string/dialog_toast"
@@ -34,10 +34,10 @@
         android:layout_marginStart="@dimen/dp_10" />
 
     <TextView
-        android:id="@+id/tv_open_browse"
+        android:id="@+id/tv_open"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/sp_18"
         android:layout_marginTop="@dimen/dp_20"
         android:paddingEnd="@dimen/dp_10"
@@ -52,12 +52,12 @@
         android:id="@+id/btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/sp_14"
         android:background="@drawable/bg_common_rect"
         android:layout_marginTop="@dimen/dp_10"
         android:text="@string/dialog_cancel"
-        app:layout_constraintTop_toBottomOf="@id/tv_logout"
+        app:layout_constraintTop_toBottomOf="@id/tv_open"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/btn_confirm"/>
 
@@ -65,12 +65,12 @@
         android:id="@+id/btn_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/sp_14"
         android:background="@drawable/bg_common_rect"
         android:layout_marginTop="@dimen/dp_10"
         android:text="@string/dialog_confirm"
-        app:layout_constraintTop_toBottomOf="@id/tv_logout"
+        app:layout_constraintTop_toBottomOf="@id/tv_open"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 

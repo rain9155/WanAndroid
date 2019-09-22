@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.presenter.project;
 
-import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
+import com.example.hy.wanandroid.base.presenter.BaseFragmentPresenter;
+import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.project.ProjectContract;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
@@ -15,7 +16,7 @@ import javax.inject.Inject;
  * 项目Presenter
  * Created by 陈健宇 at 2018/10/23
  */
-public class ProjectPresenter extends BaseMvpPresenter<ProjectContract.View> implements ProjectContract.Presenter{
+public class ProjectPresenter extends BaseFragmentPresenter<ProjectContract.View> implements ProjectContract.Presenter{
 
 
     @Inject
@@ -25,7 +26,7 @@ public class ProjectPresenter extends BaseMvpPresenter<ProjectContract.View> imp
 
     @Override
     public void loadProjectList() {
-        addSubcriber(
+        addSubscriber(
                 mModel.getProjectList()
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())

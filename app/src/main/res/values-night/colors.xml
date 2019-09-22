@@ -5,19 +5,22 @@
     <color name="colorPrimaryDark">#424242</color>
     <color name="colorAccent">#616161</color>
     <color name="colorPrimaryLight">#9E9E9E</color>
-    <color name="primaryText">#FAFAFA</color>
-    <color name="secondaryText">#F5F5F5</color>
-    <color name="thirdText">#EEEEEE</color>
+    <color name="colorPrimaryText">#FAFAFA</color>
+    <color name="colorSecondaryText">#F5F5F5</color>
+    <color name="colorThirdText">#EEEEEE</color>
     <color name="foreground">#424242</color>
     <color name="background">#212121</color>
     <color name="divier">#1ebdbdbd</color>
     <color name="translucence">#80FFFFFF</color>
     <color name="transparency">#00000000</color>
+    <color name="colorLaunchText">#FFFFFF</color>
     <color name="colorCollected">#65ff0000</color>
     <color name="colorIndicator">#424242</color>
-    <color name="colorBorder">#424242</color>
+    <color name="colorWave">#424242</color>
+    <color name="colorWaveBackground">#EEEEEE</color>
     <color name="colorNavBtmBackground">#424242</color>
     <color name="colorNavBtmIconTint">#FAFAFA</color>
+    <color name="colorFill">#00BCD4</color>
     <color name="colorNavBtmText">#FAFAFA</color>
     <color name="colorEtHint">#9E9E9E</color>
     <color name="colorTrackOpen">#03A9F4</color>
@@ -34,5 +37,6 @@
     <color name="colorTag2">#00BCD4</color>
     <color name="colorCropViewBg">#616161</color>
     <color name="colorCropViewToolBarBg">#424242</color>
+    <color name="colorAddCoin">#FAFAFA</color>
 
 </resources>

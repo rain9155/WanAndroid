@@ -46,7 +46,6 @@ import com.example.hy.wanandroid.widget.dialog.ClearCacheDialog;
 import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.LanguageDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
-import com.example.permission.PermissionFragment;
 import com.example.permission.PermissionHelper;
 import com.example.permission.callback.IPermissionCallback;
 
@@ -168,6 +167,8 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     Lazy<LanguageDialog> mLanguageDialog;
 
 
+    private boolean isNightChanging;
+    private boolean isNight;
     private ObjectAnimator mAnimator;
     private String mNewVersionName;
     private String mCurrentVersionName;
@@ -194,6 +195,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
         isEnableTip = false;
+        isNight = mPresenter.getNightModeState();
         initToolBar();
         initSwitch();
         initSettings();
@@ -256,10 +258,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         tlCommon.setNavigationOnClickListener(v -> finish());
     }
 
-    @Override
-    protected void initData() {
-        mPresenter.subscribleEvent();
-    }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -271,6 +269,10 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
                 mPresenter.setNoImageState(isChecked);
                 break;
             case R.id.switch_nightMode:
+                if(isNightChanging){
+                    buttonView.setChecked(isNight);
+                    return;
+                }
                 mPresenter.setNightModeState(isChecked);
                 break;
             case R.id.switch_status_bar:
@@ -302,7 +304,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
     @Override
     public void useNightNode(boolean isNight) {
-
         int background, primaryText, foreground, colorPrimary, colorPrimaryDark, colorRipple;
         if (isNight) {
             colorPrimary = Color.parseColor("#212121");
@@ -371,32 +372,53 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     }
 
     @Override
-    public void showChangeAnimation() {
+    public void showNightChangeAnim(boolean isNight) {
+        this.isNight = isNight;
+        isNightChanging = true;
         final View decorView = getWindow().getDecorView();
         Bitmap cacheBitmap = getCacheBitmapFromView(decorView);
         if (decorView instanceof ViewGroup && cacheBitmap != null) {
             final View view = new View(this);
-            view.setBackgroundDrawable(new BitmapDrawable(getResources(), cacheBitmap));
-            ViewGroup.LayoutParams layoutParam = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            view.setBackground(new BitmapDrawable(getResources(), cacheBitmap));
+            ViewGroup.LayoutParams layoutParam = new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
             ((ViewGroup) decorView).addView(view, layoutParam);
             ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f);
-            objectAnimator.setDuration(300);
+            objectAnimator.setDuration(200);
             objectAnimator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     ((ViewGroup) decorView).removeView(view);
+                    isNightChanging = false;
                 }
             });
             objectAnimator.start();
         }
     }
 
+    @Override
+    public void setStatusBarColor(boolean isSet) {
+        int statusBarColor;
+        if (isNight) {
+            if (isSet)
+                statusBarColor = Color.parseColor("#212121");
+            else
+                statusBarColor = Color.parseColor("#424242");
+        } else {
+            if (isSet)
+                statusBarColor = Color.parseColor("#00BCD4");
+            else
+                statusBarColor = Color.parseColor("#0097A7");
+        }
+        StatusBarUtil.immersive(this, statusBarColor);
+    }
+
 
     @Override
     public void showLoading() {
-        startloadAnimator();
+        startLoadAnimator();
     }
 
     @Override
@@ -422,13 +444,13 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     }
 
     @Override
-    public void showAlareadNewToast(String content) {
+    public void showAlreadyNewToast(String content) {
         mAnimator.cancel();
         showToast(content);
     }
 
     @Override
-    public void hadleLanguage() {
+    public void handleLanguage() {
         finish();
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
@@ -449,7 +471,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     public void upDataVersion() {
         PermissionHelper.getInstance().with(this).requestPermission(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
+                Constant.REQUEST_WRITE_EXTERNAL,
                 new IPermissionCallback() {
                     @Override
                     public void onAccepted(Permission permission) {
@@ -478,7 +500,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
      * 启动load动画
      */
     @SuppressLint("WrongConstant")
-    private void startloadAnimator() {
+    private void startLoadAnimator() {
         mAnimator = ObjectAnimator.ofFloat(ivUpdata, "rotation", 0, 360).setDuration(600);
         mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         mAnimator.setRepeatCount(ValueAnimator.INFINITE);

@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.contract.mine;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.base.view.IView;
 
 /**
  * 注册的Contract
@@ -9,7 +8,7 @@ import com.example.hy.wanandroid.base.view.BaseView;
  */
 public interface RegisterContract {
 
-    interface View extends BaseView {
+    interface View extends IView {
 
         void setAccountErrorView(String error);//设置用户名错误提示
         void setPasswordErrorView(String error);//设置密码错误提示
@@ -18,7 +17,7 @@ public interface RegisterContract {
         void registerSuccess();//注册成功
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter{
         void register(String username, String password, String rePassword);//注册
     }
 

@@ -3,7 +3,6 @@ package com.example.hy.wanandroid.view.homepager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -83,11 +82,11 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
     @Inject
     Lazy<PressPopup> mPopupWindow;
 
-    private int pageNum = 0;//首页文章页数
+    private int mPageNum = 0;//首页文章页数
     private boolean isLoadMore = false;
     private int mArticlePosition = 0;//点击的位置
     private Article mArticle;//点击的文章
-    private Banner banner;
+    private Banner mBanner;
     private boolean isPress = false;
 
     @Override
@@ -120,7 +119,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
     private void initRecyclerView() {
         //首页文章
         View bannerLayout = LayoutInflater.from(mActivity).inflate(R.layout.banner_layout, null);
-        banner = bannerLayout.findViewById(R.id.banner);
+        mBanner = bannerLayout.findViewById(R.id.banner);
         rvArticles.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
         mArticlesAdapter.addHeaderView(bannerLayout);
@@ -139,7 +138,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
             mArticlePosition = position;
             mArticle = mArticles.get(position);
             if(!User.getInstance().isLoginStatus()){
-                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
+                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_LOGIN);
                 showToast(getString(R.string.first_login));
                 return;
             }
@@ -156,13 +155,14 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
     private void initRefreshView() {
         srlHome.setOnLoadMoreListener(refreshLayout -> {
-            pageNum++;
-            mPresenter.loadMoreArticles(pageNum);
+            mPageNum++;
+            mPresenter.loadMoreArticles(mPageNum);
             isLoadMore = true;
         });
         srlHome.setOnRefreshListener(refreshLayout -> {
             mPresenter.loadMoreArticles(0);
             mPresenter.loadBannerDatas();
+            mPageNum = 0;
             isLoadMore = false;
         });
     }
@@ -178,7 +178,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
     @Override
     protected void loadData() {
-        mPresenter.subscribleEvent();
+        super.loadData();
         mPresenter.loadBannerDatas();
         mPresenter.loadArticles(0);
     }
@@ -197,7 +197,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
             bannerAddress.add(bannerData.getUrl());
         }
         //设置banner
-        banner.setImageLoader(new BannerImageLoader())
+        mBanner.setImageLoader(new BannerImageLoader())
                 .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)//显示圆形指示器和标题（水平显示）
                 .setImages(bannerImages)//设置图片集合
                 .setBannerAnimation(Transformer.BackgroundToForeground)//设置轮播动画
@@ -242,16 +242,16 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
     @Override
     public void collectArticleSuccess() {
-        showToast(getString(R.string.common_collection_success));
         mArticles.get(mArticlePosition).setCollect(true);
         mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
+        showToast(getString(R.string.toast_collection_success));
     }
 
     @Override
     public void unCollectArticleSuccess() {
-        showToast(getString(R.string.common_uncollection_success));
         mArticles.get(mArticlePosition).setCollect(false);
         mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
+        showToast(getString(R.string.toast_uncollection_success));
     }
 
     @Override
@@ -288,7 +288,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
     @Override
     public void reLoad() {
-        super.reLoad();
+        mPageNum = 0;
         mPresenter.loadBannerDatas();
         mPresenter.loadArticles(0);
     }
@@ -299,7 +299,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
         if(CommonUtil.isEmptyList(mArticles)) return;
         Article article = mArticles.get(mArticlePosition);
         switch (requestCode){
-            case Constant.REQUEST_COLLECT_ARTICLE:
+            case Constant.REQUEST_LOGIN:
                 if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
                 else mPresenter.collectArticle(article.getId());
                 break;
@@ -318,16 +318,16 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
     @Override
     public void onStart() {
         super.onStart();
-        if (banner != null) {
-            banner.startAutoPlay();
+        if (mBanner != null) {
+            mBanner.startAutoPlay();
         }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (banner != null) {
-            banner.stopAutoPlay();
+        if (mBanner != null) {
+            mBanner.stopAutoPlay();
         }
     }
 

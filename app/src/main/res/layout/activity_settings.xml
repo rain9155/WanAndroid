@@ -23,7 +23,7 @@
                 android:id="@+id/tv_settings_base"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/secondaryText"
+                android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/dp_18"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginLeft="@dimen/dp_20"
@@ -56,7 +56,7 @@
                         android:id="@+id/cl_noImage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/MineFragmentConstaintStyle"
+                        style="@style/MineFragmentConstraintStyle"
                         android:background="@drawable/bg_rect"
                         android:clickable="true"
                         android:focusable="true"
@@ -102,7 +102,7 @@
                         android:background="@drawable/bg_rect"
                         android:clickable="true"
                         android:focusable="true"
-                        style="@style/MineFragmentConstaintStyle"
+                        style="@style/MineFragmentConstraintStyle"
                         app:layout_constraintTop_toBottomOf="@id/cl_noImage">
 
                         <ImageView
@@ -146,7 +146,7 @@
                         android:background="@drawable/bg_rect"
                         android:clickable="true"
                         android:focusable="true"
-                        style="@style/MineFragmentConstaintStyle"
+                        style="@style/MineFragmentConstraintStyle"
                         android:layout_marginTop="@dimen/dp_2"
                         app:layout_constraintTop_toBottomOf="@id/cl_nightMode">
 
@@ -191,7 +191,7 @@
                         android:background="@drawable/bg_rect"
                         android:clickable="true"
                         android:focusable="true"
-                        style="@style/MineFragmentConstaintStyle"
+                        style="@style/MineFragmentConstraintStyle"
                         app:layout_constraintTop_toBottomOf="@id/cl_autoCache">
 
                         <ImageView
@@ -235,7 +235,7 @@
                         android:background="@drawable/bg_rect"
                         android:clickable="true"
                         android:focusable="true"
-                        style="@style/MineFragmentConstaintStyle"
+                        style="@style/MineFragmentConstraintStyle"
                         app:layout_constraintTop_toBottomOf="@id/cl_status_bar">
 
                         <ImageView
@@ -281,7 +281,7 @@
                 android:id="@+id/tv_settings_common"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/secondaryText"
+                android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/dp_18"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginLeft="@dimen/dp_20"
@@ -317,7 +317,7 @@
                         android:background="@drawable/bg_rect"
                         android:clickable="true"
                         android:focusable="true"
-                        style="@style/MineFragmentConstaintStyle"
+                        style="@style/MineFragmentConstraintStyle"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
@@ -347,7 +347,7 @@
                         android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/MineFragmentConstaintStyle"
+                        style="@style/MineFragmentConstraintStyle"
                         android:background="@drawable/bg_rect"
                         android:clickable="true"
                         android:focusable="true"
@@ -379,7 +379,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/dp_28"
                             android:gravity="center"
-                            android:textColor="@color/secondaryText"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/sp_16"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -394,7 +394,7 @@
                         android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/MineFragmentConstaintStyle"
+                        style="@style/MineFragmentConstraintStyle"
                         android:background="@drawable/bg_rect"
                         android:clickable="true"
                         android:focusable="true"
@@ -426,7 +426,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/dp_28"
                             android:gravity="center"
-                            android:textColor="@color/secondaryText"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/sp_16"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -446,7 +446,7 @@
                 android:id="@+id/tv_settings_other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/secondaryText"
+                android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/dp_18"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginLeft="@dimen/dp_20"
@@ -482,7 +482,7 @@
                         android:background="@drawable/bg_rect"
                         android:clickable="true"
                         android:focusable="true"
-                        style="@style/MineFragmentConstaintStyle"
+                        style="@style/MineFragmentConstraintStyle"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
@@ -511,7 +511,7 @@
                         android:id="@+id/cl_updata"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/MineFragmentConstaintStyle"
+                        style="@style/MineFragmentConstraintStyle"
                         android:background="@drawable/bg_rect"
                         android:clickable="true"
                         android:focusable="true"
@@ -543,7 +543,7 @@
                             android:layout_height="@dimen/dp_28"
                             android:src="@drawable/ic_mine_next"
                             android:gravity="center"
-                            android:textColor="@color/secondaryText"
+                            android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/sp_16"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toTopOf="parent"

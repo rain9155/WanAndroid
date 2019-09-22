@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.presenter.navigation;
 
-import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
+import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
+import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.navigation.NavigationContract;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
@@ -15,7 +16,7 @@ import javax.inject.Inject;
 /**
  * Created by 陈健宇 at 2018/10/31
  */
-public class NavigationPresenter extends BaseMvpPresenter<NavigationContract.View> implements NavigationContract.Presenter {
+public class NavigationPresenter extends BaseActivityPresenter<NavigationContract.View> implements NavigationContract.Presenter {
 
     @Inject
     public NavigationPresenter(DataModel dataModel) {
@@ -24,7 +25,7 @@ public class NavigationPresenter extends BaseMvpPresenter<NavigationContract.Vie
 
     @Override
     public void loadTags() {
-        addSubcriber(
+        addSubscriber(
                 mModel.getTags()
                 .compose(RxUtils.switchSchedulers())
                 .compose(RxUtils.handleRequest2())

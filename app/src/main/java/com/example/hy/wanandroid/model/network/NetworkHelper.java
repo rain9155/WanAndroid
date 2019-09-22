@@ -1,6 +1,8 @@
 package com.example.hy.wanandroid.model.network;
 
 import com.example.hy.wanandroid.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.CoinRanks;
+import com.example.hy.wanandroid.entity.Coins;
 import com.example.hy.wanandroid.entity.FirstHierarchy;
 import com.example.hy.wanandroid.entity.SecondHierarchy;
 import com.example.hy.wanandroid.entity.Articles;
@@ -11,11 +13,13 @@ import com.example.hy.wanandroid.entity.Login;
 import com.example.hy.wanandroid.entity.Tag;
 import com.example.hy.wanandroid.entity.Tab;
 import com.example.hy.wanandroid.entity.HotKey;
+import com.example.hy.wanandroid.entity.UserCoin;
 import com.example.hy.wanandroid.entity.Version;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.http.Path;
 
 /**
  * 网络操作接口
@@ -78,4 +82,11 @@ public interface NetworkHelper {
     Observable<BaseResponse<Collection>> getCollectRequest(int id);
     //获得取消收藏结果
     Observable<BaseResponse<Collection>> getUnCollectRequest(int id);
+    //获得个人积分
+    Observable<BaseResponse<UserCoin>> getUserCoin();
+    //获得个人积分列表
+    Observable<BaseResponse<Coins>> getCoins(int pageNum);
+    //获得积分排行榜
+    Observable<BaseResponse<CoinRanks>> getCoinRanks(int pageNum);
+
 }

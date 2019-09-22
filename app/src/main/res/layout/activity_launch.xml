@@ -6,23 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".view.LaunchActivity">
 
-    <ImageView
-        android:id="@+id/iv_launch"
-        android:layout_width="@dimen/dp_100"
-        android:layout_height="@dimen/dp_100"
-        android:layout_marginBottom="@dimen/dp_10"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:layout_centerInParent="true"/>
+    <RelativeLayout
+        android:id="@+id/rl_launch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
 
-    <TextView
+        <com.example.hy.wanandroid.widget.customView.SVGBgView
+            android:id="@+id/iv_launch"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_150"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_150"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/ic_launcher_foreground"/>
+
+    </RelativeLayout>
+
+    <com.example.hy.wanandroid.widget.customView.WaveTextView
         android:id="@+id/tv_launch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="@string/app_name"
-        android:textSize="@dimen/sp_26"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/iv_launch"/>
+        android:layout_below="@id/rl_launch"
+        app:style="bold"
+        app:amplitude="80"
+        app:text="@string/app_name"
+        app:size="@dimen/sp_26"
+        app:color="@color/colorLaunchText"/>
 
 </RelativeLayout>

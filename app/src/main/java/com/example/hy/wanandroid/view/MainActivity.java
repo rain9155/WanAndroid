@@ -26,7 +26,7 @@ import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityCompone
 import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.presenter.MainPresenter;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.utlis.DownloadUtil;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.commonlib.utils.ToastUtil;
@@ -88,6 +88,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     Lazy<GotoDetialDialog> mGotoDetialDialog;
 
     private String mNewVersionName;
+    private boolean isSetStatusBar;
+    private int mStatusBarColor = R.color.colorPrimary;
 
     @Override
     protected void inject() {
@@ -105,6 +107,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStatusBarColors(isSetStatusBar);
         mFragments = new BaseFragment[5];
         if(savedInstanceState == null) {
             mFragments[0] = HomeFragment.newInstance();
@@ -134,27 +137,28 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                     showAndHideFragment(mFragments[0], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 0;
                     showFloatingButton();
-                    setStatusBarColor(mPresenter.getStatusBarState());
+                    setStatusBarColors(isSetStatusBar);
                     break;
                 case R.id.item_hierarchy:
                     showAndHideFragment(mFragments[1], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 1;
                     showFloatingButton();
-                    setStatusBarColor(mPresenter.getStatusBarState());
+                    setStatusBarColors(isSetStatusBar);
                     break;
                 case R.id.item_wechat:
                     showAndHideFragment(mFragments[2], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 2;
                     showFloatingButton();
-                    setStatusBarColor(mPresenter.getStatusBarState());
+                    setStatusBarColors(isSetStatusBar);
                     break;
                 case R.id.item_project:
                     showAndHideFragment(mFragments[3], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 3;
                     showFloatingButton();
-                    setStatusBarColor(mPresenter.getStatusBarState());
+                    setStatusBarColors(isSetStatusBar);
                     break;
                 case R.id.item_mine:
+                    //顶部带照片的Fragment不进行沉浸式
                     showAndHideFragment(mFragments[4], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 4;
                     hideFloatingButton();
@@ -173,11 +177,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
         if(mPresenter.getAutoUpdataState())
             mPresenter.checkVersion(DownloadUtil.getVersionName(this));
-    }
-
-    @Override
-    protected void initData() {
-        mPresenter.subscribleEvent();
     }
 
     @Override
@@ -236,7 +235,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     public void upDataVersion() {
         PermissionHelper.getInstance().with(this).requestPermission(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Constant.REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
+                Constant.REQUEST_WRITE_EXTERNAL,
                 new IPermissionCallback() {
                     @Override
                     public void onAccepted(Permission permission) {
@@ -286,10 +285,11 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public void setStatusBarColor(boolean isSet) {
+        this.isSetStatusBar = isSet;
         if(isSet){
-            StatusBarUtil.immersiveInFragments(this, getResources().getColor(R.color.colorPrimary), 1);
+            mStatusBarColor = R.color.colorPrimary;
         }else {
-            StatusBarUtil.immersiveInFragments(this, getResources().getColor(R.color.colorPrimaryDark), 1);
+            mStatusBarColor = R.color.colorPrimaryDark;
         }
     }
 
@@ -412,6 +412,17 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         }else {
             LogUtil.d(LogUtil.TAG_COMMON, "应用路径不存在");
             ToastUtil.toastInBottom(context, context.getString(R.string.setup_fail));
+        }
+    }
+
+    /**
+     * MainActivity中含有普通Fragment和顶部带照片的Fragment，所以特殊处理
+     */
+    private void setStatusBarColors(boolean isSet){
+        if(isSet){
+            StatusBarUtil.immersiveInFragments(this, getResources().getColor(mStatusBarColor), 1);
+        }else {
+            StatusBarUtil.immersiveInFragments(this, getResources().getColor(mStatusBarColor), 1);
         }
     }
 

@@ -9,6 +9,7 @@ import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.di.component.DaggerAppComponent;
 import com.example.hy.wanandroid.di.module.AppModule;
 import com.example.commonlib.utils.CommonUtil;
+import com.example.hy.wanandroid.utlis.GlideApp;
 import com.example.loading.Loading;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -47,7 +48,7 @@ public class  App extends LitePalApplication {
         mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         initLitepal();
         initBugly();
-        initLeakCanary();
+        //initLeakCanary();
         Loading.beginBuildCommit()
                 .addErrorView(R.layout.error_view)
                 .addLoadingView(R.layout.loading_view)

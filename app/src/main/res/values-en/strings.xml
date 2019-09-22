@@ -3,7 +3,6 @@
     <string name="app_name">WanAndroid</string>
     <string name="aboutActivity_about_us">About us</string>
     <string name="aboutActivity_about_us_text"><![CDATA[         <h2>Website content</h2>         <p>\t\t\t\tThis website adds 20–30 high-quality articles every day, and joins the existing classifications, striving to sort out a high-quality and detailed knowledge system, spare time might as well come up to learn knowledge; in addition, it also provides common tools in the development process and commonly used web site navigation. </p>         <p>\t\t\t\tOf course, this is just our current function. In the future, we will provide more and more convenient functions.</p>         <p>\t\t\t\tIf you have any good suggestions：</p>         \t\t\t\t\tAbout website typesetting         <br/>\t\t\t\t\tAbout Adding Common Web Sites and Tools          <br/>\t\t\t\t\tFuture features you want to add, etc         <p>\t\t\t\tCan be in<a href="https://github.com/hongyangAndroid/wanandroid" target="_blank">https://github.com/hongyangAndroid/xueandroid</a>the project is presented in the form of issue, and I will follow up in time. </p>         <p>\t\t\t\tIf you want to pay attention to this site for a long time, you can join our QQ group ：<b>591683946</b></p>         <h2>Source location</h2>         <p>\t\t\t\this software is open source. If you find any mistakes, don't hesitate to click on it immediately <a href="https://github.com/rain9155/WanAndroid" target="_blank">GitHub</a>，launch <b>issue</b>or submit <b>pull request</b>。</p>         <h2>Update diary </h2>         <p>\t\t\t\tFor more updates, Click<a href="https://github.com/rain9155/WanAndroid/releases" target="_blank">Here</a></p>         \""]]></string>
-    <string name="action_settings">Settings</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="articleActivity_browser">"Open with System Browser "</string>
     <string name="articleActivity_browser_error">"The link cannot be opened using a browser "</string>
@@ -19,8 +18,8 @@
     <string name="behaviour_bottom_nav">com.example.hy.wanandroid.widget.behaviour.BottomNavBehaviour</string>
     <string name="behaviour_fbtn">com.example.hy.wanandroid.widget.behaviour.FbtnBehaviour</string>
     <string name="collectionActivity_empty_collection">It\'s empty, go and collect dry goods！</string>
-    <string name="common_collection_success">"Collection success "</string>
-    <string name="common_uncollection_success">"Cancelled collection "</string>
+    <string name="toast_collection_success">"Collection success "</string>
+    <string name="toast_uncollection_success">"Cancelled collection "</string>
     <string name="dialog_btnUpdataLater">"Not updated "</string>
     <string name="dialog_btnUpdataNow">Update immediately</string>
     <string name="dialog_cancel">Cancel</string>
@@ -70,6 +69,7 @@
     <string name="mineFragment_permissions_denied">Getting photos requires permission to read files!</string>
     <string name="mineFragment_tlTitle">Tailoring</string>
     <string name="mineFragment_tvAboutUs">"About us "</string>
+    <string name="mineFragment_tvCoin">My coin</string>
     <string name="mineFragment_tvCollect">My collection</string>
     <string name="mineFragment_tvLogin">Sign in</string>
     <string name="mineFragment_tvLogout">Quit sign</string>
@@ -110,9 +110,6 @@
     <string name="setup_fail">Application installation failed</string>
     <string name="share_email_unknown">The specified application could not be found to send mail</string>
     <string name="share_unknown">"Can't find a specific application to share "</string>
-    <string name="title_activity_about_us">AboutUsActivity</string>
-    <string name="title_activity_login">Sign in</string>
-    <string name="title_activity_settings">Settings</string>
     <string name="dialog_lan_china">China</string>
     <string name="dialog_lan_english">English(US)</string>
     <string name="dialog_lan_system">Following system</string>
@@ -120,4 +117,8 @@
     <string name="settingsActivity_tvSettingsLan">Language</string>
     <string name="dialog_clear_cache1">Do you make sure clear</string>
     <string name="dialog_clear_cache2">cache?</string>
+    <string name="coinActivity_about_coin">About coin</string>
+    <string name="toast_noMoreData">No more data！</string>
+    <string name="coinActivity_tvMyCoin">My coin</string>
+    <string name="coinRankActivity_tvMyRank">My rank</string>
 </resources>

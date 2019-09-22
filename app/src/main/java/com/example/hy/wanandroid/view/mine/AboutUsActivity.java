@@ -51,10 +51,6 @@ public class AboutUsActivity extends BaseActivity {
     @BindView(R.id.tv_content)
     TextView tvContent;
 
-    @Override
-    protected void inject() {
-
-    }
 
     @Override
     protected int getLayoutId() {
@@ -133,7 +129,9 @@ public class AboutUsActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+
     }
+
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, AboutUsActivity.class);

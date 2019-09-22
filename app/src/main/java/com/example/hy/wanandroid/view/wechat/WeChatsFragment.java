@@ -3,10 +3,10 @@ package com.example.hy.wanandroid.view.wechat;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 
 import com.example.commonlib.utils.AnimUtil;
 import com.example.commonlib.utils.CommonUtil;
+import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.WeChatAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
@@ -43,7 +43,7 @@ import static android.app.Activity.RESULT_OK;
 public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implements WeChatsContract.View {
 
     @BindView(R.id.rv_wechats)
-    RecyclerView rvWechats;
+    RecyclerView rvWeChats;
     @BindView(R.id.srl_wechats)
     SmartRefreshLayout srlWeChats;
 
@@ -63,15 +63,20 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
     private boolean isLoadMore = false;
     private int mArticlePosition = 0;//点击的位置
     private Article mArticle;
-    private boolean isPress = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if(bundle != null){
             mId = bundle.getInt(Constant.KEY_WECHAT_ID, -1);
         }
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_wechats;
     }
 
     @Override
@@ -95,9 +100,9 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
     @SuppressLint("ClickableViewAccessibility")
     private void initRecyclerView() {
         //项目列表
-        rvWechats.setLayoutManager(mLinearLayoutManager);
+        rvWeChats.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
-        rvWechats.setAdapter(mArticlesAdapter);
+        rvWeChats.setAdapter(mArticlesAdapter);
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             mArticlePosition = position;
             mArticle =  mArticles.get(position);
@@ -108,7 +113,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
             mArticlePosition = position;
             mArticle =  mArticles.get(position);
             if(!User.getInstance().isLoginStatus()){
-                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_COLLECT_ARTICLE);
+                LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_LOGIN);
                 showToast(getString(R.string.first_login));
                 return;
             }
@@ -129,6 +134,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
             isLoadMore = true;
         });
         srlWeChats.setOnRefreshListener(refreshLayout -> {
+            mPageNum = 1;
             mPresenter.loadMoreMoreWeChats(1, mId);
             isLoadMore = false;
         });
@@ -136,21 +142,17 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
 
     @Override
     protected void loadData() {
-        mPresenter.subscribleEvent();
+        super.loadData();
         mPresenter.loadWeChats(1, mId);
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_wechats;
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode != RESULT_OK) return;
         Article article = mArticles.get(mArticlePosition);
         switch (requestCode){
-            case Constant.REQUEST_COLLECT_ARTICLE:
+            case Constant.REQUEST_LOGIN:
                 if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
                 else mPresenter.collectArticle(article.getId());
                 break;
@@ -168,7 +170,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
 
     @Override
     public void reLoad() {
-        super.reLoad();
+        mPageNum = 1;
         mPresenter.loadWeChats(1, mId);
     }
 
@@ -193,19 +195,19 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
 
     @Override
     public void topping() {
-        if(rvWechats != null) rvWechats.smoothScrollToPosition(0);
+        if(rvWeChats != null) rvWeChats.smoothScrollToPosition(0);
     }
 
     @Override
     public void collectArticleSuccess() {
-        showToast(getString(R.string.common_collection_success));
+        showToast(getString(R.string.toast_collection_success));
         mArticles.get(mArticlePosition).setCollect(true);
         mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
     }
 
     @Override
     public void unCollectArticleSuccess() {
-        showToast(getString(R.string.common_uncollection_success));
+        showToast(getString(R.string.toast_uncollection_success));
         mArticles.get(mArticlePosition).setCollect(false);
         mArticlesAdapter.notifyItemChanged(mArticlePosition + mArticlesAdapter.getHeaderLayoutCount());
     }

@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.presenter.wechat;
 
-import com.example.hy.wanandroid.base.presenter.BaseMvpPresenter;
+import com.example.hy.wanandroid.base.presenter.BaseFragmentPresenter;
+import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.wechat.WeChatContract;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
@@ -15,7 +16,7 @@ import javax.inject.Inject;
  * 项目Presenter
  * Created by 陈健宇 at 2018/10/23
  */
-public class WeChatPresenter extends BaseMvpPresenter<WeChatContract.View> implements WeChatContract.Presenter{
+public class WeChatPresenter extends BaseFragmentPresenter<WeChatContract.View> implements WeChatContract.Presenter{
 
 
     @Inject
@@ -25,7 +26,7 @@ public class WeChatPresenter extends BaseMvpPresenter<WeChatContract.View> imple
 
     @Override
     public void loadWeChatTabs() {
-        addSubcriber(
+        addSubscriber(
                 mModel.getWeChatTabs()
                         .compose(RxUtils.switchSchedulers())
                         .compose(RxUtils.handleRequest2())

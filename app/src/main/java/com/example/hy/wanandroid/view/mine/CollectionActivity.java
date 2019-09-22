@@ -13,7 +13,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.CollectionsAdapter;
 import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
 import com.example.hy.wanandroid.entity.ArticleBean;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
 import com.example.hy.wanandroid.entity.Collection;
 import com.example.hy.wanandroid.di.component.activity.DaggerCollectionActivityComponent;
@@ -153,7 +153,7 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
 
     @Override
     protected void initData() {
-        mPresenter.subscribleEvent();
+        super.initData();
         mPresenter.loadCollections(0);
     }
 
@@ -197,7 +197,7 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
 
     @Override
     public void unCollectArticleSuccess() {
-        showToast(getString(R.string.common_uncollection_success));
+        showToast(getString(R.string.toast_uncollection_success));
         mIds.add(mCollections.get(mCollectionPosition).getOriginId());
         mCollections.remove(mCollectionPosition);
         mCollectionsAdapter.notifyItemRemoved(mCollectionPosition + mCollectionsAdapter.getHeaderLayoutCount());

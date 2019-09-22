@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.contract;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.base.view.IView;
 
 /**
  * Mian活动
@@ -9,7 +8,7 @@ import com.example.hy.wanandroid.base.view.BaseView;
  */
 public interface MainContract {
 
-    interface View extends BaseView {
+    interface View extends IView {
         void showUpdataDialog(String content);//显示更新弹窗
         void setNewVersionName(String versionName);//设置最新版本号
         void upDataVersion();//更新
@@ -17,9 +16,13 @@ public interface MainContract {
         void installApk();
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter{
         void setCurrentItem(int position);
         int getCurrentItem();
+        boolean getNightModeState();
+        boolean getStatusBarState();
+        boolean getAutoUpdataState();
         void checkVersion(String currentVersion);
+
     }
 }

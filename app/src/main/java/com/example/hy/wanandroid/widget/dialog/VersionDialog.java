@@ -1,22 +1,12 @@
 package com.example.hy.wanandroid.widget.dialog;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.event.UpdataEvent;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 /**
  * 获取版本信息弹框

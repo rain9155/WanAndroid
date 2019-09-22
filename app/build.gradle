@@ -25,6 +25,7 @@ android {
             // 设置支持的SO库架构
             abiFilters 'armeabi', 'x86' // 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
+        vectorDrawables.useSupportLibrary = true
     }
 
     signingConfigs {
@@ -109,6 +110,9 @@ dependencies {
     implementation rootProject.ext.injectDependency
 
     //other
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     annotationProcessor rootProject.ext.otherDependency
 
     //custom

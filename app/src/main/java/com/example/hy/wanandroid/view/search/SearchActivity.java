@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -147,7 +146,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
             mArticlePosition = position;
             mArticle =  mSearchResquestList.get(position);
             if(!User.getInstance().isLoginStatus()){
-                LoginActivity.startActivityForResult(this, Constant.REQUEST_COLLECT_ARTICLE);
+                LoginActivity.startActivityForResult(this, Constant.REQUEST_LOGIN);
                 showToast(getString(R.string.first_login));
                 return;
             }
@@ -175,6 +174,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
     private void initRefreshView() {
         normalView.setOnRefreshListener(refreshLayout -> {
             isLoadMore = false;
+            mPageNum = 0;
             mPresenter.loadSearchMoreResquest(mSearchView.getQuery().toString(), 0);
         });
         normalView.setOnLoadMoreListener(refreshLayout -> {
@@ -206,7 +206,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
 
     @Override
     protected void initData() {
-        mPresenter.subscribleEvent();
+        super.initData();
         mPresenter.loadHotkey();
         mPresenter.loadHistories();
     }
@@ -217,7 +217,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
         if(CommonUtil.isEmptyList(mSearchResquestList)) return;
         Article article = mSearchResquestList.get(mArticlePosition);
         switch (requestCode){
-            case Constant.REQUEST_COLLECT_ARTICLE:
+            case Constant.REQUEST_LOGIN:
                 if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
                 else mPresenter.collectArticle(article.getId());
                 break;
@@ -235,7 +235,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_tl_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_search, menu);
         MenuItem menuItem = menu.findItem(R.id.item_search);
         //得到SearchView
         mSearchView = (SearchView)menuItem.getActionView();
@@ -277,6 +277,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
 
     @Override
     public void showHotKey(List<HotKey> hotKeyList) {
+        if(!CommonUtil.isEmptyList(mHistoryList)) mHotKeyList.clear();
         mHotKeyList.addAll(hotKeyList);
         mFlowTagsAdapter = new FlowTagsAdapter(hotKeyList, tflTag);
         tflTag.setAdapter(mFlowTagsAdapter);
@@ -352,6 +353,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
 
     @Override
     public void showHistories(List<String> histories) {
+        if(!CommonUtil.isEmptyList(mHistoryList)) mHistoryList.clear();
         mHistoryList.addAll(histories);
         mHistoryAdapter.notifyDataSetChanged();
     }
@@ -400,20 +402,21 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
 
     @Override
     public void collectArticleSuccess() {
-        showToast(getString(R.string.common_collection_success));
+        showToast(getString(R.string.toast_collection_success));
         mSearchResquestList.get(mArticlePosition).setCollect(true);
         mSearchResquestAdapter.notifyItemChanged(mArticlePosition + mSearchResquestAdapter.getHeaderLayoutCount());
     }
 
     @Override
     public void unCollectArticleSuccess() {
-        showToast(getString(R.string.common_uncollection_success));
+        showToast(getString(R.string.toast_uncollection_success));
         mSearchResquestList.get(mArticlePosition).setCollect(false);
         mSearchResquestAdapter.notifyItemChanged(mArticlePosition + mSearchResquestAdapter.getHeaderLayoutCount());
     }
 
     @Override
     public void reLoad() {
+        mPageNum = 0;
         mPresenter.loadSearchResquest(mSearchView.getQuery().toString(), 0);
         mPresenter.loadHotkey();
     }

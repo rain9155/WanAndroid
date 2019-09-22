@@ -6,10 +6,8 @@ import com.example.commonlib.utils.FileUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
 import com.example.hy.wanandroid.config.Constant;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.event.ChangeFaceEvent;
-
-import java.io.File;
 
 /**
  * 改变背景弹框

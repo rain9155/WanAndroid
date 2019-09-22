@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.contract.wechat;
 
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.entity.Tab;
 
 import java.util.List;
@@ -12,11 +11,11 @@ import java.util.List;
  */
 public interface WeChatContract {
 
-    interface View extends BaseView {
+    interface View extends IView {
         void showWeChatTabs(List<Tab> tabs);
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter {
         void loadWeChatTabs();
     }
 

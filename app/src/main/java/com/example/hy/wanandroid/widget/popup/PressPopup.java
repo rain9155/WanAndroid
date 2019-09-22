@@ -78,7 +78,7 @@ public class PressPopup extends PopupWindow {
                 mClickListener.onShareClick();
             this.dismiss();
         });
-        TextView tvOpenBrowse = view.findViewById(R.id.tv_open_browse);
+        TextView tvOpenBrowse = view.findViewById(R.id.tv_open);
         tvOpenBrowse.setOnClickListener(v -> {
             ShareUtil.openBrowser(context, mLink);
             if (mClickListener != null)

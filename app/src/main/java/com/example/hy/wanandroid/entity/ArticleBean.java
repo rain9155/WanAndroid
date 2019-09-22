@@ -14,7 +14,14 @@ public class ArticleBean implements Parcelable {
     private int mId;//文章id
     private boolean isCollect;//文章是否被收藏
 
-    public ArticleBean() { }
+    public ArticleBean(){}
+
+    public ArticleBean(String link) {
+        this.mLink = link;
+        this.mTitle = "";
+        this.mId = -1;
+        isCollect = false;
+    }
 
     public ArticleBean(Article article) {
         this.mLink = article.getLink();

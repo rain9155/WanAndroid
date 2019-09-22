@@ -2,17 +2,16 @@ package com.example.hy.wanandroid.base.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.base.view.BaseView;
+import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.component.NetWorkChangeReceiver;
 import com.example.hy.wanandroid.config.App;
-import com.example.hy.wanandroid.config.RxBus;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.commonlib.utils.ToastUtil;
@@ -28,13 +27,13 @@ import butterknife.Unbinder;
  * Activity的基类
  * Created by 陈健宇 at 2018/10/21
  */
-public abstract class BaseActivity extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity extends AppCompatActivity implements IView {
 
     private Unbinder mUnbinder;
     private NetWorkChangeReceiver mNetWorkChangeReceiver;
     private TextView mTipView;
     protected boolean isEnableTip = true;
-    protected abstract void inject();//注入
+    protected void inject(){}//根据需要注入
     protected abstract int getLayoutId();//获取Activity的布局Id
     protected abstract void initView();//初始化控件
     protected abstract void initData();//初始化数据
@@ -45,9 +44,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         mUnbinder = ButterKnife.bind(this);
-        setStatusBarColor(getAppComponent().getDataModel().getStatusBarState());
         inject();
         initView();
+        setStatusBarColor(getAppComponent().getDataModel().getStatusBarState());
         initData();
     }
 
@@ -85,7 +84,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     @Override
     public void showTipsView(boolean isConnection) {
-
         if (!isEnableTip)
             return;
         if(mTipView == null)
@@ -109,37 +107,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     protected AppComponent getAppComponent(){
         return ((App)getApplication()).getAppComponent();
-    }
-
-
-    @Override
-    public void showErrorView() {
-
-    }
-
-    @Override
-    public void reLoad() {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void showEmptyView() {
-
-    }
-
-    @Override
-    public void showNormalView() {
-
-    }
-
-    @Override
-    public void showErrorMes() {
-
     }
 
     @Override
@@ -169,6 +136,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     @Override
     public void showToast(Activity activity, String toast) {
+
+    }
+
+    @Override
+    public void showErrorMes() {
 
     }
 }
