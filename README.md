@@ -24,8 +24,7 @@
 <br> ![wan1](/screenshots/wan1.gif) ![wan2](/screenshots/wan2.gif) <br>
 <br> ![wan3](/screenshots/wan3.gif) ![wan4](/screenshots/wan4.gif) <br>
 ### Screenshots
-<br>
-![sc2](/screenshots/sc2.png) 
+<br>![sc2](/screenshots/sc2.png) 
 ![sc3](/screenshots/sc3.png)
 ![sc4](/screenshots/sc4.png) 
 ![sc5](/screenshots/sc5.png)
@@ -34,8 +33,7 @@
 ![sc8](/screenshots/sc8.png)
 ![sc9](/screenshots/sc9.png)
 ![sc10](/screenshots/sc10.png)
-![sc11](/screenshots/sc11.png)
-<br>
+![sc11](/screenshots/sc11.png)<br>
 ### Download (v1.6, Android 4.4 or above)
 1、[手动下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.6/WanAndroid-release.apk) 
 <br> <br>
@@ -107,6 +105,7 @@
 - [ ] Dagger-Android
 - [ ] 优化app
 - [ ] 单元测试
+- [ ] 自定义Tablayout
 ### ChangeLog
 ```
 v1.6 2019-9-22
