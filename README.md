@@ -22,14 +22,18 @@
 * 项目中使用的[MVP开发模板](https://github.com/rain9155/AndroidTemplate)
 ### Preview
 <br> ![wan1](/screenshots/wan1.gif) ![wan2](/screenshots/wan2.gif) <br>
- <br> ![wan3](/screenshots/wan3.gif) ![wan4](/screenshots/wan4.gif) <br>
+<br> ![wan3](/screenshots/wan3.gif) ![wan4](/screenshots/wan4.gif) <br>
 ### Screenshots
 <br>
-![sc3](/screenshots/sc3.png) ![sc2](/screenshots/sc2.png) 
-![sc4](/screenshots/sc4.png) ![sc5](/screenshots/sc5.png)
+![sc2](/screenshots/sc2.png) 
+![sc3](/screenshots/sc3.png)
+![sc4](/screenshots/sc4.png) 
+![sc5](/screenshots/sc5.png)
 ![sc6](/screenshots/sc6.png)
-![sc7](/screenshots/sc7.png) ![sc8](/screenshots/sc8.png)
-![sc9](/screenshots/sc9.png) ![sc10](/screenshots/sc10.png)
+![sc7](/screenshots/sc7.png) 
+![sc8](/screenshots/sc8.png)
+![sc9](/screenshots/sc9.png)
+![sc10](/screenshots/sc10.png)
 ![sc11](/screenshots/sc11.png)
 <br>
 ### Download (v1.6, Android 4.4 or above)
