@@ -6,17 +6,16 @@ import com.example.hy.wanandroid.entity.UserCoin;
 
 import java.util.List;
 
-public interface CoinContract {
+public interface CoinRankContract {
 
     interface View extends IView {
-        void showUserCoin(UserCoin userCoin);
-        void showCoins(List<Coin> coinList, boolean over);
-
+        void showUserRank(UserCoin userCoin);
+        void showCoinRank(List<UserCoin> coinRanks, boolean isOver);
     }
 
-    interface Presenter{
-         void getUserCoin();
-         void getCoins(int pageNum);
+    interface Presenter {
+        void getUserRank();
+        void getCoinRanks(int pageNum);
     }
 
 }

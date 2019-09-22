@@ -1,5 +1,6 @@
 package com.example.hy.wanandroid.model;
 
+import com.example.hy.wanandroid.entity.CoinRanks;
 import com.example.hy.wanandroid.entity.Coins;
 import com.example.hy.wanandroid.entity.UserCoin;
 import com.example.hy.wanandroid.model.db.DbHelper;
@@ -146,6 +147,11 @@ public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
     @Override
     public Observable<BaseResponse<Coins>> getCoins(int pageNum) {
         return mNetworkHelper.getCoins(pageNum);
+    }
+
+    @Override
+    public Observable<BaseResponse<CoinRanks>> getCoinRanks(int pageNum) {
+        return mNetworkHelper.getCoinRanks(pageNum);
     }
 
     @Override

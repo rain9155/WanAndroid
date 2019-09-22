@@ -3,9 +3,7 @@ package com.example.hy.wanandroid.presenter.wechat;
 import com.example.hy.wanandroid.base.presenter.BaseFragmentPresenter;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.contract.wechat.WeChatsContract;
-import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.CollectionEvent;
-import com.example.hy.wanandroid.event.NoImageEvent;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.model.DataModel;
@@ -31,6 +29,7 @@ public class WeChatsPresenter extends BaseFragmentPresenter<WeChatsContract.View
 
     @Override
     public void subscribeEvent() {
+        super.subscribeEvent();
         addSubscriber(
                 RxBus.getInstance().toObservable(ToppingEvent.class)
                 .subscribe(toppingEvent -> mView.topping())
@@ -38,14 +37,6 @@ public class WeChatsPresenter extends BaseFragmentPresenter<WeChatsContract.View
         addSubscriber(
                 RxBus.getInstance().toObservable(CollectionEvent.class)
                         .subscribe(collectionEvent -> mView.refreshCollections(collectionEvent.getIds()))
-        );
-        addSubscriber(
-                RxBus.getInstance().toObservable(NoImageEvent.class)
-                        .subscribe(noImageEvent -> mView.autoRefresh())
-        );
-        addSubscriber(
-                RxBus.getInstance().toObservable(AutoCacheEvent.class)
-                        .subscribe(noImageEvent -> mView.autoRefresh())
         );
         addSubscriber(
                 RxBus.getInstance().toObservable(TokenExpiresEvent.class)

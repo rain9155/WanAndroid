@@ -416,6 +416,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
 
     @Override
     public void reLoad() {
+        mPageNum = 0;
         mPresenter.loadSearchResquest(mSearchView.getQuery().toString(), 0);
         mPresenter.loadHotkey();
     }

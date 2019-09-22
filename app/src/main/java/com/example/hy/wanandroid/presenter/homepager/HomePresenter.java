@@ -2,7 +2,6 @@ package com.example.hy.wanandroid.presenter.homepager;
 
 import com.example.hy.wanandroid.base.presenter.BaseFragmentPresenter;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
-import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
@@ -47,11 +46,6 @@ public class HomePresenter extends BaseFragmentPresenter<HomeContract.View> impl
 
         addSubscriber(
                 RxBus.getInstance().toObservable(NoImageEvent.class)
-                        .subscribe(noImageEvent -> mView.autoRefresh())
-        );
-
-        addSubscriber(
-                RxBus.getInstance().toObservable(AutoCacheEvent.class)
                         .subscribe(noImageEvent -> mView.autoRefresh())
         );
 

@@ -288,7 +288,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
     @Override
     public void reLoad() {
-        super.reLoad();
+        mPageNum = 0;
         mPresenter.loadBannerDatas();
         mPresenter.loadArticles(0);
     }

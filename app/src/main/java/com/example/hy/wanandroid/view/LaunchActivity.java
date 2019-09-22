@@ -1,15 +1,25 @@
 package com.example.hy.wanandroid.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.widget.customView.SVGBgView;
+
+import java.io.ObjectInputStream;
 
 public class LaunchActivity extends AppCompatActivity {
 
@@ -17,6 +27,12 @@ public class LaunchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
+        SVGBgView svgBgView = findViewById(R.id.iv_launch);
+        ObjectAnimator animator = ObjectAnimator
+                .ofFloat(svgBgView, "alpha", 0, 1f)
+                .setDuration(2800);
+        animator.setInterpolator(new AccelerateInterpolator());
+        animator.start();
         new Handler().postDelayed(() -> {
             startActivity(new Intent(LaunchActivity.this, MainActivity.class));
             overridePendingTransition(R.anim.anim_launch_enter, 0);

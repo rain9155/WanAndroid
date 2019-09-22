@@ -43,17 +43,13 @@ public class CoinPresenter extends BaseActivityPresenter<CoinContract.View> impl
                 mModel.getCoins(pageNum)
                         .compose(RxUtils.switchSchedulers())
                         .compose(RxUtils.handleResult())
-                        .subscribeWith(new DefaultObserver<Coins>(mView, false, false){
+                        .subscribeWith(new DefaultObserver<Coins>(mView){
                             @Override
                             public void onNext(Coins coins) {
                                 super.onNext(coins);
                                 mView.showCoins(coins.getDatas(), coins.isOver());
                             }
 
-                            @Override
-                            public void onError(Throwable e) {
-                                mView.showCoinsFail();
-                            }
                         })
         );
     }

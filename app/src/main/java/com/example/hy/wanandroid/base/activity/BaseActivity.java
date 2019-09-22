@@ -44,9 +44,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         mUnbinder = ButterKnife.bind(this);
-        setStatusBarColor(getAppComponent().getDataModel().getStatusBarState());
         inject();
         initView();
+        setStatusBarColor(getAppComponent().getDataModel().getStatusBarState());
         initData();
     }
 

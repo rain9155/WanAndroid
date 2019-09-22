@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.model.network;
 
 import com.example.hy.wanandroid.entity.BaseResponse;
+import com.example.hy.wanandroid.entity.CoinRanks;
 import com.example.hy.wanandroid.entity.Coins;
 import com.example.hy.wanandroid.entity.FirstHierarchy;
 import com.example.hy.wanandroid.entity.SecondHierarchy;
@@ -85,5 +86,7 @@ public interface NetworkHelper {
     Observable<BaseResponse<UserCoin>> getUserCoin();
     //获得个人积分列表
     Observable<BaseResponse<Coins>> getCoins(int pageNum);
+    //获得积分排行榜
+    Observable<BaseResponse<CoinRanks>> getCoinRanks(int pageNum);
 
 }

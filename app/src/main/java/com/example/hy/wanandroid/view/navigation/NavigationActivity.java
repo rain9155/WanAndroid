@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.commonlib.utils.CommonUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.NavigationTagsAdapter;
 import com.example.hy.wanandroid.adapter.NavigationTagsNameAdapter;
@@ -182,12 +183,14 @@ public class NavigationActivity extends BaseLoadActivity<NavigationPresenter> im
 
     @Override
     public void showTags(List<Tag> tagList) {
+        if(!CommonUtil.isEmptyList(mTags)) mTags.clear();
         mTags.addAll(tagList);
         mNavigationTagsAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showTagsName(List<String> tagsName) {
+        if(!CommonUtil.isEmptyList(mTagsName)) mTagsName.clear();
         mTagsName.addAll(tagsName);
         mNavigationTagsNameAdapter = new NavigationTagsNameAdapter(this, mTagsName);
         vtlNavigation.setTabAdapter(mNavigationTagsNameAdapter);
@@ -195,7 +198,6 @@ public class NavigationActivity extends BaseLoadActivity<NavigationPresenter> im
 
     @Override
     public void reLoad() {
-        super.reLoad();
         mPresenter.loadTags();
     }
 

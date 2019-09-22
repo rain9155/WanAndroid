@@ -96,6 +96,7 @@ public class ProjectFragment extends BaseLoadFragment<ProjectPresenter> implemen
     public void showProjectList(List<Tab> projectList) {
         if(!CommonUtil.isEmptyList(mIds)) mIds.clear();
         if(!CommonUtil.isEmptyList(mTitles)) mTitles.clear();
+        if(!CommonUtil.isEmptyList(mFragments)) mFragments.clear();
         for (Tab project : projectList) {
             mIds.add(project.getId());
             mTitles.add(project.getName());
@@ -111,7 +112,6 @@ public class ProjectFragment extends BaseLoadFragment<ProjectPresenter> implemen
 
     @Override
     public void reLoad() {
-        mPresenter.loadProjectList();
     }
 
 

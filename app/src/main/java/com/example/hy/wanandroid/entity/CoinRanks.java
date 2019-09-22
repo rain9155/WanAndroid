@@ -6,7 +6,7 @@ import java.util.List;
  * 用户积分排名
  * Created by 陈健宇 at 2019/9/20
  */
-public class CoinRank {
+public class CoinRanks {
 
     /**
      * curPage : 1

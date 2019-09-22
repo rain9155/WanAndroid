@@ -66,7 +66,7 @@ public class WeChatFragment extends BaseLoadFragment<WeChatPresenter> implements
 
     @Override
     protected void initView() {
-       super.initView();
+        super.initView();
         StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
         initToolBar();
     }
@@ -94,6 +94,7 @@ public class WeChatFragment extends BaseLoadFragment<WeChatPresenter> implements
     public void showWeChatTabs(List<Tab> tabs) {
         if(!CommonUtil.isEmptyList(mIds)) mIds.clear();
         if(!CommonUtil.isEmptyList(mTitles)) mTitles.clear();
+        if(!CommonUtil.isEmptyList(mFragments)) mFragments.clear();
         for (Tab tab : tabs) {
             mIds.add(tab.getId());
             mTitles.add(tab.getName());
@@ -109,8 +110,6 @@ public class WeChatFragment extends BaseLoadFragment<WeChatPresenter> implements
 
     @Override
     public void reLoad() {
-        super.reLoad();
-        mPresenter.loadWeChatTabs();
     }
 
 

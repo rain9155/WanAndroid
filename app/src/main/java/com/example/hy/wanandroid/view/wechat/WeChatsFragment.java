@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.example.commonlib.utils.AnimUtil;
 import com.example.commonlib.utils.CommonUtil;
+import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.WeChatAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
@@ -42,7 +43,7 @@ import static android.app.Activity.RESULT_OK;
 public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implements WeChatsContract.View {
 
     @BindView(R.id.rv_wechats)
-    RecyclerView rvWechats;
+    RecyclerView rvWeChats;
     @BindView(R.id.srl_wechats)
     SmartRefreshLayout srlWeChats;
 
@@ -62,15 +63,20 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
     private boolean isLoadMore = false;
     private int mArticlePosition = 0;//点击的位置
     private Article mArticle;
-    private boolean isPress = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if(bundle != null){
             mId = bundle.getInt(Constant.KEY_WECHAT_ID, -1);
         }
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_wechats;
     }
 
     @Override
@@ -94,9 +100,9 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
     @SuppressLint("ClickableViewAccessibility")
     private void initRecyclerView() {
         //项目列表
-        rvWechats.setLayoutManager(mLinearLayoutManager);
+        rvWeChats.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();
-        rvWechats.setAdapter(mArticlesAdapter);
+        rvWeChats.setAdapter(mArticlesAdapter);
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             mArticlePosition = position;
             mArticle =  mArticles.get(position);
@@ -137,14 +143,9 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
     @Override
     protected void loadData() {
         super.loadData();
-        mPresenter.subscribeEvent();
         mPresenter.loadWeChats(1, mId);
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_wechats;
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -169,7 +170,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
 
     @Override
     public void reLoad() {
-        super.reLoad();
+        mPageNum = 1;
         mPresenter.loadWeChats(1, mId);
     }
 
@@ -194,7 +195,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
 
     @Override
     public void topping() {
-        if(rvWechats != null) rvWechats.smoothScrollToPosition(0);
+        if(rvWeChats != null) rvWeChats.smoothScrollToPosition(0);
     }
 
     @Override

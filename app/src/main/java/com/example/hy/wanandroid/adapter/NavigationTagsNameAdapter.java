@@ -43,7 +43,7 @@ public class NavigationTagsNameAdapter implements TabAdapter {
     public ITabView.TabTitle getTitle(int position) {
         return new ITabView.TabTitle.Builder()
                 .setContent(mTagNames.get(position))
-                .setTextColor(ContextCompat.getColor(mContext, R.color.white),
+                .setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimaryText),
                         ContextCompat.getColor(mContext, R.color.colorSecondaryText))
                 .build();
     }

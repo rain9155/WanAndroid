@@ -26,45 +26,44 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".view.mine.CoinsRankActivity"></activity>
         <activity
-            android:name=".view.mine.CoinActivity"
-            android:launchMode="singleTask"/>
+            android:name=".view.mine.CoinsActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".view.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:launchMode="singleTask" />
         <activity
             android:name=".view.hierarchy.HierarchySecondActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".view.navigation.NavigationActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".view.search.SearchActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:theme="@style/SearchActivityStyle" />
         <activity
             android:name=".view.homepager.ArticleActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".view.mine.LoginActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".view.mine.RegisterActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".view.mine.AboutUsActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".view.mine.CollectionActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".view.mine.SettingsActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".view.LaunchActivity"
-            android:launchMode="singleTask"
             android:theme="@style/LauncherTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -75,6 +74,10 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" /> <!-- optional (needed if default theme has no action bar) -->
+        <activity
+            android:name=".view.mine.CropperImageActivity"
+            android:launchMode="singleTop" />
+
         <service
             android:name=".component.UpdataService"
             android:enabled="true"
@@ -94,10 +97,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-        <activity
-            android:name=".view.mine.CropperImageActivity"
-            android:launchMode="singleTask" />
     </application>
 
 </manifest>

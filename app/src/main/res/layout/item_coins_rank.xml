@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:background="@drawable/bg_rect"
+    android:padding="@dimen/dp_10">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/tv_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_20"
+            android:textColor="@color/colorPrimaryText"
+            android:layout_marginEnd="@dimen/dp_10"
+            tools:text="1"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_20"
+            android:layout_marginStart="@dimen/dp_5"
+            android:textColor="@color/colorPrimaryText"
+            tools:text="rain"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_coin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_20"
+        android:textColor="@color/colorAddCoin"
+        android:textStyle="bold"
+        android:layout_alignParentEnd="true"
+        tools:text="666"/>
+
+</RelativeLayout>

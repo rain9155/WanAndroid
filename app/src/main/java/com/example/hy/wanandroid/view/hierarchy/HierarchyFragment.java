@@ -35,8 +35,6 @@ import butterknife.BindView;
  */
 public class HierarchyFragment extends BaseLoadFragment<HierarchyPresenter> implements HierarchyContract.View {
 
-    private final String TAG = HierarchyFragment.class.getSimpleName();
-
     @BindView(R.id.tl_common)
     Toolbar tlCommon;
     @BindView(R.id.rv_hierarchy)

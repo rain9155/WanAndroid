@@ -2,7 +2,6 @@ package com.example.hy.wanandroid.presenter.project;
 
 import com.example.hy.wanandroid.base.presenter.BaseFragmentPresenter;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
-import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
@@ -42,10 +41,6 @@ public class ProjectsPresenter extends BaseFragmentPresenter<ProjectsContract.Vi
         );
         addSubscriber(
                 RxBus.getInstance().toObservable(NoImageEvent.class)
-                        .subscribe(noImageEvent -> mView.autoRefresh())
-        );
-        addSubscriber(
-                RxBus.getInstance().toObservable(AutoCacheEvent.class)
                         .subscribe(noImageEvent -> mView.autoRefresh())
         );
         addSubscriber(

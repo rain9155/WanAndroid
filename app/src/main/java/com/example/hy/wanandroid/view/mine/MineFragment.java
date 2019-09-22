@@ -145,7 +145,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
         clCoin.setOnClickListener(v -> {
             if (!isLogin()) return;
-            CoinActivity.startActivity(mActivity);
+            CoinsActivity.startActivity(mActivity);
         });
         clCollection.setOnClickListener(v -> {
             if (!isLogin()) return;

@@ -120,4 +120,5 @@
     <string name="coinActivity_about_coin">About coin</string>
     <string name="toast_noMoreData">No more data！</string>
     <string name="coinActivity_tvMyCoin">My coin</string>
+    <string name="coinRankActivity_tvMyRank">My rank</string>
 </resources>

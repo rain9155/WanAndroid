@@ -30,14 +30,6 @@ import dagger.Provides;
 @Module
 public class CoinActivityModule {
 
-    private Context mContext;
-    private View mView;
-
-    public CoinActivityModule(Context context, View view){
-        this.mContext = context;
-        this.mView = view;
-    }
-
     @PerActivity
     @Provides
     List<Coin> provideCoins(){
@@ -53,16 +45,6 @@ public class CoinActivityModule {
     @PerActivity
     CoinsAdapter provideLinearCollectionsAdapter(List<Coin> coinList){
         return new CoinsAdapter(R.layout.item_coins, coinList);
-    }
-
-    @PerActivity
-    @Provides
-    StatusView provideStatusView(){
-        return Loading.beginBuildStatusView(mContext)
-                .warpView(mView)
-                .addEmptyView(R.layout.empty_view)
-                .addErrorView(R.layout.error_view)
-                .addLoadingView(R.layout.loading_view).create();
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.hy.wanandroid.utlis;
+package com.example.commonlib.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

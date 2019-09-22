@@ -40,7 +40,7 @@
         tools:ignore="RtlSymmetry" />
 
     <TextView
-        android:id="@+id/tv_open_browse"
+        android:id="@+id/tv_open"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/articleActivity_browser"

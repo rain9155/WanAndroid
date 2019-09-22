@@ -239,7 +239,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
 
     @Override
     public void reLoad() {
-        super.reLoad();
+        mPageNum = 1;
         mPresenter.loadProjects(1, mId);
     }
 

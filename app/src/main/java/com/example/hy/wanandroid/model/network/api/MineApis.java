@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.model.network.api;
 
 import com.example.hy.wanandroid.entity.BaseResponse;
 import com.example.hy.wanandroid.entity.Coin;
+import com.example.hy.wanandroid.entity.CoinRanks;
 import com.example.hy.wanandroid.entity.Coins;
 import com.example.hy.wanandroid.entity.Collection;
 import com.example.hy.wanandroid.entity.CollectionRequest;
@@ -83,5 +84,12 @@ public interface MineApis {
      */
     @GET("lg/coin/list/{pageNum}/json")
     Observable<BaseResponse<Coins>> getCoins(@Path("pageNum") int pageNum);
+
+    /**
+     * 获得积分排行榜
+     * https://www.wanandroid.com/coin/rank/1/json
+     */
+    @GET("coin/rank/{pageNum}/json")
+    Observable<BaseResponse<CoinRanks>> getCoinRanks(@Path("pageNum") int pageNum);
 
 }

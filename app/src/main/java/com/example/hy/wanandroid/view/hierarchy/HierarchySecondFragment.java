@@ -69,11 +69,11 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if(bundle != null){
             mId = bundle.getInt(Constant.KEY_HIERARCHY_PAGENUM, -1);
         }
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -208,7 +208,7 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
 
     @Override
     public void reLoad() {
-        super.reLoad();
+        mPageNum = 0;
         mPresenter.loadArticles(0, mId);
     }
 

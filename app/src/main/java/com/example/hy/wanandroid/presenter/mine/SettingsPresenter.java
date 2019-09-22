@@ -7,7 +7,6 @@ import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
-import com.example.hy.wanandroid.event.AutoCacheEvent;
 import com.example.hy.wanandroid.event.ClearCacheEvent;
 import com.example.hy.wanandroid.event.LanguageEvent;
 import com.example.hy.wanandroid.event.NightModeEvent;
@@ -65,7 +64,7 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
                         .subscribeWith(new DefaultObserver<NightModeEvent>(mView, false, false){
                             @Override
                             public void onNext(NightModeEvent nightModeEvent) {
-                                mView.showChangeAnimation();
+                                mView.showNightChangeAnim(nightModeEvent.isNight());
                                 mView.useNightNode(nightModeEvent.isNight());
                             }
 
@@ -85,7 +84,7 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
                 RxBus.getInstance().toObservable(LanguageEvent.class)
                 .subscribe(languageEvent -> {
                     mModel.setSelectedLanguage(languageEvent.getLanguage());
-                    mView.hadleLanguage();
+                    mView.handleLanguage();
                 })
         );
     }
@@ -99,7 +98,6 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
     @Override
     public void setAutoCacheState(boolean isAuto) {
         mModel.setAutoCacheState(isAuto);
-        RxBus.getInstance().post(new AutoCacheEvent());
     }
 
     @Override
@@ -177,7 +175,7 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
                     @Override
                     public void onComplete() {
                         if(!isUpdata)
-                            mView.showAlareadNewToast(App.getContext().getResources().getString(R.string.dialog_version_already));
+                            mView.showAlreadyNewToast(App.getContext().getResources().getString(R.string.dialog_version_already));
                     }
                 })
         );

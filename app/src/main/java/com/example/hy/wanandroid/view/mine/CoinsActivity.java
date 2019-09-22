@@ -2,8 +2,6 @@ package com.example.hy.wanandroid.view.mine;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -14,16 +12,17 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.animation.BaseAnimation;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.CoinsAdapter;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
+import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.CoinContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerCoinActivityComponent;
-import com.example.hy.wanandroid.di.module.activity.CoinActivityModule;
+import com.example.hy.wanandroid.entity.ArticleBean;
 import com.example.hy.wanandroid.entity.Coin;
 import com.example.hy.wanandroid.entity.UserCoin;
 import com.example.hy.wanandroid.presenter.mine.CoinPresenter;
+import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.loading.Loading;
 import com.example.loading.StatusView;
 import com.google.android.material.appbar.AppBarLayout;
@@ -34,9 +33,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class CoinActivity extends BaseMvpActivity<CoinPresenter> implements CoinContract.View {
+public class CoinsActivity extends BaseMvpActivity<CoinPresenter> implements CoinContract.View {
 
     @Inject
     CoinPresenter mPresenter;
@@ -63,22 +61,19 @@ public class CoinActivity extends BaseMvpActivity<CoinPresenter> implements Coin
     private boolean isOver;
     private int mPageNum = 1;
     private boolean isLoadMore;
-    @Inject
-    StatusView mStatusView;
-
+    private StatusView mStatusView;
 
     @Override
     protected void inject() {
         DaggerCoinActivityComponent.builder()
                 .appComponent(getAppComponent())
-                .coinActivityModule(new CoinActivityModule(this, srlCoin))
                 .build()
                 .inject(this);
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_coin;
+        return R.layout.activity_coins;
     }
 
     @Override
@@ -90,11 +85,21 @@ public class CoinActivity extends BaseMvpActivity<CoinPresenter> implements Coin
     protected void initView() {
         super.initView();
 
+        mStatusView = Loading.beginBuildStatusView(this)
+                .warpView(rvCoin)
+                .addErrorView(R.layout.error_view)
+                .withReload(() -> reLoad(), R.id.cl_reload)
+                .create();
+
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> finish());
 
         srlCoin.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark);
         srlCoin.setOnRefreshListener(() -> {
+            if(mCoinsAdapter.isLoading()) {
+                srlCoin.setRefreshing(false);
+                return;
+            }
             isLoadMore = false;
             mPageNum = 1;
             mPresenter.getUserCoin();
@@ -105,11 +110,16 @@ public class CoinActivity extends BaseMvpActivity<CoinPresenter> implements Coin
         rvCoin.setHasFixedSize(true);
         rvCoin.setLayoutManager(mLayoutManager);
         rvCoin.setAdapter(mCoinsAdapter);
-        mCoinsAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
+
+        mCoinsAdapter.openLoadAnimation();
         mCoinsAdapter.setOnLoadMoreListener(() -> {
+            if(srlCoin.isRefreshing()){
+                mCoinsAdapter.loadMoreComplete();
+                return;
+            }
             if(isOver) {
                 showToast(getString(R.string.toast_noMoreData));
-                mCoinsAdapter.loadMoreComplete();
+                mCoinsAdapter.loadMoreEnd();
                 return;
             }
             isLoadMore = true;
@@ -134,6 +144,11 @@ public class CoinActivity extends BaseMvpActivity<CoinPresenter> implements Coin
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.item_coin_rank){
+            CoinsRankActivity.startActivity(this);
+        }else if(item.getItemId() == R.id.item_coin_about){
+            ArticleActivity.startActivity(this, new ArticleBean(Constant.URL_COIN_RANK_RULE), true);
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -151,13 +166,16 @@ public class CoinActivity extends BaseMvpActivity<CoinPresenter> implements Coin
         mCoinList.addAll(coinList);
         mCoinsAdapter.notifyDataSetChanged();
         mCoinsAdapter.disableLoadMoreIfNotFullPage(rvCoin);
-        srlCoin.setRefreshing(false);
-        mCoinsAdapter.loadMoreComplete();
+        if(isLoadMore){
+            mCoinsAdapter.loadMoreComplete();
+        }else {
+            srlCoin.setRefreshing(false);
+        }
         mStatusView.showSuccess();
     }
 
     @Override
-    public void showCoinsFail() {
+    public void showErrorView() {
         srlCoin.setRefreshing(false);
         mCoinsAdapter.loadMoreComplete();
         mStatusView.showError();
@@ -165,6 +183,7 @@ public class CoinActivity extends BaseMvpActivity<CoinPresenter> implements Coin
 
     @Override
     public void reLoad() {
+        mPageNum = 1;
         isLoadMore = false;
         srlCoin.setRefreshing(true);
         mPresenter.getUserCoin();
@@ -172,7 +191,7 @@ public class CoinActivity extends BaseMvpActivity<CoinPresenter> implements Coin
     }
 
     public static void startActivity(Context context) {
-        context.startActivity(new Intent(context, CoinActivity.class));
+        context.startActivity(new Intent(context, CoinsActivity.class));
     }
 
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".view.mine.CoinActivity">
+    tools:context=".view.mine.CoinsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -81,7 +81,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_coin"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_coins">
 
 
         </androidx.recyclerview.widget.RecyclerView>

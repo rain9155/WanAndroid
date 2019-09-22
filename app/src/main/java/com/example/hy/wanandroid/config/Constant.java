@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.config;
 import android.os.Environment;
 
 import com.example.commonlib.utils.FileUtil;
+import com.example.hy.wanandroid.R;
 
 import java.io.File;
 
@@ -37,6 +38,10 @@ public class Constant {
     public static final String KEY_HIERARCHY_ID = "hierarchyId";
     public static final String KEY_HIERARCHY_NAMES = "hierarchyNames";
     public static final String KEY_HIERARCHY_NAME = "hierarchyName";
+
+    //CoinsRankActivity
+    public static final String KEY_COIN_RANK = "coinRank";
+    public static final String URL_COIN_RANK_RULE = BASE_URL + "blog/show/2653";
 
     //HomeFragment, 11 ~ 20
     public static final int REQUEST_REFRESH_ARTICLE = 11;
