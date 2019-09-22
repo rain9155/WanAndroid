@@ -24,6 +24,7 @@
 <br> ![wan1](/screenshots/wan1.gif) ![wan2](/screenshots/wan2.gif) <br>
  <br> ![wan3](/screenshots/wan3.gif) ![wan4](/screenshots/wan4.gif) <br>
 ### Screenshots
+<br>
 ![sc3](/screenshots/sc3.png) ![sc2](/screenshots/sc2.png) 
 ![sc4](/screenshots/sc4.png) ![sc5](/screenshots/sc5.png)
 ![sc6](/screenshots/sc6.png)
@@ -32,7 +33,7 @@
 ![sc11](/screenshots/sc11.png)
 <br>
 ### Download (v1.6, Android 4.4 or above)
-1、[手动下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.5/app-release.apk) 
+1、[手动下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.6/WanAndroid-release.apk) 
 <br> <br>
 2、二维码下载
 <br> <br>
@@ -104,6 +105,12 @@
 - [ ] 单元测试
 ### ChangeLog
 ```
+v1.6 2019-9-22
+1、 添加个人积分、积分排行榜
+2、 优化夜间切换，修复一些问题
+3、 移除WaveLoadingView库
+4、 封装Loading，统一视图切换
+
 v1.5 2019-3-27
 1、Wnadroid接口从http转为https
 2、使用Fragment代理申请权限
