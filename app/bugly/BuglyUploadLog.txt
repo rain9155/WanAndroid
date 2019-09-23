@@ -26,3 +26,19 @@ file=D:\source\AndroidStudio\WanAndroid\app\build\outputs\mapping\release\mappin
 sha1=0e3c1f7bba270d2c5bbf9a5ae32aebe40e63b5c0
 appId=a0768ddf34
 
+file=D:\source\AndroidStudio\WanAndroid\app\build\outputs\mapping\release\mapping.txt
+sha1=0e3c1f7bba270d2c5bbf9a5ae32aebe40e63b5c0
+appId=a0768ddf34
+
+file=D:\source\AndroidStudio\WanAndroid\app\build\outputs\mapping\release\mapping.txt
+sha1=0e3c1f7bba270d2c5bbf9a5ae32aebe40e63b5c0
+appId=a0768ddf34
+
+file=D:\source\AndroidStudio\WanAndroid\app\build\outputs\mapping\release\mapping.txt
+sha1=0e3c1f7bba270d2c5bbf9a5ae32aebe40e63b5c0
+appId=a0768ddf34
+
+file=D:\source\AndroidStudio\WanAndroid\app\build\outputs\mapping\release\mapping.txt
+sha1=0e3c1f7bba270d2c5bbf9a5ae32aebe40e63b5c0
+appId=a0768ddf34
+

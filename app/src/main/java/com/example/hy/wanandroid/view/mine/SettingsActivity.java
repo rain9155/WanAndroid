@@ -202,6 +202,11 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
     }
 
+    @Override
+    protected void initData() {
+        super.initData();
+    }
+
     private void initSettings() {
 
         mCurrentVersionName = DownloadUtil.getVersionName(this);
@@ -451,13 +456,10 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
     @Override
     public void handleLanguage() {
+        Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         finish();
-        new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }, 200);
-
     }
 
     @Override

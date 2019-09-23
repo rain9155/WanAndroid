@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -44,6 +45,7 @@ import com.example.permission.callback.ISpecialPermissionCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
@@ -172,8 +174,12 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             show(bnvBtm);
         });
 
-        if(mPresenter.getAutoUpdataState())
-            mPresenter.checkVersion(DownloadUtil.getVersionName(this));
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        if(mPresenter.getAutoUpdataState()) mPresenter.checkVersion(DownloadUtil.getVersionName(this));
     }
 
     @Override

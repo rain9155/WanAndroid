@@ -84,19 +84,16 @@ android {
     }
 
     //自定义release apk的输出路径和名称
-    applicationVariants.all {
+    android.applicationVariants.all { variant ->
+        def curBuildType = variant.buildType.name
         def apkName = "app-release.apk"
-        def buildType = "release"
-        def curBuildType = it.buildType.name
-        def dir = File.separator + "release"
-        //只对release包起作用，如果不是release包则不变更输出路径，否则可能导致AS无法自动安装debug包
-        if (curBuildType == buildType) {
-            it.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + dir)
-        }
-        it.outputs.each {
-            if (curBuildType == buildType) {
-                //重新对apk命名,适用于Gradle4.0以上版本
-                it.outputFileName = apkName
+        variant.outputs.all { output ->
+            //只对release包起作用，如果不是release包则不变更输出路径，否则可能导致AS无法自动安装debug包
+            if(curBuildType == "release"){
+                //指定输出路径
+                output.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + "/app/release")
+                //重新对apk命名
+                output.outputFileName = apkName
             }
         }
     }
