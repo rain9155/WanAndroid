@@ -39,9 +39,6 @@ public interface IView {
     //禁止加载
     void unableRefresh();
 
-    //夜间模式
-    void useNightNode(boolean isNight);
-
     //设置状态栏颜色
     void setStatusBarColor(boolean isSet);
 

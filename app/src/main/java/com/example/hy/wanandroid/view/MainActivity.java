@@ -1,6 +1,8 @@
 package com.example.hy.wanandroid.view;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -100,6 +102,12 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         mMainActivityComponent.inject(this);
     }
 
+
+    @Override
+    protected MainPresenter getPresenter() {
+        return mPresenter;
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -174,17 +182,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             show(bnvBtm);
         });
 
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
         if(mPresenter.getAutoUpdataState()) mPresenter.checkVersion(DownloadUtil.getVersionName(this));
-    }
 
-    @Override
-    protected MainPresenter getPresenter() {
-        return mPresenter;
     }
 
     @Override
@@ -219,6 +218,10 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             mVersionDialog = null;
         if(mGotoDetialDialog.get() != null)
             mGotoDetialDialog = null;
+        if(mShowFbtnAnimator != null)
+            mShowFbtnAnimator.cancel();
+        if(mHideFbtnAnimator != null)
+            mHideFbtnAnimator.cancel();
         super.onDestroy();
     }
 
@@ -365,6 +368,12 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         if(fbtnUp.getVisibility() == View.INVISIBLE){
             fbtnUp.setVisibility(View.VISIBLE);
             mShowFbtnAnimator = fbtnUp.animate().setDuration(500).setInterpolator(new BounceInterpolator()).translationY(0);
+            mShowFbtnAnimator.setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    fbtnUp.setVisibility(View.VISIBLE);
+                }
+            });
         }
     }
 
@@ -377,7 +386,12 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             mHideFbtnAnimator = fbtnUp.animate().setDuration(300).setInterpolator(new AccelerateDecelerateInterpolator()).translationY(
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 400, getResources().getDisplayMetrics())
             );
-            new Handler().postDelayed(() -> fbtnUp.setVisibility(View.INVISIBLE), 301);
+            mHideFbtnAnimator.setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    fbtnUp.setVisibility(View.INVISIBLE);
+                }
+            });
             mHideFbtnAnimator.start();
         }
     }

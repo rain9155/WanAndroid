@@ -15,7 +15,6 @@ public interface SettingsContract {
         void handleLanguage();//处理更换语言事件
         void clearCache();//清空缓存
         void upDataVersion();//更新
-        void showNightChangeAnim(boolean isNight);//显示一个夜间模式切换动画
     }
 
     interface Presenter {

@@ -14,7 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
-import android.os.Handler;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.commonlib.utils.LanguageUtil;
+
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -34,6 +36,7 @@ import com.example.commonlib.utils.ShareUtil;
 import com.example.commonlib.utils.StatusBarUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
+import com.example.hy.wanandroid.config.App;
 import com.example.permission.bean.Permission;
 import com.example.hy.wanandroid.component.UpdataService;
 import com.example.hy.wanandroid.config.Constant;
@@ -168,10 +171,19 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
 
     private boolean isNightChanging;
-    private boolean isNight;
     private ObjectAnimator mAnimator;
     private String mNewVersionName;
     private String mCurrentVersionName;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        AppCompatDelegate.setDefaultNightMode(
+                App.getContext().getAppComponent()
+                        .getDataModel()
+                        .getNightModeState()
+                        ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     protected void inject() {
@@ -195,16 +207,10 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
         isEnableTip = false;
-        isNight = mPresenter.getNightModeState();
         initToolBar();
         initSwitch();
         initSettings();
 
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
     }
 
     private void initSettings() {
@@ -274,11 +280,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
                 mPresenter.setNoImageState(isChecked);
                 break;
             case R.id.switch_nightMode:
-                if(isNightChanging){
-                    buttonView.setChecked(isNight);
-                    return;
-                }
-                mPresenter.setNightModeState(isChecked);
+                changeNightNode(buttonView);
                 break;
             case R.id.switch_status_bar:
                 mPresenter.setStatusBarState(isChecked);
@@ -306,120 +308,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
             mLanguageDialog = null;
         super.onDestroy();
     }
-
-    @Override
-    public void useNightNode(boolean isNight) {
-        int background, primaryText, foreground, colorPrimary, colorPrimaryDark, colorRipple;
-        if (isNight) {
-            colorPrimary = Color.parseColor("#212121");
-            if (mPresenter.getStatusBarState())
-                colorPrimaryDark = Color.parseColor("#212121");
-            else
-                colorPrimaryDark = Color.parseColor("#424242");
-            background = Color.parseColor("#212121");
-            foreground = Color.parseColor("#424242");
-            primaryText = Color.parseColor("#FAFAFA");
-            colorRipple = Color.parseColor("#c7f5f5f5");
-        } else {
-            colorPrimary = Color.parseColor("#00BCD4");
-            if (mPresenter.getStatusBarState())
-                colorPrimaryDark = Color.parseColor("#00BCD4");
-            else
-                colorPrimaryDark = Color.parseColor("#0097A7");
-            foreground = Color.parseColor("#FFFFFF");
-            background = Color.parseColor("#fafafa");
-            primaryText = Color.parseColor("#212121");
-            colorRipple = Color.parseColor("#B3E5FC");
-        }
-
-        //动态改变颜色
-        StatusBarUtil.immersive(this, colorPrimaryDark, 1f);
-        tlCommon.setBackgroundColor(colorPrimary);
-        rootView.setBackgroundColor(background);
-        tvSettingsBase.setTextColor(primaryText);
-
-        //base settings
-        cdBaseSettings.setCardBackgroundColor(foreground);
-        tvNoImage.setTextColor(primaryText);
-        tvNightMode.setTextColor(primaryText);
-        tvAutoCache.setTextColor(primaryText);
-        tvStatusBar.setTextColor(primaryText);
-        tvAutoUpdata.setTextColor(primaryText);
-        tvSettingsOther.setTextColor(primaryText);
-
-        //common settings
-        cdCommonSettings.setCardBackgroundColor(foreground);
-        tvClearCache.setTextColor(primaryText);
-        tvCache.setTextColor(primaryText);
-        tvMes.setTextColor(primaryText);
-        tvLanguage.setTextColor(primaryText);
-        tvLanguageHint.setTextColor(primaryText);
-
-        //other settings
-        cdOtherSettings.setCardBackgroundColor(foreground);
-        tvFeedBack.setTextColor(primaryText);
-        tvUpdata.setTextColor(primaryText);
-        tvVersion.setTextColor(primaryText);
-
-        //动态改变波纹点击颜色
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ((RippleDrawable) clNoImage.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable) clAutoCache.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable) clClearCache.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable) clNightMode.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable) clStatusBar.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable) clFeedBack.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable) clUpdata.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable) clAutoUpdata.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable) clMes.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-            ((RippleDrawable) clLanguage.getBackground()).setColor(ColorStateList.valueOf(colorRipple));
-        }
-    }
-
-    @Override
-    public void showNightChangeAnim(boolean isNight) {
-        this.isNight = isNight;
-        isNightChanging = true;
-        final View decorView = getWindow().getDecorView();
-        Bitmap cacheBitmap = getCacheBitmapFromView(decorView);
-        if (decorView instanceof ViewGroup && cacheBitmap != null) {
-            final View view = new View(this);
-            view.setBackground(new BitmapDrawable(getResources(), cacheBitmap));
-            ViewGroup.LayoutParams layoutParam = new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT);
-            ((ViewGroup) decorView).addView(view, layoutParam);
-            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f);
-            objectAnimator.setDuration(200);
-            objectAnimator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    ((ViewGroup) decorView).removeView(view);
-                    isNightChanging = false;
-                }
-            });
-            objectAnimator.start();
-        }
-    }
-
-    @Override
-    public void setStatusBarColor(boolean isSet) {
-        int statusBarColor;
-        if (isNight) {
-            if (isSet)
-                statusBarColor = Color.parseColor("#212121");
-            else
-                statusBarColor = Color.parseColor("#424242");
-        } else {
-            if (isSet)
-                statusBarColor = Color.parseColor("#00BCD4");
-            else
-                statusBarColor = Color.parseColor("#0097A7");
-        }
-        StatusBarUtil.immersive(this, statusBarColor);
-    }
-
 
     @Override
     public void showLoading() {
@@ -457,9 +345,8 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     @Override
     public void handleLanguage() {
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        finish();
     }
 
     @Override
@@ -511,8 +398,52 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     }
 
     /**
+     * 夜间模式切换
+     */
+    private void changeNightNode(CompoundButton buttonView) {
+        if(isNightChanging){
+            buttonView.setChecked(!buttonView.isChecked());
+            return;
+        }
+        isNightChanging = true;
+        mPresenter.setNightModeState(buttonView.isChecked());
+        startActivity(new Intent(this, SettingsActivity.class));
+        overridePendingTransition( R.anim.anim_settings_exter, R.anim.anim_settings_exit);
+        finish();
+        isNightChanging = false;
+    }
+
+    /**
+     * 添加一个渐变的Bitmap在DecorView上
+     */
+    @Deprecated
+    private void addBitmapOnDecorView() {
+        final View decorView = getWindow().getDecorView();
+        Bitmap cacheBitmap = getCacheBitmapFromView(decorView);
+        if (decorView instanceof ViewGroup && cacheBitmap != null) {
+            final View view = new View(this);
+            view.setBackground(new BitmapDrawable(getResources(), cacheBitmap));
+            ViewGroup.LayoutParams layoutParam = new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT);
+            ((ViewGroup) decorView).addView(view, layoutParam);
+            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f);
+            objectAnimator.setDuration(300);
+            objectAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    ((ViewGroup) decorView).removeView(view);
+                }
+            });
+            objectAnimator.start();
+        }
+    }
+
+    /**
      * 获取一个View的缓存视图
      */
+    @Deprecated
     private Bitmap getCacheBitmapFromView(View view) {
         view.setDrawingCacheEnabled(true);
         //view.buildDrawingCache(true);
@@ -526,7 +457,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         }
         return bitmap;
     }
-
 
     /**
      * 获取当前的语言设置

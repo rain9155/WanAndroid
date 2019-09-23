@@ -226,9 +226,9 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     @Override
     public void useNightNode(boolean isNight) {
         if (isNight)
-            ivBack.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+            ivBack.getDrawable().mutate().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
         else
-            ivBack.getDrawable().clearColorFilter();
+            ivBack.getDrawable().mutate().clearColorFilter();
     }
 
     @Override

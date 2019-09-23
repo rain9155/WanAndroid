@@ -26,7 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.mine.CoinsRankActivity"></activity>
+        <activity
+            android:name=".view.mine.CoinsRankActivity"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".view.mine.CoinsActivity"
             android:launchMode="singleTop" />
@@ -60,8 +62,7 @@
             android:name=".view.mine.CollectionActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".view.mine.SettingsActivity"
-            android:launchMode="singleTop" />
+            android:name=".view.mine.SettingsActivity"/>
         <activity
             android:name=".view.LaunchActivity"
             android:theme="@style/LauncherTheme">

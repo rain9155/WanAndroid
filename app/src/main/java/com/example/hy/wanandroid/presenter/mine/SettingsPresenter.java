@@ -59,23 +59,6 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
         );
 
         addSubscriber(
-                RxBus.getInstance().toObservable(NightModeEvent.class)
-                        .compose(RxUtils.switchSchedulers())
-                        .subscribeWith(new DefaultObserver<NightModeEvent>(mView, false, false){
-                            @Override
-                            public void onNext(NightModeEvent nightModeEvent) {
-                                mView.showNightChangeAnim(nightModeEvent.isNight());
-                                mView.useNightNode(nightModeEvent.isNight());
-                            }
-
-                            @Override
-                            protected void unknown() {
-                                mView.showToast(App.getContext().getString(R.string.error_switch_fail));
-                            }
-                        })
-        );
-
-        addSubscriber(
                 RxBus.getInstance().toObservable(ClearCacheEvent.class)
                 .subscribe(clearCacheEvent -> mView.clearCache())
         );

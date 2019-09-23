@@ -125,9 +125,4 @@ public abstract class BaseFragment extends AbstractLazyLoadFragment
 
     }
 
-    @Override
-    public void useNightNode(boolean isNight) {
-
-    }
-
 }

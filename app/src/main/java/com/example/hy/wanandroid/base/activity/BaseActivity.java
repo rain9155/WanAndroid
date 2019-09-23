@@ -110,16 +110,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public void useNightNode(boolean isNight) {
-        if(isNight){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-        recreate();
-    }
-
-    @Override
     public void showToast(String toast) {
         ToastUtil.toastInBottom(App.getContext(), toast);
     }
