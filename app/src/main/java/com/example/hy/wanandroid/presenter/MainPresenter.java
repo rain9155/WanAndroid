@@ -84,12 +84,12 @@ public class MainPresenter extends BaseActivityPresenter<MainContract.View> impl
 
     @Override
     public void setCurrentItem(int position) {
-        mModel.setCurrentItem(position);
+        mModel.setCurMainItem(position);
     }
 
     @Override
     public int getCurrentItem() {
-        return mModel.getCurrentItem();
+        return mModel.getCurMainItem();
     }
 
     @Override

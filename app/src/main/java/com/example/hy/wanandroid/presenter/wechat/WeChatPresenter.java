@@ -38,4 +38,14 @@ public class WeChatPresenter extends BaseFragmentPresenter<WeChatContract.View> 
                             }
                         }));
     }
+
+    @Override
+    public void setCurrentItem(int pos) {
+        mModel.setCurWechatItem(pos);
+    }
+
+    @Override
+    public int getCurrentItem() {
+        return mModel.getCurWechatItem();
+    }
 }

@@ -17,7 +17,6 @@ import com.example.commonlib.utils.FileProvider7;
 import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
-import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.permission.bean.Permission;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
@@ -45,7 +44,6 @@ import com.example.permission.callback.ISpecialPermissionCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
@@ -90,6 +88,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     private String mNewVersionName;
     private boolean isSetStatusBar;
     private int mStatusBarColor = R.color.colorPrimary;
+    private boolean hasSetStatusBar;
 
     @Override
     protected void inject() {
@@ -108,7 +107,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBarColors(isSetStatusBar);
-        mFragments = new BaseFragment[5];
         if(savedInstanceState == null) {
             mFragments[0] = HomeFragment.newInstance();
             mFragments[1] = HierarchyFragment.newInstance();
@@ -116,7 +114,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             mFragments[3] = ProjectFragment.newInstance();
             mFragments[4] = MineFragment.newInstance();
             loadMultipleFragment(R.id.fl_container, 0, mFragments);
-            AppCompatDelegate.setDefaultNightMode(mPresenter.getNightModeState() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         }else {
             mFragments[0] = findFragmentByTag(HomeFragment.class.getName());
             mFragments[1] = findFragmentByTag(HierarchyFragment.class.getName());
@@ -158,7 +155,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                     setStatusBarColors(isSetStatusBar);
                     break;
                 case R.id.item_mine:
-                    //顶部带照片的Fragment不进行沉浸式
+                    //顶部带照片的Fragment特殊处理
                     showAndHideFragment(mFragments[4], mFragments[mPreFragmentPosition]);
                     mPreFragmentPosition = 4;
                     hideFloatingButton();
@@ -257,7 +254,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public void showOpenBrowseDialog() {
-        mOpenBrowseDialog.show(getSupportFragmentManager(), "tag10");
+        mOpenBrowseDialog.show(getSupportFragmentManager(), OpenBrowseDialog.class.getName());
     }
 
     @Override
@@ -286,6 +283,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     @Override
     public void setStatusBarColor(boolean isSet) {
         this.isSetStatusBar = isSet;
+        this.hasSetStatusBar = false;
         if(isSet){
             mStatusBarColor = R.color.colorPrimary;
         }else {
@@ -397,7 +395,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
      */
     private void installApk(Context context) {
         LogUtil.d(LogUtil.TAG_COMMON, "安装应用");
-        File file = new File(Constant.PATH_APK_1);
+        File file = new File(Constant.PATH_APK);
         if (file.exists()) {
             Intent install = new Intent("android.intent.action.VIEW");
             FileProvider7.setIntentDataAndType(
@@ -419,6 +417,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
      * MainActivity中含有普通Fragment和顶部带照片的Fragment，所以特殊处理
      */
     private void setStatusBarColors(boolean isSet){
+        if(hasSetStatusBar) return;
+        hasSetStatusBar = true;
         if(isSet){
             StatusBarUtil.immersiveInFragments(this, getResources().getColor(mStatusBarColor), 1);
         }else {

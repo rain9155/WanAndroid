@@ -38,4 +38,14 @@ public class ProjectPresenter extends BaseFragmentPresenter<ProjectContract.View
                     }
                 }));
     }
+
+    @Override
+    public void setCurrentItem(int pos) {
+        mModel.setCurProjectItem(pos);
+    }
+
+    @Override
+    public int getCurrentItem() {
+        return mModel.getCurProjectItem();
+    }
 }

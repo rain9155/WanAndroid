@@ -22,7 +22,7 @@ public class DownloadUtil {
      * 下载apk
      */
     public static void downloadApk(Context context, String newVersionName) {
-        String url = Constant.BASE_APK_URL + newVersionName + "/app-release.apk";
+        String url = Constant.BASE_APK_URL + newVersionName + File.separator + Constant.APK_NAME;
         Constant.NEW_VERSION_URL = url;
         if(canDownloadState(context)){
             LogUtil.d(LogUtil.TAG_COMMON, "DownloadManager可用");
@@ -31,7 +31,7 @@ public class DownloadUtil {
             context.startService(intent);
         }else {
             LogUtil.d(LogUtil.TAG_COMMON, "DownloadManager不可用");
-            File file = new File(Constant.PATH_APK_2);
+            File file = new File(Constant.PATH_APK);
             if(file.exists()) file.delete();
             ShareUtil.openBrowser(context, url);
         }

@@ -190,13 +190,33 @@ public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
     }
 
     @Override
-    public void setCurrentItem(int position) {
-        mPreferencesHelper.setCurrentItem(position);
+    public void setCurMainItem(int position) {
+        mPreferencesHelper.setCurMainItem(position);
     }
 
     @Override
-    public int getCurrentItem() {
-        return mPreferencesHelper.getCurrentItem();
+    public void setCurWechatItem(int position) {
+        mPreferencesHelper.setCurWechatItem(position);
+    }
+
+    @Override
+    public void setCurProjectItem(int position) {
+        mPreferencesHelper.setCurProjectItem(position);
+    }
+
+    @Override
+    public int getCurMainItem() {
+        return mPreferencesHelper.getCurMainItem();
+    }
+
+    @Override
+    public int getCurWechatItem() {
+        return mPreferencesHelper.getCurWechatItem();
+    }
+
+    @Override
+    public int getCurProjectItem() {
+        return mPreferencesHelper.getCurProjectItem();
     }
 
     @Override
