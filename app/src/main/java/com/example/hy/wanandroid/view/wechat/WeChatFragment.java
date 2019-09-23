@@ -1,5 +1,6 @@
 package com.example.hy.wanandroid.view.wechat;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +23,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -69,6 +72,18 @@ public class WeChatFragment extends BaseLoadFragment<WeChatPresenter> implements
         super.initView();
         StatusBarUtil.setHeightAndPadding(mActivity, tlCommon);
         initToolBar();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mPresenter.setCurrentItem(vpWeChats.getCurrentItem());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        vpWeChats.setCurrentItem(mPresenter.getCurrentItem());
     }
 
     private void initToolBar() {

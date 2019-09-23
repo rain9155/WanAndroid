@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import com.example.commonlib.utils.LanguageUtil;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
-import com.example.hy.wanandroid.model.prefs.PreferencesHelper;
 
 import javax.inject.Inject;
 
@@ -25,52 +24,72 @@ public class PreferencesHelperImp implements PreferencesHelper {
 
     @Override
     public void setNightModeState(boolean isNight) {
-        mPreferences.edit().putBoolean(Constant.KEY_PREFS_NODEMODE, isNight).apply();
+        mPreferences.edit().putBoolean(Constant.KEY_PREFS_NODE_MODE, isNight).apply();
     }
 
     @Override
     public boolean getNightModeState() {
-        return mPreferences.getBoolean(Constant.KEY_PREFS_NODEMODE, false);
+        return mPreferences.getBoolean(Constant.KEY_PREFS_NODE_MODE, false);
     }
 
     @Override
-    public void setCurrentItem(int position) {
-        mPreferences.edit().putInt(Constant.KEY_PREFS_CURRWNTITEM, position).apply();
+    public void setCurMainItem(int position) {
+        mPreferences.edit().putInt(Constant.KEY_PREFS_CUR_MAIN_ITEM, position).apply();
     }
 
     @Override
-    public int getCurrentItem() {
-        return mPreferences.getInt(Constant.KEY_PREFS_CURRWNTITEM, 0);
+    public void setCurWechatItem(int position) {
+        mPreferences.edit().putInt(Constant.KEY_PREFS_CUR_WECHAT_ITEM, position).apply();
+    }
+
+    @Override
+    public void setCurProjectItem(int position) {
+        mPreferences.edit().putInt(Constant.KEY_PREFS_CUR_PROJECT_ITEM, position).apply();
+    }
+
+    @Override
+    public int getCurMainItem() {
+        return mPreferences.getInt(Constant.KEY_PREFS_CUR_MAIN_ITEM, 0);
+    }
+
+    @Override
+    public int getCurWechatItem() {
+        return mPreferences.getInt(Constant.KEY_PREFS_CUR_WECHAT_ITEM, 0);
+    }
+
+    @Override
+    public int getCurProjectItem() {
+        return mPreferences.getInt(Constant.KEY_PREFS_CUR_PROJECT_ITEM, 0);
     }
 
     @Override
     public void setNoImageState(boolean isNoImage) {
-        mPreferences.edit().putBoolean(Constant.KEY_PREFS_NOIMAGE, isNoImage).apply();
+        mPreferences.edit().putBoolean(Constant.KEY_PREFS_NO_IMAGE, isNoImage).apply();
     }
 
     @Override
     public boolean getNoImageState() {
-        return mPreferences.getBoolean(Constant.KEY_PREFS_NOIMAGE, false);
+        return mPreferences.getBoolean(Constant.KEY_PREFS_NO_IMAGE, false);
     }
 
     @Override
     public void setAutoCacheState(boolean isAuto) {
-        mPreferences.edit().putBoolean(Constant.KEY_PREFS_AUTOCACHE, isAuto).apply();
+        mPreferences.edit().putBoolean(Constant.KEY_PREFS_AUTO_CACHE, isAuto).apply();
     }
 
     @Override
     public boolean getAutoCacheState() {
-        return mPreferences.getBoolean(Constant.KEY_PREFS_AUTOCACHE, true);
+        return mPreferences.getBoolean(Constant.KEY_PREFS_AUTO_CACHE, true);
     }
 
     @Override
     public void setStatusBarState(boolean isStatusBar) {
-          mPreferences.edit().putBoolean(Constant.KEY_PREFS_STATUSBAR, isStatusBar).apply();
+          mPreferences.edit().putBoolean(Constant.KEY_PREFS_STATUS_BAR, isStatusBar).apply();
     }
 
     @Override
     public boolean getStatusBarState() {
-        return mPreferences.getBoolean(Constant.KEY_PREFS_STATUSBAR, true);
+        return mPreferences.getBoolean(Constant.KEY_PREFS_STATUS_BAR, true);
     }
 
     @Override
@@ -95,12 +114,12 @@ public class PreferencesHelperImp implements PreferencesHelper {
 
     @Override
     public void setAutoUpdataState(boolean isAuto) {
-        mPreferences.edit().putBoolean(Constant.KEY_PREFS_AUTOUPDATA, isAuto).apply();
+        mPreferences.edit().putBoolean(Constant.KEY_PREFS_AUTO_UPDATA, isAuto).apply();
     }
 
     @Override
     public boolean getAutoUpdataState() {
-        return mPreferences.getBoolean(Constant.KEY_PREFS_AUTOUPDATA, true);
+        return mPreferences.getBoolean(Constant.KEY_PREFS_AUTO_UPDATA, true);
     }
 
     @Override

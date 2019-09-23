@@ -17,6 +17,8 @@ public interface WeChatContract {
 
     interface Presenter {
         void loadWeChatTabs();
+        void setCurrentItem(int pos);
+        int getCurrentItem();
     }
 
 }

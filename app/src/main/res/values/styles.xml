@@ -49,7 +49,7 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsTranslucent">false</item>
-        <!--<item name="android:windowBackground">@mipmap/ic_launcher</item>-->
+        <item name="android:windowBackground">@color/background</item>
     </style>
 
     <!--Dialog风格-->

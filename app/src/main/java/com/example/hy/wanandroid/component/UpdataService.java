@@ -70,7 +70,7 @@ public class UpdataService extends Service {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         //创建目录, 外部存储--> Download文件夹
         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdir() ;
-        File file = new File(Constant.PATH_APK_1);
+        File file = new File(Constant.PATH_APK);
         if(file.exists())
             file.delete();
         //设置文件存放路径

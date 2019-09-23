@@ -17,6 +17,8 @@ public interface ProjectContract {
 
     interface Presenter {
         void loadProjectList();
+        void setCurrentItem(int pos);
+        int getCurrentItem();
     }
 
 }

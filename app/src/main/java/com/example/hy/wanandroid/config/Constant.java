@@ -66,13 +66,15 @@ public class Constant {
 
     //settingActivity
     public static final String SHAREDPREFERENCES_NAME = "prefs";
-    public static final String KEY_PREFS_NODEMODE = "nightModeState";
-    public static final String KEY_PREFS_CURRWNTITEM = "currentItem";
-    public static final String KEY_PREFS_NOIMAGE= "noImage";
-    public static final String KEY_PREFS_AUTOCACHE= "autoCache";
-    public static final String KEY_PREFS_STATUSBAR = "statusBar";
+    public static final String KEY_PREFS_NODE_MODE = "nightModeState";
+    public static final String KEY_PREFS_CUR_MAIN_ITEM = "curMainItem";
+    public static final String KEY_PREFS_CUR_WECHAT_ITEM = "curWechatItem";
+    public static final String KEY_PREFS_CUR_PROJECT_ITEM = "curProjectItem";
+    public static final String KEY_PREFS_NO_IMAGE = "noImage";
+    public static final String KEY_PREFS_AUTO_CACHE = "autoCache";
+    public static final String KEY_PREFS_STATUS_BAR = "statusBar";
     public static final String KEY_PREFS_NETWORK = "netWork";
-    public static final String KEY_PREFS_AUTOUPDATA = "autoUpdata";
+    public static final String KEY_PREFS_AUTO_UPDATA = "autoUpdata";
     public static final String KEY_PREFS_LAN = "language";
 
     //utils
@@ -85,8 +87,8 @@ public class Constant {
     public static final String PATH_NET_CACHE = FileUtil.getCachePath(App.getContext(), "netData");
     public static final String PATH_IMAGE_FACE = FileUtil.getFilePath(App.getContext(), "image");
     public static final String PATH_IMAGE_BACKGROUND = FileUtil.getFilePath(App.getContext(), "image");
-    public static final String PATH_APK_1 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/WanAndroid.apk";
-    public static final String PATH_APK_2 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/app-release.apk";
+    public static final String APK_NAME = "app-release.apk";
+    public static final String PATH_APK = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + APK_NAME;
     public static final String FACE = "face.jpeg";
     public static final String BACK = "background.jpeg";
 

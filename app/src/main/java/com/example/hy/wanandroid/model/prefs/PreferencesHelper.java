@@ -10,10 +10,18 @@ public interface PreferencesHelper {
     void setNightModeState(boolean isNight);
     //取得夜间模式设置
     boolean getNightModeState();
-    //保存页面状态
-    void setCurrentItem(int position);
-    //获取页面状态
-    int getCurrentItem();
+    //保存主页面状态
+    void setCurMainItem(int position);
+    //保存Wechats页面状态
+    void setCurWechatItem(int position);
+    //保存Projects页面状态
+    void setCurProjectItem(int position);
+    //获取主页面状态
+    int getCurMainItem();
+    //获取Wechats状态
+    int getCurWechatItem();
+    //获取Projects页面状态
+    int getCurProjectItem();
     //保存无图设置
     void setNoImageState(boolean isNoImage);
     //获得无图设置

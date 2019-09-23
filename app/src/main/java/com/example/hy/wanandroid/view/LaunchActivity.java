@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import android.animation.ObjectAnimator;
@@ -17,6 +18,7 @@ import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.widget.customView.SVGBgView;
 
 import java.io.ObjectInputStream;
@@ -25,6 +27,11 @@ public class LaunchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppCompatDelegate.setDefaultNightMode(
+                App.getContext().getAppComponent()
+                        .getDataModel()
+                        .getNightModeState()
+                        ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
         SVGBgView svgBgView = findViewById(R.id.iv_launch);
