@@ -4,8 +4,10 @@ import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
 import com.example.hy.wanandroid.contract.mine.CoinRankContract;
 import com.example.hy.wanandroid.entity.CoinRanks;
 import com.example.hy.wanandroid.entity.UserCoin;
+import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
 import javax.inject.Inject;
@@ -15,6 +17,15 @@ public class CoinRankPresenter extends BaseActivityPresenter<CoinRankContract.Vi
     @Inject
     public CoinRankPresenter(DataModel dataModel) {
         super(dataModel);
+    }
+
+    @Override
+    public void subscribeEvent() {
+        super.subscribeEvent();
+        addSubscriber(
+                RxBus.getInstance().toObservable(TokenExpiresEvent.class)
+                        .subscribe(tokenExpiresEvent -> mView.reLoad())
+        );
     }
 
     @Override

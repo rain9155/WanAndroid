@@ -18,7 +18,7 @@ import com.example.commonlib.R;
 public class ShareUtil{
 
     public static void shareText(Context context, String text, String title) {
-        Intent intent = new Intent("android.intent.action.SEND");
+        Intent intent = new Intent("android.intent.doWork.SEND");
         intent.setType("text/plain");
         intent.putExtra("android.intent.extra.TEXT", text);
         if (context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
@@ -31,7 +31,7 @@ public class ShareUtil{
     }
 
     public static void sendEmail(Context context, String address, String title) {
-        Intent intent = new Intent("android.intent.action.SENDTO", Uri.parse("mailto:" + address));
+        Intent intent = new Intent("android.intent.doWork.SENDTO", Uri.parse("mailto:" + address));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
             Intent emailIntent = Intent.createChooser(intent, title);

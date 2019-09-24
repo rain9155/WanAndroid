@@ -110,7 +110,7 @@ public class PermissionUtil {
     public static void gotoMiuiPermission(Context context) {
         try {
             // MIUI 8
-            Intent intent = new Intent("miui.intent.action.APP_PERM_EDITOR");
+            Intent intent = new Intent("miui.intent.doWork.APP_PERM_EDITOR");
             intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.PermissionsEditorActivity");
             intent.putExtra("extra_pkgname", context.getPackageName());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -119,7 +119,7 @@ public class PermissionUtil {
             e.printStackTrace();
             try {
                 // MIUI 5/6/7
-                Intent intent = new Intent("miui.intent.action.APP_PERM_EDITOR");
+                Intent intent = new Intent("miui.intent.doWork.APP_PERM_EDITOR");
                 intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
                 intent.putExtra("extra_pkgname", context.getPackageName());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

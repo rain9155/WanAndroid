@@ -8,8 +8,10 @@ import com.example.hy.wanandroid.contract.mine.CoinContract;
 import com.example.hy.wanandroid.entity.Coin;
 import com.example.hy.wanandroid.entity.Coins;
 import com.example.hy.wanandroid.entity.UserCoin;
+import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
+import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
 import javax.inject.Inject;
@@ -19,6 +21,15 @@ public class CoinPresenter extends BaseActivityPresenter<CoinContract.View> impl
     @Inject
     public CoinPresenter(DataModel dataModel) {
         super(dataModel);
+    }
+
+    @Override
+    public void subscribeEvent() {
+        super.subscribeEvent();
+        addSubscriber(
+                RxBus.getInstance().toObservable(TokenExpiresEvent.class)
+                .subscribe(tokenExpiresEvent -> mView.reLoad())
+        );
     }
 
     @Override

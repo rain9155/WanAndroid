@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -18,6 +17,7 @@ import android.widget.FrameLayout;
 
 import com.example.commonlib.utils.FileProvider7;
 import com.example.commonlib.utils.LogUtil;
+import com.example.commonlib.utils.TimeUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.permission.bean.Permission;
@@ -47,14 +47,11 @@ import com.example.permission.callback.ISpecialPermissionCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import butterknife.BindView;
 import dagger.Lazy;
-
-import android.os.Handler;
 
 
 import java.io.File;
@@ -188,10 +185,9 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public void onBackPressed() {
-        if(System.currentTimeMillis() - Constant.TOUCH_TIME < Constant.WAIT_TIME){
+        if(TimeUtil.isInInterval(Constant.EXIT_WAIT_TIME)){
             finish();
         }else {
-            Constant.TOUCH_TIME = System.currentTimeMillis();
             ToastUtil.toastInCenter(this, getString(R.string.mainActivity_back));
         }
     }
@@ -417,7 +413,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         LogUtil.d(LogUtil.TAG_COMMON, "安装应用");
         File file = new File(Constant.PATH_APK);
         if (file.exists()) {
-            Intent install = new Intent("android.intent.action.VIEW");
+            Intent install = new Intent("android.intent.doWork.VIEW");
             FileProvider7.setIntentDataAndType(
                     App.getContext(),
                     install,

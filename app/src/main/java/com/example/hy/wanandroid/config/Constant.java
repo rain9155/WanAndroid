@@ -17,8 +17,7 @@ public class Constant {
     public final static String BASE_APK_URL = "https://github.com/rain9155/WanAndroid/releases/download/";
 
     //MainActivity
-    public static final long WAIT_TIME = 2000L; // 再点一次退出程序时间设置
-    public static long TOUCH_TIME = 0;//第一次按下返回键的时间
+    public static final int EXIT_WAIT_TIME = 2000;
 
     //common, 1~10
     public static final int REQUEST_LOGIN = 1;
@@ -76,6 +75,7 @@ public class Constant {
     public static final String KEY_PREFS_NETWORK = "netWork";
     public static final String KEY_PREFS_AUTO_UPDATA = "autoUpdata";
     public static final String KEY_PREFS_LAN = "language";
+    public static final int NIGHT_CHANGE_WAIT_TIME = 1000;
 
     //utils
     public static final String EMAIL_ADDRESS = "1847796089@qq.com";

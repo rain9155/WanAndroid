@@ -34,7 +34,7 @@ public class MinePresenter extends BaseFragmentPresenter<MineContract.View> impl
 
         addSubscriber(
                 RxBus.getInstance().toObservable(LoginEvent.class)
-                        .filter(loginEvent -> loginEvent.isLogin())
+                        .filter(LoginEvent::isLogin)
                         .subscribe(loginEvent -> mView.showLoginView())
         );
 

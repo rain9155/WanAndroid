@@ -1,8 +1,11 @@
 package com.example.commonlib.utils;
 
-import java.text.ParseException;
+import android.annotation.SuppressLint;
+import android.util.SparseLongArray;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * 时间转换工具类
@@ -10,22 +13,48 @@ import java.util.Date;
  */
 public class TimeUtil {
 
+    private static SparseLongArray mTimeManager = new SparseLongArray();
+
     /**
-     * 将时间转换为时间戳
+     * 判断isInInterval两次调用之间的时间间隔是否在interval时间内
      */
-    public static String dateToStamp(String s) throws ParseException {
-        String res;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = simpleDateFormat.parse(s);
-        long ts = date.getTime();
-        res = String.valueOf(ts);
-        return res;
+    public static boolean isInInterval(int interval){
+        if(mTimeManager.get(interval, -1) != -1){
+            long preTime = mTimeManager.get(interval);
+            if(System.currentTimeMillis() - preTime < interval){
+                mTimeManager.delete(interval);
+                return true;
+            }
+        }
+        mTimeManager.put(interval, System.currentTimeMillis());
+        return false;
     }
+
+    /**
+     * 判断isInInterval两次调用之间的时间是否间隔interval时间
+     */
+    public static boolean isOutInterval(int interval){
+        if(mTimeManager.get(interval, -1) != -1){
+            long preTime = mTimeManager.get(interval);
+            if(System.currentTimeMillis() - preTime > interval){
+                mTimeManager.delete(interval);
+                return true;
+            }
+            return false;
+        }else {
+            mTimeManager.put(interval, System.currentTimeMillis());
+            return true;
+        }
+    }
+
+
+
 
     /**
      * 将时间戳转换为时间
      */
     public static String stampToDate(Long stamp){
+        @SuppressLint("SimpleDateFormat")
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(stamp);
         String res = simpleDateFormat.format(date);

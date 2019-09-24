@@ -106,6 +106,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     Lazy<GotoDetialDialog> mGotoDetialDialog;
 
     private int mChangeFlag;//更换头像标志
+    private boolean isCoin;
 
     @Override
     protected int getLayoutId() {
@@ -144,11 +145,11 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         btnLogin.setOnClickListener(v -> LoginActivity.startActivity(mActivity));
 
         clCoin.setOnClickListener(v -> {
-            if (!isLogin()) return;
+            if (!isLogin(true))return;
             CoinsActivity.startActivity(mActivity);
         });
         clCollection.setOnClickListener(v -> {
-            if (!isLogin()) return;
+            if (!isLogin(false))return;
             CollectionActivity.startActivity(mActivity);
         });
         clSettings.setOnClickListener(v -> SettingsActivity.startActivity(mActivity));
@@ -170,9 +171,14 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) return;
 
-        //handle result of collection Activity
-        if (requestCode == Constant.REQUEST_LOGIN)
-            CollectionActivity.startActivity(mActivity);
+        //handle result of login Activity
+        if (requestCode == Constant.REQUEST_LOGIN){
+            if(isCoin){
+                CoinsActivity.startActivity(mActivity);
+            }else {
+                CollectionActivity.startActivity(mActivity);
+            }
+        }
 
         // handle result of pick image chooser
         if (requestCode == Constant.REQUEST_PICK_IMAGE_CHOOSER) {
@@ -292,8 +298,9 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         return chooserIntent;
     }
 
-    private boolean isLogin() {
+    private boolean isLogin(boolean isCoin) {
         if (!User.getInstance().isLoginStatus()) {
+            this.isCoin = isCoin;
             LoginActivity.startActivityForResultByFragment(mActivity, this, Constant.REQUEST_LOGIN);
             showToast(getString(R.string.first_login));
             return false;

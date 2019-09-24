@@ -8,11 +8,8 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +31,7 @@ import com.example.commonlib.utils.FileUtil;
 import com.example.commonlib.utils.ServiceUtil;
 import com.example.commonlib.utils.ShareUtil;
 import com.example.commonlib.utils.StatusBarUtil;
+import com.example.commonlib.utils.TimeUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.config.App;
@@ -401,16 +399,11 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
      * 夜间模式切换
      */
     private void changeNightNode(CompoundButton buttonView) {
-        if(isNightChanging){
-            buttonView.setChecked(!buttonView.isChecked());
-            return;
-        }
-        isNightChanging = true;
+        if(!TimeUtil.isOutInterval(Constant.NIGHT_CHANGE_WAIT_TIME)) return;
         mPresenter.setNightModeState(buttonView.isChecked());
         startActivity(new Intent(this, SettingsActivity.class));
         overridePendingTransition( R.anim.anim_settings_exter, R.anim.anim_settings_exit);
         finish();
-        isNightChanging = false;
     }
 
     /**
