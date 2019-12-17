@@ -1,9 +1,7 @@
 package com.example.hy.wanandroid.di.component.fragment;
 
-import com.example.hy.wanandroid.di.module.fragment.HierarchyFragmentModule;
 import com.example.hy.wanandroid.di.module.fragment.HierarchySecondFragmentModule;
 import com.example.hy.wanandroid.di.scope.PerFragment;
-import com.example.hy.wanandroid.view.hierarchy.HierarchySecondActivity;
 import com.example.hy.wanandroid.view.hierarchy.HierarchySecondFragment;
 
 import dagger.Subcomponent;

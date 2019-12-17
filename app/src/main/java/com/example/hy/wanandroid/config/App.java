@@ -48,7 +48,7 @@ public class  App extends LitePalApplication {
         mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         initLitepal();
         initBugly();
-        //initLeakCanary();
+        initLeakCanary();
         Loading.beginBuildCommit()
                 .addErrorView(R.layout.error_view)
                 .addLoadingView(R.layout.loading_view)

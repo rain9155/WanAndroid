@@ -20,7 +20,6 @@ import org.json.JSONException;
 
 import java.net.UnknownHostException;
 
-import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.ResourceObserver;

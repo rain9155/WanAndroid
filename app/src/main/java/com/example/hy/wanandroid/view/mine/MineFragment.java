@@ -185,7 +185,6 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
             Uri imageUri = CropImage.getPickImageResultUri(mActivity, data);
             PermissionHelper.getInstance().with(mActivity).requestPermission(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
-                    CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE,
                     new IPermissionCallback() {
                         @Override
                         public void onAccepted(Permission permission) {
@@ -260,7 +259,6 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     @Override
     public void changeFaceOrBackground(int flag) {
         this.mChangeFlag = flag;
-
         if (flag == Constant.CHANGE_NO) {
             ivBack.setImageResource(R.drawable.girl);
             ivFace.setImageResource(R.drawable.girl);

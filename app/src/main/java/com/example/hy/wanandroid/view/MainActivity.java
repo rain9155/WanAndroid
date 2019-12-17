@@ -55,6 +55,7 @@ import dagger.Lazy;
 
 
 import java.io.File;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -129,7 +130,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             mFragments[4] = findFragmentByTag(MineFragment.class.getName());
             bnvBtm.setSelectedItemId(getSelectedId(mPresenter.getCurrentItem()));
         }
-
     }
 
     @Override
@@ -237,7 +237,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     public void upDataVersion() {
         PermissionHelper.getInstance().with(this).requestPermission(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Constant.REQUEST_WRITE_EXTERNAL,
                 new IPermissionCallback() {
                     @Override
                     public void onAccepted(Permission permission) {

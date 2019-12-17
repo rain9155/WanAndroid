@@ -10,8 +10,6 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static java.net.HttpURLConnection.HTTP_NOT_MODIFIED;
-
 /**
  * Okhttp缓存拦截器
  * Created by 陈健宇 at 2018/12/5

@@ -8,7 +8,6 @@ import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.event.InstallApkEvent;
-import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.OpenBrowseEvent;
 import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.event.UpdataEvent;

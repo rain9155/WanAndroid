@@ -16,7 +16,6 @@ import com.example.hy.wanandroid.di.module.fragment.WeChatFragmentModule;
 import com.example.hy.wanandroid.di.module.fragment.WeChatsFragmentModule;
 import com.example.hy.wanandroid.di.scope.PerActivity;
 import com.example.hy.wanandroid.view.MainActivity;
-import com.example.hy.wanandroid.view.project.ProjectFragment;
 
 import dagger.Component;
 

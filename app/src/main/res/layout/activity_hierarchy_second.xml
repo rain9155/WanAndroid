@@ -16,6 +16,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!--suppress AndroidDomInspection -->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_hierarchy_second"
         android:layout_width="match_parent"
