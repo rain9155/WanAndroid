@@ -213,17 +213,18 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode != RESULT_OK) return;
-        if(CommonUtil.isEmptyList(mSearchResquestList)) return;
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) return;
+        if (CommonUtil.isEmptyList(mSearchResquestList)) return;
         Article article = mSearchResquestList.get(mArticlePosition);
-        switch (requestCode){
+        switch (requestCode) {
             case Constant.REQUEST_LOGIN:
-                if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
+                if (article.isCollect()) mPresenter.unCollectArticle(article.getId());
                 else mPresenter.collectArticle(article.getId());
                 break;
             case Constant.REQUEST_REFRESH_ARTICLE:
                 boolean isCollect = data.getBooleanExtra(Constant.KEY_DATA_RETURN, false);
-                if(article.isCollect() != isCollect){
+                if (article.isCollect() != isCollect) {
                     article.setCollect(isCollect);
                     mSearchResquestAdapter.notifyItemChanged(mArticlePosition + mSearchResquestAdapter.getHeaderLayoutCount());
                 }

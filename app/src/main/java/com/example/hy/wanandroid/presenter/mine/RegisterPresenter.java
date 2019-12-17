@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.contract.mine.RegisterContract;
 import com.example.hy.wanandroid.model.DataModel;

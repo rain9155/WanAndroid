@@ -26,6 +26,9 @@ android {
             abiFilters 'armeabi', 'x86' // 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
         vectorDrawables.useSupportLibrary = true
+
+        //打包时排除私有项目、android系统库和第三方库中非指定语言的资源文件
+        resConfigs "zh", "en"
     }
 
     signingConfigs {
@@ -45,11 +48,6 @@ android {
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
-            android.applicationVariants.all { variant ->
-                variant.outputs.all {
-                    outputFileName = "WanAndroid-release.apk"
-                }
-            }
         }
 
         debug {
@@ -86,7 +84,7 @@ android {
     //自定义release apk的输出路径和名称
     android.applicationVariants.all { variant ->
         def curBuildType = variant.buildType.name
-        def apkName = "app-release.apk"
+        def apkName = "app-release-" + System.currentTimeMillis()  + ".apk"
         variant.outputs.all { output ->
             //只对release包起作用，如果不是release包则不变更输出路径，否则可能导致AS无法自动安装debug包
             if(curBuildType == "release"){
@@ -98,12 +96,10 @@ android {
         }
     }
 
-
     dependencies {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
 
         implementation project(':commonlib')
-        implementation project(':permission')
 
         //android support
         implementation 'androidx.appcompat:appcompat:1.1.0'

@@ -2,26 +2,17 @@ package com.example.hy.wanandroid.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnticipateInterpolator;
-import android.view.animation.AnticipateOvershootInterpolator;
-import android.view.animation.DecelerateInterpolator;
 
+import com.example.commonlib.utils.ToastUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.widget.customView.SVGBgView;
-
-import java.io.ObjectInputStream;
 
 public class LaunchActivity extends AppCompatActivity {
 

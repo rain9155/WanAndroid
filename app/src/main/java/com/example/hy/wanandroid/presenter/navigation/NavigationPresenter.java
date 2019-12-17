@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.presenter.navigation;
 
 import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.contract.navigation.NavigationContract;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;

@@ -48,6 +48,7 @@ import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.LanguageDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 import com.example.permission.PermissionHelper;
+import com.example.permission.bean.SpecialPermission;
 import com.example.permission.callback.IPermissionCallback;
 
 import java.io.File;
@@ -167,8 +168,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     @Inject
     Lazy<LanguageDialog> mLanguageDialog;
 
-
-    private boolean isNightChanging;
     private ObjectAnimator mAnimator;
     private String mNewVersionName;
     private String mCurrentVersionName;
@@ -208,7 +207,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         initToolBar();
         initSwitch();
         initSettings();
-
     }
 
     private void initSettings() {
@@ -358,12 +356,10 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     public void upDataVersion() {
         PermissionHelper.getInstance().with(this).requestPermission(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Constant.REQUEST_WRITE_EXTERNAL,
-                new IPermissionCallback() {
+                new IPermissionCallback(){
                     @Override
                     public void onAccepted(Permission permission) {
                         DownloadUtil.downloadApk(SettingsActivity.this, mNewVersionName);
-
                     }
 
                     @Override

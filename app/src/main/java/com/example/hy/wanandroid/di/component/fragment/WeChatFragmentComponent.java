@@ -1,6 +1,5 @@
 package com.example.hy.wanandroid.di.component.fragment;
 
-import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
 import com.example.hy.wanandroid.di.module.fragment.WeChatFragmentModule;
 import com.example.hy.wanandroid.di.scope.PerFragment;
 import com.example.hy.wanandroid.view.wechat.WeChatFragment;

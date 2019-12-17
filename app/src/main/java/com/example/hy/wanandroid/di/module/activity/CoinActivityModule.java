@@ -1,21 +1,11 @@
 package com.example.hy.wanandroid.di.module.activity;
 
-import android.content.Context;
-import android.view.View;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.CoinsAdapter;
-import com.example.hy.wanandroid.adapter.CollectionsAdapter;
-import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.di.scope.PerActivity;
 import com.example.hy.wanandroid.entity.Coin;
-import com.example.hy.wanandroid.entity.Collection;
-import com.example.loading.Loading;
-import com.example.loading.StatusView;
 
 import java.util.ArrayList;
 import java.util.List;

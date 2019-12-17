@@ -1,11 +1,7 @@
 package com.example.hy.wanandroid.presenter.mine;
 
-import com.example.commonlib.utils.LogUtil;
 import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
-import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.contract.mine.CoinContract;
-import com.example.hy.wanandroid.entity.Coin;
 import com.example.hy.wanandroid.entity.Coins;
 import com.example.hy.wanandroid.entity.UserCoin;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;

@@ -22,7 +22,7 @@ public class CustomGsonConverterFactory extends Converter.Factory {
         return create(new Gson());
     }
 
-    @SuppressWarnings("ConstantConditions") // Guarding public API nullability.
+    // Guarding public API nullability.
     public static CustomGsonConverterFactory create(Gson gson) {
         if (gson == null) throw new NullPointerException("gson == null");
         return new CustomGsonConverterFactory(gson);

@@ -18,7 +18,6 @@ import com.example.commonlib.utils.ToastUtil;
 import com.example.hy.wanandroid.event.ReLoadEvent;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

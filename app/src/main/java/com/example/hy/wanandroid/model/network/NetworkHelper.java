@@ -19,7 +19,6 @@ import com.example.hy.wanandroid.entity.Version;
 import java.util.List;
 
 import io.reactivex.Observable;
-import retrofit2.http.Path;
 
 /**
  * 网络操作接口

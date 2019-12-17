@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.CoinsAdapter;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;

@@ -172,8 +172,9 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK && requestCode == Constant.REQUEST_LOGIN){
-            if(isCollection) mPresenter.unCollectArticle(mArticleId);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_LOGIN) {
+            if (isCollection) mPresenter.unCollectArticle(mArticleId);
             else mPresenter.collectArticle(mArticleId);
         }
     }

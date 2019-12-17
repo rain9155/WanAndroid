@@ -72,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_author"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="2018/1/1"
-        tools:ignore="RtlSymmetry" />
+        tools:ignore="MissingConstraints,RtlSymmetry" />
 
         <TextView
             android:id="@+id/tv_tags"

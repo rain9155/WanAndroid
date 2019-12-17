@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.base.view;
 
 import android.app.Activity;
-import android.content.Context;
 
 /**
  * 通用View接口

@@ -2,7 +2,6 @@ package com.example.hy.wanandroid.config;
 import android.os.Environment;
 
 import com.example.commonlib.utils.FileUtil;
-import com.example.hy.wanandroid.R;
 
 import java.io.File;
 
@@ -21,7 +20,6 @@ public class Constant {
 
     //common, 1~10
     public static final int REQUEST_LOGIN = 1;
-    public static final int REQUEST_WRITE_EXTERNAL = 2;
     public static final String KEY_URL_APK = "urlApk";
     public static final String KEY_DOWNLOAD_ID = "downloadId";
     public static String NEW_VERSION_URL = "";

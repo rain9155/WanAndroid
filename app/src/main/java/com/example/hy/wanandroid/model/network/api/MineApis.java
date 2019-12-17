@@ -1,15 +1,12 @@
 package com.example.hy.wanandroid.model.network.api;
 
 import com.example.hy.wanandroid.entity.BaseResponse;
-import com.example.hy.wanandroid.entity.Coin;
 import com.example.hy.wanandroid.entity.CoinRanks;
 import com.example.hy.wanandroid.entity.Coins;
 import com.example.hy.wanandroid.entity.Collection;
 import com.example.hy.wanandroid.entity.CollectionRequest;
 import com.example.hy.wanandroid.entity.Login;
 import com.example.hy.wanandroid.entity.UserCoin;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;

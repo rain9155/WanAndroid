@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.contract.mine;
 
 import com.example.hy.wanandroid.base.view.IView;
-import com.example.hy.wanandroid.entity.Coin;
 import com.example.hy.wanandroid.entity.UserCoin;
 
 import java.util.List;

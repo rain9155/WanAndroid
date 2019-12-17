@@ -1,8 +1,6 @@
 package com.example.hy.wanandroid.adapter;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

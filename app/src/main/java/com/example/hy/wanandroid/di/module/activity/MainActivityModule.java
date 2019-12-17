@@ -1,6 +1,5 @@
 package com.example.hy.wanandroid.di.module.activity;
 
-import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.di.scope.PerActivity;
 import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;

@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.di.component.activity;
 
 import com.example.hy.wanandroid.di.component.AppComponent;
-import com.example.hy.wanandroid.di.module.activity.LoginActivityModule;
 import com.example.hy.wanandroid.di.module.activity.RegisterActivityModule;
 import com.example.hy.wanandroid.di.scope.PerActivity;
 import com.example.hy.wanandroid.view.mine.RegisterActivity;
