@@ -50,3 +50,7 @@ file=D:\source\AndroidStudio\WanAndroid\app\build\outputs\mapping\release\mappin
 sha1=523b9981611cbb3773e1ac3ec2f21764958b3e18
 appId=a0768ddf34
 
+file=D:\source\AndroidStudio\WanAndroid\app\build\outputs\mapping\release\mapping.txt
+sha1=0414709c5d55367a288ee863dd62b9748cdbe3af
+appId=a0768ddf34
+
