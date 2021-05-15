@@ -29,6 +29,7 @@ public class WriteCookiesInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
         HashSet<String> cookies = (HashSet<String>) mPreferences.getStringSet(TAG, new HashSet<>());
+        //有问题，只需要写入Cookie的name=value值
         for(String cookie : cookies){
             builder.addHeader("Cookie", cookie);
             LogUtil.d(LogUtil.TAG_HTTP, "add Cookie: " + cookie);

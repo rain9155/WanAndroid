@@ -29,7 +29,7 @@ public class CustomResponseBodyConverter<T> implements Converter<ResponseBody, O
             }else {
                 throw new ApiException(baseResponse.getErrorCode(), baseResponse.getErrorMsg());
             }
-            } finally {
+        } finally {
             value.close();
         }
     }
