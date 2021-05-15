@@ -35,7 +35,7 @@
 ![sc10](/screenshots/sc10.png)
 ![sc11](/screenshots/sc11.png)<br>
 ### Download (v1.6, Android 4.4 or above)
-1、[手动下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.6/app-release.apk) 
+1、[手动下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.6/app-release-1576585021339.apk) 
 <br> <br>
 2、二维码下载
 <br> <br>
