@@ -23,5 +23,5 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation rootProject.ext.support["appcompat"]
 }

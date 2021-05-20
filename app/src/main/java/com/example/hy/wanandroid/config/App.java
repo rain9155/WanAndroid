@@ -3,6 +3,8 @@ package com.example.hy.wanandroid.config;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
 
+import androidx.multidex.MultiDex;
+
 import com.example.hy.wanandroid.BuildConfig;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.di.component.AppComponent;
@@ -40,6 +42,12 @@ public class  App extends LitePalApplication {
     }
 
     private AppComponent mAppComponent;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
+    }
 
     @Override
     public void onCreate() {

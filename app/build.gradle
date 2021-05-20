@@ -26,9 +26,9 @@ android {
             abiFilters 'armeabi', 'x86' // 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
         vectorDrawables.useSupportLibrary = true
-
         //打包时排除私有项目、android系统库和第三方库中非指定语言的资源文件
         resConfigs "zh", "en"
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -98,34 +98,20 @@ android {
 
     dependencies {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
-
         implementation project(':commonlib')
 
         //android support
-        implementation 'androidx.appcompat:appcompat:1.1.0'
-        implementation 'com.google.android.material:material:1.0.0'
-        implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-
-        //db,gilde
-        implementation rootProject.ext.commonDependency
-
-        //network
-        implementation rootProject.ext.networkDependency
-
-        //rxjava2
-        implementation rootProject.ext.rejava2Dependency
-
-        //ui
-        implementation rootProject.ext.uiDependency
-
-        //inject
-        implementation rootProject.ext.injectDependency
-
-        //other
-        annotationProcessor rootProject.ext.otherDependency
-
+        implementation rootProject.ext.supportDependency
         //custom
         implementation rootProject.ext.customDependency
+        //core
+        implementation rootProject.ext.coreDependency
+        //inject
+        implementation rootProject.ext.injectDependency
+        //compiler
+        annotationProcessor rootProject.ext.compilerDependency
+        //ui
+        implementation rootProject.ext.uiDependency
 
         //bugly
         //noinspection GradleDependency

@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/WanAndroid.iml" filepath="$PROJECT_DIR$/.idea/WanAndroid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/WanAndroid.iml" filepath="$PROJECT_DIR$/WanAndroid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/commonlib/commonlib.iml" filepath="$PROJECT_DIR$/commonlib/commonlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/WanAndroid.iml" filepath="$PROJECT_DIR$/.idea/modules/WanAndroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/WanAndroid.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/WanAndroid.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/commonlib/WanAndroid.commonlib.iml" filepath="$PROJECT_DIR$/.idea/modules/commonlib/WanAndroid.commonlib.iml" />
     </modules>
   </component>
 </project>
