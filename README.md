@@ -1,8 +1,8 @@
 # WanAndroid
 ### WanAndroid，一款基于MVP + Rxjava2 + Dagger2 + Retrofit + Material Design的应用, 欢迎大家start、fork。
-### Pre
+## Pre
 本人小白一个，一直以来都想自己做一个完整的app，所以本项目就在我的闲暇时间中形成，一开始遇到很多不懂的，也靠自己解决了，所以会一直添加新的功能，解决bug，不断打造成一款持续稳定, 功能完善的WanAndroid应用。
-### Features
+## Features
 - [x] 首页
 - [x] 知识体系
 - [x] 公众号
@@ -16,14 +16,14 @@
 - [x] 应用内检查更新
 - [x] 多语言支持
 - [X] ...
-### Tips
+## Tips
 * 本人能力有限，可能会在bug，如有任何问题，欢迎[issues](https://github.com/rain9155/WanAndroid/issues)
 * 项目中所用到的api均由[WanAndroid网站](http://www.wanandroid.com/blog/show/2)提供 
 * 项目中使用的[MVP开发模板](https://github.com/rain9155/AndroidTemplate)
-### Preview
+## Preview
 <br> ![wan1](/screenshots/wan1.gif) ![wan2](/screenshots/wan2.gif) <br>
 <br> ![wan3](/screenshots/wan3.gif) ![wan4](/screenshots/wan4.gif) <br>
-### Screenshots
+## Screenshots
 <br>![sc2](/screenshots/sc2.png) 
 ![sc3](/screenshots/sc3.png)
 ![sc4](/screenshots/sc4.png) 
@@ -34,10 +34,10 @@
 ![sc9](/screenshots/sc9.png)
 ![sc10](/screenshots/sc10.png)
 ![sc11](/screenshots/sc11.png)<br>
-### Download (v1.6, Android 4.4 or above)
+## Download (v1.6, Android 4.4 or above)
 [点击下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.6/app-release-1576585021339.apk) 
 
-### Points And Reference
+## Points And Reference
 1、Rxjava2配合Retrofit进行网络请求
 * [给 Android 开发者的 RxJava 详解](https://gank.io/post/560e15be2dca930e00da1083)
 * [你真的会用Retrofit2吗?Retrofit2完全教程](https://www.jianshu.com/p/308f3c54abdd)
@@ -97,12 +97,12 @@
 
 > 以上是项目中的主要亮点和我做项目时参考的文章，当然对于一些主流的框架官方文档中也有详细的介绍，更多细节可以查看项目具体代码。
 
-### TODO
+## TODO
 - [ ] Dagger-Android
 - [ ] 优化app
 - [ ] 单元测试
 - [ ] 自定义Tablayout
-### ChangeLog
+## ChangeLog
 ```
 v1.6 2019-9-22
 1、 添加个人积分、积分排行榜
@@ -142,7 +142,7 @@ v1.1 2018-12-15
 v1.0 2018-12-1
 第一版发布
 ```
-### Thanks
+## Thanks
 * **UI** <br>
 [阿里巴巴图标](http://www.iconfont.cn/home/index) <br> 
 [Material Design Palette](http://huaban.com/)<br>
@@ -169,9 +169,9 @@ v1.0 2018-12-1
 [AgentWeb](https://github.com/Justson/AgentWeb)<br>
 [SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout)<br>
 [ImageCropper](https://github.com/ArthurHub/Android-Image-Cropper)
-### End
+## End
 本项目只用作学习用途，不做其他用途 
-### License
+## License
 ```
 Copyright 2018 rain9155
 
