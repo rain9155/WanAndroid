@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/WanAndroid.iml" filepath="$PROJECT_DIR$/.idea/modules/WanAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/WanAndroid.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/WanAndroid.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/commonlib/WanAndroid.commonlib.iml" filepath="$PROJECT_DIR$/.idea/modules/commonlib/WanAndroid.commonlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-WanAndroid.iml" filepath="$PROJECT_DIR$/.idea/modules/android-WanAndroid.iml" group="WanAndroid" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="WanAndroid/app" />
     </modules>
   </component>
 </project>

@@ -97,7 +97,6 @@ android {
 
     dependencies {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
-        implementation project(':commonlib')
 
         //android support
         implementation rootProject.ext.supportDependency

@@ -10,7 +10,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.di.component.DaggerAppComponent;
 import com.example.hy.wanandroid.di.module.AppModule;
-import com.example.commonlib.utils.CommonUtil;
+import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.utlis.GlideApp;
 import com.example.loading.Loading;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;

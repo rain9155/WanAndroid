@@ -4,9 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.commonlib.utils.AnimUtil;
-import com.example.commonlib.utils.CommonUtil;
-import com.example.commonlib.utils.ToastUtil;
+import com.example.hy.wanandroid.utlis.AnimUtil;
+import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.WeChatAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;

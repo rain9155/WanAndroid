@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.AccelerateInterpolator;
 
-import com.example.commonlib.utils.ToastUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.widget.customView.SVGBgView;

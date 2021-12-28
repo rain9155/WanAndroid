@@ -6,8 +6,8 @@ import android.view.View;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
 import com.example.hy.wanandroid.config.Constant;
-import com.example.commonlib.utils.LogUtil;
-import com.example.commonlib.utils.ShareUtil;
+import com.example.hy.wanandroid.utlis.LogUtil;
+import com.example.hy.wanandroid.utlis.ShareUtil;
 
 import java.io.File;
 

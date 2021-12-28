@@ -14,7 +14,7 @@ import com.example.hy.wanandroid.event.UpdataEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
 import com.example.hy.wanandroid.entity.Version;
-import com.example.commonlib.utils.FileUtil;
+import com.example.hy.wanandroid.utlis.FileUtil;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
 import javax.inject.Inject;

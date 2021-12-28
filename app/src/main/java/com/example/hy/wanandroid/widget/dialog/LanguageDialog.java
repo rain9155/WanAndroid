@@ -3,7 +3,7 @@ package com.example.hy.wanandroid.widget.dialog;
 import android.view.View;
 import android.widget.RadioButton;
 
-import com.example.commonlib.utils.LanguageUtil;
+import com.example.hy.wanandroid.utlis.LanguageUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
 import com.example.hy.wanandroid.config.App;

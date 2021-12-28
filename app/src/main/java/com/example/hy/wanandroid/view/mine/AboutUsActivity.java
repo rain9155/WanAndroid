@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
-import com.example.commonlib.utils.StatusBarUtil;
+import com.example.hy.wanandroid.utlis.StatusBarUtil;
 import com.example.hy.wanandroid.widget.interpolator.ElasticOutInterpolator;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;

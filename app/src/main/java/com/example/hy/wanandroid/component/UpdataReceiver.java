@@ -11,8 +11,8 @@ import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.event.InstallApkEvent;
 import com.example.hy.wanandroid.event.OpenBrowseEvent;
-import com.example.commonlib.utils.LogUtil;
-import com.example.commonlib.utils.ToastUtil;
+import com.example.hy.wanandroid.utlis.LogUtil;
+import com.example.hy.wanandroid.utlis.ToastUtil;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 

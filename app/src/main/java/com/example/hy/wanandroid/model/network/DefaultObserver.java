@@ -11,7 +11,7 @@ import com.example.hy.wanandroid.event.LoginEvent;
 import com.example.hy.wanandroid.event.TokenExpiresEvent;
 import com.example.hy.wanandroid.entity.Login;
 import com.example.hy.wanandroid.model.network.gson.ApiException;
-import com.example.commonlib.utils.LogUtil;
+import com.example.hy.wanandroid.utlis.LogUtil;
 import com.example.hy.wanandroid.utlis.RxUtils;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.google.gson.JsonParseException;
@@ -25,7 +25,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.ResourceObserver;
 import retrofit2.HttpException;
 
-import static com.example.commonlib.utils.LogUtil.TAG_ERROR;
+import static com.example.hy.wanandroid.utlis.LogUtil.TAG_ERROR;
 
 /**
  * 封装Observer

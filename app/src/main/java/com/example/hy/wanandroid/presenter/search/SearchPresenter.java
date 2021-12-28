@@ -10,7 +10,7 @@ import com.example.hy.wanandroid.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
 import com.example.hy.wanandroid.entity.Articles;
 import com.example.hy.wanandroid.entity.HotKey;
-import com.example.commonlib.utils.CommonUtil;
+import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.utlis.RxUtils;
 
 import java.util.Collections;

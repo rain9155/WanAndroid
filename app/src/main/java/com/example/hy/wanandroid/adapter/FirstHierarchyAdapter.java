@@ -5,7 +5,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.entity.FirstHierarchy;
 import com.example.hy.wanandroid.entity.Tab;
-import com.example.commonlib.utils.CommonUtil;
+import com.example.hy.wanandroid.utlis.CommonUtil;
 
 import java.util.List;
 

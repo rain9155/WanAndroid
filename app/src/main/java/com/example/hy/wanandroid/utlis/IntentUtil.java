@@ -1,9 +1,8 @@
-package com.example.commonlib.utils;
+package com.example.hy.wanandroid.utlis;
 
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -12,8 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
 
 /**
  * Created by 陈健宇 at 2019/1/10

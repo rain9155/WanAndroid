@@ -16,10 +16,10 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.commonlib.utils.AnimUtil;
-import com.example.commonlib.utils.FileUtil;
-import com.example.commonlib.utils.IntentUtil;
-import com.example.commonlib.utils.StatusBarUtil;
+import com.example.hy.wanandroid.utlis.AnimUtil;
+import com.example.hy.wanandroid.utlis.FileUtil;
+import com.example.hy.wanandroid.utlis.IntentUtil;
+import com.example.hy.wanandroid.utlis.StatusBarUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
 import com.example.hy.wanandroid.config.Constant;

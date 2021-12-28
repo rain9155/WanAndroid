@@ -2,7 +2,7 @@ package com.example.hy.wanandroid.widget.dialog;
 
 import android.view.View;
 
-import com.example.commonlib.utils.ShareUtil;
+import com.example.hy.wanandroid.utlis.ShareUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
 import com.example.hy.wanandroid.config.App;

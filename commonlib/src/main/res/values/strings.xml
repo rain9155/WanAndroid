@@ -1,9 +1,0 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-
-    <string name="app_name">WanAndroid</string>
-    <string name="open_browser_unknown">找不到指定应用打开浏览器</string>
-    <string name="share_unknown">找不到指定应用来分享</string>
-    <string name="share_email_unknown">找不到指定的应用来发送邮件</string>
-    <string name="articleActivity_browser_error">该链接无法使用浏览器打开</string>
-
-</resources>

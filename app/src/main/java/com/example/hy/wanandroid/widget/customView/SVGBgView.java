@@ -21,7 +21,7 @@ import android.view.animation.LinearInterpolator;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.commonlib.utils.LogUtil;
+import com.example.hy.wanandroid.utlis.LogUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.utlis.PathData;
 import com.example.hy.wanandroid.utlis.PathParser;

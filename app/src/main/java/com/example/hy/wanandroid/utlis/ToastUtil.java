@@ -1,4 +1,4 @@
-package com.example.commonlib.utils;
+package com.example.hy.wanandroid.utlis;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.commonlib.R;
+import com.example.hy.wanandroid.R;
 
 /**
  * Created by 陈健宇 at 2018/12/5
@@ -104,6 +104,7 @@ public class ToastUtil{
 
             }
 
+            @Override
             public void onAnimationEnd(Animator animation) {
                 viewGroup.removeView(textView);
             }

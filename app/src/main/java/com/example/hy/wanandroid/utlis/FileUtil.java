@@ -1,4 +1,4 @@
-package com.example.commonlib.utils;
+package com.example.hy.wanandroid.utlis;
 
 import android.content.Context;
 import android.graphics.Bitmap;

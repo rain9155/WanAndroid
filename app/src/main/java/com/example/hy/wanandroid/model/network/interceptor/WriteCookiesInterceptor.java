@@ -3,7 +3,7 @@ package com.example.hy.wanandroid.model.network.interceptor;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.commonlib.utils.LogUtil;
+import com.example.hy.wanandroid.utlis.LogUtil;
 
 import java.io.IOException;
 import java.util.HashSet;

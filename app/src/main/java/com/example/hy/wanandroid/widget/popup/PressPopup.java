@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.example.commonlib.utils.ShareUtil;
-import com.example.commonlib.utils.ToastUtil;
+import com.example.hy.wanandroid.utlis.ShareUtil;
+import com.example.hy.wanandroid.utlis.ToastUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.entity.Article;
 

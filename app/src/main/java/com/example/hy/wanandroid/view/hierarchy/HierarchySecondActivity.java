@@ -16,7 +16,7 @@ import com.example.hy.wanandroid.di.component.activity.HierarchySecondActivityCo
 import com.example.hy.wanandroid.di.module.activity.HierarchySecondActivityModule;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.utlis.RxBus;
-import com.example.commonlib.utils.StatusBarUtil;
+import com.example.hy.wanandroid.utlis.StatusBarUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 

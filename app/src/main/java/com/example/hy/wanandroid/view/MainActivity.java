@@ -15,9 +15,9 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.widget.FrameLayout;
 
-import com.example.commonlib.utils.FileProvider7;
-import com.example.commonlib.utils.LogUtil;
-import com.example.commonlib.utils.TimeUtil;
+import com.example.hy.wanandroid.utlis.FileProvider7;
+import com.example.hy.wanandroid.utlis.LogUtil;
+import com.example.hy.wanandroid.utlis.TimeUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.permission.bean.Permission;
@@ -30,8 +30,8 @@ import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.utlis.DownloadUtil;
-import com.example.commonlib.utils.StatusBarUtil;
-import com.example.commonlib.utils.ToastUtil;
+import com.example.hy.wanandroid.utlis.StatusBarUtil;
+import com.example.hy.wanandroid.utlis.ToastUtil;
 import com.example.hy.wanandroid.view.hierarchy.HierarchyFragment;
 import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
@@ -55,7 +55,6 @@ import dagger.Lazy;
 
 
 import java.io.File;
-import java.util.HashMap;
 
 import javax.inject.Inject;
 

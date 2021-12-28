@@ -19,7 +19,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.example.commonlib.utils.LanguageUtil;
+import com.example.hy.wanandroid.utlis.LanguageUtil;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
@@ -27,11 +27,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.commonlib.utils.FileUtil;
-import com.example.commonlib.utils.ServiceUtil;
-import com.example.commonlib.utils.ShareUtil;
-import com.example.commonlib.utils.StatusBarUtil;
-import com.example.commonlib.utils.TimeUtil;
+import com.example.hy.wanandroid.utlis.FileUtil;
+import com.example.hy.wanandroid.utlis.ServiceUtil;
+import com.example.hy.wanandroid.utlis.ShareUtil;
+import com.example.hy.wanandroid.utlis.StatusBarUtil;
+import com.example.hy.wanandroid.utlis.TimeUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.config.App;
@@ -48,7 +48,6 @@ import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.LanguageDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
 import com.example.permission.PermissionHelper;
-import com.example.permission.bean.SpecialPermission;
 import com.example.permission.callback.IPermissionCallback;
 
 import java.io.File;

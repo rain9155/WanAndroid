@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.CallSuper;
 
-import com.example.commonlib.utils.LanguageUtil;
+import com.example.hy.wanandroid.utlis.LanguageUtil;
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.config.App;
 

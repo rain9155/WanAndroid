@@ -3,7 +3,7 @@ package com.example.hy.wanandroid.model.prefs;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.commonlib.utils.LanguageUtil;
+import com.example.hy.wanandroid.utlis.LanguageUtil;
 import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.config.Constant;
 

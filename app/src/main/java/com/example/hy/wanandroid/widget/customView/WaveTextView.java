@@ -16,7 +16,7 @@ import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.Nullable;
 
-import com.example.commonlib.utils.LogUtil;
+import com.example.hy.wanandroid.utlis.LogUtil;
 import com.example.hy.wanandroid.R;
 
 

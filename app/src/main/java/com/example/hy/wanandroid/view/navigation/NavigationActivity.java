@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.commonlib.utils.CommonUtil;
+import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.NavigationTagsAdapter;
 import com.example.hy.wanandroid.adapter.NavigationTagsNameAdapter;
@@ -17,7 +17,7 @@ import com.example.hy.wanandroid.di.component.activity.DaggerNavigationActivityC
 import com.example.hy.wanandroid.di.module.activity.NavigationActivityModule;
 import com.example.hy.wanandroid.entity.Tag;
 import com.example.hy.wanandroid.presenter.navigation.NavigationPresenter;
-import com.example.commonlib.utils.StatusBarUtil;
+import com.example.hy.wanandroid.utlis.StatusBarUtil;
 import com.example.hy.wanandroid.view.search.SearchActivity;
 
 import java.util.List;

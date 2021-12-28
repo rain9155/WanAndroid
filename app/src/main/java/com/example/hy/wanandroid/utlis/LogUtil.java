@@ -1,4 +1,4 @@
-package com.example.commonlib.utils;
+package com.example.hy.wanandroid.utlis;
 
 /**
  * log工具类

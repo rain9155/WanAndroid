@@ -1,6 +1,5 @@
-package com.example.commonlib.utils;
+package com.example.hy.wanandroid.utlis;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -9,7 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.example.commonlib.R;
+import com.example.hy.wanandroid.R;
 
 /**
  * 分享工具
