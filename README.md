@@ -1,7 +1,7 @@
 # WanAndroid
-### WanAndroid，一款基于MVP + Rxjava2 + Dagger2 + Retrofit + Material Design的应用, 欢迎大家start、fork。
-## Pre
-本人小白一个，一直以来都想自己做一个完整的app，所以本项目就在我的闲暇时间中形成，一开始遇到很多不懂的，也靠自己解决了，所以会一直添加新的功能，解决bug，不断打造成一款持续稳定, 功能完善的WanAndroid应用。
+
+### WanAndroid，一款基于MVP + Rxjava2 + Dagger2 + Retrofit + Material Design的应用, 欢迎大家start、fork!
+
 ## Features
 - [x] 首页
 - [x] 知识体系
@@ -16,10 +16,12 @@
 - [x] 应用内检查更新
 - [x] 多语言支持
 - [X] ...
+
 ## Tips
 * 本人能力有限，可能会在bug，如有任何问题，欢迎[issues](https://github.com/rain9155/WanAndroid/issues)
 * 项目中所用到的api均由[WanAndroid网站](http://www.wanandroid.com/blog/show/2)提供 
 * 项目中使用的[MVP开发模板](https://github.com/rain9155/AndroidTemplate)
+
 ## Preview
 <br> ![wan1](/screenshots/wan1.gif) ![wan2](/screenshots/wan2.gif) <br>
 <br> ![wan3](/screenshots/wan3.gif) ![wan4](/screenshots/wan4.gif) <br>
@@ -95,13 +97,40 @@
 14、集成腾讯Bugly与LeakCanary，更容易找出bug与内存泄漏
 * 参考官方文档
 
-> 以上是项目中的主要亮点和我做项目时参考的文章，当然对于一些主流的框架官方文档中也有详细的介绍，更多细节可以查看项目具体代码。
+以上是项目中的主要亮点和我做项目时参考的文章，当然对于一些主流的框架官方文档中也有详细的介绍，更多细节可以查看项目具体代码。
+
+## Thanks
+* **UI** <br>
+[阿里巴巴图标](http://www.iconfont.cn/home/index) <br>
+[Material Design Palette](http://huaban.com/)<br>
+[Material Design Color](https://www.materialui.co/colors)<br>
+* **DB** <br>
+[LitePal](https://github.com/LitePalFramework/LitePal) <br>
+* **Network** <br>
+[Retrofit](https://github.com/square/retrofit) <br>
+* **Rx** <br>
+[RxJava2](https://github.com/ReactiveX/RxJava) <br>
+* **Injection** <br>
+[Dagger](https://github.com/google/dagger) <br>
+[Butterknife](https://github.com/JakeWharton/butterknife)
+* **ImageLoader** <br>
+[Glide](https://github.com/bumptech/glide)<br>
+* **Leak Check** <br>
+[LeakCanary](https://github.com/square/leakcanary)
+* **Other excellent open source library** <br>
+[MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)<br>
+[VerticalTabLayout](https://github.com/qstumn/VerticalTabLayout)<br>
+[BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)<br>
+[Banner](https://github.com/youth5201314/banner)<br>
+[FlowLayout](https://github.com/hongyangAndroid/FlowLayout)<br>
+[AgentWeb](https://github.com/Justson/AgentWeb)<br>
+[SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout)<br>
+[ImageCropper](https://github.com/ArthurHub/Android-Image-Cropper)
 
 ## TODO
 - [ ] Dagger-Android
-- [ ] 优化app
 - [ ] 单元测试
-- [ ] 自定义Tablayout
+
 ## ChangeLog
 ```
 v1.6 2019-9-22
@@ -142,35 +171,10 @@ v1.1 2018-12-15
 v1.0 2018-12-1
 第一版发布
 ```
-## Thanks
-* **UI** <br>
-[阿里巴巴图标](http://www.iconfont.cn/home/index) <br> 
-[Material Design Palette](http://huaban.com/)<br>
-[Material Design Color](https://www.materialui.co/colors)<br>
-* **DB** <br>
-[LitePal](https://github.com/LitePalFramework/LitePal) <br>
-* **Network** <br>
-[Retrofit](https://github.com/square/retrofit) <br>
-* **Rx** <br>
-[RxJava2](https://github.com/ReactiveX/RxJava) <br>
-* **Injection** <br>
-[Dagger](https://github.com/google/dagger) <br>
-[Butterknife](https://github.com/JakeWharton/butterknife)
-* **ImageLoader** <br>
-[Glide](https://github.com/bumptech/glide)<br>
-* **Leak Check** <br>
-[LeakCanary](https://github.com/square/leakcanary)
-* **Other excellent open source library** <br>
-[MultiWaveHeader](https://github.com/scwang90/MultiWaveHeader)<br>
-[VerticalTabLayout](https://github.com/qstumn/VerticalTabLayout)<br>
-[BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)<br>
-[Banner](https://github.com/youth5201314/banner)<br>
-[FlowLayout](https://github.com/hongyangAndroid/FlowLayout)<br>
-[AgentWeb](https://github.com/Justson/AgentWeb)<br>
-[SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout)<br>
-[ImageCropper](https://github.com/ArthurHub/Android-Image-Cropper)
+
 ## End
 本项目只用作学习用途，不做其他用途 
+
 ## License
 ```
 Copyright 2018 rain9155
@@ -186,5 +190,5 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-   
-   ```
+ 
+```
