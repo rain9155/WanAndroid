@@ -3,8 +3,6 @@ package com.example.hy.wanandroid.utlis;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.hy.wanandroid.R;
 
 /**
@@ -20,67 +17,36 @@ import com.example.hy.wanandroid.R;
  */
 public class ToastUtil{
 
-    private static Toast mToastInBottom;
-    @SuppressLint("StaticFieldLeak")
-    private static TextView mTextView;
-    private static Toast mShowToast;
-
     /**
      * Toast提示
      * @param message 的内容
      */
-    @SuppressLint("ShowToast")
     public static void showToast(Context context, String message){
-        if(mShowToast == null){
-            mShowToast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
-        }else {
-            mShowToast.setText(message);
-        }
-        mShowToast.show();
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
-    @SuppressLint({"ResourceAsColor"})
-    public static void toastInCenter(Context context, String message) {
-        @SuppressLint("InflateParams") View toastView = LayoutInflater.from(context).inflate(R.layout.toast_center, null);
-        TextView textView = toastView.findViewById(R.id.tv_toast);
-        textView.setText(message);
-
+    public static void showCustomToast(Context context, View contentView, Pos pos) {
         Toast toast = new Toast(context);
-        toast.setGravity(17, 0, 0);
+        toast.setView(contentView);
+        toast.setGravity(pos.gravity, pos.xOffset, pos.yOffset);
         toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(toastView);
         toast.show();
     }
 
-    @SuppressLint({"ResourceAsColor"})
-    public static void toastInBottom(Context context, String message) {
-        if(mToastInBottom == null){
-            @SuppressLint("InflateParams")
-            View toastView = LayoutInflater.from(context).inflate(R.layout.toast_bottom, null);
-            mTextView = toastView.findViewById(R.id.tv_toast);
-            mTextView.setText(message);
-
-            mToastInBottom = new Toast(context);
-            mToastInBottom.setGravity(Gravity.BOTTOM, 0, DisplayUtil.dip2px(context, 50));
-            mToastInBottom.setDuration(Toast.LENGTH_SHORT);
-            mToastInBottom.setView(toastView);
-         }else {
-            mTextView.setText(message);
-        }
-        mToastInBottom.show();
-    }
-
-    @SuppressLint({"ResourceAsColor"})
-    public static void toastInBottom(Activity activity, String message) {
-        @SuppressLint("InflateParams")
-        View toastView = LayoutInflater.from(activity).inflate(R.layout.toast_bottom, null);
+    public static void showCustomToastInCenter(Context context, String message) {
+        View toastView = LayoutInflater.from(context).inflate(R.layout.toast_center, null);
         TextView textView = toastView.findViewById(R.id.tv_toast);
         textView.setText(message);
-        Toast toastInBottomForFragment = new Toast(activity);
-        toastInBottomForFragment.setGravity(Gravity.BOTTOM, 0, DisplayUtil.dip2px(activity, 50));
-        toastInBottomForFragment.setDuration(Toast.LENGTH_SHORT);
-        toastInBottomForFragment.setView(toastView);
-        toastInBottomForFragment.show();
+        Pos pos = new Pos(17, 0, 0);
+        showCustomToast(context, toastView, pos);
+    }
+
+    public static void showCustomToastInBottom(Context context, String message) {
+        View toastView = LayoutInflater.from(context).inflate(R.layout.toast_bottom, null);
+        TextView textView = toastView.findViewById(R.id.tv_toast);
+        textView.setText(message);
+        Pos pos = new Pos(Gravity.BOTTOM, 0, DisplayUtil.dip2px(context, 50));
+        showCustomToast(context, toastView, pos);
     }
 
     public static void toastMake(final TextView textView, final ViewGroup viewGroup, String s, int backgroundColor, int textColor) {
@@ -121,4 +87,18 @@ public class ToastUtil{
         });
     }
 
+    private static final class Pos {
+
+        public int gravity;
+
+        public int xOffset;
+
+        public int yOffset;
+
+        public Pos(int gravity, int xOffset, int yOffset) {
+            this.gravity = gravity;
+            this.xOffset = xOffset;
+            this.yOffset = yOffset;
+        }
+    }
 }

@@ -88,7 +88,7 @@ public class PressPopup extends PopupWindow {
         TextView tvCopy = view.findViewById(R.id.tv_copy);
         tvCopy.setOnClickListener(v -> {
             ShareUtil.copyString(context, mLink);
-            ToastUtil.toastInBottom(context, context.getString(R.string.articleActivity_copy_success));
+            ToastUtil.showCustomToastInBottom(context, context.getString(R.string.articleActivity_copy_success));
             if(mClickListener != null)
                 mClickListener.onCopyClick();
             this.dismiss();

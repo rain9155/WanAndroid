@@ -56,7 +56,9 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
 
     @Override
     protected void onStart() {
-        if(isShowProgress) mView.showLoading();
+        if(isShowProgress) {
+            mView.showLoading();
+        }
     }
 
     @Override
@@ -100,7 +102,9 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
 
                             @Override
                             public void onComplete() {
-                                if(mDisposable != null) mDisposable.dispose();
+                                if(mDisposable != null) {
+                                    mDisposable.dispose();
+                                }
                             }
                         });
                 LogUtil.e(TAG_ERROR, "token：" + apiException.getErrorMessage());
@@ -137,7 +141,9 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
     protected void unknown() {
         mView.showToast(App.getContext().getString(R.string.error_unknown));
         mView.unableRefresh();
-        if(isShowErrorView) mView.showErrorView();
+        if(isShowErrorView) {
+            mView.showErrorView();
+        }
     }
 
     /**
@@ -145,7 +151,9 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
      */
     protected void praseError(){
         mView.unableRefresh();
-        if (isShowErrorView) mView.showErrorView();
+        if (isShowErrorView) {
+            mView.showErrorView();
+        }
     }
 
     /**
@@ -154,7 +162,9 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
     protected void httpError(){
         mView.showToast(App.getContext().getString(R.string.error_http));
         mView.unableRefresh();
-        if (isShowErrorView) mView.showErrorView();
+        if (isShowErrorView) {
+            mView.showErrorView();
+        }
     }
 
     /**
@@ -163,7 +173,9 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
     protected void nullError(){
         mView.showToast(App.getContext().getString(R.string.error_nothing));
         mView.unableRefresh();
-        if (isShowErrorView) mView.showErrorView();
+        if (isShowErrorView) {
+            mView.showErrorView();
+        }
     }
 
     /**
@@ -172,7 +184,9 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
     protected void timeoutError() {
         mView.showToast(App.getContext().getString(R.string.error_timeout));
         mView.unableRefresh();
-        if (isShowErrorView) mView.showErrorView();
+        if (isShowErrorView) {
+            mView.showErrorView();
+        }
     }
 
     /**
@@ -181,7 +195,9 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
     protected void unavaiableError() {
         mView.showToast(App.getContext().getString(R.string.error_unavailable));
         mView.unableRefresh();
-        if (isShowErrorView) mView.showErrorView();
+        if (isShowErrorView) {
+            mView.showErrorView();
+        }
     }
 
     /**
@@ -190,7 +206,9 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
     protected void otherError(String error) {
         mView.showToast(error);
         mView.unableRefresh();
-        if (isShowErrorView) mView.showErrorView();
+        if (isShowErrorView) {
+            mView.showErrorView();
+        }
     }
 
     @Override

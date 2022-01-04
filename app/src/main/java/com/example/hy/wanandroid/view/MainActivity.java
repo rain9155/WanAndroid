@@ -187,7 +187,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         if(TimeUtil.isInInterval(Constant.EXIT_WAIT_TIME)){
             finish();
         }else {
-            ToastUtil.toastInCenter(this, getString(R.string.mainActivity_back));
+            ToastUtil.showCustomToastInCenter(this, getString(R.string.mainActivity_back));
         }
     }
 
@@ -423,7 +423,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             context.startActivity(install);
         }else {
             LogUtil.d(LogUtil.TAG_COMMON, "应用路径不存在");
-            ToastUtil.toastInBottom(context, context.getString(R.string.setup_fail));
+            ToastUtil.showCustomToastInBottom(context, context.getString(R.string.setup_fail));
         }
     }
 

@@ -53,7 +53,7 @@ public class UpdataReceiver extends BroadcastReceiver {
                     RxBus.getInstance().post(new InstallApkEvent());
                      break;
                 case DownloadManager.STATUS_FAILED://下载失败
-                    ToastUtil.toastInBottom(context, context.getString(R.string.download_fail));
+                    ToastUtil.showCustomToastInBottom(context, context.getString(R.string.download_fail));
                     RxBus.getInstance().post(new OpenBrowseEvent());
                     LogUtil.d(LogUtil.TAG_COMMON, "下载失败.....");
                     break;

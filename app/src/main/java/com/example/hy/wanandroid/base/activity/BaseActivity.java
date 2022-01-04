@@ -110,7 +110,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
 
     @Override
     public void showToast(String toast) {
-        ToastUtil.toastInBottom(App.getContext(), toast);
+        ToastUtil.showCustomToastInBottom(this, toast);
     }
 
     @Override

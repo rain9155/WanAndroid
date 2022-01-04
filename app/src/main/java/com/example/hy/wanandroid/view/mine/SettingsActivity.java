@@ -200,8 +200,9 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     @Override
     protected void initView() {
         super.initView();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
+        }
         isEnableTip = false;
         initToolBar();
         initSwitch();
@@ -394,10 +395,12 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
      * 夜间模式切换
      */
     private void changeNightNode(CompoundButton buttonView) {
-        if(!TimeUtil.isOutInterval(Constant.NIGHT_CHANGE_WAIT_TIME)) return;
+        if(!TimeUtil.isOutInterval(Constant.NIGHT_CHANGE_WAIT_TIME)) {
+            return;
+        }
         mPresenter.setNightModeState(buttonView.isChecked());
         startActivity(new Intent(this, SettingsActivity.class));
-        overridePendingTransition( R.anim.anim_settings_exter, R.anim.anim_settings_exit);
+        overridePendingTransition(R.anim.anim_settings_exter, R.anim.anim_settings_exit);
         finish();
     }
 
