@@ -142,12 +142,16 @@ if(isModule.toBoolean()) {
 
 ### 5、组件间通信
 
-组件间通信统一采用服务暴露、注入、发现的方式来进行通信，在Api库暴露服务接口，在Impl库实现服务，通过[ARouter](https://github.com/alibaba/ARouter)或[Dagger2](https://github.com/google/dagger)建立起服务接口和服务实现的映射关系。
+组件间通信统一采用服务暴露、注入、发现的方式来进行通信，在Api库暴露服务接口，在Impl库实现服务，通过[ARouter](https://github.com/alibaba/ARouter)、[Dagger2](https://github.com/google/dagger)、[EventBus](https://github.com/greenrobot/EventBus)建立起服务接口和服务实现的映射关系，使用路由或组件总线的方式来发现服务
 
 ## 参考文档
 
 [Android组件化，全面掌握](https://juejin.cn/post/6881116198889586701)
 
 [模块管理最佳实践-ModuleManager](https://juejin.cn/post/6986326399296471053#heading-9)
+
+[Android组件化之(路由 vs 组件总线)](https://juejin.cn/post/6844903582374821901?share_token=6d6f0fd3-5148-4556-95b0-89346adc2e31)
+
+[总结一波安卓组件化开源方案](https://juejin.cn/post/6844903565035569166)
 
 [组件化场景下module依赖优雅实践方案](https://juejin.cn/post/6925629544946892813)
