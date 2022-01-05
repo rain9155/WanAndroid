@@ -142,7 +142,7 @@ if(isModule.toBoolean()) {
 
 ### 5、组件间通信
 
-组件间通信统一采用服务暴露、注入、发现的方式来进行通信，在Api库暴露服务接口，在Impl库实现服务，通过[ARouter](https://github.com/alibaba/ARouter)、[Dagger2](https://github.com/google/dagger)、[EventBus](https://github.com/greenrobot/EventBus)建立起服务接口和服务实现的映射关系，使用路由或组件总线的方式来发现服务
+组件间通信统一采用服务暴露、注入、发现的方式来进行通信，在Api库暴露服务接口，在Impl库实现服务，通过[ARouter](https://github.com/alibaba/ARouter)、[Dagger2](https://github.com/google/dagger)、[EventBus](https://github.com/greenrobot/EventBus)等建立起服务接口和服务实现的映射关系，使用路由或组件总线的方式来管理和发现服务
 
 ## 参考文档
 
