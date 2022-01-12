@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.example.hy.wanandroid.component.UpdataService;
+import com.example.hy.wanandroid.component.UpdateService;
 import com.example.hy.wanandroid.config.Constant;
 
 import java.io.File;
@@ -24,7 +24,7 @@ public class DownloadUtil {
         Constant.NEW_VERSION_URL = url;
         if(canDownloadState(context)){
             LogUtil.d(LogUtil.TAG_COMMON, "DownloadManager可用");
-            Intent intent = new Intent(context, UpdataService.class);
+            Intent intent = new Intent(context, UpdateService.class);
             intent.putExtra(Constant.KEY_URL_APK, url);
             context.startService(intent);
         }else {

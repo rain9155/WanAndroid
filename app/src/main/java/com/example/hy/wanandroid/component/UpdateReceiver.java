@@ -20,20 +20,20 @@ import static android.content.Context.DOWNLOAD_SERVICE;
  * 下载回调广播
  * Created by 陈健宇 at 2018/12/7
  */
-public class UpdataReceiver extends BroadcastReceiver {
+public class UpdateReceiver extends BroadcastReceiver {
 
     private DownloadManager mManager;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         //下载完成
-        if(intent.getAction().equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE)){
+        if(DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(intent.getAction())){
             long downloadApkId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1L);
             long saveId = App.getContext().getAppComponent().getDataModel().getDownloadId();
             if(downloadApkId == saveId){
                 checkDownloadStatus(context, downloadApkId);
             }
-            context.stopService(new Intent(context, UpdataService.class));
+            context.stopService(new Intent(context, UpdateService.class));
         }
     }
 

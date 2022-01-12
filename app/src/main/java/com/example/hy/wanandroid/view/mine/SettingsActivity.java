@@ -36,7 +36,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.config.App;
 import com.example.permission.bean.Permission;
-import com.example.hy.wanandroid.component.UpdataService;
+import com.example.hy.wanandroid.component.UpdateService;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.di.component.activity.DaggerSettingsActivityComponent;
@@ -233,7 +233,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         clMes.setOnClickListener(v -> ShareUtil.gotoAppDetailIntent(this));
 
         clUpdata.setOnClickListener(v -> {
-            if (ServiceUtil.isServiceRunning(this, UpdataService.class.getName())) {
+            if (ServiceUtil.isServiceRunning(this, UpdateService.class.getName())) {
                 showToast(getString(R.string.downloading));
                 return;
             }

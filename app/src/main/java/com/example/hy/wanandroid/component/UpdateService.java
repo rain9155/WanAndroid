@@ -26,7 +26,7 @@ import androidx.annotation.Nullable;
  * 下载apk服务
  * Created by 陈健宇 at 2018/12/7
  */
-public class UpdataService extends Service {
+public class UpdateService extends Service {
 
     private DataModel mDataModel;
     private Context mContext = this;
@@ -42,7 +42,7 @@ public class UpdataService extends Service {
     public void onCreate() {
         super.onCreate();
         mDataModel = App.getContext().getAppComponent().getDataModel();
-        mReceiver = new UpdataReceiver();
+        mReceiver = new UpdateReceiver();
         registerReceiver(mReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 

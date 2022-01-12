@@ -80,12 +80,12 @@
             android:launchMode="singleTop" />
 
         <service
-            android:name=".component.UpdataService"
+            android:name=".component.UpdateService"
             android:enabled="true"
             android:exported="true" />
 
         <receiver
-            android:name=".component.UpdataReceiver"
+            android:name=".component.UpdateReceiver"
             android:enabled="true"
             android:exported="true" />
 
