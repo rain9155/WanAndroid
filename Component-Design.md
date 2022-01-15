@@ -40,9 +40,7 @@ Api库设计原则：
 
 - 原则上组件需要实现功能闭环，不依赖外部调度也能正常work；
 - 有多个实现库可选的，建议做成基础能力组件，抽象出接口，未来可以方便替换实现库；
-- 尽量避免提供类似于init的方法，直接使用Dagger实现组件懒加载;
-- 对于一些组件需要在app启动时进行初始化，可以借助[App Startup](https://developer.android.com/topic/libraries/app-startup)在组件内部提前完成初始化；
-- 对于一些组件的初始化需要依赖其他组件的初始化，可以借助[Alpha](https://github.com/alibaba/alpha)、[Anchors](https://github.com/YummyLau/Anchors)这些库完成初始化.
+- 尽量避免提供类似于init的方法，直接使用Dagger实现组件懒加载.
 
 ## 组件化设计
 
@@ -143,6 +141,13 @@ if(isModule.toBoolean()) {
 ### 5、组件间通信
 
 组件间通信统一采用服务暴露、注入、发现的方式来进行通信，在Api库暴露服务接口，在Impl库实现服务，通过[ARouter](https://github.com/alibaba/ARouter)、[Dagger2](https://github.com/google/dagger)、[EventBus](https://github.com/greenrobot/EventBus)等建立起服务接口和服务实现的映射关系，使用路由或组件总线的方式来管理和发现服务
+
+### 6、其他改造点
+
+- ButterKnife改造：组件化后在模块中使用R.id.XX会报错，解决办法是在模块中添加[ButterKnife插件](https://github.com/JakeWharton/butterknife#library-projects)，然后在源码中把R的使用替换成R2；
+- Dagger改造：组件化后每个模块的依赖注入在模块内闭环，模块之间的Component需要相互依赖，Dagger提供了SubComponent和dependencies两种依赖方式，可以参考[Using Dagger in multi-module apps](https://developer.android.com/training/dependency-injection/dagger-multi-module)；
+- 组件初始化：对于一些组件需要在app启动时进行初始化，可以借助[App Startup](https://developer.android.com/topic/libraries/app-startup)在组件内部提前完成初始化，对于一些组件的初始化需要依赖其他组件的初始化，可以借助[Alpha](https://github.com/alibaba/alpha)、[Anchors](https://github.com/YummyLau/Anchors)这些库完成初始化.
+
 
 ## 参考文档
 

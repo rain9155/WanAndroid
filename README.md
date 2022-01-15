@@ -128,8 +128,8 @@
 [ImageCropper](https://github.com/ArthurHub/Android-Image-Cropper)
 
 ## TODO
-- [ ] Dagger-Android
 - [ ] 单元测试
+- [ ] [Dagger-Android](https://dagger.dev/dev-guide/android)
 - [ ] [组件化改造](Component-Design.md)
 
 ## ChangeLog
