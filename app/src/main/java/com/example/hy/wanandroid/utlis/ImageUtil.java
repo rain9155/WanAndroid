@@ -5,7 +5,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 
 /**
  * 图片加载工具

@@ -25,9 +25,7 @@ import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
-import com.example.hy.wanandroid.di.module.fragment.MineFragmentModule;
 import com.example.hy.wanandroid.presenter.mine.MinePresenter;
-import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.widget.customView.ShapeImageView;
 import com.example.hy.wanandroid.widget.dialog.ChangeFaceDialog;
 import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
@@ -95,7 +93,6 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     @BindView(R.id.cl_coin)
     ConstraintLayout clCoin;
 
-
     @Inject
     MinePresenter mPresenter;
     @Inject
@@ -115,8 +112,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
     @Override
     protected void inject() {
-        if (!(getActivity() instanceof MainActivity)) return;
-        ((MainActivity) getActivity()).getComponent().getMineFragmentComponent(new MineFragmentModule()).inject(this);
+        getAppComponent().inject(this);
     }
 
     @Override

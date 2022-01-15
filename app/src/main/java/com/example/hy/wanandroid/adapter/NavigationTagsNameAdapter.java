@@ -1,6 +1,7 @@
 package com.example.hy.wanandroid.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 
 import com.example.hy.wanandroid.R;
 
@@ -43,8 +44,7 @@ public class NavigationTagsNameAdapter implements TabAdapter {
     public ITabView.TabTitle getTitle(int position) {
         return new ITabView.TabTitle.Builder()
                 .setContent(mTagNames.get(position))
-                .setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimaryText),
-                        ContextCompat.getColor(mContext, R.color.colorSecondaryText))
+                .setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimaryText), ContextCompat.getColor(mContext, R.color.colorThirdText))
                 .build();
     }
 

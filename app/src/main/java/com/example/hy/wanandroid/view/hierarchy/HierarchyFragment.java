@@ -8,13 +8,11 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.FirstHierarchyAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchyContract;
-import com.example.hy.wanandroid.di.module.fragment.HierarchyFragmentModule;
 import com.example.hy.wanandroid.entity.FirstHierarchy;
 import com.example.hy.wanandroid.entity.Tab;
 import com.example.hy.wanandroid.presenter.hierarchy.HierarchyPresenter;
 import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.utlis.StatusBarUtil;
-import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
 import com.example.hy.wanandroid.view.search.SearchActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -51,11 +49,10 @@ public class HierarchyFragment extends BaseLoadFragment<HierarchyPresenter> impl
     @Inject
     FirstHierarchyAdapter mListAdapter;
     @Inject
-    List<FirstHierarchy> mFirstHierarchyList;
-    @Inject
     LinearLayoutManager mLayoutManager;
 
     private boolean isLoadMore;
+    private List<FirstHierarchy> mFirstHierarchyList;
 
     @Override
     protected int getLayoutId() {
@@ -69,8 +66,7 @@ public class HierarchyFragment extends BaseLoadFragment<HierarchyPresenter> impl
 
     @Override
     protected void inject() {
-        if (!(getActivity() instanceof MainActivity)) return;
-        ((MainActivity) getActivity()).getComponent().getHierarchyFragmentSubComponent(new HierarchyFragmentModule()).inject(this);
+        getAppComponent().inject(this);
     }
 
     @Override
@@ -92,6 +88,7 @@ public class HierarchyFragment extends BaseLoadFragment<HierarchyPresenter> impl
     }
 
     private void initRecyclerView() {
+        mFirstHierarchyList = mListAdapter.getData();
         rvHierarchy.setLayoutManager(mLayoutManager);
         mListAdapter.openLoadAnimation();
         rvHierarchy.setAdapter(mListAdapter);

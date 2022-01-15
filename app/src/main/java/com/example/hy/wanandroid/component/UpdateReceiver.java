@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.event.InstallApkEvent;
 import com.example.hy.wanandroid.event.OpenBrowseEvent;

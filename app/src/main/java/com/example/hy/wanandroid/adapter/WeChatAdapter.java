@@ -9,17 +9,24 @@ import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.entity.Article;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import javax.inject.Inject;
+
 /**
  * Created by 陈健宇 at 2018/12/31
  */
 public class WeChatAdapter extends BaseQuickAdapter <Article, BaseViewHolder>{
 
+    @Inject
+    public WeChatAdapter() {
+        this(R.layout.item_acticles, new ArrayList<>());
+    }
 
     public WeChatAdapter(int layoutResId, @Nullable List<Article> data) {
         super(layoutResId, data);

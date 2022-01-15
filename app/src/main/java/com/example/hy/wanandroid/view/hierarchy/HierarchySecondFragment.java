@@ -11,7 +11,6 @@ import com.example.hy.wanandroid.entity.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.hierarchy.HierarchySecondContract;
-import com.example.hy.wanandroid.di.module.fragment.HierarchySecondFragmentModule;
 import com.example.hy.wanandroid.entity.Article;
 import com.example.hy.wanandroid.presenter.hierarchy.HierarchySecondPresenter;
 import com.example.hy.wanandroid.utlis.AnimUtil;
@@ -51,8 +50,6 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
     @Inject
     LinearLayoutManager mLinearLayoutManager;
     @Inject
-    List<Article> mArticleList;
-    @Inject
     Lazy<PressPopup> mPopupWindow;
 
     private int mPageNum = 0;
@@ -61,6 +58,7 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
     private int mArticlePosition = 0;//点击的位置
     private Article mArticle;
     private boolean isPress = false;
+    private List<Article> mArticleList;
 
     @Override
     protected int getLayoutId() {
@@ -83,7 +81,7 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
 
     @Override
     protected void inject() {
-        ((HierarchySecondActivity) getActivity()).getComponent().getHierarchySecondFragmentComponent(new HierarchySecondFragmentModule()).inject(this);
+        getAppComponent().inject(this);
     }
 
     @Override
@@ -95,6 +93,7 @@ public class HierarchySecondFragment extends BaseLoadFragment<HierarchySecondPre
 
     @SuppressLint("ClickableViewAccessibility")
     private void initRecyclerView() {
+        mArticleList = mArticlesAdapter.getData();
         mArticlesAdapter.openLoadAnimation();
         rvHierarchySecondList.setHasFixedSize(true);
         rvHierarchySecondList.setLayoutManager(mLinearLayoutManager);

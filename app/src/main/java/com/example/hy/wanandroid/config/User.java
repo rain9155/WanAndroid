@@ -1,5 +1,6 @@
 package com.example.hy.wanandroid.config;
 
+import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.utlis.FileUtil;
 
 import java.io.IOException;

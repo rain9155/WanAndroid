@@ -24,6 +24,7 @@ import com.example.hy.wanandroid.model.prefs.PreferencesHelperImp;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 
@@ -31,6 +32,7 @@ import io.reactivex.Observable;
  * Model层，管理着所有的数据来源
  * Created by 陈健宇 at 2018/11/26
  */
+@Singleton
 public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
 
     private NetworkHelper mNetworkHelper;

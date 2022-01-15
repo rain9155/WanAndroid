@@ -11,11 +11,14 @@ import com.example.hy.wanandroid.entity.Article;
 import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.utlis.ImageUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+
+import javax.inject.Inject;
 
 /**
  * 项目列表的适配器
@@ -23,6 +26,10 @@ import androidx.core.content.ContextCompat;
  */
 public class ProjectsAdapter extends BaseQuickAdapter<Article, BaseViewHolder>{
 
+    @Inject
+    public ProjectsAdapter() {
+        this(R.layout.item_project_list, new ArrayList<>());
+    }
 
     public ProjectsAdapter(int layoutResId, @Nullable List<Article> data) {
         super(layoutResId, data);

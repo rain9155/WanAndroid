@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.component.NetWorkChangeReceiver;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.utlis.StatusBarUtil;

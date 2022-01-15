@@ -12,6 +12,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.entity.Article;
 import com.example.hy.wanandroid.utlis.CommonUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,11 +20,18 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 
+import javax.inject.Inject;
+
 /**
  * 文章列表adapter
  * Created by 陈健宇 at 2018/10/27
  */
 public class ArticlesAdapter extends BaseQuickAdapter<Article, BaseViewHolder> {
+
+    @Inject
+    public ArticlesAdapter() {
+        this(R.layout.item_acticles, new ArrayList<>());
+    }
 
     public ArticlesAdapter(int layoutResId, @Nullable List<Article> data) {
         super(layoutResId, data);

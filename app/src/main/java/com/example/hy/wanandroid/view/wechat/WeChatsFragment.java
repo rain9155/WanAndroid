@@ -13,10 +13,8 @@ import com.example.hy.wanandroid.entity.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.wechat.WeChatsContract;
-import com.example.hy.wanandroid.di.module.fragment.WeChatsFragmentModule;
 import com.example.hy.wanandroid.entity.Article;
 import com.example.hy.wanandroid.presenter.wechat.WeChatsPresenter;
-import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.widget.popup.PressPopup;
@@ -53,8 +51,6 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
     @Inject
     WeChatAdapter mArticlesAdapter;
     @Inject
-    List<Article> mArticles;
-    @Inject
     Lazy<PressPopup> mPopupWindow;
 
     private int mPageNum = 1;
@@ -62,6 +58,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
     private boolean isLoadMore = false;
     private int mArticlePosition = 0;//点击的位置
     private Article mArticle;
+    private List<Article> mArticles;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,8 +82,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
 
     @Override
     protected void inject() {
-        if (!(getActivity() instanceof MainActivity)) return;
-        ((MainActivity) getActivity()).getComponent().getWeChatsFragmentComponent(new WeChatsFragmentModule()).inject(this);
+        getAppComponent().inject(this);
     }
 
     @Override
@@ -98,6 +94,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
 
     @SuppressLint("ClickableViewAccessibility")
     private void initRecyclerView() {
+        mArticles = mArticlesAdapter.getData();
         //项目列表
         rvWeChats.setLayoutManager(mLinearLayoutManager);
         mArticlesAdapter.openLoadAnimation();

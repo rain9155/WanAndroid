@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.event.NetWorkChangeEvent;
 import com.example.hy.wanandroid.model.DataModel;

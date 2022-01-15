@@ -17,6 +17,8 @@ import com.example.hy.wanandroid.entity.Article;
 
 import androidx.core.content.ContextCompat;
 
+import javax.inject.Inject;
+
 /**
  * 长按弹出框
  * Created by 陈健宇 at 2018/12/26
@@ -28,6 +30,7 @@ public class PressPopup extends PopupWindow {
     private String mLink;
     private boolean isPress;
 
+    @Inject
     public PressPopup(Context context) {
         super(context);
         initPopup(context);

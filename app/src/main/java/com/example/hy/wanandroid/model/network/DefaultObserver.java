@@ -4,7 +4,7 @@ import android.net.ParseException;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.IView;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.event.LoginEvent;

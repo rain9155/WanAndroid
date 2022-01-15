@@ -10,7 +10,7 @@ import android.os.Handler;
 import android.view.animation.AccelerateInterpolator;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.widget.customView.SVGBgView;
 
 public class LaunchActivity extends AppCompatActivity {

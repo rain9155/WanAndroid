@@ -13,8 +13,6 @@ import com.example.hy.wanandroid.adapter.NavigationTagsAdapter;
 import com.example.hy.wanandroid.adapter.NavigationTagsNameAdapter;
 import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
 import com.example.hy.wanandroid.contract.navigation.NavigationContract;
-import com.example.hy.wanandroid.di.component.activity.DaggerNavigationActivityComponent;
-import com.example.hy.wanandroid.di.module.activity.NavigationActivityModule;
 import com.example.hy.wanandroid.entity.Tag;
 import com.example.hy.wanandroid.presenter.navigation.NavigationPresenter;
 import com.example.hy.wanandroid.utlis.StatusBarUtil;
@@ -26,6 +24,7 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -53,17 +52,15 @@ public class NavigationActivity extends BaseLoadActivity<NavigationPresenter> im
     NavigationTagsAdapter mNavigationTagsAdapter;
     @Inject
     List<String> mTagsName;
-    @Inject
-    List<Tag> mTags;
 
-    private NavigationTagsNameAdapter mNavigationTagsNameAdapter;
     private int mCurrentSelectedIndex;
     private boolean isDownScroll;//RecyclerView是否向下滑动状态
     private boolean isTagSelected;//标签是否被选中
+    private List<Tag> mTags;
 
     @Override
     protected void inject() {
-        DaggerNavigationActivityComponent.builder().appComponent(getAppComponent()).navigationActivityModule(new NavigationActivityModule()).build().inject(this);
+        getAppComponent().inject(this);
     }
 
     @Override
@@ -87,6 +84,7 @@ public class NavigationActivity extends BaseLoadActivity<NavigationPresenter> im
     }
 
     private void initRecyclerView() {
+        mTags = mNavigationTagsAdapter.getData();
         mNavigationTagsAdapter.openLoadAnimation();
         rvNavigation.setLayoutManager(mLinearLayoutManager);
         rvNavigation.setAdapter(mNavigationTagsAdapter);
@@ -153,10 +151,12 @@ public class NavigationActivity extends BaseLoadActivity<NavigationPresenter> im
         int fistIndex = mLinearLayoutManager.findFirstVisibleItemPosition();
         int lastIndex = mLinearLayoutManager.findLastVisibleItemPosition();
         if(position < fistIndex)//RecyclerView准备向上滑动
+        {
             rvNavigation.smoothScrollToPosition(position);
-        else if(position < lastIndex)//此处position处于屏幕中间，调用RecyclerView.smoothScrollToPosition(position)不会滚动，要手动smoothScroll向上滑
+        } else if(position < lastIndex)//此处position处于屏幕中间，调用RecyclerView.smoothScrollToPosition(position)不会滚动，要手动smoothScroll向上滑
+        {
             rvNavigation.smoothScrollBy(0, rvNavigation.getChildAt(mCurrentSelectedIndex - fistIndex).getTop());
-        else{//RecyclerView准备向下滑动
+        } else{//RecyclerView准备向下滑动
             isDownScroll = true;
             rvNavigation.smoothScrollToPosition(position);
         }
@@ -183,17 +183,21 @@ public class NavigationActivity extends BaseLoadActivity<NavigationPresenter> im
 
     @Override
     public void showTags(List<Tag> tagList) {
-        if(!CommonUtil.isEmptyList(mTags)) mTags.clear();
+        if(!CommonUtil.isEmptyList(mTags)) {
+            mTags.clear();
+        }
         mTags.addAll(tagList);
         mNavigationTagsAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showTagsName(List<String> tagsName) {
-        if(!CommonUtil.isEmptyList(mTagsName)) mTagsName.clear();
+        if(!CommonUtil.isEmptyList(mTagsName)) {
+            mTagsName.clear();
+        }
         mTagsName.addAll(tagsName);
-        mNavigationTagsNameAdapter = new NavigationTagsNameAdapter(this, mTagsName);
-        vtlNavigation.setTabAdapter(mNavigationTagsNameAdapter);
+        NavigationTagsNameAdapter navigationTagsNameAdapter = new NavigationTagsNameAdapter(this, mTagsName);
+        vtlNavigation.setTabAdapter(navigationTagsNameAdapter);
     }
 
     @Override

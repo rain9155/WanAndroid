@@ -1,15 +1,14 @@
-package com.example.hy.wanandroid.config;
+package com.example.hy.wanandroid;
 
 import android.content.ComponentCallbacks2;
 import android.content.Context;
 
 import androidx.multidex.MultiDex;
 
-import com.example.hy.wanandroid.BuildConfig;
-import com.example.hy.wanandroid.R;
+import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.di.component.DaggerAppComponent;
-import com.example.hy.wanandroid.di.module.AppModule;
+import com.example.hy.wanandroid.di.module.CommonModule;
 import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.utlis.GlideApp;
 import com.example.loading.Loading;
@@ -25,7 +24,7 @@ import org.litepal.LitePalApplication;
 /**
  * Created by 陈健宇 at 2018/10/20
  */
-public class  App extends LitePalApplication {
+public class App extends LitePalApplication {
 
     private static App mContext;
 
@@ -53,7 +52,7 @@ public class  App extends LitePalApplication {
     public void onCreate() {
         super.onCreate();
         mContext = this;
-        mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        mAppComponent = DaggerAppComponent.builder().commonModule(new CommonModule(this)).build();
         initLitepal();
         initBugly();
         initLeakCanary();

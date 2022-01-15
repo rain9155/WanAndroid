@@ -11,9 +11,6 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
 import com.example.hy.wanandroid.base.activity.BaseActivity;
 import com.example.hy.wanandroid.config.Constant;
-import com.example.hy.wanandroid.di.component.activity.DaggerHierarchySecondActivityComponent;
-import com.example.hy.wanandroid.di.component.activity.HierarchySecondActivityComponent;
-import com.example.hy.wanandroid.di.module.activity.HierarchySecondActivityModule;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.utlis.StatusBarUtil;
@@ -53,14 +50,11 @@ public class HierarchySecondActivity extends BaseActivity {
     @Inject
     List<Integer> mIds;
 
-    private FragmentPagerAdapter mPagerAdapter;
-    private HierarchySecondActivityComponent mComponent;
     private String mTitle;
 
     @Override
     protected void inject() {
-        mComponent = DaggerHierarchySecondActivityComponent.builder().appComponent(getAppComponent()).hierarchySecondActivityModule(new HierarchySecondActivityModule()).build();
-        mComponent.inject(this);
+        getAppComponent().inject(this);
     }
 
     @Override
@@ -70,11 +64,13 @@ public class HierarchySecondActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP) {
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
+        }
         Intent intent = getIntent();
-        for (String s : intent.getStringArrayListExtra(Constant.KEY_HIERARCHY_ID))
+        for (String s : intent.getStringArrayListExtra(Constant.KEY_HIERARCHY_ID)) {
             mIds.add(Integer.valueOf(s));
+        }
         mTitles = intent.getStringArrayListExtra(Constant.KEY_HIERARCHY_NAMES);
         mTitle = intent.getStringExtra(Constant.KEY_HIERARCHY_NAME);
         initToolBar();
@@ -92,8 +88,8 @@ public class HierarchySecondActivity extends BaseActivity {
             commonTablayout.addTab(commonTablayout.newTab().setText(mTitles.get(i)));
             mFragments.add(HierarchySecondFragment.newInstance(mIds.get(i)));
         }
-        mPagerAdapter = new VpAdapter(getSupportFragmentManager(), mFragments, mTitles);
-        vpHierarchySecond.setAdapter(mPagerAdapter);
+        VpAdapter pagerAdapter = new VpAdapter(getSupportFragmentManager(), mFragments, mTitles);
+        vpHierarchySecond.setAdapter(pagerAdapter);
         vpHierarchySecond.setOffscreenPageLimit(mTitles.size());
         commonTablayout.setupWithViewPager(vpHierarchySecond);
     }
@@ -104,11 +100,6 @@ public class HierarchySecondActivity extends BaseActivity {
         tvCommonTitle.setText(mTitle);
         tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
         tlCommon.setNavigationOnClickListener(v -> finish());
-    }
-
-
-    public HierarchySecondActivityComponent getComponent() {
-        return mComponent;
     }
 
     public static void startActivity(Context context, String name, ArrayList<String> listId, ArrayList<String> listName) {

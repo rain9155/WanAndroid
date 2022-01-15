@@ -13,7 +13,10 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.entity.Coin;
 import com.example.hy.wanandroid.utlis.TimeUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * 个人积分Adapter
@@ -21,6 +24,10 @@ import java.util.List;
  */
 public class CoinsAdapter extends BaseQuickAdapter<Coin, BaseViewHolder>{
 
+    @Inject
+    public CoinsAdapter() {
+        this(R.layout.item_coins, new ArrayList<>());
+    }
 
     public CoinsAdapter(int layoutResId, @Nullable List<Coin> data) {
         super(layoutResId, data);
@@ -28,7 +35,9 @@ public class CoinsAdapter extends BaseQuickAdapter<Coin, BaseViewHolder>{
 
     @Override
     protected void convert(BaseViewHolder helper, Coin item) {
-        if(item == null) return;
+        if(item == null) {
+            return;
+        }
         String coin = item.getDesc().substring(item.getDesc().lastIndexOf('：') + 1).trim();
         String spanCoin = "+ " + getSum(coin);
         SpannableStringBuilder spanCoinStr = new SpannableStringBuilder(spanCoin);

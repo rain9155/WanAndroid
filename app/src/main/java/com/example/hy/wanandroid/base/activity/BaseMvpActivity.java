@@ -6,7 +6,7 @@ import androidx.annotation.CallSuper;
 
 import com.example.hy.wanandroid.utlis.LanguageUtil;
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 
 /**
  * 封装了获取Presenter的Activity基类

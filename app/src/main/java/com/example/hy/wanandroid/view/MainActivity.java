@@ -15,17 +15,16 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.widget.FrameLayout;
 
+import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.utlis.FileProvider7;
 import com.example.hy.wanandroid.utlis.LogUtil;
 import com.example.hy.wanandroid.utlis.TimeUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.permission.bean.Permission;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.MainContract;
-import com.example.hy.wanandroid.di.component.activity.DaggerMainActivityComponent;
-import com.example.hy.wanandroid.di.component.activity.MainActivityComponent;
 import com.example.hy.wanandroid.event.ToppingEvent;
 import com.example.hy.wanandroid.presenter.MainPresenter;
 import com.example.hy.wanandroid.utlis.RxBus;
@@ -69,7 +68,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     BottomNavigationView bnvBtm;
 
     private int mPreFragmentPosition = 0;//上一个被选中的Fragment位置
-    private MainActivityComponent mMainActivityComponent;
     private ObjectAnimator  mShowNavAnimator;
     private ViewPropertyAnimator mHideFbtnAnimator, mShowFbtnAnimator;
 
@@ -78,14 +76,13 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     @Inject
     MainPresenter mPresenter;
     @Inject
-    Fragment[] mFragments;
-    @Inject
     Lazy<VersionDialog> mVersionDialog;
     @Inject
     OpenBrowseDialog mOpenBrowseDialog;
     @Inject
     Lazy<GotoDetialDialog> mGotoDetialDialog;
 
+    private Fragment[] mFragments;
     private String mNewVersionName;
     private boolean isSetStatusBar;
     private int mStatusBarColor = R.color.colorPrimary;
@@ -93,10 +90,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     protected void inject() {
-        mMainActivityComponent = DaggerMainActivityComponent.builder()
-                .appComponent(getAppComponent())
-                .build();
-        mMainActivityComponent.inject(this);
+        getAppComponent().inject(this);
     }
 
 
@@ -115,6 +109,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         super.onCreate(savedInstanceState);
         setStatusBarColors(isSetStatusBar);
         if(savedInstanceState == null) {
+            mFragments = new BaseFragment[5];
             mFragments[0] = HomeFragment.newInstance();
             mFragments[1] = HierarchyFragment.newInstance();
             mFragments[2] = WeChatFragment.newInstance();
@@ -178,7 +173,9 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             show(bnvBtm);
         });
 
-        if(mPresenter.getAutoUpdataState()) mPresenter.checkVersion(DownloadUtil.getVersionName(this));
+        if(mPresenter.getAutoUpdataState()) {
+            mPresenter.checkVersion(DownloadUtil.getVersionName(this));
+        }
 
     }
 
@@ -199,24 +196,35 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     protected void onStop() {
-        if(mHideFbtnAnimator != null) mHideFbtnAnimator.cancel();
-        if(mShowFbtnAnimator != null) mShowFbtnAnimator.cancel();
-        if(mShowNavAnimator != null) mShowNavAnimator.cancel();
+        if(mHideFbtnAnimator != null) {
+            mHideFbtnAnimator.cancel();
+        }
+        if(mShowFbtnAnimator != null) {
+            mShowFbtnAnimator.cancel();
+        }
+        if(mShowNavAnimator != null) {
+            mShowNavAnimator.cancel();
+        }
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        if(mOpenBrowseDialog != null)
+        if(mOpenBrowseDialog != null) {
             mOpenBrowseDialog = null;
-        if(mVersionDialog.get() != null)
+        }
+        if(mVersionDialog.get() != null) {
             mVersionDialog = null;
-        if(mGotoDetialDialog.get() != null)
+        }
+        if(mGotoDetialDialog.get() != null) {
             mGotoDetialDialog = null;
-        if(mShowFbtnAnimator != null)
+        }
+        if(mShowFbtnAnimator != null) {
             mShowFbtnAnimator.cancel();
-        if(mHideFbtnAnimator != null)
+        }
+        if(mHideFbtnAnimator != null) {
             mHideFbtnAnimator.cancel();
+        }
         super.onDestroy();
     }
 
@@ -279,10 +287,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         );
     }
 
-    public MainActivityComponent getComponent(){
-        return mMainActivityComponent;
-    }
-
     @Override
     public void setStatusBarColor(boolean isSet) {
         this.isSetStatusBar = isSet;
@@ -321,8 +325,9 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
      */
     private void showAndHideFragment(Fragment show, Fragment hide){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if(show != hide)
+        if(show != hide) {
             transaction.show(show).hide(hide).commitAllowingStateLoss();
+        }
     }
 
     /**
@@ -431,7 +436,9 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
      * MainActivity中含有普通Fragment和顶部带照片的Fragment，所以特殊处理
      */
     private void setStatusBarColors(boolean isSet){
-        if(hasSetStatusBar) return;
+        if(hasSetStatusBar) {
+            return;
+        }
         hasSetStatusBar = true;
         if(isSet){
             StatusBarUtil.immersiveInFragments(this, getResources().getColor(mStatusBarColor), 1);

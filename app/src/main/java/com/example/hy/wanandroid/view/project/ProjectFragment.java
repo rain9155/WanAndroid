@@ -10,11 +10,9 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.VpAdapter;
 import com.example.hy.wanandroid.base.fragment.BaseLoadFragment;
 import com.example.hy.wanandroid.contract.project.ProjectContract;
-import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
 import com.example.hy.wanandroid.entity.Tab;
 import com.example.hy.wanandroid.presenter.project.ProjectPresenter;
 import com.example.hy.wanandroid.utlis.StatusBarUtil;
-import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
 import com.example.hy.wanandroid.view.search.SearchActivity;
 import com.google.android.material.tabs.TabLayout;
@@ -56,8 +54,6 @@ public class ProjectFragment extends BaseLoadFragment<ProjectPresenter> implemen
     @Inject
     List<Fragment> mFragments;
 
-    private VpAdapter mVpAdapter;
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_project;
@@ -70,8 +66,7 @@ public class ProjectFragment extends BaseLoadFragment<ProjectPresenter> implemen
 
     @Override
     protected void inject() {
-        if (!(getActivity() instanceof MainActivity)) return;
-        ((MainActivity) getActivity()).getComponent().getProjectFragmentComponent(new ProjectFragmentModule()).inject(this);
+        getAppComponent().inject(this);
     }
 
     @Override
@@ -119,8 +114,8 @@ public class ProjectFragment extends BaseLoadFragment<ProjectPresenter> implemen
         for (int i = 0; i < projectList.size(); i++) {
             mFragments.add(ProjectsFragment.newInstance(mIds.get(i)));
         }
-        mVpAdapter = new VpAdapter(getChildFragmentManager(), mFragments, mTitles);
-        vpProject.setAdapter(mVpAdapter);
+        VpAdapter vpAdapter = new VpAdapter(getChildFragmentManager(), mFragments, mTitles);
+        vpProject.setAdapter(vpAdapter);
         vpProject.setOffscreenPageLimit(mTitles.size());
         commonTablayout.setupWithViewPager(vpProject);
     }

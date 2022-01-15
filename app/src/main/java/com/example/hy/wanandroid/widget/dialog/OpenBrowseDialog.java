@@ -11,11 +11,18 @@ import com.example.hy.wanandroid.utlis.ShareUtil;
 
 import java.io.File;
 
+import javax.inject.Inject;
+
 /**
  * 打开浏览器弹框
  * Created by 陈健宇 at 2018/12/15
  */
 public class OpenBrowseDialog extends BaseDialogFragment {
+
+    @Inject
+    public OpenBrowseDialog() {
+
+    }
 
     @Override
     protected int getDialogViewId() {

@@ -14,8 +14,6 @@ import android.widget.TextView;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.contract.mine.LoginContract;
-import com.example.hy.wanandroid.di.component.activity.DaggerLoginActivityComponent;
-import com.example.hy.wanandroid.di.module.activity.LoginActivityModule;
 import com.example.hy.wanandroid.presenter.mine.LoginPresenter;
 import com.example.hy.wanandroid.utlis.KeyBoardUtil;
 import com.example.hy.wanandroid.utlis.StatusBarUtil;
@@ -61,13 +59,12 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     @Inject
     Lazy<LoadingDialog> mLoadingDialog;
 
-
     private View focusView = null;
     private static boolean isNeedResult = false;
 
     @Override
     protected void inject() {
-        DaggerLoginActivityComponent.builder().appComponent(getAppComponent()).loginActivityModule(new LoginActivityModule()).build().inject(this);
+        getAppComponent().inject(this);
     }
 
     @Override

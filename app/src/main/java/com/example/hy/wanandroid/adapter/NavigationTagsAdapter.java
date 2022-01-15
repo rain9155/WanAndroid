@@ -15,15 +15,23 @@ import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+
+import javax.inject.Inject;
 
 /**
  * 垂直标签每个子item的适配器
  * Created by 陈健宇 at 2018/11/1
  */
 public class NavigationTagsAdapter extends BaseQuickAdapter<Tag, BaseViewHolder> {
+
+    @Inject
+    public NavigationTagsAdapter() {
+        this(R.layout.item_navigation_tabs, new ArrayList<>());
+    }
 
     public NavigationTagsAdapter(int layoutResId, @Nullable List<Tag> data) {
         super(layoutResId, data);

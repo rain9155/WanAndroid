@@ -9,6 +9,8 @@ import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.event.ClearCacheEvent;
 
+import javax.inject.Inject;
+
 /**
  * 清除缓存弹框
  * Created by 陈健宇 at 2018/12/15
@@ -16,6 +18,11 @@ import com.example.hy.wanandroid.event.ClearCacheEvent;
 public class ClearCacheDialog extends BaseDialogFragment {
 
     private String mContent = "";
+
+    @Inject
+    public ClearCacheDialog() {
+
+    }
 
     @Override
     protected int getDialogViewId() {

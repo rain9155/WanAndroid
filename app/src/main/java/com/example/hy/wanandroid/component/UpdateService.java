@@ -13,7 +13,7 @@ import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.utlis.ToastUtil;

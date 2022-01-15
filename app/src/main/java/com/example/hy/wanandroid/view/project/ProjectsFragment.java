@@ -11,12 +11,10 @@ import com.example.hy.wanandroid.entity.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.project.ProjectsContract;
-import com.example.hy.wanandroid.di.module.fragment.ProjectFragmentModule;
 import com.example.hy.wanandroid.entity.Article;
 import com.example.hy.wanandroid.presenter.project.ProjectsPresenter;
 import com.example.hy.wanandroid.utlis.AnimUtil;
 import com.example.hy.wanandroid.utlis.CommonUtil;
-import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.widget.popup.PressPopup;
@@ -55,8 +53,6 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
     @Inject
     ProjectsAdapter mProjectsAdapter;
     @Inject
-    List<Article> mArticles;
-    @Inject
     Lazy<PressPopup> mPopupWindow;
 
     private int mPageNum = 1;
@@ -65,6 +61,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
     private int mArticlePosition = 0;//点击的位置
     private Article mArticle;
     private boolean isPress = false;
+    private List<Article> mArticles;
 
     @Override
     protected int getLayoutId() {
@@ -78,8 +75,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
 
     @Override
     protected void inject() {
-        if(!(getActivity() instanceof MainActivity)) return;
-        ((MainActivity) getActivity()).getComponent().getProjectFragmentComponent(new ProjectFragmentModule()).inject(this);
+        getAppComponent().inject(this);
     }
 
     @Override
@@ -91,6 +87,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
 
     @SuppressLint("ClickableViewAccessibility")
     private void initRecyclerView() {
+        mArticles = mProjectsAdapter.getData();
         //项目列表
         rvProjectList.setLayoutManager(mLinearLayoutManager);
         mProjectsAdapter.openLoadAnimation();

@@ -1,6 +1,6 @@
 package com.example.hy.wanandroid.di.module;
 
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.model.network.api.VersionApi;
 import com.example.hy.wanandroid.model.network.api.WechatApis;
@@ -15,11 +15,8 @@ import com.example.hy.wanandroid.model.network.api.SearchApis;
 import com.example.hy.wanandroid.model.network.gson.CustomGsonConverterFactory;
 import com.example.hy.wanandroid.model.network.ssl.SSLSocketCompatFactory;
 import com.example.hy.wanandroid.model.network.ssl.TrustAllCert;
-import com.example.hy.wanandroid.widget.popup.PressPopup;
-
 import java.io.File;
 import java.util.concurrent.TimeUnit;
-
 import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Module;
@@ -31,34 +28,19 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * App的module
+ * 网络相关的module
  * Created by 陈健宇 at 2018/10/26
  */
-@Module
-public class AppModule {
-
-    private final App mApp;
-
-    public AppModule(App app) {
-        mApp = app;
-    }
+@Module()
+public class NetworkModule {
 
     @Provides
-    @Singleton
-    App provideApp(){
-        return mApp;
-    }
-
-    @Provides
-    @Singleton
     OkHttpClient.Builder provideOkHttpClientBuilder(){
         return new OkHttpClient.Builder();
     }
 
     @Provides
-    @Singleton
     OkHttpClient provideOkHttpClient(OkHttpClient.Builder builder){
-
         //设置ssl
         TrustAllCert trustAllCert = new TrustAllCert();
         builder.sslSocketFactory(new SSLSocketCompatFactory(trustAllCert), trustAllCert);
@@ -81,7 +63,6 @@ public class AppModule {
         builder.cookieJar(new CookieManger(App.getContext()));
         return builder.build();
     }
-
 
     @Provides
     @Singleton
@@ -107,56 +88,43 @@ public class AppModule {
     }
 
     @Provides
-    @Singleton
      HierarchyApis provideHierarchyApis(Retrofit retrofit){
         return retrofit.create(HierarchyApis.class);
     }
 
     @Provides
-    @Singleton
      HomeApis provideHomeApis(Retrofit retrofit){
         return retrofit.create(HomeApis.class);
     }
 
     @Provides
-    @Singleton
     ProjectApis provideProjectApis(Retrofit retrofit){
         return retrofit.create(ProjectApis.class);
     }
 
     @Provides
-    @Singleton
      NavigationApis provideNavigationApis(Retrofit retrofit){
         return retrofit.create(NavigationApis.class);
     }
 
     @Provides
-    @Singleton
      SearchApis provideSearchApis(Retrofit retrofit){
         return retrofit.create(SearchApis.class);
     }
 
     @Provides
-    @Singleton
      MineApis provideMineApis(Retrofit retrofit){
         return retrofit.create(MineApis.class);
     }
 
     @Provides
-    @Singleton
     WechatApis provideWechatApis(Retrofit retrofit){
         return retrofit.create(WechatApis.class);
     }
 
     @Provides
-    @Singleton
     VersionApi provideVersionApi(@Named("version") Retrofit retrofit){
         return retrofit.create(VersionApi.class);
     }
 
-    @Provides
-    @Singleton
-    PressPopup providePressPopup(){
-        return new PressPopup(App.getContext());
-    }
 }

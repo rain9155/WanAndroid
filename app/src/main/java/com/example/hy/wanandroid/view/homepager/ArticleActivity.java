@@ -26,7 +26,6 @@ import com.example.hy.wanandroid.entity.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.ArticleContract;
-import com.example.hy.wanandroid.di.component.activity.DaggerArticleActivityComponent;
 import com.example.hy.wanandroid.presenter.homepager.ArticlePresenter;
 import com.example.hy.wanandroid.utlis.NetWorkUtil;
 import com.example.hy.wanandroid.utlis.ShareUtil;
@@ -66,8 +65,7 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
 
     @Override
     protected void inject() {
-        DaggerArticleActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
-
+        getAppComponent().inject(this);
     }
 
     @Override

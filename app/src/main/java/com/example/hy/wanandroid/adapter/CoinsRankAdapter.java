@@ -7,7 +7,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.entity.UserCoin;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * 积分排行榜Adapter
@@ -15,11 +18,14 @@ import java.util.List;
  */
 public class CoinsRankAdapter extends BaseQuickAdapter<UserCoin, BaseViewHolder>{
 
+    @Inject
+    public CoinsRankAdapter() {
+        this(R.layout.item_coins_rank, new ArrayList<>());
+    }
 
     public CoinsRankAdapter(int layoutResId, @Nullable List<UserCoin> data) {
         super(layoutResId, data);
     }
-
 
     @Override
     protected void convert(BaseViewHolder helper, UserCoin item) {

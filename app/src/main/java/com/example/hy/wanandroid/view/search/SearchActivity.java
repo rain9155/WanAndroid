@@ -20,7 +20,6 @@ import com.example.hy.wanandroid.entity.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.search.SearchContract;
-import com.example.hy.wanandroid.di.component.activity.DaggerSearchActivityComponent;
 import com.example.hy.wanandroid.entity.Article;
 import com.example.hy.wanandroid.entity.HotKey;
 import com.example.hy.wanandroid.presenter.search.SearchPresenter;
@@ -85,10 +84,6 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
     @Inject
     HistoryAdapter mHistoryAdapter;
     @Inject
-    List<Article> mSearchResquestList;
-    @Inject
-    List<String> mHistoryList;
-    @Inject
     List<HotKey> mHotKeyList;
     @Inject
     Lazy<PressPopup> mPopupWindow;
@@ -101,10 +96,12 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
     private int mArticlePosition = 0;//点击的位置
     private Article mArticle;
     private boolean isPress = false;
+    private List<Article> mSearchResquestList;
+    private List<String> mHistoryList;
 
     @Override
     protected void inject() {
-        DaggerSearchActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+        getAppComponent().inject(this);
     }
 
     @Override
@@ -130,6 +127,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
 
     @SuppressLint("ClickableViewAccessibility")
     private void initSearchRequestView() {
+        mSearchResquestList = mSearchResquestAdapter.getData();
         //搜索结果
         mSearchResquestAdapter.openLoadAnimation();
         rvSearchRequest.setLayoutManager(mSearchRequestManager);
@@ -162,6 +160,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
     }
 
     private void initHistoryView() {
+        mHistoryList = mHistoryAdapter.getData();
         //历史记录
         mHistoryAdapter.openLoadAnimation();
         rvHistory.setLayoutManager(mHistoriesManager);

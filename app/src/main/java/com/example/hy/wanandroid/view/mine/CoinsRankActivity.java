@@ -13,10 +13,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.adapter.CoinsRankAdapter;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
-import com.example.hy.wanandroid.config.App;
 import com.example.hy.wanandroid.contract.mine.CoinRankContract;
 import com.example.hy.wanandroid.entity.UserCoin;
-import com.example.hy.wanandroid.presenter.mine.CoinRankPresenter;
+import com.example.hy.wanandroid.presenter.mine.CoinsRankPresenter;
 import com.example.loading.Loading;
 import com.example.loading.StatusView;
 import com.google.android.material.appbar.AppBarLayout;
@@ -26,9 +25,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 
-public class CoinsRankActivity extends BaseMvpActivity<CoinRankPresenter> implements CoinRankContract.View {
+public class CoinsRankActivity extends BaseMvpActivity<CoinsRankPresenter> implements CoinRankContract.View {
 
     @BindView(R.id.tv_user_rank)
     TextView tvUserRank;
@@ -47,16 +48,20 @@ public class CoinsRankActivity extends BaseMvpActivity<CoinRankPresenter> implem
     @BindView(R.id.fbtn_up)
     FloatingActionButton upButton;
 
-    private List<UserCoin> mCoinRanks;
-    private CoinsRankAdapter mAdapter;
+    @Inject
+    CoinsRankPresenter mCoinsRankPresenter;
+    @Inject
+    CoinsRankAdapter mCoinsRankAdapter;
+
+    private List<UserCoin> mCoinsRanks;
     private int mPageNum = 1;
     private boolean isLoadMore;
     private StatusView mStatusView;
     private boolean isOver;
 
     @Override
-    protected CoinRankPresenter getPresenter() {
-        return new CoinRankPresenter(App.getContext().getAppComponent().getDataModel());
+    protected CoinsRankPresenter getPresenter() {
+        return mCoinsRankPresenter;
     }
 
     @Override
@@ -65,13 +70,18 @@ public class CoinsRankActivity extends BaseMvpActivity<CoinRankPresenter> implem
     }
 
     @Override
+    protected void inject() {
+        getAppComponent().inject(this);
+    }
+
+    @Override
     protected void initView() {
         super.initView();
 
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        mCoinRanks = new ArrayList<>();
-        mAdapter = new CoinsRankAdapter(R.layout.item_coins_rank, mCoinRanks);
+        mCoinsRanks = mCoinsRankAdapter.getData();
+
         mStatusView = Loading.beginBuildStatusView(this)
                 .warpView(rvCoinRank)
                 .addErrorView(R.layout.error_view)
@@ -80,7 +90,7 @@ public class CoinsRankActivity extends BaseMvpActivity<CoinRankPresenter> implem
 
         srlCoinRank.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark);
         srlCoinRank.setOnRefreshListener( () -> {
-            if(mAdapter.isLoading()){
+            if(mCoinsRankAdapter.isLoading()){
                 srlCoinRank.setRefreshing(false);
                 return;
             }
@@ -92,18 +102,18 @@ public class CoinsRankActivity extends BaseMvpActivity<CoinRankPresenter> implem
         srlCoinRank.setRefreshing(true);
 
         rvCoinRank.setHasFixedSize(true);
-        rvCoinRank.setAdapter(mAdapter);
+        rvCoinRank.setAdapter(mCoinsRankAdapter);
         rvCoinRank.setLayoutManager(new LinearLayoutManager(this));
         rvCoinRank.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));
 
-        mAdapter.openLoadAnimation();
-        mAdapter.setOnLoadMoreListener(() -> {
+        mCoinsRankAdapter.openLoadAnimation();
+        mCoinsRankAdapter.setOnLoadMoreListener(() -> {
             if(srlCoinRank.isRefreshing()) {
-                mAdapter.loadMoreComplete();
+                mCoinsRankAdapter.loadMoreComplete();
                 return;
             }
             if(isOver){
-                mAdapter.loadMoreEnd();
+                mCoinsRankAdapter.loadMoreEnd();
                 showToast(getString(R.string.toast_noMoreData));
                 return;
             }
@@ -138,12 +148,12 @@ public class CoinsRankActivity extends BaseMvpActivity<CoinRankPresenter> implem
     public void showCoinRank(List<UserCoin> coinRanks, boolean isOver) {
         this.isOver = isOver;
         if(!isLoadMore){
-            mCoinRanks.clear();
+            mCoinsRanks.clear();
         }
-        mCoinRanks.addAll(coinRanks);
-        mAdapter.notifyDataSetChanged();
+        mCoinsRanks.addAll(coinRanks);
+        mCoinsRankAdapter.notifyDataSetChanged();
         if(isLoadMore){
-            mAdapter.loadMoreComplete();
+            mCoinsRankAdapter.loadMoreComplete();
         }else {
             srlCoinRank.setRefreshing(false);
         }
@@ -153,7 +163,7 @@ public class CoinsRankActivity extends BaseMvpActivity<CoinRankPresenter> implem
     @Override
     public void showErrorView() {
         srlCoinRank.setRefreshing(false);
-        mAdapter.loadMoreComplete();
+        mCoinsRankAdapter.loadMoreComplete();
         mStatusView.showError();
     }
 

@@ -16,11 +16,10 @@ import com.example.hy.wanandroid.adapter.CoinsAdapter;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.CoinContract;
-import com.example.hy.wanandroid.di.component.activity.DaggerCoinActivityComponent;
 import com.example.hy.wanandroid.entity.ArticleBean;
 import com.example.hy.wanandroid.entity.Coin;
 import com.example.hy.wanandroid.entity.UserCoin;
-import com.example.hy.wanandroid.presenter.mine.CoinPresenter;
+import com.example.hy.wanandroid.presenter.mine.CoinsPresenter;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.loading.Loading;
 import com.example.loading.StatusView;
@@ -33,16 +32,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class CoinsActivity extends BaseMvpActivity<CoinPresenter> implements CoinContract.View {
-
-    @Inject
-    CoinPresenter mPresenter;
-    @Inject
-    List<Coin> mCoinList;
-    @Inject
-    StaggeredGridLayoutManager mLayoutManager;
-    @Inject
-    CoinsAdapter mCoinsAdapter;
+public class CoinsActivity extends BaseMvpActivity<CoinsPresenter> implements CoinContract.View {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -57,17 +47,23 @@ public class CoinsActivity extends BaseMvpActivity<CoinPresenter> implements Coi
     @BindView(R.id.srl_coin)
     SwipeRefreshLayout srlCoin;
 
+    @Inject
+    CoinsPresenter mPresenter;
+    @Inject
+    StaggeredGridLayoutManager mLayoutManager;
+    @Inject
+    CoinsAdapter mCoinsAdapter;
+
     private boolean isOver;
     private int mPageNum = 1;
     private boolean isLoadMore;
     private StatusView mStatusView;
 
+    private List<Coin> mCoinList;
+
     @Override
     protected void inject() {
-        DaggerCoinActivityComponent.builder()
-                .appComponent(getAppComponent())
-                .build()
-                .inject(this);
+        getAppComponent().inject(this);
     }
 
     @Override
@@ -76,13 +72,15 @@ public class CoinsActivity extends BaseMvpActivity<CoinPresenter> implements Coi
     }
 
     @Override
-    protected CoinPresenter getPresenter() {
+    protected CoinsPresenter getPresenter() {
         return mPresenter;
     }
 
     @Override
     protected void initView() {
         super.initView();
+
+        mCoinList = mCoinsAdapter.getData();
 
         mStatusView = Loading.beginBuildStatusView(this)
                 .warpView(rvCoin)

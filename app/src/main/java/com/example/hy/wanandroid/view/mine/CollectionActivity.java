@@ -10,13 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
-import com.example.hy.wanandroid.adapter.CollectionsAdapter;
+import com.example.hy.wanandroid.adapter.CollectionAdapter;
 import com.example.hy.wanandroid.base.activity.BaseLoadActivity;
 import com.example.hy.wanandroid.entity.ArticleBean;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.contract.mine.CollectionContract;
 import com.example.hy.wanandroid.entity.Collection;
-import com.example.hy.wanandroid.di.component.activity.DaggerCollectionActivityComponent;
 import com.example.hy.wanandroid.event.CollectionEvent;
 import com.example.hy.wanandroid.presenter.mine.CollectionPresenter;
 import com.example.hy.wanandroid.utlis.AnimUtil;
@@ -57,9 +56,7 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
     @Inject
     LinearLayoutManager mLinearLayoutManager;
     @Inject
-    List<Collection> mCollections;
-    @Inject
-    CollectionsAdapter mCollectionsAdapter;
+    CollectionAdapter mCollectionAdapter;
     @Inject
     List<Integer> mIds;
     @Inject
@@ -70,10 +67,11 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
     private int mCollectionPosition = -1;//点击的位置
     private boolean isPress = false;
     private Collection mCollection;
+    private List<Collection> mCollections;
 
     @Override
     protected void inject() {
-        DaggerCollectionActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+        getAppComponent().inject(this);
     }
 
     @Override
@@ -98,22 +96,23 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
 
     @SuppressLint("ClickableViewAccessibility")
     private void initRecyclerView() {
+        mCollections = mCollectionAdapter.getData();
         //collections
-        mCollectionsAdapter.openLoadAnimation();
+        mCollectionAdapter.openLoadAnimation();
         rvCollections.setLayoutManager(mLinearLayoutManager);
-        rvCollections.setAdapter(mCollectionsAdapter);
-        mCollectionsAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
+        rvCollections.setAdapter(mCollectionAdapter);
+        mCollectionAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
             mCollectionPosition = position;
             ArticleBean articleBean = new ArticleBean(mCollections.get(position));
             ArticleActivity.startActivity(this, articleBean, true);
         });
-        mCollectionsAdapter.setOnItemChildClickListener((adapter, view, position) -> {//取消收藏
+        mCollectionAdapter.setOnItemChildClickListener((adapter, view, position) -> {//取消收藏
             mCollectionPosition = position;
             mCollection = mCollections.get(position);
             mPresenter.unCollectArticle(mCollection.getId(), mCollection.getOriginId());
             AnimUtil.scale(view, -1);
         });
-        mCollectionsAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+        mCollectionAdapter.setOnItemLongClickListener((adapter, view, position) -> {
             Collection collection = mCollections.get(position);
             view.setOnTouchListener((v, event) -> {
                 if(event.getAction() == MotionEvent.ACTION_UP && isPress){
@@ -179,7 +178,7 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
     public void showCollections(List<Collection> collections) {
         if(!CommonUtil.isEmptyList(mCollections)) mCollections.clear();
         mCollections.addAll(collections);
-        mCollectionsAdapter.notifyDataSetChanged();
+        mCollectionAdapter.notifyDataSetChanged();
         if(CommonUtil.isEmptyList(mCollections)) showEmptyLayout();
     }
 
@@ -192,7 +191,7 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
             normalView.finishRefresh();
         }
         mCollections.addAll(collections);
-        mCollectionsAdapter.notifyDataSetChanged();
+        mCollectionAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -200,7 +199,7 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
         showToast(getString(R.string.toast_uncollection_success));
         mIds.add(mCollections.get(mCollectionPosition).getOriginId());
         mCollections.remove(mCollectionPosition);
-        mCollectionsAdapter.notifyItemRemoved(mCollectionPosition + mCollectionsAdapter.getHeaderLayoutCount());
+        mCollectionAdapter.notifyItemRemoved(mCollectionPosition + mCollectionAdapter.getHeaderLayoutCount());
         if(CommonUtil.isEmptyList(mCollections)) showEmptyLayout();
     }
 

@@ -1,12 +1,15 @@
 package com.example.hy.wanandroid.widget.dialog;
 
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.event.UpdataEvent;
+
+import javax.inject.Inject;
 
 /**
  * 获取版本信息弹框
@@ -16,6 +19,11 @@ public class VersionDialog extends BaseDialogFragment {
 
     private String mContentText = "";
     private boolean isMain;
+
+    @Inject
+    public VersionDialog() {
+
+    }
 
     @Override
     protected int getDialogViewId() {

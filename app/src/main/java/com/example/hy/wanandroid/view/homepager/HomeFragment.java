@@ -14,7 +14,6 @@ import com.example.hy.wanandroid.entity.ArticleBean;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.homepager.HomeContract;
-import com.example.hy.wanandroid.di.module.fragment.HomeFragmentModule;
 import com.example.hy.wanandroid.entity.Article;
 import com.example.hy.wanandroid.entity.BannerData;
 import com.example.hy.wanandroid.presenter.homepager.HomePresenter;
@@ -22,7 +21,6 @@ import com.example.hy.wanandroid.utlis.AnimUtil;
 import com.example.hy.wanandroid.utlis.BannerImageLoader;
 import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.utlis.StatusBarUtil;
-import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
 import com.example.hy.wanandroid.view.search.SearchActivity;
@@ -35,7 +33,6 @@ import com.youth.banner.Transformer;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -65,16 +62,11 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
     @Inject
     HomePresenter mPresenter;
     @Inject
-    @Named("bannerTitles")
-    List<String> bannerTitles;
+    List<String> mBannerTitles;
     @Inject
-    @Named("bannerImages")
-    List<String> bannerImages;
+    List<String> mBannerImages;
     @Inject
-    @Named("bannerAddress")
-    List<String> bannerAddress;
-    @Inject
-    List<Article> mArticles;
+    List<String> mBannerAddress;
     @Inject
     LinearLayoutManager mLinearLayoutManager;
     @Inject
@@ -88,6 +80,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
     private Article mArticle;//点击的文章
     private Banner mBanner;
     private boolean isPress = false;
+    private List<Article> mArticles;
 
     @Override
     protected int getLayoutId() {
@@ -101,8 +94,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
     @Override
     protected void inject() {
-        if (!(getActivity() instanceof MainActivity)) return;
-        ((MainActivity) getActivity()).getComponent().getHomFragmentSubComponent(new HomeFragmentModule()).inject(this);
+        getAppComponent().inject(this);
     }
 
     @SuppressLint("ResourceAsColor")
@@ -117,6 +109,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
     @SuppressLint("ClickableViewAccessibility")
     private void initRecyclerView() {
+        mArticles = mArticlesAdapter.getData();
         //首页文章
         View bannerLayout = LayoutInflater.from(mActivity).inflate(R.layout.banner_layout, null);
         mBanner = bannerLayout.findViewById(R.id.banner);
@@ -126,7 +119,9 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
         rvArticles.setAdapter(mArticlesAdapter);
 
         mArticlesAdapter.setOnItemClickListener((adapter, view, position) -> {//跳转文章
-            if(CommonUtil.isEmptyList(mArticles)) return;
+            if(CommonUtil.isEmptyList(mArticles)) {
+                return;
+            }
             mArticlePosition = position;
             mArticle = mArticles.get(position);
             ArticleBean articleBean = new ArticleBean(mArticle);
@@ -134,7 +129,9 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
         });
         mArticlesAdapter.setOnItemChildClickListener((adapter, view, position) -> {//收藏
-            if(CommonUtil.isEmptyList(mArticles)) return;
+            if(CommonUtil.isEmptyList(mArticles)) {
+                return;
+            }
             mArticlePosition = position;
             mArticle = mArticles.get(position);
             if(!User.getInstance().isLoginStatus()){
@@ -146,7 +143,9 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
             AnimUtil.scale(view, -1);
         });
         mArticlesAdapter.setOnItemLongClickListener((adapter, view, position) -> {
-            if(CommonUtil.isEmptyList(mArticles)) return false;
+            if(CommonUtil.isEmptyList(mArticles)) {
+                return false;
+            }
             Article article = mArticles.get(position);
             mPopupWindow.get().show(srlHome, view, article);
             return true;
@@ -185,30 +184,30 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
     @Override
     public void showBannerDatas(List<BannerData> bannerDataList) {
-        if(!CommonUtil.isEmptyList(bannerTitles)){
-            bannerTitles.clear();
-            bannerImages.clear();
-            bannerAddress.clear();
+        if(!CommonUtil.isEmptyList(mBannerTitles)){
+            mBannerTitles.clear();
+            mBannerImages.clear();
+            mBannerAddress.clear();
         }
         //获得标题,图片
         for (BannerData bannerData : bannerDataList) {
-            bannerTitles.add(bannerData.getTitle());
-            bannerImages.add(bannerData.getImagePath());
-            bannerAddress.add(bannerData.getUrl());
+            mBannerTitles.add(bannerData.getTitle());
+            mBannerImages.add(bannerData.getImagePath());
+            mBannerAddress.add(bannerData.getUrl());
         }
         //设置banner
         mBanner.setImageLoader(new BannerImageLoader())
                 .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)//显示圆形指示器和标题（水平显示）
-                .setImages(bannerImages)//设置图片集合
+                .setImages(mBannerImages)//设置图片集合
                 .setBannerAnimation(Transformer.BackgroundToForeground)//设置轮播动画
-                .setBannerTitles(bannerTitles)//设置标题集合
+                .setBannerTitles(mBannerTitles)//设置标题集合
                 .setIndicatorGravity(BannerConfig.RIGHT)//设置指示器位置，右边
                 .setDelayTime(2000)//设置轮播事件间隔
                 .setOnBannerListener(position -> {
                     //跳转到详情
                     ArticleBean articleBean = new ArticleBean();
-                    articleBean.setTitle(bannerTitles.get(position));
-                    articleBean.setLink(bannerAddress.get(position));
+                    articleBean.setTitle(mBannerTitles.get(position));
+                    articleBean.setLink(mBannerAddress.get(position));
                     articleBean.setCollect(false);
                     articleBean.setId(-1);
                     ArticleActivity.startActivity(mActivity, articleBean, true);
@@ -218,7 +217,9 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
     @Override
     public void showArticles(List<Article> articleList) {
-        if(!CommonUtil.isEmptyList(mArticles)) mArticles.clear();
+        if(!CommonUtil.isEmptyList(mArticles)) {
+            mArticles.clear();
+        }
         mArticles.addAll(articleList);
         mArticlesAdapter.notifyDataSetChanged();
     }
@@ -228,7 +229,9 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
         if (isLoadMore) {
             srlHome.finishLoadMore();
         } else {
-            if (!CommonUtil.isEmptyList(mArticles)) mArticles.clear();
+            if (!CommonUtil.isEmptyList(mArticles)) {
+                mArticles.clear();
+            }
             srlHome.finishRefresh();
         }
         mArticles.addAll(articleList);
@@ -237,7 +240,9 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
     @Override
     public void topping() {
-        if(rvArticles != null) rvArticles.smoothScrollToPosition(0);
+        if(rvArticles != null) {
+            rvArticles.smoothScrollToPosition(0);
+        }
     }
 
     @Override
@@ -269,11 +274,14 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
     @Override
     public void collect() {
-        if(mArticle == null) return;
-        if(mArticle.isCollect())
+        if(mArticle == null) {
+            return;
+        }
+        if(mArticle.isCollect()) {
             mPresenter.unCollectArticle(mArticle.getId());
-        else
+        } else {
             mPresenter.collectArticle(mArticle.getId());
+        }
     }
 
     @Override
@@ -283,7 +291,11 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
     @Override
     public void unableRefresh() {
-        if(isLoadMore) srlHome.finishLoadMore(); else srlHome.finishRefresh();
+        if(isLoadMore) {
+            srlHome.finishLoadMore();
+        } else {
+            srlHome.finishRefresh();
+        }
     }
 
     @Override
@@ -295,13 +307,20 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode != RESULT_OK) return;
-        if(CommonUtil.isEmptyList(mArticles)) return;
+        if(resultCode != RESULT_OK) {
+            return;
+        }
+        if(CommonUtil.isEmptyList(mArticles)) {
+            return;
+        }
         Article article = mArticles.get(mArticlePosition);
         switch (requestCode){
             case Constant.REQUEST_LOGIN:
-                if(article.isCollect()) mPresenter.unCollectArticle(article.getId());
-                else mPresenter.collectArticle(article.getId());
+                if(article.isCollect()) {
+                    mPresenter.unCollectArticle(article.getId());
+                } else {
+                    mPresenter.collectArticle(article.getId());
+                }
                 break;
             case Constant.REQUEST_REFRESH_ARTICLE:
                 boolean isCollect = data.getBooleanExtra(Constant.KEY_DATA_RETURN, false);

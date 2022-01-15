@@ -5,13 +5,21 @@ import android.view.View;
 import com.example.hy.wanandroid.utlis.ShareUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
+
+import javax.inject.Inject;
 
 /**
  * 前往应用信息弹框
  * Created by 陈健宇 at 2019/3/25
  */
 public class GotoDetialDialog extends BaseDialogFragment {
+
+    @Inject
+    public GotoDetialDialog() {
+
+    }
+
     @Override
     protected int getDialogViewId() {
         return R.layout.dialog_goto_detail;

@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.LoginContract;

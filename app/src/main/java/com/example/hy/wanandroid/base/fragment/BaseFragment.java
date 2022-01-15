@@ -8,8 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hy.wanandroid.base.view.IView;
+import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.utlis.ToastUtil;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,8 +21,7 @@ import butterknife.Unbinder;
  * Fragment的基类
  * Created by 陈健宇 at 2018/10/21
  */
-public abstract class BaseFragment extends AbstractLazyLoadFragment
-        implements IView {
+public abstract class BaseFragment extends AbstractLazyLoadFragment implements IView {
 
     private Unbinder mUnbinder;
     protected Activity mActivity;
@@ -55,6 +55,11 @@ public abstract class BaseFragment extends AbstractLazyLoadFragment
     @Override
     protected void onLazyLoadData() {
         loadData();
+    }
+
+    protected AppComponent getAppComponent(){
+        assert getContext() != null;
+        return ((App)getContext().getApplicationContext()).getAppComponent();
     }
 
     @Override

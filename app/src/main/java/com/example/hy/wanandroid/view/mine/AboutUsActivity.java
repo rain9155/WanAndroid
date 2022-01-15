@@ -29,7 +29,6 @@ import butterknife.BindView;
 
 public class AboutUsActivity extends BaseActivity {
 
-
     @BindView(R.id.mountain)
     MountainSceneView mountain;
     @BindView(R.id.toolbar)

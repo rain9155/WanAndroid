@@ -4,7 +4,7 @@ import android.content.res.Resources;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.event.InstallApkEvent;

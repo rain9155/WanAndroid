@@ -6,9 +6,11 @@ import android.widget.RadioButton;
 import com.example.hy.wanandroid.utlis.LanguageUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.event.LanguageEvent;
+
+import javax.inject.Inject;
 
 /**
  * 选择语言弹出框
@@ -16,8 +18,12 @@ import com.example.hy.wanandroid.event.LanguageEvent;
  */
 public class LanguageDialog extends BaseDialogFragment {
 
-
     private String mSelectedLanguage;
+
+    @Inject
+    public LanguageDialog() {
+
+    }
 
     @Override
     protected int getDialogViewId() {

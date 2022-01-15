@@ -34,12 +34,11 @@ import com.example.hy.wanandroid.utlis.StatusBarUtil;
 import com.example.hy.wanandroid.utlis.TimeUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
-import com.example.hy.wanandroid.config.App;
+import com.example.hy.wanandroid.App;
 import com.example.permission.bean.Permission;
 import com.example.hy.wanandroid.component.UpdateService;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
-import com.example.hy.wanandroid.di.component.activity.DaggerSettingsActivityComponent;
 import com.example.hy.wanandroid.presenter.mine.SettingsPresenter;
 import com.example.hy.wanandroid.utlis.DownloadUtil;
 import com.example.hy.wanandroid.view.MainActivity;
@@ -183,7 +182,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
     @Override
     protected void inject() {
-        DaggerSettingsActivityComponent.builder().appComponent(getAppComponent()).build().inject(this);
+        getAppComponent().inject(this);
     }
 
     @Override

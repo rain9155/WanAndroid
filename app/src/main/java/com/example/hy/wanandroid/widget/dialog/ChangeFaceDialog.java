@@ -9,11 +9,18 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.event.ChangeFaceEvent;
 
+import javax.inject.Inject;
+
 /**
  * 改变背景弹框
  * Created by 陈健宇 at 2019/1/7
  */
 public class ChangeFaceDialog extends BaseDialogFragment {
+
+    @Inject
+    public ChangeFaceDialog() {
+
+    }
 
     @Override
     protected int getDialogViewId() {
