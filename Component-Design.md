@@ -145,7 +145,9 @@ if(isModule.toBoolean()) {
 ### 6、其他改造点
 
 - ButterKnife改造：组件化后在模块中使用R.id.XX会报错，解决办法是在模块中添加[ButterKnife插件](https://github.com/JakeWharton/butterknife#library-projects)，然后在源码中把R的使用替换成R2；
+
 - Dagger改造：组件化后每个模块的依赖注入在模块内闭环，模块之间的Component需要相互依赖，Dagger提供了SubComponent和dependencies两种依赖方式，可以参考[Using Dagger in multi-module apps](https://developer.android.com/training/dependency-injection/dagger-multi-module)；
+
 - 组件初始化：对于一些组件需要在app启动时进行初始化，可以借助[App Startup](https://developer.android.com/topic/libraries/app-startup)在组件内部提前完成初始化，对于一些组件的初始化需要依赖其他组件的初始化，可以借助[Alpha](https://github.com/alibaba/alpha)、[Anchors](https://github.com/YummyLau/Anchors)这些库完成初始化.
 
 
