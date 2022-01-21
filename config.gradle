@@ -10,7 +10,7 @@ ext {
 
     version = [
         //appcompat
-        AppCompat : "1.0.0",
+        AppCompat : "1.1.0",
 
         //material
         Material : "1.0.0",

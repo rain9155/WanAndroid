@@ -108,8 +108,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBarColors(isSetStatusBar);
+        mFragments = new BaseFragment[5];
         if(savedInstanceState == null) {
-            mFragments = new BaseFragment[5];
             mFragments[0] = HomeFragment.newInstance();
             mFragments[1] = HierarchyFragment.newInstance();
             mFragments[2] = WeChatFragment.newInstance();

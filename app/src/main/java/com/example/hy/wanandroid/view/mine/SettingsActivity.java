@@ -215,9 +215,9 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
         clClearCache.setOnClickListener(v -> {
             String cache = FileUtil.getCacheSize(mCacheFile);
-            if (cache.equals("0K"))
+            if (cache.equals("0K")) {
                 showToast(getString(R.string.settingsActivity_already_clear));
-            else {
+            } else {
                 mClearCacheDialog.get().setContent(cache);
                 mClearCacheDialog.get().show(getSupportFragmentManager(), ClearCacheDialog.class.getName());
             }
@@ -236,7 +236,9 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
                 showToast(getString(R.string.downloading));
                 return;
             }
-            if (mAnimator != null && mAnimator.isRunning()) return;
+            if (mAnimator != null && mAnimator.isRunning()) {
+                return;
+            }
             mPresenter.checkVersion(mCurrentVersionName);
         });
 
@@ -287,20 +289,26 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
     @Override
     protected void onStop() {
-        if (mAnimator != null) mAnimator.cancel();
+        if (mAnimator != null) {
+            mAnimator.cancel();
+        }
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        if (mClearCacheDialog.get() != null)
+        if (mClearCacheDialog.get() != null) {
             mClearCacheDialog = null;
-        if (mVersionDialog.get() != null)
+        }
+        if (mVersionDialog.get() != null) {
             mVersionDialog = null;
-        if (mGotoDetialDialog.get() != null)
+        }
+        if (mGotoDetialDialog.get() != null) {
             mGotoDetialDialog = null;
-        if(mLanguageDialog.get() != null)
+        }
+        if(mLanguageDialog.get() != null) {
             mLanguageDialog = null;
+        }
         super.onDestroy();
     }
 
