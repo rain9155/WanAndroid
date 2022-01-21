@@ -98,14 +98,6 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
 
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(mLoadingDialog != null)
-            mLoadingDialog = null;
-    }
-
     @Override
     public void setAccountErrorView(String error) {
         focusView = tlAccount;

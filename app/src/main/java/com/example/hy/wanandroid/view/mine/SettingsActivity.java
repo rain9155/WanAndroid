@@ -296,23 +296,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     }
 
     @Override
-    protected void onDestroy() {
-        if (mClearCacheDialog.get() != null) {
-            mClearCacheDialog = null;
-        }
-        if (mVersionDialog.get() != null) {
-            mVersionDialog = null;
-        }
-        if (mGotoDetialDialog.get() != null) {
-            mGotoDetialDialog = null;
-        }
-        if(mLanguageDialog.get() != null) {
-            mLanguageDialog = null;
-        }
-        super.onDestroy();
-    }
-
-    @Override
     public void showLoading() {
         startLoadAnimator();
     }

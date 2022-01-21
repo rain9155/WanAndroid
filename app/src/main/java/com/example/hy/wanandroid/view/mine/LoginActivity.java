@@ -101,13 +101,6 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(mLoadingDialog != null)
-            mLoadingDialog = null;
-    }
-
-    @Override
     public void showLoading() {
         mLoadingDialog.get().show(getSupportFragmentManager(), "tag");
     }

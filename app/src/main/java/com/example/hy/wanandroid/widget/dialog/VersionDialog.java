@@ -1,7 +1,6 @@
 package com.example.hy.wanandroid.widget.dialog;
 
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.widget.TextView;
 
 import com.example.hy.wanandroid.R;
@@ -41,7 +40,7 @@ public class VersionDialog extends BaseDialogFragment {
             this.dismiss();
             RxBus.getInstance().post(new UpdataEvent(isMain));
         });
-        CancelBackDismiss();
+        cancelBackDismiss();
     }
 
     public void setContentText(String content){

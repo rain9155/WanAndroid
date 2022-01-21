@@ -18,7 +18,7 @@ public class UpDataLoadingDialog extends BaseDialogFragment {
 
     @Override
     protected void initView(View view) {
-        CancelBackDismiss();
+        cancelBackDismiss();
     }
 
 }

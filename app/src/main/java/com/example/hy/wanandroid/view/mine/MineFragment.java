@@ -154,14 +154,6 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         clLogout.setOnClickListener(v -> mLogoutDialog.get().show(getChildFragmentManager(), LogoutDialog.class.getSimpleName()));
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mLogoutDialog.get() != null) mLogoutDialog = null;
-        if (mChangeFaceDialog.get() != null) mChangeFaceDialog = null;
-        if (mGotoDetialDialog.get() != null) mGotoDetialDialog = null;
-    }
-
     @SuppressLint("InlinedApi")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

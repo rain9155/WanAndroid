@@ -210,15 +210,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     protected void onDestroy() {
-        if(mOpenBrowseDialog != null) {
-            mOpenBrowseDialog = null;
-        }
-        if(mVersionDialog.get() != null) {
-            mVersionDialog = null;
-        }
-        if(mGotoDetialDialog.get() != null) {
-            mGotoDetialDialog = null;
-        }
         if(mShowFbtnAnimator != null) {
             mShowFbtnAnimator.cancel();
         }

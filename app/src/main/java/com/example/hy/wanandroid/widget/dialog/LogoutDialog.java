@@ -34,6 +34,6 @@ public class LogoutDialog extends BaseDialogFragment {
             this.dismiss();
             RxBus.getInstance().post(new LoginEvent(false));
         });
-        CancelBackDismiss();
+        cancelBackDismiss();
     }
 }

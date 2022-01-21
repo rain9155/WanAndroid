@@ -72,7 +72,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
      * 禁止按返回键取消dialog
      * 设置点击屏幕Dialog不消失
      */
-    protected void CancelBackDismiss() {
+    protected void cancelBackDismiss() {
         mDialog.setCanceledOnTouchOutside(false);
         mDialog.setOnKeyListener((dialog1, keyCode, event) -> keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0);
     }
