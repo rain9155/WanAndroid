@@ -16,30 +16,41 @@ import com.example.hy.wanandroid.R;
  */
 public class ShareUtil{
 
+    /**
+     * 分享文本
+     */
     public static void shareText(Context context, String text, String title) {
-        Intent intent = new Intent("android.intent.doWork.SEND");
+        Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra("android.intent.extra.TEXT", text);
+        intent.putExtra(Intent.EXTRA_TEXT, text);
         if (context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
             Intent shardIntent = Intent.createChooser(intent, title);
-            shardIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(shardIntent);
         } else {
             ToastUtil.showToast(context, context.getString(R.string.share_unknown));
         }
     }
 
+    /**
+     * 发送邮件
+     */
     public static void sendEmail(Context context, String address, String title) {
-        Intent intent = new Intent("android.intent.doWork.SENDTO", Uri.parse("mailto:" + address));
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{address});
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+        if (context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
+           intent = new Intent(Intent.ACTION_SEND);
+           intent.setType("text/plain");
+           intent.putExtra(Intent.EXTRA_EMAIL, new String[]{address});
+           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        if(context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
             Intent emailIntent = Intent.createChooser(intent, title);
-            emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(emailIntent);
-        } else {
+        }else {
             ToastUtil.showToast(context, context.getString(R.string.share_email_unknown));
         }
-
     }
 
     /**
@@ -51,8 +62,8 @@ public class ShareUtil{
             return;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setData(Uri.parse(address));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if(context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null){
             context.startActivity(intent);
         }else {
@@ -74,7 +85,9 @@ public class ShareUtil{
      * 复制字符串
      */
     public static void copyString(Context context, String text) {
-        if(TextUtils.isEmpty(text)) return;
+        if(TextUtils.isEmpty(text)) {
+            return;
+        }
         ClipboardManager mClipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         assert mClipboardManager != null;
         mClipboardManager.setPrimaryClip(ClipData.newPlainText(null, text));
