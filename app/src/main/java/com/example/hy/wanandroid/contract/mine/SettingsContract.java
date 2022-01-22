@@ -12,7 +12,8 @@ public interface SettingsContract {
         void showUpdataDialog(String content);//显示更新弹窗
         void setNewVersionName(String versionName);//设置最新版本号
         void showAlreadyNewToast(String content);//已经是最新版本
-        void handleLanguage();//处理更换语言事件
+        void handleLanguageChange();//处理更换语言事件
+        void handleThemeChange();//处理主题更换事件
         void clearCache();//清空缓存
         void upDataVersion();//更新
     }
@@ -20,14 +21,13 @@ public interface SettingsContract {
     interface Presenter {
         void setNoImageState(boolean isNight);
         void setAutoCacheState(boolean isNight);
-        void setNightModeState(boolean isNight);
         void setStatusBarState(boolean isStatusBar);
+        void checkVersion(String currentVersion);
         boolean getNoImageState();
         boolean getAutoCacheState();
-        boolean getNightModeState();
         boolean getStatusBarState();
         boolean getAutoUpdataState();
         String getSelectedLanguage();
-        void checkVersion(String currentVersion);
+        String getSelectedTheme();
     }
 }

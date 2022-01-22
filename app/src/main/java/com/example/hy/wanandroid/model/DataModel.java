@@ -182,13 +182,13 @@ public class DataModel implements NetworkHelper, DbHelper, PreferencesHelper{
     }
 
     @Override
-    public void setNightModeState(boolean isNight) {
-        mPreferencesHelper.setNightModeState(isNight);
+    public void setSelectedTheme(String theme) {
+        mPreferencesHelper.setSelectedTheme(theme);
     }
 
     @Override
-    public boolean getNightModeState() {
-        return mPreferencesHelper.getNightModeState();
+    public String getSelectedTheme() {
+        return mPreferencesHelper.getSelectedTheme();
     }
 
     @Override

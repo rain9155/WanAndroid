@@ -64,7 +64,6 @@ public class Constant {
 
     //settingActivity
     public static final String SHAREDPREFERENCES_NAME = "prefs";
-    public static final String KEY_PREFS_NODE_MODE = "nightModeState";
     public static final String KEY_PREFS_CUR_MAIN_ITEM = "curMainItem";
     public static final String KEY_PREFS_CUR_WECHAT_ITEM = "curWechatItem";
     public static final String KEY_PREFS_CUR_PROJECT_ITEM = "curProjectItem";
@@ -74,7 +73,7 @@ public class Constant {
     public static final String KEY_PREFS_NETWORK = "netWork";
     public static final String KEY_PREFS_AUTO_UPDATA = "autoUpdata";
     public static final String KEY_PREFS_LAN = "language";
-    public static final int NIGHT_CHANGE_WAIT_TIME = 1000;
+    public static final String KEY_PREFS_THEME = "theme";
 
     //utils
     public static final String EMAIL_ADDRESS = "1847796089@qq.com";

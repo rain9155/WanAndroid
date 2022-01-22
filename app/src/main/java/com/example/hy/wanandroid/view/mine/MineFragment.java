@@ -26,6 +26,7 @@ import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.presenter.mine.MinePresenter;
+import com.example.hy.wanandroid.utlis.ThemeUtil;
 import com.example.hy.wanandroid.widget.customView.ShapeImageView;
 import com.example.hy.wanandroid.widget.dialog.ChangeFaceDialog;
 import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
@@ -131,25 +132,31 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
         Bitmap faceBitmap = FileUtil.loadBitmap(Constant.PATH_IMAGE_FACE, Constant.FACE);
         Bitmap backBitmap = FileUtil.loadBitmap(Constant.PATH_IMAGE_BACKGROUND, Constant.BACK);
-        if (faceBitmap != null) ivFace.setImageBitmap(faceBitmap);
-        if (backBitmap != null) ivBack.setImageBitmap(backBitmap);
-
-        if (mPresenter.getNightModeState())
+        if (faceBitmap != null) {
+            ivFace.setImageBitmap(faceBitmap);
+        }
+        if (backBitmap != null) {
+            ivBack.setImageBitmap(backBitmap);
+        }
+        if(ThemeUtil.isDarkTheme(getContext())) {
             ivBack.getDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+        }
 
         ivFace.setOnClickListener(v -> mChangeFaceDialog.get().show(getChildFragmentManager(), ChangeFaceDialog.class.getSimpleName()));
         btnLogin.setOnClickListener(v -> LoginActivity.startActivity(mActivity));
-
         clCoin.setOnClickListener(v -> {
-            if (!isLogin(true))return;
+            if (!isLogin(true)) {
+                return;
+            }
             CoinsActivity.startActivity(mActivity);
         });
         clCollection.setOnClickListener(v -> {
-            if (!isLogin(false))return;
+            if (!isLogin(false)) {
+                return;
+            }
             CollectionActivity.startActivity(mActivity);
         });
         clSettings.setOnClickListener(v -> SettingsActivity.startActivity(mActivity));
-
         clAboutus.setOnClickListener(v -> AboutUsActivity.startActivity(mActivity));
         clLogout.setOnClickListener(v -> mLogoutDialog.get().show(getChildFragmentManager(), LogoutDialog.class.getSimpleName()));
     }
@@ -157,7 +164,9 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     @SuppressLint("InlinedApi")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) return;
+        if (resultCode != RESULT_OK) {
+            return;
+        }
 
         //handle result of login Activity
         if (requestCode == Constant.REQUEST_LOGIN){
@@ -176,8 +185,9 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                     new IPermissionCallback() {
                         @Override
                         public void onAccepted(Permission permission) {
-                            if (imageUri != null)
+                            if (imageUri != null) {
                                 CropperImageActivity.startActivityByFragment(mActivity, MineFragment.this, imageUri, mChangeFlag);
+                            }
                         }
 
                         @Override
@@ -199,15 +209,17 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(mActivity.getContentResolver().openInputStream(resultUri));
                 if (mChangeFlag == Constant.CHANGE_FACE) {
-                    if (FileUtil.saveBitmap(Constant.PATH_IMAGE_FACE, Constant.FACE, bitmap))
+                    if (FileUtil.saveBitmap(Constant.PATH_IMAGE_FACE, Constant.FACE, bitmap)) {
                         ivFace.setImageBitmap(bitmap);
-                    else
+                    } else {
                         showToast(getString(R.string.mineFragment_change_face_fail));
+                    }
                 } else if (mChangeFlag == Constant.CHANGE_BACK) {
-                    if (FileUtil.saveBitmap(Constant.PATH_IMAGE_BACKGROUND, Constant.BACK, bitmap))
+                    if (FileUtil.saveBitmap(Constant.PATH_IMAGE_BACKGROUND, Constant.BACK, bitmap)) {
                         ivBack.setImageBitmap(bitmap);
-                    else
+                    } else {
                         showToast(getString(R.string.mineFragment_change_back_fail));
+                    }
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -216,12 +228,13 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
     }
 
-    @Override
+    @Deprecated
     public void useNightNode(boolean isNight) {
-        if (isNight)
+        if (isNight) {
             ivBack.getDrawable().mutate().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
-        else
+        } else {
             ivBack.getDrawable().mutate().clearColorFilter();
+        }
     }
 
     @Override
@@ -268,8 +281,9 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         //add All gallery Intents
         List<Intent> allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_GET_CONTENT, true);
         //部分机型会因为用用Intent.ACTION_GET_CONTENT获不到intents，用Intent.ACTION_PICK
-        if (allGalleryIntents.isEmpty())
+        if (allGalleryIntents.isEmpty()) {
             allGalleryIntents = IntentUtil.getGalleryIntents(mActivity, Intent.ACTION_PICK, true);
+        }
         allIntents.addAll(allGalleryIntents);
 
         //create chooserIntent

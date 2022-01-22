@@ -5,11 +5,11 @@ import android.content.res.Resources;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
 import com.example.hy.wanandroid.App;
+import com.example.hy.wanandroid.event.ThemeEvent;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.event.ClearCacheEvent;
 import com.example.hy.wanandroid.event.LanguageEvent;
-import com.example.hy.wanandroid.event.NightModeEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
 import com.example.hy.wanandroid.event.StatusBarEvent;
 import com.example.hy.wanandroid.event.UpdataEvent;
@@ -49,12 +49,7 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
 
         addSubscriber(
                 RxBus.getInstance().toObservable(UpdataEvent.class)
-                        .filter(new Predicate<UpdataEvent>() {
-                            @Override
-                            public boolean test(UpdataEvent updataEvent) throws Exception {
-                                return updataEvent.isMain() == false;
-                            }
-                        })
+                        .filter(updataEvent -> !updataEvent.isMain())
                         .subscribe(updataEvent -> mView.upDataVersion())
         );
 
@@ -67,7 +62,15 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
                 RxBus.getInstance().toObservable(LanguageEvent.class)
                 .subscribe(languageEvent -> {
                     mModel.setSelectedLanguage(languageEvent.getLanguage());
-                    mView.handleLanguage();
+                    mView.handleLanguageChange();
+                })
+        );
+
+        addSubscriber(
+                RxBus.getInstance().toObservable(ThemeEvent.class)
+                .subscribe(themeEvent -> {
+                    mModel.setSelectedTheme(themeEvent.getTheme());
+                    mView.handleThemeChange();
                 })
         );
     }
@@ -81,12 +84,6 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
     @Override
     public void setAutoCacheState(boolean isAuto) {
         mModel.setAutoCacheState(isAuto);
-    }
-
-    @Override
-    public void setNightModeState(boolean isNight) {
-        mModel.setNightModeState(isNight);
-        RxBus.getInstance().post(new NightModeEvent(isNight));
     }
 
     @Override
@@ -106,11 +103,6 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
     }
 
     @Override
-    public boolean getNightModeState() {
-        return mModel.getNightModeState();
-    }
-
-    @Override
     public boolean getStatusBarState() {
         return mModel.getStatusBarState();
     }
@@ -123,6 +115,11 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
     @Override
     public String getSelectedLanguage() {
         return mModel.getSelectedLanguage();
+    }
+
+    @Override
+    public String getSelectedTheme() {
+        return mModel.getSelectedTheme();
     }
 
     @Override
@@ -157,8 +154,9 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
                     }
                     @Override
                     public void onComplete() {
-                        if(!isUpdata)
+                        if(!isUpdata) {
                             mView.showAlreadyNewToast(App.getContext().getResources().getString(R.string.dialog_version_already));
+                        }
                     }
                 })
         );

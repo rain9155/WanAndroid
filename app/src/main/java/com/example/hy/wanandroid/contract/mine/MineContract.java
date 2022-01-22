@@ -10,12 +10,10 @@ public interface MineContract {
         void showLoginView();
         void showLogoutView();
         void changeFaceOrBackground(int flag);
-        void useNightNode(boolean isNight);
     }
 
     interface Presenter{
         void logout();//退出登陆
-        boolean getNightModeState();
     }
 
 }

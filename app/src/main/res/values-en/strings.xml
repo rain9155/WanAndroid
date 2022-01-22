@@ -100,7 +100,6 @@
     <string name="settingsActivity_tvClearCache">"Wipe cache "</string>
     <string name="settingsActivity_tvFeedback">"Feedback "</string>
     <string name="settingsActivity_tvMes">"Application information "</string>
-    <string name="settingsActivity_tvNightMode">Night mode</string>
     <string name="settingsActivity_tvNoImage">No graph mode</string>
     <string name="settingsActivity_tvSettingsBase">Basic setting</string>
     <string name="settingsActivity_tvSettingsOther">Other setting</string>
@@ -110,9 +109,9 @@
     <string name="setup_fail">Application installation failed</string>
     <string name="share_email_unknown">The specified application could not be found to send mail</string>
     <string name="share_unknown">"Can't find a specific application to share "</string>
-    <string name="dialog_lan_china">China</string>
-    <string name="dialog_lan_english">English(US)</string>
-    <string name="dialog_lan_system">Following system</string>
+    <string name="dialog_china">China</string>
+    <string name="dialog_english">English(US)</string>
+    <string name="dialog_system">Following system</string>
     <string name="settingsActivity_tvSettingsCommon">Common setting</string>
     <string name="settingsActivity_tvSettingsLan">Language</string>
     <string name="dialog_clear_cache1">Do you make sure clear</string>
@@ -121,4 +120,7 @@
     <string name="toast_noMoreData">No more data！</string>
     <string name="coinActivity_tvMyCoin">My coin</string>
     <string name="coinRankActivity_tvMyRank">My rank</string>
+    <string name="dialog_dark">Dark</string>
+    <string name="settingsActivity_tvSettingsTheme">Theme</string>
+    <string name="dialog_light">Light</string>
 </resources>

@@ -77,20 +77,9 @@ public class MainPresenter extends BaseActivityPresenter<MainContract.View> impl
     }
 
     @Override
-    public boolean getNightModeState() {
-        return mModel.getNightModeState();
-    }
-
-    @Override
-    public boolean getStatusBarState() {
-        return mModel.getStatusBarState();
-    }
-
-    @Override
     public boolean getAutoUpdataState() {
         return mModel.getAutoUpdataState();
     }
-
 
     @Override
     public void checkVersion(String currentVersion) {

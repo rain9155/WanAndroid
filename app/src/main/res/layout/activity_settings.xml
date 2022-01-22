@@ -96,50 +96,6 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_nightMode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_rect"
-                        android:clickable="true"
-                        android:focusable="true"
-                        style="@style/MineFragmentConstraintStyle"
-                        app:layout_constraintTop_toBottomOf="@id/cl_noImage">
-
-                        <ImageView
-                            android:id="@+id/iv_nightMode"
-                            android:layout_width="@dimen/dp_28"
-                            android:layout_height="@dimen/dp_28"
-                            app:srcCompat="@drawable/ic_settings_nightmode"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:id="@+id/tv_nightMode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/settingsActivity_tvNightMode"
-                            style="@style/MineFragmentTextStyle"
-                            app:layout_constraintLeft_toRightOf="@id/iv_nightMode"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/switch_nightMode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_28"
-                            android:src="@drawable/ic_mine_next"
-                            android:theme="@style/SwitchTrack"
-                            app:thumbTint="@color/colorSwitchButton"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            tools:ignore="ContentDescription" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cl_autoCache"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -148,7 +104,7 @@
                         android:focusable="true"
                         style="@style/MineFragmentConstraintStyle"
                         android:layout_marginTop="@dimen/dp_2"
-                        app:layout_constraintTop_toBottomOf="@id/cl_nightMode">
+                        app:layout_constraintTop_toBottomOf="@id/cl_noImage">
 
                         <ImageView
                             android:id="@+id/iv_autoCache"
@@ -436,6 +392,50 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_theme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        style="@style/MineFragmentConstraintStyle"
+                        app:layout_constraintTop_toBottomOf="@id/cl_language">
+
+                        <ImageView
+                            android:id="@+id/iv_theme"
+                            android:layout_width="@dimen/dp_28"
+                            android:layout_height="@dimen/dp_28"
+                            app:srcCompat="@drawable/ic_settings_nightmode"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_theme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settingsActivity_tvSettingsTheme"
+                            style="@style/MineFragmentTextStyle"
+                            app:layout_constraintLeft_toRightOf="@id/iv_theme"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_theme_hint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_28"
+                            android:gravity="center"
+                            android:textColor="@color/colorSecondaryText"
+                            android:textSize="@dimen/sp_16"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            tools:ignore="ContentDescription"
+                            tools:text="跟随系统"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

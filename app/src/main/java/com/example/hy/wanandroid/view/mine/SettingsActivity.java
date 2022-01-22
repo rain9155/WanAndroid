@@ -19,9 +19,10 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.utlis.LanguageUtil;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -31,10 +32,10 @@ import com.example.hy.wanandroid.utlis.FileUtil;
 import com.example.hy.wanandroid.utlis.ServiceUtil;
 import com.example.hy.wanandroid.utlis.ShareUtil;
 import com.example.hy.wanandroid.utlis.StatusBarUtil;
-import com.example.hy.wanandroid.utlis.TimeUtil;
+import com.example.hy.wanandroid.utlis.ThemeUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
-import com.example.hy.wanandroid.App;
+import com.example.hy.wanandroid.widget.dialog.ThemeDialog;
 import com.example.permission.bean.Permission;
 import com.example.hy.wanandroid.component.UpdateService;
 import com.example.hy.wanandroid.config.Constant;
@@ -52,6 +53,7 @@ import com.example.permission.callback.IPermissionCallback;
 import java.io.File;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import butterknife.BindView;
 import dagger.Lazy;
@@ -84,14 +86,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     SwitchCompat switchAutoCache;
     @BindView(R.id.cl_autoCache)
     ConstraintLayout clAutoCache;
-    @BindView(R.id.iv_nightMode)
-    ImageView ivNightMode;
-    @BindView(R.id.tv_nightMode)
-    TextView tvNightMode;
-    @BindView(R.id.switch_nightMode)
-    SwitchCompat switchNightMode;
-    @BindView(R.id.cl_nightMode)
-    ConstraintLayout clNightMode;
     @BindView(R.id.tv_settings_other)
     TextView tvSettingsOther;
     @BindView(R.id.iv_feedBack)
@@ -152,6 +146,14 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     CardView cdCommonSettings;
     @BindView(R.id.cl_language)
     ConstraintLayout clLanguage;
+    @BindView(R.id.iv_theme)
+    ImageView ivTheme;
+    @BindView(R.id.tv_theme)
+    TextView tvTheme;
+    @BindView(R.id.tv_theme_hint)
+    TextView tvThemeHint;
+    @BindView(R.id.cl_theme)
+    ConstraintLayout clTheme;
 
     @Inject
     SettingsPresenter mPresenter;
@@ -165,20 +167,12 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     Lazy<GotoDetialDialog> mGotoDetialDialog;
     @Inject
     Lazy<LanguageDialog> mLanguageDialog;
+    @Inject
+    Provider<ThemeDialog> mThemeDialogProvider;
 
     private ObjectAnimator mAnimator;
     private String mNewVersionName;
     private String mCurrentVersionName;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        AppCompatDelegate.setDefaultNightMode(
-                App.getContext().getAppComponent()
-                        .getDataModel()
-                        .getNightModeState()
-                        ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     protected void inject() {
@@ -195,6 +189,11 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         return mPresenter;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void initView() {
@@ -209,7 +208,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     }
 
     private void initSettings() {
-
         mCurrentVersionName = DownloadUtil.getVersionName(this);
         tvVersion.setText(getString(R.string.settingsActivity_version_current) + mCurrentVersionName);
 
@@ -226,6 +224,9 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
         clLanguage.setOnClickListener(v -> mLanguageDialog.get().show(getSupportFragmentManager(), LanguageDialog.class.getName()));
         tvLanguageHint.setText(getLanguageHint(mPresenter.getSelectedLanguage()));
+
+        clTheme.setOnClickListener(v -> mThemeDialogProvider.get().show(getSupportFragmentManager(), ThemeDialog.class.getName()));
+        tvThemeHint.setText(getThemeHint(mPresenter.getSelectedTheme()));
 
         clFeedBack.setOnClickListener(v -> ShareUtil.sendEmail(this, Constant.EMAIL_ADDRESS, getString(R.string.settingsActivity_email_to)));
 
@@ -248,12 +249,10 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     private void initSwitch() {
         switchNoImage.setChecked(mPresenter.getNoImageState());
         switchAutoCache.setChecked(mPresenter.getAutoCacheState());
-        switchNightMode.setChecked(mPresenter.getNightModeState());
         switchStatusBar.setChecked(mPresenter.getStatusBarState());
         switchAutoUpdata.setChecked(mPresenter.getAutoUpdataState());
         switchAutoCache.setOnCheckedChangeListener(this);
         switchNoImage.setOnCheckedChangeListener(this);
-        switchNightMode.setOnCheckedChangeListener(this);
         switchStatusBar.setOnCheckedChangeListener(this);
         switchAutoUpdata.setOnCheckedChangeListener(this);
     }
@@ -275,9 +274,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
                 break;
             case R.id.switch_noImage:
                 mPresenter.setNoImageState(isChecked);
-                break;
-            case R.id.switch_nightMode:
-                changeNightNode(buttonView);
                 break;
             case R.id.switch_status_bar:
                 mPresenter.setStatusBarState(isChecked);
@@ -329,10 +325,19 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     }
 
     @Override
-    public void handleLanguage() {
+    public void handleLanguageChange() {
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    public void handleThemeChange() {
+        startActivity(new Intent(this, SettingsActivity.class));
+        overridePendingTransition(R.anim.anim_settings_enter, R.anim.anim_settings_exit);
+        finish();
+        String theme = mPresenter.getSelectedTheme();
+        ThemeUtil.setTheme(this, theme);
     }
 
     @Override
@@ -379,19 +384,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         mAnimator.setRepeatCount(ValueAnimator.INFINITE);
         mAnimator.setRepeatMode(ValueAnimator.INFINITE);
         mAnimator.start();
-    }
-
-    /**
-     * 夜间模式切换
-     */
-    private void changeNightNode(CompoundButton buttonView) {
-        if(!TimeUtil.isOutInterval(Constant.NIGHT_CHANGE_WAIT_TIME)) {
-            return;
-        }
-        mPresenter.setNightModeState(buttonView.isChecked());
-        startActivity(new Intent(this, SettingsActivity.class));
-        overridePendingTransition(R.anim.anim_settings_exter, R.anim.anim_settings_exit);
-        finish();
     }
 
     /**
@@ -443,19 +435,35 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
      * 获取当前的语言设置
      */
     private String getLanguageHint(String lan) {
-        String ret = "";
+        String ret;
         switch (lan){
-            case LanguageUtil.SYSTEM:
-                ret = getString(R.string.dialog_lan_system);
-                break;
             case LanguageUtil.SIMPLIFIED_CHINESE:
-                ret = getString(R.string.dialog_lan_china);
+                ret = getString(R.string.dialog_china);
                 break;
             case LanguageUtil.ENGLISH:
-                ret = getString(R.string.dialog_lan_english);
+                ret = getString(R.string.dialog_english);
                 break;
             default:
-                ret = getString(R.string.dialog_lan_system);
+                ret = getString(R.string.dialog_system);
+                break;
+        }
+        return ret;
+    }
+
+    /**
+     * 获取当前的主题设置
+     */
+    private String getThemeHint(String theme) {
+        String ret;
+        switch (theme){
+            case ThemeUtil.DARK:
+                ret = getString(R.string.dialog_dark);
+                break;
+            case ThemeUtil.LIGHT:
+                ret = getString(R.string.dialog_light);
+                break;
+            default:
+                ret = getString(R.string.dialog_system);
                 break;
         }
         return ret;

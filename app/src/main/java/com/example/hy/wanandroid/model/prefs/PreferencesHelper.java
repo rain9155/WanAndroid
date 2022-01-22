@@ -6,10 +6,6 @@ package com.example.hy.wanandroid.model.prefs;
  */
 public interface PreferencesHelper {
 
-    //保存夜间模式设置
-    void setNightModeState(boolean isNight);
-    //取得夜间模式设置
-    boolean getNightModeState();
     //保存主页面状态
     void setCurMainItem(int position);
     //保存Wechats页面状态
@@ -50,4 +46,9 @@ public interface PreferencesHelper {
     String getSelectedLanguage();
     //设置选择的语言
     void setSelectedLanguage(String lan);
+    //保存选择的主题
+    void setSelectedTheme(String theme);
+    //获取保存的主题
+    String getSelectedTheme();
+
 }

@@ -7,7 +7,7 @@ import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.event.ChangeFaceEvent;
-import com.example.hy.wanandroid.event.NightModeEvent;
+import com.example.hy.wanandroid.event.ThemeEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.entity.BaseResponse;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
@@ -45,21 +45,6 @@ public class MinePresenter extends BaseFragmentPresenter<MineContract.View> impl
         );
 
         addSubscriber(
-                RxBus.getInstance().toObservable(NightModeEvent.class)
-                        .compose(RxUtils.switchSchedulers())
-                        .subscribeWith(new DefaultObserver<NightModeEvent>(mView, false, false){
-                            @Override
-                            public void onNext(NightModeEvent nightModeEvent) {
-                                mView.useNightNode(nightModeEvent.isNight());
-                            }
-
-                            @Override
-                            protected void unknown() {
-                                mView.showToast(App.getContext().getString(R.string.error_switch_fail));
-                            }
-                        }));
-
-        addSubscriber(
                 RxBus.getInstance().toObservable(ChangeFaceEvent.class)
                 .subscribe(changeFaceEvent -> mView.changeFaceOrBackground(changeFaceEvent.isChangeFace()))
         );
@@ -80,10 +65,5 @@ public class MinePresenter extends BaseFragmentPresenter<MineContract.View> impl
                     }
                 })
         );
-    }
-
-    @Override
-    public boolean getNightModeState() {
-        return mModel.getNightModeState();
     }
 }

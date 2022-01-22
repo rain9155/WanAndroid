@@ -6,35 +6,35 @@
     android:background="@drawable/bg_dialog">
 
     <RadioGroup
-        android:id="@+id/rg_lan"
+        android:id="@+id/rg_theme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:checkedButton="@id/rb_lan_system"
+        android:checkedButton="@id/rb_theme_system"
         android:padding="@dimen/dp_5">
 
         <RadioButton
-            android:id="@+id/rb_lan_system"
+            android:id="@+id/rb_theme_system"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryText"
             android:text="@string/dialog_system" />
 
         <RadioButton
-            android:id="@+id/rb_lan_china"
+            android:id="@+id/rb_theme_dark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryText"
-            android:text="@string/dialog_china"
+            android:text="@string/dialog_dark"
             android:layout_marginTop="@dimen/dp_5"/>
 
         <RadioButton
-            android:id="@+id/rb_lan_english"
+            android:id="@+id/rb_theme_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryText"
-            android:text="@string/dialog_english"
+            android:text="@string/dialog_light"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_marginBottom="@dimen/dp_10"/>
 
@@ -48,7 +48,7 @@
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/sp_14"
         android:background="@drawable/bg_common_rect"
-        android:layout_below="@id/rg_lan"
+        android:layout_below="@id/rg_theme"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="@dimen/dp_20"
@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_confirm"
-        android:layout_below="@id/rg_lan"
+        android:layout_below="@id/rg_theme"
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/sp_14"
         android:background="@drawable/bg_common_rect"

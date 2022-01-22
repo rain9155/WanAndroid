@@ -19,8 +19,6 @@ public interface MainContract {
     interface Presenter{
         void setCurrentItem(int position);
         int getCurrentItem();
-        boolean getNightModeState();
-        boolean getStatusBarState();
         boolean getAutoUpdataState();
         void checkVersion(String currentVersion);
 

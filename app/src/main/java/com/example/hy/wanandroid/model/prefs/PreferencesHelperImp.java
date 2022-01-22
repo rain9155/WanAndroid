@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.example.hy.wanandroid.utlis.LanguageUtil;
 import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.config.Constant;
+import com.example.hy.wanandroid.utlis.ThemeUtil;
 
 import javax.inject.Inject;
 
@@ -23,13 +24,13 @@ public class PreferencesHelperImp implements PreferencesHelper {
     }
 
     @Override
-    public void setNightModeState(boolean isNight) {
-        mPreferences.edit().putBoolean(Constant.KEY_PREFS_NODE_MODE, isNight).apply();
+    public void setSelectedTheme(String theme) {
+        mPreferences.edit().putString(Constant.KEY_PREFS_THEME, theme).apply();
     }
 
     @Override
-    public boolean getNightModeState() {
-        return mPreferences.getBoolean(Constant.KEY_PREFS_NODE_MODE, false);
+    public String getSelectedTheme() {
+        return mPreferences.getString(Constant.KEY_PREFS_THEME, ThemeUtil.SYSTEM);
     }
 
     @Override

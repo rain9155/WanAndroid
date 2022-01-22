@@ -32,7 +32,8 @@ public class LanguageDialog extends BaseDialogFragment {
 
     @Override
     protected void initView(View view) {
-        int selectedId = getLanguageSelectedId(App.getContext().getAppComponent().getDataModel().getSelectedLanguage());
+        String selectedLan = App.getContext().getAppComponent().getDataModel().getSelectedLanguage();
+        int selectedId = getLanguageSelectedId(selectedLan);
         if(selectedId != -1) {
             ((RadioButton)view.findViewById(selectedId)).setChecked(true);
         }
@@ -41,10 +42,8 @@ public class LanguageDialog extends BaseDialogFragment {
         view.findViewById(R.id.rb_lan_english).setOnClickListener(v -> mSelectedLanguage = LanguageUtil.ENGLISH);
         view.findViewById(R.id.btn_cancel).setOnClickListener(v -> this.dismiss());
         view.findViewById(R.id.btn_confirm).setOnClickListener(v -> {
-            if(mSelectedLanguage != null){
-                if(!mSelectedLanguage.equals(App.getContext().getAppComponent().getDataModel().getSelectedLanguage())) {
-                    RxBus.getInstance().post(new LanguageEvent(mSelectedLanguage));
-                }
+            if(mSelectedLanguage != null && !mSelectedLanguage.equals(selectedLan)){
+                RxBus.getInstance().post(new LanguageEvent(mSelectedLanguage));
             }
             this.dismiss();
         });
@@ -52,14 +51,10 @@ public class LanguageDialog extends BaseDialogFragment {
 
     /**
      * 获取当前的语言设置对应的单选控件按钮id
-     * @return
      */
     private int getLanguageSelectedId(String lan) {
-        int ret = -1;
+        int ret;
         switch (lan){
-            case LanguageUtil.SYSTEM:
-                ret = R.id.rb_lan_system;
-                break;
             case LanguageUtil.SIMPLIFIED_CHINESE:
                 ret = R.id.rb_lan_china;
                 break;
@@ -67,6 +62,7 @@ public class LanguageDialog extends BaseDialogFragment {
                 ret = R.id.rb_lan_english;
                 break;
             default:
+                ret = R.id.rb_lan_system;
                 break;
         }
         return ret;

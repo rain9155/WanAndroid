@@ -33,9 +33,13 @@
     <string name="dialog_toast">提示</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_confirm">确认</string>
-    <string name="dialog_lan_system">跟随系统</string>
-    <string name="dialog_lan_china">简体中文</string>
-    <string name="dialog_lan_english">English(US)</string>
+    <string name="dialog_system">跟随系统</string>
+    <string name="dialog_china">简体中文</string>
+    <string name="dialog_english">English(US)</string>
+    <string name="dialog_light">浅色</string>
+    <string name="dialog_dark">深色</string>
+    <string name="dialog_clear_cache1">确认清空\t</string>
+    <string name="dialog_clear_cache2">\t缓存？</string>
 
     //toast
     <string name="toast_collection_success">收藏成功</string>
@@ -102,7 +106,6 @@
     <string name="settingsActivity_tvSettingsOther">其他设置</string>
     <string name="settingsActivity_tvNoImage">无图模式</string>
     <string name="settingsActivity_tvAutoCache">自动缓存文章</string>
-    <string name="settingsActivity_tvNightMode">夜间模式</string>
     <string name="settingsActivity_tvStatusBar">状态栏跟随主题</string>
     <string name="settingsActivity_tvAutoUpadta">自动检查更新</string>
     <string name="settingsActivity_tvClearCache">清空缓存</string>
@@ -116,8 +119,7 @@
     <string name="settingsActivity_already_clear">缓存已清空</string>
     <string name="settingsActivity_tvSettingsCommon">通用设置</string>
     <string name="settingsActivity_tvSettingsLan">多语言</string>
-    <string name="dialog_clear_cache1">确认清空\t</string>
-    <string name="dialog_clear_cache2">\t缓存？</string>
+    <string name="settingsActivity_tvSettingsTheme">主题</string>
 
     //navigation
     <string name="navigationActivity_tlTitle">导航</string>

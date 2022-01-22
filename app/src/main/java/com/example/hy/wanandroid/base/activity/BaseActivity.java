@@ -2,6 +2,7 @@ package com.example.hy.wanandroid.base.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -40,10 +41,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        inject();
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         mUnbinder = ButterKnife.bind(this);
-        inject();
         initView();
         setStatusBarColor(getAppComponent().getDataModel().getStatusBarState());
         initData();
@@ -68,7 +69,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         if(mUnbinder != null && mUnbinder != Unbinder.EMPTY){
             mUnbinder.unbind();
         }
-        if(mTipView != null && mTipView.getParent() != null) ((ViewGroup)getWindow().getDecorView()).removeView(mTipView);
+        if(mTipView != null && mTipView.getParent() != null) {
+            ((ViewGroup)getWindow().getDecorView()).removeView(mTipView);
+        }
         super.onDestroy();
     }
 
@@ -83,18 +86,23 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
 
     @Override
     public void showTipsView(boolean isConnection) {
-        if (!isEnableTip)
+        if (!isEnableTip) {
             return;
-        if(mTipView == null)
+        }
+        if(mTipView == null) {
             mTipView = new TextView(this);
+        }
 
         if (isConnection){
-            if(mTipView.getParent() != null)
+            if(mTipView.getParent() != null) {
                 ((ViewGroup)getWindow().getDecorView()).removeView(mTipView);
+            }
             RxBus.getInstance().post(new ReLoadEvent());
         }
         else{
-            if(mTipView.getParent() != null) return;
+            if(mTipView.getParent() != null) {
+                return;
+            }
             ToastUtil.toastMake(
                     mTipView,
                     (ViewGroup) getWindow().getDecorView(),
