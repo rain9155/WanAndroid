@@ -11,6 +11,9 @@ import com.example.hy.wanandroid.di.component.DaggerAppComponent;
 import com.example.hy.wanandroid.di.module.CommonModule;
 import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.utlis.GlideApp;
+import com.example.hy.wanandroid.utlis.LanguageUtil;
+import com.example.hy.wanandroid.utlis.ThemeUtil;
+import com.example.hy.wanandroid.widget.dialog.LanguageDialog;
 import com.example.loading.Loading;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -51,8 +54,8 @@ public class App extends LitePalApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = this;
         mAppComponent = DaggerAppComponent.builder().commonModule(new CommonModule(this)).build();
+        mContext = this;
         initLitepal();
         initBugly();
         initLeakCanary();
@@ -61,21 +64,24 @@ public class App extends LitePalApplication {
                 .addLoadingView(R.layout.loading_view)
                 .addEmptyView(R.layout.empty_view)
                 .commit();
+        ThemeUtil.setTheme(this, getAppComponent().getDataModel().getSelectedTheme());
     }
 
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
         //当应用所有UI隐藏时应该释放UI上所有占用的资源
-        if(ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN == level)
+        if(ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN == level) {
             GlideApp.get(this).clearMemory();
+        }
         //根据level级别来清除一些图片缓存
         GlideApp.get(this).onTrimMemory(level);
     }
 
     private void initLeakCanary() {
-        if (!LeakCanary.isInAnalyzerProcess(this))
+        if (!LeakCanary.isInAnalyzerProcess(this)) {
             LeakCanary.install(this);
+        }
     }
 
     private void initLitepal() {
@@ -83,7 +89,9 @@ public class App extends LitePalApplication {
     }
 
     private void initBugly() {
-        if(BuildConfig.DEBUG) return;
+        if(BuildConfig.DEBUG) {
+            return;
+        }
         Context context = getApplicationContext();
         // 获取当前包名
         String packageName = context.getPackageName();

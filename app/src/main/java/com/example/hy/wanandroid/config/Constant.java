@@ -76,7 +76,7 @@ public class Constant {
     public static final String KEY_PREFS_THEME = "theme";
 
     //utils
-    public static final String EMAIL_ADDRESS = "1847796089@qq.com";
+    public static final String EMAIL_ADDRESS = "jianyu9155@gmial.com";
 
     //bugly
     public static final String BUGLY_ID = "a0768ddf34";

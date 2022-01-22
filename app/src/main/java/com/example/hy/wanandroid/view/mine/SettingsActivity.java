@@ -326,8 +326,9 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
 
     @Override
     public void handleLanguageChange() {
-        Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        LanguageUtil.attachBaseContext(this, mPresenter.getSelectedLanguage());
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 

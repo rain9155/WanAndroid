@@ -129,4 +129,3 @@ android {
         testImplementation rootProject.ext.test["mocktio"]
     }
 }
-

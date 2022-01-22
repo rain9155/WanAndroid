@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.hy.wanandroid.BuildConfig;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
 import com.example.hy.wanandroid.entity.ArticleBean;
@@ -30,6 +31,7 @@ import com.example.hy.wanandroid.presenter.homepager.ArticlePresenter;
 import com.example.hy.wanandroid.utlis.NetWorkUtil;
 import com.example.hy.wanandroid.utlis.ShareUtil;
 import com.example.hy.wanandroid.utlis.StatusBarUtil;
+import com.example.hy.wanandroid.utlis.ThemeUtil;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.widget.layout.WebLayout;
 import com.just.agentweb.AgentWeb;
@@ -95,8 +97,9 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
     @Override
     protected void initView() {
         super.initView();
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP) {
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
+        }
         initToolBar();
     }
 
@@ -116,6 +119,9 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
     @Override
     protected void initData() {
         super.initData();
+
+        WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG);
+
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(flContainer, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator(getResources().getColor(R.color.colorPrimary))
@@ -141,8 +147,12 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_article, menu);
         mCollectionItem = menu.findItem(R.id.item_collection);
-        if(isHideCollection) mCollectionItem.setVisible(false);
-        if(isCollection) mCollectionItem.setTitle(getString(R.string.articleActivity_cancel_collection));
+        if(isHideCollection) {
+            mCollectionItem.setVisible(false);
+        }
+        if(isCollection) {
+            mCollectionItem.setTitle(getString(R.string.articleActivity_cancel_collection));
+        }
         return true;
     }
 
@@ -153,7 +163,9 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
                 shareText();
                 break;
             case R.id.item_collection:
-                if(mArticleId == -1) return true;
+                if(mArticleId == -1) {
+                    return true;
+                }
                 collection();
                 break;
             case R.id.item_browser:
@@ -172,8 +184,11 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_LOGIN) {
-            if (isCollection) mPresenter.unCollectArticle(mArticleId);
-            else mPresenter.collectArticle(mArticleId);
+            if (isCollection) {
+                mPresenter.unCollectArticle(mArticleId);
+            } else {
+                mPresenter.collectArticle(mArticleId);
+            }
         }
     }
 
@@ -223,10 +238,11 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
 
     @Override
     public void collect() {
-        if(isCollection)
+        if(isCollection) {
             mPresenter.unCollectArticle(mArticleId);
-        else
+        } else {
             mPresenter.collectArticle(mArticleId);
+        }
     }
 
     /**
@@ -253,14 +269,15 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
      * 分享
      */
     private void shareText() {
-        if(!TextUtils.isEmpty(mTitle) && !TextUtils.isEmpty(mAddress))
+        if(!TextUtils.isEmpty(mTitle) && !TextUtils.isEmpty(mAddress)) {
             ShareUtil.shareText(
                     this,
                     getString(R.string.articleActivity_share_text) + "\n" + mTitle + "\n" + mAddress,
                     getString(R.string.articleActivity_share_to)
             );
-        else
+        } else {
             showToast(getString(R.string.articleActivity_share_fail));
+        }
     }
 
     /**
@@ -268,19 +285,21 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
      */
     @SuppressLint("SetJavaScriptEnabled")
     private void setSettings(WebSettings settings) {
-        if (mPresenter.getNoImageState())
+        if (mPresenter.getNoImageState()) {
             settings.setBlockNetworkImage(true);
-        else
+        } else {
             settings.setBlockNetworkImage(false);
+        }
 
         if(mPresenter.getAutoCacheState()){
             settings.setAppCacheEnabled(true);
             settings.setDatabaseEnabled(true);
             settings.setDatabaseEnabled(true);
-            if(NetWorkUtil.isNetworkConnected(this))
+            if(NetWorkUtil.isNetworkConnected(this)) {
                 settings.setCacheMode(WebSettings.LOAD_DEFAULT);//（默认）根据cache-control决定是否从网络上取数据
-            else
+            } else {
                 settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//只要本地有，无论是否过期，或者no-cache，都使用缓存中的数据。
+            }
         }else {
             settings.setAppCacheEnabled(false);
             settings.setDatabaseEnabled(false);
@@ -301,6 +320,11 @@ public class ArticleActivity extends BaseMvpActivity<ArticlePresenter> implement
         settings.setLoadWithOverviewMode(true);
         //自适应屏幕
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+
+        //android 10支持WebView暗黑模式
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            settings.setForceDark(ThemeUtil.isDarkTheme(this) ? WebSettings.FORCE_DARK_ON : WebSettings.FORCE_DARK_OFF);
+        }
     }
 
     /**

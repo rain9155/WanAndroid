@@ -65,7 +65,6 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
     private int pageNum = 0;//首页文章页数
     private boolean isLoadMore = false;
     private int mCollectionPosition = -1;//点击的位置
-    private boolean isPress = false;
     private Collection mCollection;
     private List<Collection> mCollections;
 
@@ -87,8 +86,9 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
     @Override
     protected void initView( ) {
         super.initView();
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP) {
             StatusBarUtil.setHeightAndPadding(this, tlCommon);
+        }
         initToolBar();
         initRecyclerView();
         initRefreshView();
@@ -114,15 +114,7 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
         });
         mCollectionAdapter.setOnItemLongClickListener((adapter, view, position) -> {
             Collection collection = mCollections.get(position);
-            view.setOnTouchListener((v, event) -> {
-                if(event.getAction() == MotionEvent.ACTION_UP && isPress){
-                   // mPopupWindow.get().show(tlCommon, event.getRawX(), event.getRawY());
-                    mPopupWindow.get().setMessage(collection.getTitle(), collection.getLink());
-                    isPress = false;
-                }
-                return false;
-            });
-            isPress = true;
+            mPopupWindow.get().show(tlCommon, view, collection);
             return true;
         });
     }
@@ -145,7 +137,9 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
         tvCommonTitle.setText(R.string.mineFragment_tvCollect);
         tlCommon.setNavigationIcon(R.drawable.ic_arrow_left);
         tlCommon.setNavigationOnClickListener(v -> {
-            if(!CommonUtil.isEmptyList(mIds)) RxBus.getInstance().post(new CollectionEvent(mIds));
+            if(!CommonUtil.isEmptyList(mIds)) {
+                RxBus.getInstance().post(new CollectionEvent(mIds));
+            }
             finish();
         });
     }
@@ -158,14 +152,19 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
 
     @Override
     public void onBackPressed() {
-        if(!CommonUtil.isEmptyList(mIds)) RxBus.getInstance().post(new CollectionEvent(mIds));
+        if(!CommonUtil.isEmptyList(mIds)) {
+            RxBus.getInstance().post(new CollectionEvent(mIds));
+        }
         finish();
     }
 
     @Override
     public void unableRefresh() {
-        if (isLoadMore) normalView.finishLoadMore();
-        else normalView.finishRefresh();
+        if (isLoadMore) {
+            normalView.finishLoadMore();
+        } else {
+            normalView.finishRefresh();
+        }
     }
 
     @Override
@@ -176,10 +175,14 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
 
     @Override
     public void showCollections(List<Collection> collections) {
-        if(!CommonUtil.isEmptyList(mCollections)) mCollections.clear();
+        if(!CommonUtil.isEmptyList(mCollections)) {
+            mCollections.clear();
+        }
         mCollections.addAll(collections);
         mCollectionAdapter.notifyDataSetChanged();
-        if(CommonUtil.isEmptyList(mCollections)) showEmptyLayout();
+        if(CommonUtil.isEmptyList(mCollections)) {
+            showEmptyLayout();
+        }
     }
 
     @Override
@@ -187,7 +190,9 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
         if (isLoadMore) {
             normalView.finishLoadMore();
         } else {
-            if (!CommonUtil.isEmptyList(mCollections)) mCollections.clear();
+            if (!CommonUtil.isEmptyList(mCollections)) {
+                mCollections.clear();
+            }
             normalView.finishRefresh();
         }
         mCollections.addAll(collections);
@@ -200,7 +205,9 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
         mIds.add(mCollections.get(mCollectionPosition).getOriginId());
         mCollections.remove(mCollectionPosition);
         mCollectionAdapter.notifyItemRemoved(mCollectionPosition + mCollectionAdapter.getHeaderLayoutCount());
-        if(CommonUtil.isEmptyList(mCollections)) showEmptyLayout();
+        if(CommonUtil.isEmptyList(mCollections)) {
+            showEmptyLayout();
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@
     android:id="@+id/cl_reload"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.Guideline
@@ -19,6 +20,7 @@
         android:layout_width="@dimen/dp_100"
         android:layout_height="@dimen/dp_100"
         android:src="@drawable/ic_reload"
+        android:tint="@color/colorSecondaryText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/gl_horizontal"
@@ -31,7 +33,7 @@
         android:text="@string/loading_error"
         android:layout_marginTop="@dimen/dp_15"
         android:textSize="@dimen/sp_18"
-        android:textColor="@color/colorSecondaryText"
+        android:textColor="@color/colorThirdText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/gl_horizontal"/>

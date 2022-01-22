@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.util.DisplayMetrics;
 
+import com.example.hy.wanandroid.BuildConfig;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -42,7 +44,9 @@ public class LanguageUtil {
 
 
     /**
-     * 配置Context，使它支持给定的语言
+     * 配置Context，使它支持给定的语言，要在两处地方调用：
+     * 1、选择完语言后调用，然后重启app
+     * 2、每个activity的attachBaseContext方法中调用
      * @param context 要配置的配置Context
      * @param lan 要设置的语言
      * @return 配置过的Context
@@ -61,10 +65,11 @@ public class LanguageUtil {
      * @param lan 要替换的语言
      * @return 已经update过的Context
      */
-    private static Context updateConfigurationContext(Context context, String lan){
+    public static Context updateConfigurationContext(Context context, String lan){
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
-        configuration.locale = getSupportLanguage(lan);
+        Locale locale = getSupportLanguage(lan);
+        configuration.setLocale(locale);
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         resources.updateConfiguration(configuration, displayMetrics);
         return context;
@@ -73,18 +78,16 @@ public class LanguageUtil {
     /**
      * android7.0之后，需要set local 到 configuration
      * @param context 要set的Context
-     * @param language 要替换的语言
+     * @param lan 要替换的语言
      * @return 一个通过configuration创建的新的Context
      */
-    @TargetApi(Build.VERSION_CODES.N)
-    private static Context createConfigurationContext(Context context, String language) {
+    public static Context createConfigurationContext(Context context, String lan) {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
-        Locale locale = getSupportLanguage(language);
+        Locale locale = getSupportLanguage(lan);
         configuration.setLocale(locale);
         return context.createConfigurationContext(configuration);
     }
-
 
     /**
      * 获取支持的语言的Locale, 没有就返回默认的系统语言Locale
@@ -92,8 +95,9 @@ public class LanguageUtil {
      * @return 支持的语言的Locale
      */
     public static Locale getSupportLanguage(String lan){
-        if(isSupportLanguage(lan))
+        if(isSupportLanguage(lan)) {
             return mSupportLans.get(lan);
+        }
         return getSystemDefaultLanguage();
     }
 

@@ -1,12 +1,17 @@
 package com.example.hy.wanandroid.base.activity;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.view.ContextThemeWrapper;
 
 import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 
+import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.utlis.LanguageUtil;
 import com.example.hy.wanandroid.base.presenter.BasePresenter;
 import com.example.hy.wanandroid.App;
+import com.example.hy.wanandroid.utlis.ThemeUtil;
 
 /**
  * 封装了获取Presenter的Activity基类
@@ -20,7 +25,13 @@ public abstract class BaseMvpActivity<T extends BasePresenter> extends BaseActiv
     @Override
     protected void attachBaseContext(Context newBase) {
         String selectedLan = App.getContext().getAppComponent().getDataModel().getSelectedLanguage();
-        super.attachBaseContext(LanguageUtil.attachBaseContext(newBase, selectedLan));
+        Context context = LanguageUtil.attachBaseContext(newBase, selectedLan);
+        super.attachBaseContext(context);
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.hy.wanandroid.entity.Collection;
 import com.example.hy.wanandroid.utlis.ShareUtil;
 import com.example.hy.wanandroid.utlis.ToastUtil;
 import com.example.hy.wanandroid.R;
@@ -37,14 +38,22 @@ public class PressPopupWindow extends PopupWindow {
         mLink = "";
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     public void show(View parentView, View view, Article article) {
+        show(parentView, view, article.getTitle(), article.getLink());
+    }
+
+    public void show(View parentView, View view, Collection collection) {
+        show(parentView, view, collection.getTitle(), collection.getLink());
+    }
+
+    public void show(View parentView, View view, String title, String link) {
         initPopup(view.getContext());
         view.setOnTouchListener((v, event) -> {
-            if((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) && isPress){
+            boolean isShow = (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) && isPress;
+            if(isShow){
                 this.showAtLocation(parentView, Gravity.NO_GRAVITY, (int) event.getRawX(), (int) event.getRawY());
-                this.mTitle = article.getTitle();
-                this.mLink = article.getLink();
+                this.mTitle = title;
+                this.mLink = link;
                 isPress = false;
             }
             return false;
@@ -54,10 +63,6 @@ public class PressPopupWindow extends PopupWindow {
 
     public void setOnClickListener(OnClickListener onClickListener){
         this.mClickListener = onClickListener;
-    }
-
-    public void setMessage(String title, String link){
-
     }
 
     private void initPopup(Context context) {
@@ -77,23 +82,26 @@ public class PressPopupWindow extends PopupWindow {
                     context.getString(R.string.articleActivity_share_text) + "\n" + mTitle + "\n" + mLink,
                     context.getString(R.string.articleActivity_share_to)
             );
-            if (mClickListener != null)
+            if (mClickListener != null) {
                 mClickListener.onShareClick();
+            }
             this.dismiss();
         });
         TextView tvOpenBrowse = view.findViewById(R.id.tv_open);
         tvOpenBrowse.setOnClickListener(v -> {
             ShareUtil.openBrowser(context, mLink);
-            if (mClickListener != null)
+            if (mClickListener != null) {
                 mClickListener.onOpenBrowserClick();
+            }
             this.dismiss();
         });
         TextView tvCopy = view.findViewById(R.id.tv_copy);
         tvCopy.setOnClickListener(v -> {
             ShareUtil.copyString(context, mLink);
             ToastUtil.showCustomToastInBottom(context, context.getString(R.string.articleActivity_copy_success));
-            if(mClickListener != null)
+            if(mClickListener != null) {
                 mClickListener.onCopyClick();
+            }
             this.dismiss();
         });
     }

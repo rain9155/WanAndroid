@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.animation.AccelerateInterpolator;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.App;
+import com.example.hy.wanandroid.utlis.ThemeUtil;
 import com.example.hy.wanandroid.widget.customView.SVGBgView;
 
 public class LaunchActivity extends AppCompatActivity {
@@ -27,7 +29,7 @@ public class LaunchActivity extends AppCompatActivity {
                 .setDuration(2800);
         animator.setInterpolator(new AccelerateInterpolator());
         animator.start();
-        new Handler().postDelayed(() -> {
+        getWindow().getDecorView().postDelayed(() -> {
             startActivity(new Intent(LaunchActivity.this, MainActivity.class));
             overridePendingTransition(R.anim.anim_launch_enter, 0);
             finish();
