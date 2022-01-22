@@ -7,12 +7,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/background</item>
-        <item name="android:windowIsTranslucent">true</item>
-    </style>
-
-    <style name="AppTheme" parent="@style/BaseTheme">
         <item name="android:windowAnimationStyle">@style/ActivityAnim</item>
     </style>
+
+    <style name="AppTheme" parent="@style/BaseTheme" />
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -44,11 +42,9 @@
     </style>
 
     <!--Dialog风格-->
-    <style name="DialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
-        <item name="android:windowNoTitle">true</item>
+    <style name="DialogTheme" parent="ThemeOverlay.AppCompat.Dialog">
         <item name="android:windowBackground">@color/transparency</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnim</item>
     </style>
 
     <style name="PopupAnim">

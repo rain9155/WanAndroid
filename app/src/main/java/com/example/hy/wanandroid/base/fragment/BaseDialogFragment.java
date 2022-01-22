@@ -2,9 +2,7 @@ package com.example.hy.wanandroid.base.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -12,16 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 
 import com.example.hy.wanandroid.R;
 
 import java.lang.reflect.Field;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StyleRes;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -47,8 +42,18 @@ public abstract class BaseDialogFragment extends DialogFragment {
         return R.style.DialogTheme;
     }
 
+    /**
+     * 设置Dialog Window的大小
+     */
     protected ViewGroup.LayoutParams getLayoutParams() {
-        return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+
+    /**
+     * 设置Dialog Window的DecorView的Padding
+     */
+    protected Rect getDecorPadding() {
+        return new Rect(60, 60, 60, 60);
     }
 
     /**
@@ -71,12 +76,12 @@ public abstract class BaseDialogFragment extends DialogFragment {
                 .create();
         Window window = mDialog.getWindow();
         if(window != null) {
+            Rect padding = getDecorPadding();
+            window.getDecorView().setPadding(padding.left, padding.top, padding.right, padding.bottom);
+            ViewGroup.LayoutParams layoutParams = getLayoutParams();
+            window.setLayout(layoutParams.width, layoutParams.height);
             window.setWindowAnimations(getDialogAnimStyle());
             window.setGravity(getGravity());
-            window.getDecorView().setPadding(0, 0, 0, 0);
-            ViewGroup.LayoutParams layoutParams = getLayoutParams();
-            window.getAttributes().width = layoutParams.width;
-            window.getAttributes().height = layoutParams.height;
         }
         if(isCancelBackDismiss()) {
             mDialog.setCancelable(false);

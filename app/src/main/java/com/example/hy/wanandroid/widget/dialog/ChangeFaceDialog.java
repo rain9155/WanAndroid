@@ -1,9 +1,8 @@
 package com.example.hy.wanandroid.widget.dialog;
 
+import android.graphics.Rect;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.example.hy.wanandroid.utlis.FileUtil;
 import com.example.hy.wanandroid.R;
@@ -41,8 +40,8 @@ public class ChangeFaceDialog extends BaseDialogFragment {
     }
 
     @Override
-    protected ViewGroup.LayoutParams getLayoutParams() {
-        return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    protected Rect getDecorPadding() {
+        return new Rect();
     }
 
     @Override
