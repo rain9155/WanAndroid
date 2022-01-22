@@ -10,7 +10,7 @@
     <color name="colorThirdText">#E6E6E6</color>
     <color name="foreground">#424242</color>
     <color name="background">#212121</color>
-    <color name="divier">#1ebdbdbd</color>
+    <color name="divider">#1ebdbdbd</color>
     <color name="translucence">#80FFFFFF</color>
     <color name="transparency">#00000000</color>
     <color name="colorLaunchText">#FFFFFF</color>

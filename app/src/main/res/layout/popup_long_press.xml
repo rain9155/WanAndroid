@@ -10,16 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/articleActivity_share"
-        android:textSize="@dimen/sp_18"
-        android:gravity="left"
+        android:textSize="@dimen/sp_16"
+        android:gravity="start"
         android:clickable="true"
         android:focusable="true"
-        android:layout_marginTop="@dimen/dp_10"
-        android:paddingLeft="@dimen/dp_10"
+        android:padding="@dimen/dp_10"
         android:textColor="@color/colorPrimaryText"
-        android:paddingRight="@dimen/dp_10"
         android:background="@drawable/bg_common_tv"
-        android:paddingStart="@dimen/dp_10"
         tools:ignore="RtlSymmetry" />
 
     <TextView
@@ -27,16 +24,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/articleActivity_copy"
-        android:textSize="@dimen/sp_18"
+        android:textSize="@dimen/sp_16"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="left"
+        android:gravity="start"
         android:background="@drawable/bg_common_tv"
-        android:layout_marginTop="@dimen/dp_10"
-        android:paddingLeft="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10"
+        android:padding="@dimen/dp_10"
         android:textColor="@color/colorPrimaryText"
-        android:paddingStart="@dimen/dp_10"
         tools:ignore="RtlSymmetry" />
 
     <TextView
@@ -44,17 +38,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/articleActivity_browser"
-        android:textSize="@dimen/sp_18"
+        android:textSize="@dimen/sp_16"
         android:gravity="center"
         android:clickable="true"
         android:focusable="true"
         android:background="@drawable/bg_common_tv"
-        android:layout_marginTop="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10"
-        android:paddingLeft="@dimen/dp_10"
+        android:padding="@dimen/dp_10"
         android:textColor="@color/colorPrimaryText"
-        android:paddingStart="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10"
         tools:ignore="RtlSymmetry" />
 
 </LinearLayout>

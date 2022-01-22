@@ -24,7 +24,7 @@ import com.example.hy.wanandroid.utlis.StatusBarUtil;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
 import com.example.hy.wanandroid.view.navigation.NavigationActivity;
 import com.example.hy.wanandroid.view.search.SearchActivity;
-import com.example.hy.wanandroid.widget.popup.PressPopup;
+import com.example.hy.wanandroid.widget.popup.PressPopupWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -72,7 +72,7 @@ public class HomeFragment extends BaseLoadFragment<HomePresenter> implements Hom
     @Inject
     ArticlesAdapter mArticlesAdapter;
     @Inject
-    Lazy<PressPopup> mPopupWindow;
+    Lazy<PressPopupWindow> mPopupWindow;
 
     private int mPageNum = 0;//首页文章页数
     private boolean isLoadMore = false;

@@ -26,6 +26,11 @@ public class LogoutDialog extends BaseDialogFragment {
     }
 
     @Override
+    protected boolean isCancelBackDismiss() {
+        return true;
+    }
+
+    @Override
     protected void initView(View view) {
         view.findViewById(R.id.btn_cancel).setOnClickListener(v ->
                 this.dismiss()
@@ -34,6 +39,5 @@ public class LogoutDialog extends BaseDialogFragment {
             this.dismiss();
             RxBus.getInstance().post(new LoginEvent(false));
         });
-        cancelBackDismiss();
     }
 }

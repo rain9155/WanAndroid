@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.text.TextUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -98,27 +99,27 @@ public class FileUtil{
     /**
      * 在本地文件保存图片
      */
-    public static boolean saveBitmap(String file, String name, Bitmap bitmap){
+    public static boolean saveBitmap(String dir, String fileName, Bitmap bitmap){
         BufferedOutputStream bufferedOutputStream = null;
         FileOutputStream fileOutputStream = null;
-        File fileParent = new File(file);
-        File bitmapFile = new File(fileParent, name);
+        File fileParent = new File(dir);
+        File bitmapFile = new File(fileParent, fileName);
         boolean result = false;
         try {
-            if(!fileParent.exists())
+            if(!fileParent.exists()) {
                 fileParent.mkdirs();
-            if(bitmapFile.exists())
+            }
+            if(bitmapFile.exists()) {
                 bitmapFile.delete();
+            }
             bitmapFile.createNewFile();
             fileOutputStream = new FileOutputStream(bitmapFile);
             bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
             result = bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bufferedOutputStream);
             bufferedOutputStream.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             close(bufferedOutputStream);
             close(fileOutputStream);
         }
@@ -130,12 +131,12 @@ public class FileUtil{
     /**
      * 在本地文件取出保存的图片
      */
-    public static Bitmap loadBitmap(String file, String name){
+    public static Bitmap loadBitmap(String dir, String fileName){
         BufferedInputStream bufferedInputStream = null;
         Bitmap bitmap = null;
         FileInputStream fileInputStream = null;
         try {
-            fileInputStream = new FileInputStream(new File(file, name));
+            fileInputStream = new FileInputStream(new File(dir, fileName));
             bufferedInputStream = new BufferedInputStream(fileInputStream);
             bitmap = BitmapFactory.decodeStream(bufferedInputStream);
         } catch (FileNotFoundException e) {
@@ -147,6 +148,20 @@ public class FileUtil{
         return bitmap;
     }
 
+    /**
+     * 判断某个文件是否存在
+     */
+    public static boolean isFileExist(String dir, String fileName) {
+        if(!TextUtils.isEmpty(dir) && !TextUtils.isEmpty(fileName)) {
+            return (new File(dir, fileName)).exists();
+        }else if(!TextUtils.isEmpty(dir)) {
+            return (new File(dir)).exists();
+        }else if(!TextUtils.isEmpty(fileName)){
+            return (new File(fileName)).exists();
+        }else {
+            return false;
+        }
+    }
 
     /**
      * 删除某个文件或某个文件夹下所有的文件

@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -14,6 +14,43 @@
         <item name="android:windowAnimationStyle">@style/ActivityAnim</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.LauncherActivity">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowBackground">@color/background</item>
+    </style>
+
+    <style name="AppTheme.SearchActivity">
+        <item name="windowNoTitle">true</item>
+        <!--设置menu中item的图标颜色-->
+        <item name="android:textColorSecondary">@color/white</item>
+        <!--设置commit按钮和搜索按钮的图标-->
+        <item name="searchViewStyle">@style/SearchViewStyle</item>
+    </style>
+
+    <!--菜单风格-->
+    <style name="AppBarOverlayTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!--toolbar弹出菜单的风格-->
+    <style name="PopupOverlayTheme" parent="ThemeOverlay.AppCompat.DayNight">
+        <item name="overlapAnchor">false</item>
+    </style>
+
+    <!--Dialog风格-->
+    <style name="DialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparency</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <style name="PopupAnim">
         <item name="android:windowEnterAnimation">@anim/anim_popup_enter</item>
         <item name="android:windowExitAnimation">@anim/anim_popup_exit</item>
@@ -22,6 +59,11 @@
     <style name="DialogAnim">
         <item name="android:windowEnterAnimation">@anim/anim_dialog_enter</item>
         <item name="android:windowExitAnimation">@anim/anim_dialog_exit</item>
+    </style>
+
+    <style name="DialogBottomAnim">
+        <item name="android:windowEnterAnimation">@anim/anim_dialog_bottom_enter</item>
+        <item name="android:windowExitAnimation">@anim/anim_dialog_bottom_exit</item>
     </style>
 
     <style name="ActivityAnim">
@@ -44,19 +86,11 @@
         <item name="android:windowExitAnimation">@anim/anim_tip_out</item>
     </style>
 
-    <style name="LauncherTheme" parent="AppTheme">
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowBackground">@color/background</item>
-    </style>
-
-    <!--Dialog风格-->
-    <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:background">@color/colorNavBtmBackground</item>
-        <item name="android:windowBackground">@color/transparency</item>
+    <!--SearchViewStyle-->
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/ic_search</item>
+        <item name="goIcon">@drawable/ic_search</item>
+        <item name="searchHintIcon">@null</item>
     </style>
 
     <!--SwitchButton轨迹style-->
@@ -68,30 +102,6 @@
         <!--关闭时的轨迹颜色-->
         <item name="android:colorForeground">@color/colorTrackClose</item>
 
-    </style>
-
-    <!--菜单风格-->
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <!--toolbar弹出菜单的风格-->
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-        <item name="overlapAnchor">false</item>
-    </style>
-
-    <!--搜索界面的style-->
-    <style name="SearchActivityStyle" parent="AppTheme">
-        <item name="windowNoTitle">true</item>
-        <!--设置menu中item的图标颜色-->
-        <item name="android:textColorSecondary">@color/white</item>
-        <!--设置commit按钮和搜索按钮的图标-->
-        <item name="searchViewStyle">@style/SearchViewStyle</item>
-    </style>
-
-    <!--SearchViewStyle-->
-    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
-        <item name="searchIcon">@drawable/ic_search</item>
-        <item name="goIcon">@drawable/ic_search</item>
-        <item name="searchHintIcon">@null</item>
     </style>
 
     <!-- 设置Toolbar标题字体的大小 -->
@@ -127,11 +137,6 @@
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
         <item name="android:foreground">@drawable/fg_card_rect</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

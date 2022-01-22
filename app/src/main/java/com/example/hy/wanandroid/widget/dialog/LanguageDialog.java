@@ -32,18 +32,19 @@ public class LanguageDialog extends BaseDialogFragment {
 
     @Override
     protected void initView(View view) {
-
         int selectedId = getLanguageSelectedId(App.getContext().getAppComponent().getDataModel().getSelectedLanguage());
-        if(selectedId != -1) ((RadioButton)view.findViewById(selectedId)).setChecked(true);
-
+        if(selectedId != -1) {
+            ((RadioButton)view.findViewById(selectedId)).setChecked(true);
+        }
         view.findViewById(R.id.rb_lan_system).setOnClickListener(v -> mSelectedLanguage = LanguageUtil.SYSTEM);
         view.findViewById(R.id.rb_lan_china).setOnClickListener(v -> mSelectedLanguage = LanguageUtil.SIMPLIFIED_CHINESE);
         view.findViewById(R.id.rb_lan_english).setOnClickListener(v -> mSelectedLanguage = LanguageUtil.ENGLISH);
         view.findViewById(R.id.btn_cancel).setOnClickListener(v -> this.dismiss());
         view.findViewById(R.id.btn_confirm).setOnClickListener(v -> {
             if(mSelectedLanguage != null){
-                if(!mSelectedLanguage.equals(App.getContext().getAppComponent().getDataModel().getSelectedLanguage()))
+                if(!mSelectedLanguage.equals(App.getContext().getAppComponent().getDataModel().getSelectedLanguage())) {
                     RxBus.getInstance().post(new LanguageEvent(mSelectedLanguage));
+                }
             }
             this.dismiss();
         });

@@ -20,10 +20,10 @@ import androidx.core.content.ContextCompat;
 import javax.inject.Inject;
 
 /**
- * 长按弹出框
+ * 长按弹出框，PopupWindow实现
  * Created by 陈健宇 at 2018/12/26
  */
-public class PressPopup extends PopupWindow {
+public class PressPopupWindow extends PopupWindow {
 
     private OnClickListener mClickListener;
     private String mTitle;
@@ -31,15 +31,15 @@ public class PressPopup extends PopupWindow {
     private boolean isPress;
 
     @Inject
-    public PressPopup(Context context) {
+    public PressPopupWindow(Context context) {
         super(context);
-        initPopup(context);
         mTitle = "";
         mLink = "";
     }
 
     @SuppressLint("ClickableViewAccessibility")
     public void show(View parentView, View view, Article article) {
+        initPopup(view.getContext());
         view.setOnTouchListener((v, event) -> {
             if((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) && isPress){
                 this.showAtLocation(parentView, Gravity.NO_GRAVITY, (int) event.getRawX(), (int) event.getRawY());

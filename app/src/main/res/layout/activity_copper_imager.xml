@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorCropViewToolBarBg"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
+        android:theme="@style/AppBarOverlayTheme"
+        app:popupTheme="@style/PopupOverlayTheme"
         app:navigationIcon="@drawable/ic_arrow_left">
 
         <RelativeLayout

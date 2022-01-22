@@ -45,7 +45,7 @@
         <activity
             android:name=".view.search.SearchActivity"
             android:launchMode="singleTop"
-            android:theme="@style/SearchActivityStyle" />
+            android:theme="@style/AppTheme.SearchActivity" />
         <activity
             android:name=".view.homepager.ArticleActivity"
             android:launchMode="singleTop" />
@@ -65,7 +65,7 @@
             android:name=".view.mine.SettingsActivity"/>
         <activity
             android:name=".view.LaunchActivity"
-            android:theme="@style/LauncherTheme">
+            android:theme="@style/AppTheme.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -36,7 +36,9 @@ public class OpenBrowseDialog extends BaseDialogFragment {
             this.dismiss();
             LogUtil.d(LogUtil.TAG_COMMON, "DownloadManager不可用");
             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "app-release.apk");
-            if(file.exists()) file.delete();
+            if(file.exists()) {
+                file.delete();
+            }
             ShareUtil.openBrowser(getContext(), Constant.NEW_VERSION_URL);
         });
     }

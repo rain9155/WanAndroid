@@ -23,8 +23,7 @@ public class LoadingDialog extends BaseDialogFragment {
     }
 
     @Override
-    protected void initView(View view) {
-        cancelBackDismiss();
+    protected boolean isCancelBackDismiss() {
+        return true;
     }
-
 }

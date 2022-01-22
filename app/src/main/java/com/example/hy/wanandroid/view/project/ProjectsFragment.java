@@ -17,7 +17,7 @@ import com.example.hy.wanandroid.utlis.AnimUtil;
 import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
-import com.example.hy.wanandroid.widget.popup.PressPopup;
+import com.example.hy.wanandroid.widget.popup.PressPopupWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class ProjectsFragment extends BaseLoadFragment<ProjectsPresenter> implem
     @Inject
     ProjectsAdapter mProjectsAdapter;
     @Inject
-    Lazy<PressPopup> mPopupWindow;
+    Lazy<PressPopupWindow> mPopupWindow;
 
     private int mPageNum = 1;
     private int mId;

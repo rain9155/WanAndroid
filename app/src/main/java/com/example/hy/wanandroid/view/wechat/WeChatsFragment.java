@@ -17,7 +17,7 @@ import com.example.hy.wanandroid.entity.Article;
 import com.example.hy.wanandroid.presenter.wechat.WeChatsPresenter;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
-import com.example.hy.wanandroid.widget.popup.PressPopup;
+import com.example.hy.wanandroid.widget.popup.PressPopupWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class WeChatsFragment extends BaseLoadFragment<WeChatsPresenter> implemen
     @Inject
     WeChatAdapter mArticlesAdapter;
     @Inject
-    Lazy<PressPopup> mPopupWindow;
+    Lazy<PressPopupWindow> mPopupWindow;
 
     private int mPageNum = 1;
     private int mId;

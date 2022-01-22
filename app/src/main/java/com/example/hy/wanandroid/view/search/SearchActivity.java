@@ -28,7 +28,7 @@ import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.utlis.StatusBarUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
 import com.example.hy.wanandroid.view.mine.LoginActivity;
-import com.example.hy.wanandroid.widget.popup.PressPopup;
+import com.example.hy.wanandroid.widget.popup.PressPopupWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
@@ -86,7 +86,7 @@ public class SearchActivity extends BaseLoadActivity<SearchPresenter> implements
     @Inject
     List<HotKey> mHotKeyList;
     @Inject
-    Lazy<PressPopup> mPopupWindow;
+    Lazy<PressPopupWindow> mPopupWindow;
 
     private SearchView mSearchView;
     private SearchView.SearchAutoComplete mSearchAutoComplete;

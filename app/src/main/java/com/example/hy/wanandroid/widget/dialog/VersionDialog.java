@@ -30,6 +30,11 @@ public class VersionDialog extends BaseDialogFragment {
     }
 
     @Override
+    protected boolean isCancelBackDismiss() {
+        return true;
+    }
+
+    @Override
     protected void initView(View view) {
         TextView updataLater = view.findViewById(R.id.tv_updata_later);
         TextView updataNow = view.findViewById(R.id.tv_updata_now);
@@ -40,7 +45,6 @@ public class VersionDialog extends BaseDialogFragment {
             this.dismiss();
             RxBus.getInstance().post(new UpdataEvent(isMain));
         });
-        cancelBackDismiss();
     }
 
     public void setContentText(String content){

@@ -22,7 +22,7 @@ import com.example.hy.wanandroid.utlis.AnimUtil;
 import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.utlis.StatusBarUtil;
 import com.example.hy.wanandroid.view.homepager.ArticleActivity;
-import com.example.hy.wanandroid.widget.popup.PressPopup;
+import com.example.hy.wanandroid.widget.popup.PressPopupWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -60,7 +60,7 @@ public class CollectionActivity extends BaseLoadActivity<CollectionPresenter> im
     @Inject
     List<Integer> mIds;
     @Inject
-    Lazy<PressPopup> mPopupWindow;
+    Lazy<PressPopupWindow> mPopupWindow;
 
     private int pageNum = 0;//首页文章页数
     private boolean isLoadMore = false;

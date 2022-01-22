@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppBarOverlayTheme">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
@@ -66,7 +66,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/ic_arrow_left"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:popupTheme="@style/PopupOverlayTheme" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
