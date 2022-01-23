@@ -35,11 +35,7 @@ public class FileUtil{
             objectInputStream = new ObjectInputStream(fileInputStream);
             object = objectInputStream.readObject();
             return object;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         } finally {
             close(fileInputStream);
@@ -58,8 +54,6 @@ public class FileUtil{
             fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(saveObject);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

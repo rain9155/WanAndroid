@@ -23,7 +23,6 @@ public class Constant {
     public static final int REQUEST_LOGIN = 1;
     public static final String KEY_URL_APK = "urlApk";
     public static final String KEY_DOWNLOAD_ID = "downloadId";
-    public static String NEW_VERSION_URL = "";
 
     //HierarchyFragment
     public static final String KEY_HIERARCHY_PAGENUM = "hierarchyPageNum";
@@ -82,12 +81,9 @@ public class Constant {
     public static final String BUGLY_ID = "a0768ddf34";
 
     //path
-    public static final String PATH_NET_CACHE = FileUtil.getCachePath(App.getContext(), "netData");
-    public static final String PATH_IMAGE_FACE = FileUtil.getFilePath(App.getContext(), "image");
-    public static final String PATH_IMAGE_BACKGROUND = FileUtil.getFilePath(App.getContext(), "image");
-    public static final String APK_NAME = "app-release.apk";
-    public static final String PATH_APK = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + APK_NAME;
-    public static final String FACE = "face.jpeg";
-    public static final String BACK = "background.jpeg";
+    public static final String PATH_NET = FileUtil.getCachePath(App.getContext(), "netData");
+    public static final String PATH_IMAGE = FileUtil.getFilePath(App.getContext(), "image");
+    public static final String FACE_NAME = "face.jpeg";
+    public static final String BACKGROUND_NAME = "background.jpeg";
 
 }

@@ -46,7 +46,7 @@ public class NetworkModule {
         builder.sslSocketFactory(new SSLSocketCompatFactory(trustAllCert), trustAllCert);
 
         //设置缓存
-        File cacheDir = new File(Constant.PATH_NET_CACHE);
+        File cacheDir = new File(Constant.PATH_NET);
         Cache cache = new Cache(cacheDir, 1024 * 1024 * 10);//缓存的最大尺寸10M
         builder.cache(cache);
         builder.addInterceptor(new CacheInterceptor());

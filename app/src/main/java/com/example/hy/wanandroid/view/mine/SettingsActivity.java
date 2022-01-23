@@ -1,6 +1,5 @@
 package com.example.hy.wanandroid.view.mine;
 
-import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
@@ -20,14 +19,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.hy.wanandroid.App;
+import com.example.hy.wanandroid.entity.Apk;
+import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.utlis.LanguageUtil;
-
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.example.hy.wanandroid.utlis.FileUtil;
 import com.example.hy.wanandroid.utlis.ServiceUtil;
 import com.example.hy.wanandroid.utlis.ShareUtil;
@@ -35,20 +33,16 @@ import com.example.hy.wanandroid.utlis.StatusBarUtil;
 import com.example.hy.wanandroid.utlis.ThemeUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
+import com.example.hy.wanandroid.widget.dialog.GotoDetailDialog;
 import com.example.hy.wanandroid.widget.dialog.ThemeDialog;
-import com.example.permission.bean.Permission;
 import com.example.hy.wanandroid.component.UpdateService;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
 import com.example.hy.wanandroid.presenter.mine.SettingsPresenter;
-import com.example.hy.wanandroid.utlis.DownloadUtil;
 import com.example.hy.wanandroid.view.MainActivity;
 import com.example.hy.wanandroid.widget.dialog.ClearCacheDialog;
-import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
 import com.example.hy.wanandroid.widget.dialog.LanguageDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
-import com.example.permission.PermissionHelper;
-import com.example.permission.callback.IPermissionCallback;
 
 import java.io.File;
 
@@ -164,15 +158,13 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     @Inject
     Lazy<ClearCacheDialog> mClearCacheDialog;
     @Inject
-    Lazy<GotoDetialDialog> mGotoDetialDialog;
+    Lazy<GotoDetailDialog> mGotoDetialDialog;
     @Inject
     Lazy<LanguageDialog> mLanguageDialog;
     @Inject
     Provider<ThemeDialog> mThemeDialogProvider;
 
     private ObjectAnimator mAnimator;
-    private String mNewVersionName;
-    private String mCurrentVersionName;
 
     @Override
     protected void inject() {
@@ -208,16 +200,15 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     }
 
     private void initSettings() {
-        mCurrentVersionName = DownloadUtil.getVersionName(this);
-        tvVersion.setText(getString(R.string.settingsActivity_version_current) + mCurrentVersionName);
+        String currentVersionName = CommonUtil.getVersionName(this);
+        tvVersion.setText(getString(R.string.settingsActivity_version_current) + currentVersionName);
 
         clClearCache.setOnClickListener(v -> {
             String cache = FileUtil.getCacheSize(mCacheFile);
-            if (cache.equals("0K")) {
+            if ("0K".equals(cache)) {
                 showToast(getString(R.string.settingsActivity_already_clear));
             } else {
-                mClearCacheDialog.get().setContent(cache);
-                mClearCacheDialog.get().show(getSupportFragmentManager(), ClearCacheDialog.class.getName());
+                mClearCacheDialog.get().showWithCache(getSupportFragmentManager(), ClearCacheDialog.class.getName(), cache);
             }
         });
         tvCache.setText(FileUtil.getCacheSize(mCacheFile));
@@ -240,7 +231,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
             if (mAnimator != null && mAnimator.isRunning()) {
                 return;
             }
-            mPresenter.checkVersion(mCurrentVersionName);
+            mPresenter.checkVersion(currentVersionName);
         });
 
     }
@@ -250,7 +241,7 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         switchNoImage.setChecked(mPresenter.getNoImageState());
         switchAutoCache.setChecked(mPresenter.getAutoCacheState());
         switchStatusBar.setChecked(mPresenter.getStatusBarState());
-        switchAutoUpdata.setChecked(mPresenter.getAutoUpdataState());
+        switchAutoUpdata.setChecked(mPresenter.getAutoUpdateState());
         switchAutoCache.setOnCheckedChangeListener(this);
         switchNoImage.setOnCheckedChangeListener(this);
         switchStatusBar.setOnCheckedChangeListener(this);
@@ -277,6 +268,9 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
                 break;
             case R.id.switch_status_bar:
                 mPresenter.setStatusBarState(isChecked);
+                break;
+            case R.id.switch_auto_updata:
+                mPresenter.setAutoUpdateState(isChecked);
                 break;
             default:
                 break;
@@ -307,21 +301,16 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
     }
 
     @Override
-    public void showUpdataDialog(String content) {
-        mVersionDialog.get().setContentText(content);
-        mVersionDialog.get().setIsMain(false);
-        mVersionDialog.get().show(getSupportFragmentManager(), VersionDialog.class.getName());
-    }
-
-    @Override
-    public void setNewVersionName(String versionName) {
-        mNewVersionName = versionName;
-    }
-
-    @Override
-    public void showAlreadyNewToast(String content) {
+    public void showUpdateDialog(Apk apk) {
         mAnimator.cancel();
-        showToast(content);
+        if(apk == null) {
+            return;
+        }
+        if(apk.isNeedUpdate()) {
+            mVersionDialog.get().showWithApkInfo(getSupportFragmentManager(), VersionDialog.class.getName(), apk);
+        }else {
+            showToast(getString(R.string.dialog_version_already));
+        }
     }
 
     @Override
@@ -346,28 +335,6 @@ public class SettingsActivity extends BaseMvpActivity<SettingsPresenter>
         FileUtil.deleteDir(mCacheFile);
         tvCache.setText(FileUtil.getCacheSize(mCacheFile));
         showToast(getString(R.string.settingsActivity_clear_cache));
-    }
-
-    @Override
-    public void upDataVersion() {
-        PermissionHelper.getInstance().with(this).requestPermission(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                new IPermissionCallback(){
-                    @Override
-                    public void onAccepted(Permission permission) {
-                        DownloadUtil.downloadApk(SettingsActivity.this, mNewVersionName);
-                    }
-
-                    @Override
-                    public void onDenied(Permission permission) {
-                        showToast(getString(R.string.settingsActivity_permission_denied));
-                    }
-
-                    @Override
-                    public void onDeniedAndReject(Permission permission) {
-                        mGotoDetialDialog.get().show(getSupportFragmentManager(), GotoDetialDialog.class.getName());
-                    }
-                });
     }
 
     public static void startActivity(Context context) {

@@ -16,6 +16,7 @@ import java.util.Map;
 
 /**
  * 多语言切换工具
+ * @see <a herf=""https://proandroiddev.com/change-language-programmatically-at-runtime-on-android-5e6bc15c758></a>
  * Created by 陈健宇 at 2019/5/5
  */
 public class LanguageUtil {

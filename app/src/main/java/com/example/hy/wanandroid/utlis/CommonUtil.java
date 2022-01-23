@@ -3,6 +3,8 @@ package com.example.hy.wanandroid.utlis;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.view.Window;
@@ -35,6 +37,9 @@ public class CommonUtil{
         return tintDrawable;
     }
 
+    /**
+     * 获取进程名称
+     */
     public static String getProcessName(Context cxt, int pid) {
         @SuppressLint("WrongConstant")
         ActivityManager am = (ActivityManager)cxt.getSystemService("activity");
@@ -52,6 +57,21 @@ public class CommonUtil{
             } while(procInfo.pid != pid);
             return procInfo.processName;
         }
+    }
+
+    /**
+     * 获取版本号
+     */
+    public static String getVersionName(Context context){
+        PackageManager packageManager = context.getPackageManager();
+        String version = "";
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
+            version = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return version;
     }
 
 }

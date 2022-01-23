@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.hy.wanandroid.App;
-import com.example.hy.wanandroid.base.fragment.BaseFragment;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.entity.HotKey;
 
@@ -44,7 +43,7 @@ public class CommonModule {
 
     @Provides
     File provideCacheFile(){
-        return new File(Constant.PATH_NET_CACHE);
+        return new File(Constant.PATH_NET);
     }
 
     @Provides

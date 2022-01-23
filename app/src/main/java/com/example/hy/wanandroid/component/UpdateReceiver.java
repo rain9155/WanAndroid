@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.App;
@@ -22,7 +23,7 @@ import static android.content.Context.DOWNLOAD_SERVICE;
  */
 public class UpdateReceiver extends BroadcastReceiver {
 
-    private DownloadManager mManager;
+    private static final String TAG = "UpdateReceiver";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -41,26 +42,29 @@ public class UpdateReceiver extends BroadcastReceiver {
      * 查询下载完成文件的状态
      */
     private void checkDownloadStatus(Context context, long downloadId) {
-        mManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+        DownloadManager manager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
         DownloadManager.Query query = new DownloadManager.Query();
         query.setFilterById(downloadId);
-        Cursor cursor = mManager.query(query);
+        Cursor cursor = manager.query(query);
          if (cursor.moveToFirst()) {
              int status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
              switch (status) {
-                case DownloadManager.STATUS_SUCCESSFUL:
-                    LogUtil.d(LogUtil.TAG_COMMON, "下载完成！");
-                    RxBus.getInstance().post(new InstallApkEvent());
+                case DownloadManager.STATUS_SUCCESSFUL://下载完成
+                    Uri apkDownloadedUri = manager.getUriForDownloadedFile(downloadId);
+                    LogUtil.d(TAG, "checkDownloadStatus: STATUS_SUCCESSFUL, uri = " + apkDownloadedUri);
+                    RxBus.getInstance().post(new InstallApkEvent(apkDownloadedUri.toString()));
                      break;
                 case DownloadManager.STATUS_FAILED://下载失败
                     ToastUtil.showCustomToastInBottom(context, context.getString(R.string.download_fail));
-                    RxBus.getInstance().post(new OpenBrowseEvent());
-                    LogUtil.d(LogUtil.TAG_COMMON, "下载失败.....");
+                    String apkDownloadUrl = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_URI));
+                    LogUtil.d(TAG, "checkDownloadStatus: STATUS_FAILED, url = " + apkDownloadUrl);
+                    RxBus.getInstance().post(new OpenBrowseEvent(apkDownloadUrl));
                     break;
                 case DownloadManager.STATUS_RUNNING://正在下载
-                     LogUtil.d(LogUtil.TAG_COMMON, "正在下载.....");
+                    LogUtil.d(TAG, "checkDownloadStatus: STATUS_RUNNING");
                      break;
                 default:
+                    LogUtil.d(TAG, "checkDownloadStatus: state = " + status);
                     break;
              }
          }

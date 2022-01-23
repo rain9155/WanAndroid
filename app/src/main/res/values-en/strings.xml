@@ -20,8 +20,8 @@
     <string name="collectionActivity_empty_collection">It\'s empty, go and collect dry goods！</string>
     <string name="toast_collection_success">"Collection success "</string>
     <string name="toast_uncollection_success">"Cancelled collection "</string>
-    <string name="dialog_btnUpdataLater">"Not updated "</string>
-    <string name="dialog_btnUpdataNow">Update immediately</string>
+    <string name="dialog_btnUpdateLater">"Not updated "</string>
+    <string name="dialog_btnUpdateNow">Update immediately</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_change_background">Change Background</string>
     <string name="dialog_change_face">Change Face</string>
@@ -97,7 +97,7 @@
     <string name="settingsActivity_permission_denied">Downloading applications requires file write permission!</string>
     <string name="settingsActivity_tvAutoCache">"Automatic caching of articles "</string>
     <string name="settingsActivity_tvAutoUpadta">"Automatic Check Updates "</string>
-    <string name="settingsActivity_tvClearCache">"Wipe cache "</string>
+    <string name="settingsActivity_tvClearCache">"Net cache "</string>
     <string name="settingsActivity_tvFeedback">"Feedback "</string>
     <string name="settingsActivity_tvMes">"Application information "</string>
     <string name="settingsActivity_tvNoImage">No graph mode</string>

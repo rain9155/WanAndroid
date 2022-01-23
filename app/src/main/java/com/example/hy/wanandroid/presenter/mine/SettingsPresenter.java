@@ -1,10 +1,7 @@
 package com.example.hy.wanandroid.presenter.mine;
 
-import android.content.res.Resources;
-
-import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.presenter.BaseActivityPresenter;
-import com.example.hy.wanandroid.App;
+import com.example.hy.wanandroid.entity.Apk;
 import com.example.hy.wanandroid.event.ThemeEvent;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.contract.mine.SettingsContract;
@@ -12,7 +9,6 @@ import com.example.hy.wanandroid.event.ClearCacheEvent;
 import com.example.hy.wanandroid.event.LanguageEvent;
 import com.example.hy.wanandroid.event.NoImageEvent;
 import com.example.hy.wanandroid.event.StatusBarEvent;
-import com.example.hy.wanandroid.event.UpdataEvent;
 import com.example.hy.wanandroid.model.DataModel;
 import com.example.hy.wanandroid.model.network.DefaultObserver;
 import com.example.hy.wanandroid.entity.Version;
@@ -30,8 +26,6 @@ import io.reactivex.functions.Predicate;
  */
 public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.View> implements SettingsContract.Presenter{
 
-    private boolean isUpdata = false;
-
     @Inject
     public SettingsPresenter(DataModel dataModel) {
         super(dataModel);
@@ -45,12 +39,6 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
                 RxBus.getInstance().toObservable(StatusBarEvent.class)
                         .compose(RxUtils.switchSchedulers())
                         .subscribe(statusBarEvent -> mView.setStatusBarColor(statusBarEvent.isSet()))
-        );
-
-        addSubscriber(
-                RxBus.getInstance().toObservable(UpdataEvent.class)
-                        .filter(updataEvent -> !updataEvent.isMain())
-                        .subscribe(updataEvent -> mView.upDataVersion())
         );
 
         addSubscriber(
@@ -93,6 +81,11 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
     }
 
     @Override
+    public void setAutoUpdateState(boolean isAutoUpdate) {
+        mModel.setAutoUpdateState(isAutoUpdate);
+    }
+
+    @Override
     public boolean getNoImageState() {
         return mModel.getNoImageState();
     }
@@ -108,8 +101,8 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
     }
 
     @Override
-    public boolean getAutoUpdataState() {
-        return mModel.getAutoUpdataState();
+    public boolean getAutoUpdateState() {
+        return mModel.getAutoUpdateState();
     }
 
     @Override
@@ -125,40 +118,43 @@ public class SettingsPresenter extends BaseActivityPresenter<SettingsContract.Vi
     @Override
     public void checkVersion(String currentVersion) {
         addSubscriber(
-                mModel.getVersionDetails()
-                .compose(RxUtils.switchSchedulers())
-                .filter(new Predicate<Version>() {
-                    @Override
-                    public boolean test(Version version) throws Exception {
-                        isUpdata = Float.valueOf(currentVersion.replace("v", "")) < Float.valueOf(version.getTag_name().replace("v", ""));
-                        return isUpdata;
+            mModel.getVersionDetails()
+            .compose(RxUtils.switchSchedulers())
+            .filter(new Predicate<Version>() {
+                @Override
+                public boolean test(Version version) throws Exception {
+                    if(version == null || version.getAssets().size() == 0) {
+                        throw new IllegalArgumentException("version assets is empty!");
                     }
-                })
-                .map(new Function<Version, String>() {
-                    @Override
-                    public String apply(Version version) throws Exception {
-                        StringBuilder content = new StringBuilder();
-                        Resources resources = App.getContext().getResources();
-                        mView.setNewVersionName(version.getTag_name());
-                        content.append(resources.getString(R.string.dialog_versionName)).append(version.getTag_name()).append("\n")
-                                .append(resources.getString(R.string.dialog_versionSize)).append(FileUtil.getFormatSize(version.getAssets().get(0).getSize())).append("\n")
-                                .append(resources.getString(R.string.dialog_versionContent)).append("\n").append(version.getBody());
-                        return content.toString();
-                    }
-                })
-                .subscribeWith(new DefaultObserver<String>(mView, true, true){
-                    @Override
-                    public void onNext(String s){
-                        super.onNext(s);
-                        mView.showUpdataDialog(s);
-                    }
-                    @Override
-                    public void onComplete() {
-                        if(!isUpdata) {
-                            mView.showAlreadyNewToast(App.getContext().getResources().getString(R.string.dialog_version_already));
-                        }
-                    }
-                })
+                    return true;
+                }
+            })
+            .map(new Function<Version, Apk>() {
+                @Override
+                public Apk apply(Version version) throws Exception {
+                    Version.AssetsBean asset = version.getAssets().get(0);
+                    String downloadUrl = asset.getBrowser_download_url();
+                    String size = FileUtil.getFormatSize(asset.getSize());
+                    String name = version.getName();
+                    String versionName = version.getTag_name();
+                    String versionBody = version.getBody();
+                    boolean needUpdate = Float.parseFloat(currentVersion.replace("v", "")) < Float.parseFloat(versionName.replace("v", ""));
+                    return new Apk(downloadUrl, name, size, versionName, versionBody, needUpdate);
+                }
+            })
+            .subscribeWith(new DefaultObserver<Apk>(mView, true, true){
+                @Override
+                public void onNext(Apk apk){
+                    super.onNext(apk);
+                    mView.showUpdateDialog(apk);
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                    mView.showUpdateDialog(null);
+                }
+            })
         );
     }
 

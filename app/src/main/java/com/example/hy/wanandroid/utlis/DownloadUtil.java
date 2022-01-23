@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 
 import com.example.hy.wanandroid.component.UpdateService;
 import com.example.hy.wanandroid.config.Constant;
+import com.example.hy.wanandroid.entity.Apk;
 
 import java.io.File;
 
@@ -17,28 +18,22 @@ import java.io.File;
 public class DownloadUtil {
 
     /**
-     * 下载apk
+     * 使用DownloadManager下载apk，如果不能则使用系统浏览器
      */
-    public static void downloadApk(Context context, String newVersionName) {
-        String url = Constant.BASE_APK_URL + newVersionName + File.separator + Constant.APK_NAME;
-        Constant.NEW_VERSION_URL = url;
-        if(canDownloadState(context)){
-            LogUtil.d(LogUtil.TAG_COMMON, "DownloadManager可用");
-            Intent intent = new Intent(context, UpdateService.class);
-            intent.putExtra(Constant.KEY_URL_APK, url);
-            context.startService(intent);
-        }else {
-            LogUtil.d(LogUtil.TAG_COMMON, "DownloadManager不可用");
-            File file = new File(Constant.PATH_APK);
-            if(file.exists()) file.delete();
-            ShareUtil.openBrowser(context, url);
+    public static boolean downloadApk(Context context, Apk apk) {
+        if(!canDownloadState(context)) {
+            return false;
         }
+        Intent intent = new Intent(context, UpdateService.class);
+        intent.putExtra(Constant.KEY_URL_APK, apk.getDownloadUrl());
+        context.startService(intent);
+        return true;
     }
 
     /**
-     * 是否可以使用DownloadManager,如果不能则使用系统浏览器
+     * 判断是否可以使用DownloadManager
      */
-    public static boolean canDownloadState(Context ctx) {
+    private static boolean canDownloadState(Context ctx) {
         try {
             int state = ctx.getPackageManager().getApplicationEnabledSetting("com.android.providers.downloads");
             if (state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
@@ -52,21 +47,5 @@ public class DownloadUtil {
         }
         return true;
     }
-
-    /**
-     * 获取版本号
-     */
-    public static String getVersionName(Context context){
-        PackageManager packageManager = context.getPackageManager();
-        String version = "";
-        try {
-            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
-            version = packageInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return version;
-    }
-
 
 }

@@ -1,8 +1,13 @@
 package com.example.hy.wanandroid.widget.dialog;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
@@ -17,11 +22,27 @@ import javax.inject.Inject;
  */
 public class ClearCacheDialog extends BaseDialogFragment {
 
-    private String mContent = "";
+    private static final String KEY_CACHE = "cache";
+
+    private String mCache;
 
     @Inject
     public ClearCacheDialog() {
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState != null) {
+            mCache = savedInstanceState.getString(KEY_CACHE);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_CACHE, mCache);
     }
 
     @Override
@@ -32,7 +53,7 @@ public class ClearCacheDialog extends BaseDialogFragment {
     @Override
     @SuppressLint("SetTextI18n")
     protected void initView(View view) {
-        ((TextView)view.findViewById(R.id.tv_clear)).setText(getString(R.string.dialog_clear_cache1) + mContent + getString(R.string.dialog_clear_cache2));
+        ((TextView)view.findViewById(R.id.tv_clear)).setText(getString(R.string.dialog_clear_cache1) + mCache + getString(R.string.dialog_clear_cache2));
         view.findViewById(R.id.btn_cancel).setOnClickListener(v -> this.dismiss());
         view.findViewById(R.id.btn_confirm).setOnClickListener(v -> {
             this.dismiss();
@@ -40,8 +61,9 @@ public class ClearCacheDialog extends BaseDialogFragment {
         });
     }
 
-    public void setContent(String content) {
-        this.mContent = content;
+    public void showWithCache(FragmentManager manager, String tag, String cache) {
+        mCache = cache;
+        show(manager, tag);
     }
 
 }

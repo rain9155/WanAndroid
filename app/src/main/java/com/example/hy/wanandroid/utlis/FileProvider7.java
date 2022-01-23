@@ -19,7 +19,7 @@ public class FileProvider7 {
      * 适配获得url，7.0以上获得content://, 以下获得file://
      */
     public static Uri getUriForFile(Context context, File file) {
-        Uri fileUri = null;
+        Uri fileUri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             fileUri = getUriForFile24(context, file);
         } else {
@@ -41,21 +41,25 @@ public class FileProvider7 {
 
 
     /**
-     * 适配apk安装的setDataAndType（）
+     * 适配apk安装的setDataAndType()
      * @param intent 打开安装界面的intent
      * @param type  meta type
      * @param file  安装包的file
      * @param writeAble 是否写
      */
     public static void setIntentDataAndType(Context context, Intent intent, String type, File file, boolean writeAble) {
+        setIntentDataAndType(intent, type, getUriForFile(context, file), writeAble);
+    }
+
+    public static void setIntentDataAndType(Intent intent, String type, Uri uri, boolean writeAble) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            intent.setDataAndType(getUriForFile(context, file), type);
+            intent.setDataAndType(uri, type);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             if (writeAble) {
                 intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             }
         } else {
-            intent.setDataAndType(Uri.fromFile(file), type);
+            intent.setDataAndType(uri, type);
         }
     }
 }

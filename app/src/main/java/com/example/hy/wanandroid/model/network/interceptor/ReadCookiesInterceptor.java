@@ -25,7 +25,6 @@ public class ReadCookiesInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Response response = chain.proceed(chain.request());
-        LogUtil.d(LogUtil.TAG_HTTP, "response: " + response.toString());
         if(!response.headers("Set-Cookie").isEmpty()){
             HashSet<String> cookies = new HashSet<>(response.headers("Set-Cookie"));
             mPreferences.edit().putStringSet(TAG, cookies).apply();

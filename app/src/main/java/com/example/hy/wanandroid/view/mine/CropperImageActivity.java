@@ -51,8 +51,9 @@ public class CropperImageActivity extends BaseActivity implements CropImageView.
         mOptions = bundle.getParcelable(Constant.KEY_IMAGE_OPTIONS);
         isChangeFace = bundle.getInt(Constant.KEY_IS_FACE);
         super.onCreate(savedInstanceState);
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
             cropImageView.setImageUriAsync(mCropImageUri);
+        }
     }
 
     @Override
@@ -62,8 +63,9 @@ public class CropperImageActivity extends BaseActivity implements CropImageView.
 
     @Override
     protected void initView() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <Build.VERSION_CODES.LOLLIPOP) {
             StatusBarUtil.setHeightAndPadding(this, toolbar);
+        }
         toolbar.setNavigationOnClickListener(v -> setResultCancel());
         ivCrop.setOnClickListener(v -> {
             Uri outputUri = getOutputUri();
@@ -76,8 +78,11 @@ public class CropperImageActivity extends BaseActivity implements CropImageView.
                     mOptions.outputRequestSizeOptions);
         });
         cropImageView.setAutoZoomEnabled(true);
-        if(isChangeFace == Constant.CHANGE_FACE) cropImageView.setCropShape(CropImageView.CropShape.OVAL);
-        else cropImageView.setCropShape(CropImageView.CropShape.RECTANGLE);
+        if(isChangeFace == Constant.CHANGE_FACE) {
+            cropImageView.setCropShape(CropImageView.CropShape.OVAL);
+        } else {
+            cropImageView.setCropShape(CropImageView.CropShape.RECTANGLE);
+        }
     }
 
     @Override

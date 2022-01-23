@@ -114,12 +114,12 @@ public class PreferencesHelperImp implements PreferencesHelper {
     }
 
     @Override
-    public void setAutoUpdataState(boolean isAuto) {
+    public void setAutoUpdateState(boolean isAuto) {
         mPreferences.edit().putBoolean(Constant.KEY_PREFS_AUTO_UPDATA, isAuto).apply();
     }
 
     @Override
-    public boolean getAutoUpdataState() {
+    public boolean getAutoUpdateState() {
         return mPreferences.getBoolean(Constant.KEY_PREFS_AUTO_UPDATA, true);
     }
 

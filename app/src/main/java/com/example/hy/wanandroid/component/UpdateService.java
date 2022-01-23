@@ -7,15 +7,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
 import android.text.TextUtils;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.model.DataModel;
+import com.example.hy.wanandroid.utlis.LogUtil;
 import com.example.hy.wanandroid.utlis.ToastUtil;
 
 import java.io.File;
@@ -27,6 +30,8 @@ import androidx.annotation.Nullable;
  * Created by 陈健宇 at 2018/12/7
  */
 public class UpdateService extends Service {
+
+    private static final String TAG = "UpdateService";
 
     private DataModel mDataModel;
     private Context mContext = this;
@@ -41,6 +46,7 @@ public class UpdateService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        LogUtil.d(TAG, "onCreate");
         mDataModel = App.getContext().getAppComponent().getDataModel();
         mReceiver = new UpdateReceiver();
         registerReceiver(mReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
@@ -48,6 +54,7 @@ public class UpdateService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        LogUtil.d(TAG, "onStartCommand");
         String url = intent.getStringExtra(Constant.KEY_URL_APK);
         if(!TextUtils.isEmpty(url)){
             long downloadId = downloadApk(url);
@@ -60,6 +67,7 @@ public class UpdateService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        LogUtil.d(TAG, "onDestroy");
         unregisterReceiver(mReceiver);
     }
 
@@ -68,11 +76,6 @@ public class UpdateService extends Service {
      */
     private long downloadApk(String url) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        //创建目录, 外部存储--> Download文件夹
-        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdir() ;
-        File file = new File(Constant.PATH_APK);
-        if(file.exists())
-            file.delete();
         //设置文件存放路径
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS  , "WanAndroid.apk");
         //设置Notification的标题

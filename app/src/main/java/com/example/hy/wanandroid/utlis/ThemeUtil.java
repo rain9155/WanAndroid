@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 /**
  * 主题切换工具
+ * @see <a herf="https://developer.android.com/guide/topics/ui/look-and-feel/darktheme">Dark Theme</a>
  * @author chenjianyu
  * @date 1/22/22
  */

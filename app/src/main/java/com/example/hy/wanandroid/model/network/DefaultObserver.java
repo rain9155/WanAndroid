@@ -25,13 +25,14 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.ResourceObserver;
 import retrofit2.HttpException;
 
-import static com.example.hy.wanandroid.utlis.LogUtil.TAG_ERROR;
 
 /**
  * 封装Observer
  * Created by 陈健宇 at 2018/10/26
  */
 public abstract class DefaultObserver<T> extends ResourceObserver<T>{
+
+    private static final String TAG = "DefaultObserver";
 
     private IView mView;
     private boolean isShowErrorView = true;
@@ -87,13 +88,13 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
 
                             @Override
                             public void onNext(Login login) {
-                                LogUtil.d(LogUtil.TAG_ERROR, "重新登陆成功");
+                                LogUtil.d(TAG, "重新登陆成功");
                                 RxBus.getInstance().post(new TokenExpiresEvent());
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                LogUtil.d(LogUtil.TAG_ERROR, "重新登陆失败");
+                                LogUtil.d(TAG, "重新登陆失败");
                                 User.getInstance().reset();
                                 RxBus.getInstance().post(new LoginEvent(false));
                                 mView.showToast(apiException.getErrorMessage());
@@ -107,29 +108,29 @@ public abstract class DefaultObserver<T> extends ResourceObserver<T>{
                                 }
                             }
                         });
-                LogUtil.e(TAG_ERROR, "token：" + apiException.getErrorMessage());
+                LogUtil.e(TAG, "token：" + apiException.getErrorMessage());
             }else {//其他
-                LogUtil.e(TAG_ERROR, "other：" + apiException.getErrorMessage());
+                LogUtil.e(TAG, "other：" + apiException.getErrorMessage());
                 otherError(apiException.getErrorMessage());
             }
         }else{
             if(e instanceof UnknownHostException){
-                LogUtil.e(TAG_ERROR, "unavailable：" + e.getMessage());
+                LogUtil.e(TAG, "unavailable：" + e.getMessage());
                 unavaiableError();
             }else if(e instanceof InterruptedException){
-                LogUtil.e(TAG_ERROR, "timeout：" + e.getMessage());
+                LogUtil.e(TAG, "timeout：" + e.getMessage());
                 timeoutError();
             }else if(e instanceof NullPointerException){
-                LogUtil.e(TAG_ERROR, "空异常：" + e.getMessage());
+                LogUtil.e(TAG, "空异常：" + e.getMessage());
                 nullError();
             }else if (e instanceof HttpException){
-                LogUtil.e(TAG_ERROR, "http错误：" + e.getMessage());
+                LogUtil.e(TAG, "http错误：" + e.getMessage());
                 httpError();
             }else if(e instanceof JsonParseException || e instanceof JSONException || e instanceof ParseException){
-                LogUtil.e(TAG_ERROR, "解析错误：" + e.getMessage());
+                LogUtil.e(TAG, "解析错误：" + e.getMessage());
                 praseError();
             } else {
-                LogUtil.e(TAG_ERROR, "unknown：" + e.getMessage());
+                LogUtil.e(TAG, "unknown：" + e.getMessage());
                 unknown();
             }
         }

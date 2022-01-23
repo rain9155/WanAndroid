@@ -32,7 +32,6 @@ public class WriteCookiesInterceptor implements Interceptor {
         //有问题，只需要写入Cookie的name=value值
         for(String cookie : cookies){
             builder.addHeader("Cookie", cookie);
-            LogUtil.d(LogUtil.TAG_HTTP, "add Cookie: " + cookie);
         }
         return chain.proceed(builder.build());
     }

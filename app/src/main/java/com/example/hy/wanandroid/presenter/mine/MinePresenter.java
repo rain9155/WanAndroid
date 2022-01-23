@@ -59,7 +59,9 @@ public class MinePresenter extends BaseFragmentPresenter<MineContract.View> impl
                     @Override
                     public void onNext(BaseResponse<Login> baseResponse) {
                         super.onNext(baseResponse);
-                        if (baseResponse.getData() != null) return;
+                        if (baseResponse.getData() != null) {
+                            return;
+                        }
                         User.getInstance().reset();
                         mView.showLogoutView();
                     }

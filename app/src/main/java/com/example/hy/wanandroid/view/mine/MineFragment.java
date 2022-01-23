@@ -13,12 +13,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.example.hy.wanandroid.utlis.AnimUtil;
 import com.example.hy.wanandroid.utlis.FileUtil;
 import com.example.hy.wanandroid.utlis.IntentUtil;
+import com.example.hy.wanandroid.utlis.LogUtil;
 import com.example.hy.wanandroid.utlis.StatusBarUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseMvpFragment;
@@ -27,26 +26,23 @@ import com.example.hy.wanandroid.config.User;
 import com.example.hy.wanandroid.contract.mine.MineContract;
 import com.example.hy.wanandroid.presenter.mine.MinePresenter;
 import com.example.hy.wanandroid.utlis.ThemeUtil;
+import com.example.hy.wanandroid.utlis.ToastUtil;
 import com.example.hy.wanandroid.widget.customView.ShapeImageView;
 import com.example.hy.wanandroid.widget.dialog.ChangeFaceDialog;
-import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
+import com.example.hy.wanandroid.widget.dialog.GotoDetailDialog;
 import com.example.hy.wanandroid.widget.dialog.LogoutDialog;
+import com.example.permission.IRejectedForeverCallback;
+import com.example.permission.IResultCallback;
 import com.example.permission.PermissionHelper;
-import com.example.permission.bean.Permission;
-import com.example.permission.callback.IPermissionCallback;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import dagger.Lazy;
-
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -54,6 +50,8 @@ import static android.app.Activity.RESULT_OK;
  * Created by 陈健宇 at 2018/10/23
  */
 public class MineFragment extends BaseMvpFragment<MinePresenter> implements MineContract.View {
+
+    private static final String TAG = "MineFragment";
 
     @BindView(R.id.iv_face)
     ShapeImageView ivFace;
@@ -101,7 +99,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     @Inject
     Lazy<ChangeFaceDialog> mChangeFaceDialog;
     @Inject
-    Lazy<GotoDetialDialog> mGotoDetialDialog;
+    Lazy<GotoDetailDialog> mGotoDetialDialog;
 
     private int mChangeFlag;//更换头像标志
     private boolean isCoin;
@@ -130,8 +128,8 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
             showLogoutView();
         }
 
-        Bitmap faceBitmap = FileUtil.loadBitmap(Constant.PATH_IMAGE_FACE, Constant.FACE);
-        Bitmap backBitmap = FileUtil.loadBitmap(Constant.PATH_IMAGE_BACKGROUND, Constant.BACK);
+        Bitmap faceBitmap = FileUtil.loadBitmap(Constant.PATH_IMAGE, Constant.FACE_NAME);
+        Bitmap backBitmap = FileUtil.loadBitmap(Constant.PATH_IMAGE, Constant.BACKGROUND_NAME);
         if (faceBitmap != null) {
             ivFace.setImageBitmap(faceBitmap);
         }
@@ -180,42 +178,27 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         // handle result of pick image chooser
         if (requestCode == Constant.REQUEST_PICK_IMAGE_CHOOSER) {
             Uri imageUri = CropImage.getPickImageResultUri(mActivity, data);
-            PermissionHelper.getInstance().with(mActivity).requestPermission(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    new IPermissionCallback() {
-                        @Override
-                        public void onAccepted(Permission permission) {
-                            if (imageUri != null) {
-                                CropperImageActivity.startActivityByFragment(mActivity, MineFragment.this, imageUri, mChangeFlag);
-                            }
-                        }
-
-                        @Override
-                        public void onDenied(Permission permission) {
-                            showToast(mActivity, getString(R.string.mineFragment_permissions_denied));
-                        }
-
-                        @Override
-                        public void onDeniedAndReject(Permission permission) {
-                            mGotoDetialDialog.get().show(getChildFragmentManager(), GotoDetialDialog.class.getName());
-                        }
-                    });
+            LogUtil.d(TAG, "onActivityResult: REQUEST_PICK_IMAGE_CHOOSER, uri = " + imageUri);
+            if (imageUri != null) {
+                CropperImageActivity.startActivityByFragment(mActivity, MineFragment.this, imageUri, mChangeFlag);
+            }
         }
 
         //handle result of Cropper Activity
         if (requestCode == Constant.REQUEST_CROP_IMAGE_ACTIVITY) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             Uri resultUri = result.getUri();
+            LogUtil.d(TAG, "onActivityResult: REQUEST_CROP_IMAGE_ACTIVITY, uri = " + resultUri);
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(mActivity.getContentResolver().openInputStream(resultUri));
                 if (mChangeFlag == Constant.CHANGE_FACE) {
-                    if (FileUtil.saveBitmap(Constant.PATH_IMAGE_FACE, Constant.FACE, bitmap)) {
+                    if (FileUtil.saveBitmap(Constant.PATH_IMAGE, Constant.FACE_NAME, bitmap)) {
                         ivFace.setImageBitmap(bitmap);
                     } else {
                         showToast(getString(R.string.mineFragment_change_face_fail));
                     }
                 } else if (mChangeFlag == Constant.CHANGE_BACK) {
-                    if (FileUtil.saveBitmap(Constant.PATH_IMAGE_BACKGROUND, Constant.BACK, bitmap)) {
+                    if (FileUtil.saveBitmap(Constant.PATH_IMAGE, Constant.BACKGROUND_NAME, bitmap)) {
                         ivBack.setImageBitmap(bitmap);
                     } else {
                         showToast(getString(R.string.mineFragment_change_back_fail));
@@ -263,10 +246,27 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         if (flag == Constant.CHANGE_NO) {
             ivBack.setImageResource(R.drawable.girl);
             ivFace.setImageResource(R.drawable.girl);
-            FileUtil.deleteDir(new File(Constant.PATH_IMAGE_FACE));
+            FileUtil.deleteDir(new File(Constant.PATH_IMAGE));
         } else {
-            Intent chooserIntent = getChooserIntent();
-            startActivityForResult(chooserIntent, Constant.REQUEST_PICK_IMAGE_CHOOSER);
+            PermissionHelper.with(this)
+                .permissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .explainAfterRejectedForever(new IRejectedForeverCallback() {
+                    @Override
+                    public void onRejectedForever(IRejectedForeverProcess rejectedForeverProcess, List<String> rejectedForeverPermissions) {
+                        mGotoDetialDialog.get().show(getChildFragmentManager(), GotoDetailDialog.class.getName());
+                    }
+                }).request(new IResultCallback() {
+                @Override
+                public void onResult(boolean allGranted, List<String> grantedPermissions, List<String> rejectedPermissions) {
+                    if(allGranted) {
+                        Intent chooserIntent = getChooserIntent();
+                        startActivityForResult(chooserIntent, Constant.REQUEST_PICK_IMAGE_CHOOSER);
+                    }else {
+                        ToastUtil.showToast(getContext(), getString(R.string.mineFragment_permissions_denied));
+                    }
+                }
+            });
+
         }
     }
 

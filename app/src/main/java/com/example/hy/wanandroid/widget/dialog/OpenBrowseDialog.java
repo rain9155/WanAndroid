@@ -1,7 +1,12 @@
 package com.example.hy.wanandroid.widget.dialog;
 
+import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.fragment.BaseDialogFragment;
@@ -19,9 +24,27 @@ import javax.inject.Inject;
  */
 public class OpenBrowseDialog extends BaseDialogFragment {
 
+    private static final String KEY_URL = "url";
+
+    private String mUrl;
+
     @Inject
     public OpenBrowseDialog() {
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState != null) {
+            mUrl = savedInstanceState.getString(KEY_URL);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_URL, mUrl);
     }
 
     @Override
@@ -34,13 +57,13 @@ public class OpenBrowseDialog extends BaseDialogFragment {
         view.findViewById(R.id.btn_cancel).setOnClickListener(v -> this.dismiss());
         view.findViewById(R.id.btn_confirm).setOnClickListener(v -> {
             this.dismiss();
-            LogUtil.d(LogUtil.TAG_COMMON, "DownloadManager不可用");
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "app-release.apk");
-            if(file.exists()) {
-                file.delete();
-            }
-            ShareUtil.openBrowser(getContext(), Constant.NEW_VERSION_URL);
+            ShareUtil.openBrowser(getContext(), mUrl);
         });
+    }
+
+    public void showWithUrl(FragmentManager manager, String tag, String url) {
+        mUrl = url;
+        show(manager, tag);
     }
 
 }

@@ -46,7 +46,7 @@ public class ChangeFaceDialog extends BaseDialogFragment {
 
     @Override
     protected void initView(View view) {
-        boolean changeDefaultImage = FileUtil.isFileExist(Constant.PATH_IMAGE_FACE, Constant.FACE) || FileUtil.isFileExist(Constant.PATH_IMAGE_BACKGROUND, Constant.BACK);
+        boolean changeDefaultImage = FileUtil.isFileExist(Constant.PATH_IMAGE, Constant.FACE_NAME) || FileUtil.isFileExist(Constant.PATH_IMAGE, Constant.BACKGROUND_NAME);
         view.findViewById(R.id.divider_2).setVisibility(changeDefaultImage ? View.VISIBLE : View.GONE);
         view.findViewById(R.id.tv_change_moren).setVisibility(changeDefaultImage ? View.VISIBLE : View.GONE);
         view.findViewById(R.id.tv_change_face).setOnClickListener(v -> {

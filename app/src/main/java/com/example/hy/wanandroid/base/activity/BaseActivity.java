@@ -3,6 +3,7 @@ package com.example.hy.wanandroid.base.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.view.IView;
 import com.example.hy.wanandroid.component.NetWorkChangeReceiver;
 import com.example.hy.wanandroid.App;
+import com.example.hy.wanandroid.utlis.LanguageUtil;
 import com.example.hy.wanandroid.utlis.RxBus;
 import com.example.hy.wanandroid.di.component.AppComponent;
 import com.example.hy.wanandroid.utlis.StatusBarUtil;
@@ -37,6 +39,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     protected abstract int getLayoutId();//获取Activity的布局Id
     protected abstract void initView();//初始化控件
     protected abstract void initData();//初始化数据
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String selectedLan = App.getContext().getAppComponent().getDataModel().getSelectedLanguage();
+        Context context = LanguageUtil.attachBaseContext(newBase, selectedLan);
+        super.attachBaseContext(context);
+    }
+
 
     @SuppressLint("ResourceAsColor")
     @Override

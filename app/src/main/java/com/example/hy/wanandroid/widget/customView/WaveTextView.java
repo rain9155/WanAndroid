@@ -89,7 +89,7 @@ public class WaveTextView extends View {
             float progress = (float) animation.getAnimatedValue();
             φ = progress;
             a = (float) (1 - progress / (2 * Math.PI)) * A;
-            LogUtil.d(TAG, "addUpdateListener(), a = " + a + ", φ = " + φ);
+//            LogUtil.d(TAG, "addUpdateListener(), a = " + a + ", φ = " + φ);
             postInvalidate();
         });
         mValueAnimator.setDuration(2500);
@@ -125,15 +125,15 @@ public class WaveTextView extends View {
         //让字体在中间
         canvas.translate((float) (getWidth() - mTextWidth) / 2, (float) getHeight() / 2 +  mTextCenter);
         mTextPath.reset();
-        LogUtil.d(TAG, "onDraw(), width = " + canvas.getWidth() + ", mTextWidth = " + mTextWidth);
+//        LogUtil.d(TAG, "onDraw(), width = " + canvas.getWidth() + ", mTextWidth = " + mTextWidth);
         for(int i = 0; i <= SAMPLING_SIZE; i++){
             float y = calculateY(mMapX[i]);
             float x = mSamplingX[i];
-            LogUtil.d(TAG, "onDraw() "
-                    + ", samplingX = " + mSamplingX[i]
-                    + ", mapX = " + mMapX[i]
-                    + ", x = " + x
-                    + ", y = " + y);
+//            LogUtil.d(TAG, "onDraw() "
+//                    + ", samplingX = " + mSamplingX[i]
+//                    + ", mapX = " + mMapX[i]
+//                    + ", x = " + x
+//                    + ", y = " + y);
             if(i == 0){
                 mTextPath.moveTo(x, y);
             }else {

@@ -23,8 +23,9 @@ public class ImageUtil {
         DiskCacheStrategy diskCacheStrategy = DiskCacheStrategy.AUTOMATIC;
         boolean isSkipMemory = false;
 
-        if(App.getContext().getAppComponent().getDataModel().getNoImageState())
+        if(App.getContext().getAppComponent().getDataModel().getNoImageState()) {
             imageUrl = null;
+        }
         if(!App.getContext().getAppComponent().getDataModel().getAutoCacheState()){
             diskCacheStrategy = DiskCacheStrategy.NONE;
             isSkipMemory = true;

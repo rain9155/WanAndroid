@@ -13,10 +13,10 @@ import javax.inject.Inject;
  * 前往应用信息弹框
  * Created by 陈健宇 at 2019/3/25
  */
-public class GotoDetialDialog extends BaseDialogFragment {
+public class GotoDetailDialog extends BaseDialogFragment {
 
     @Inject
-    public GotoDetialDialog() {
+    public GotoDetailDialog() {
 
     }
 

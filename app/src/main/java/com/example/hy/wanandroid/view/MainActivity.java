@@ -1,28 +1,26 @@
 package com.example.hy.wanandroid.view;
 
-import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.widget.FrameLayout;
-
 import com.example.hy.wanandroid.base.fragment.BaseFragment;
+import com.example.hy.wanandroid.entity.Apk;
+import com.example.hy.wanandroid.utlis.CommonUtil;
 import com.example.hy.wanandroid.utlis.FileProvider7;
-import com.example.hy.wanandroid.utlis.LogUtil;
 import com.example.hy.wanandroid.utlis.TimeUtil;
 import com.example.hy.wanandroid.R;
 import com.example.hy.wanandroid.base.activity.BaseMvpActivity;
-import com.example.permission.bean.Permission;
-import com.example.hy.wanandroid.App;
 import com.example.hy.wanandroid.config.Constant;
 import com.example.hy.wanandroid.contract.MainContract;
 import com.example.hy.wanandroid.event.ToppingEvent;
@@ -36,24 +34,22 @@ import com.example.hy.wanandroid.view.homepager.HomeFragment;
 import com.example.hy.wanandroid.view.mine.MineFragment;
 import com.example.hy.wanandroid.view.project.ProjectFragment;
 import com.example.hy.wanandroid.view.wechat.WeChatFragment;
-import com.example.hy.wanandroid.widget.dialog.GotoDetialDialog;
+import com.example.hy.wanandroid.widget.dialog.GotoDetailDialog;
 import com.example.hy.wanandroid.widget.dialog.OpenBrowseDialog;
 import com.example.hy.wanandroid.widget.dialog.VersionDialog;
-import com.example.permission.PermissionHelper;
-import com.example.permission.bean.SpecialPermission;
-import com.example.permission.callback.IPermissionCallback;
-import com.example.permission.callback.ISpecialPermissionCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+
+import java.io.File;
+import java.io.IOException;
+
 import butterknife.BindView;
 import dagger.Lazy;
 
-
-import java.io.File;
 
 import javax.inject.Inject;
 
@@ -80,10 +76,9 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     @Inject
     OpenBrowseDialog mOpenBrowseDialog;
     @Inject
-    Lazy<GotoDetialDialog> mGotoDetialDialog;
+    Lazy<GotoDetailDialog> mGotoDetialDialog;
 
     private Fragment[] mFragments;
-    private String mNewVersionName;
     private boolean isSetStatusBar;
     private int mStatusBarColor = R.color.colorPrimary;
     private boolean hasSetStatusBar;
@@ -173,8 +168,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             show(bnvBtm);
         });
 
-        if(mPresenter.getAutoUpdataState()) {
-            mPresenter.checkVersion(DownloadUtil.getVersionName(this));
+        if(mPresenter.getAutoUpdateState()) {
+            mPresenter.checkVersion(CommonUtil.getVersionName(this));
         }
 
     }
@@ -220,62 +215,30 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     }
 
     @Override
-    public void showUpdataDialog(String content) {
-        mVersionDialog.get().setContentText(content);
-        mVersionDialog.get().setIsMain(true);
-        mVersionDialog.get().show(getSupportFragmentManager(), VersionDialog.class.getName());
+    public void showUpdateDialog(Apk apk) {
+        if(apk != null && apk.isNeedUpdate()) {
+            mVersionDialog.get().showWithApkInfo(getSupportFragmentManager(), VersionDialog.class.getName(), apk);
+        }
     }
 
     @Override
-    public void setNewVersionName(String versionName) {
-        mNewVersionName = versionName;
+    public void updateVersion(Apk apk) {
+        if(!DownloadUtil.downloadApk(this, apk)) {
+            showOpenBrowseDialog(apk.getDownloadUrl());
+        }
     }
 
     @Override
-    public void upDataVersion() {
-        PermissionHelper.getInstance().with(this).requestPermission(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                new IPermissionCallback() {
-                    @Override
-                    public void onAccepted(Permission permission) {
-                        DownloadUtil.downloadApk(MainActivity.this, mNewVersionName);
-                    }
-
-                    @Override
-                    public void onDenied(Permission permission) {
-                        showToast(getString(R.string.settingsActivity_permission_denied));
-                    }
-
-                    @Override
-                    public void onDeniedAndReject(Permission permission) {
-                        mGotoDetialDialog.get().show(getSupportFragmentManager(), GotoDetialDialog.class.getSimpleName());
-
-                    }
-                });
+    public void showOpenBrowseDialog(String url) {
+        mOpenBrowseDialog.showWithUrl(getSupportFragmentManager(), OpenBrowseDialog.class.getName(), url);
     }
 
     @Override
-    public void showOpenBrowseDialog() {
-        mOpenBrowseDialog.show(getSupportFragmentManager(), OpenBrowseDialog.class.getName());
-    }
-
-    @Override
-    public void installApk() {
-        PermissionHelper.getInstance().with(this).requestSpecialPermission(
-                SpecialPermission.INSTALL_UNKNOWN_APP,
-                new ISpecialPermissionCallback() {
-                    @Override
-                    public void onAccepted(SpecialPermission permission) {
-                        LogUtil.d(TAG, "onAccepted(): " + permission.toString());
-                        installApk(MainActivity.this);
-                    }
-
-                    @Override
-                    public void onDenied(SpecialPermission permission) {
-                        LogUtil.d(TAG, "onDenied(): " + permission.toString());
-                    }
-                }
-        );
+    public void installApk(String uri) {
+        Intent install = new Intent(Intent.ACTION_VIEW);
+        FileProvider7.setIntentDataAndType(install, "application/vnd.android.package-archive", Uri.parse(uri), false);
+        install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(install);
     }
 
     @Override
@@ -349,7 +312,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         return id;
     }
 
-
     /**
      * 显示floatingButton
      */
@@ -397,29 +359,6 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         }
         if(!mShowNavAnimator.isRunning() && child.getTranslationY() >= child.getHeight()){
             mShowNavAnimator.start();
-        }
-    }
-
-    /**
-     * 安装应用
-     */
-    private void installApk(Context context) {
-        LogUtil.d(LogUtil.TAG_COMMON, "安装应用");
-        File file = new File(Constant.PATH_APK);
-        if (file.exists()) {
-            Intent install = new Intent("android.intent.doWork.VIEW");
-            FileProvider7.setIntentDataAndType(
-                    App.getContext(),
-                    install,
-                    "application/vnd.android.package-archive",
-                    file,
-                    false
-            );
-            install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(install);
-        }else {
-            LogUtil.d(LogUtil.TAG_COMMON, "应用路径不存在");
-            ToastUtil.showCustomToastInBottom(context, context.getString(R.string.setup_fail));
         }
     }
 

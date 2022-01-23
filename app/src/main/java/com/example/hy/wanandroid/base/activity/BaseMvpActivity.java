@@ -23,18 +23,6 @@ public abstract class BaseMvpActivity<T extends BasePresenter> extends BaseActiv
     protected T mPresenter;
 
     @Override
-    protected void attachBaseContext(Context newBase) {
-        String selectedLan = App.getContext().getAppComponent().getDataModel().getSelectedLanguage();
-        Context context = LanguageUtil.attachBaseContext(newBase, selectedLan);
-        super.attachBaseContext(context);
-    }
-
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
-
-    @Override
     @CallSuper
     protected void initView() {
         mPresenter = getPresenter();

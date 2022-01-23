@@ -39,9 +39,9 @@ public interface PreferencesHelper {
     //获得网络状态
     boolean getNetWorkState();
     //保存自动更新状态
-    void setAutoUpdataState(boolean isAuto);
+    void setAutoUpdateState(boolean isAuto);
     //获得自动更新状态
-    boolean getAutoUpdataState();
+    boolean getAutoUpdateState();
     //获取选择的语言
     String getSelectedLanguage();
     //设置选择的语言

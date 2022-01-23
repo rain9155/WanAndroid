@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/dp_5"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_dialog">
@@ -13,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/sp_20"
-        android:layout_margin="@dimen/dp_5"
+        android:layout_margin="@dimen/dp_10"
         android:text="@string/dialog_version_new"
         android:scrollbars="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -36,7 +35,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorSecondaryText"
         android:textSize="@dimen/sp_18"
-        android:layout_margin="@dimen/dp_5"
+        android:padding="@dimen/dp_10"
         tools:text="1、WanAndroid第一版发布！1、WanAndroid第一版发布！ 1、WanAndroid第一版发布！  "
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider_1"
@@ -55,17 +54,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_5"
         app:layout_constraintTop_toBottomOf="@id/divider_2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:id="@+id/tv_updata_later"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btn_update_later"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/dialog_btnUpdataLater"
+            android:text="@string/dialog_btnUpdateLater"
             android:clickable="true"
             android:focusable="true"
             android:background="@drawable/bg_dialog_tv"
@@ -85,11 +83,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
-        <TextView
-            android:id="@+id/tv_updata_now"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btn_update_now"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/dialog_btnUpdataNow"
+            android:text="@string/dialog_btnUpdateNow"
             android:textColor="@color/colorPrimaryText"
             android:background="@drawable/bg_dialog_tv"
             app:layout_constraintRight_toRightOf="parent"
