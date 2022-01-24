@@ -36,8 +36,8 @@
 ![sc9](/screenshots/sc9.png)
 ![sc10](/screenshots/sc10.png)
 ![sc11](/screenshots/sc11.png)<br>
-## Download (v1.6, Android 4.4 or above)
-[点击下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.6/app-release-1576585021339.apk) 
+## Download (v1.7, Android 4.4 or above)
+[点击下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.7/WanAndroid-release.apk) 
 
 ## Points And Reference
 1、Rxjava2配合Retrofit进行网络请求
@@ -134,6 +134,10 @@
 
 ## ChangeLog
 ```
+v1.7 2022-1-24
+1、适配android 10的暗黑模式和作用域存储
+2、修复一些问题
+
 v1.6 2019-9-22
 1、 添加个人积分、积分排行榜
 2、 优化夜间切换，修复一些问题
