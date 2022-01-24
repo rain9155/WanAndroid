@@ -90,7 +90,7 @@ android {
                 //指定输出路径
                 output.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + "/app/release")
                 //重新对apk命名
-                output.outputFileName = "WanAndroid-release.apk"
+                output.outputFileName = "app-release.apk"
             }
         }
     }

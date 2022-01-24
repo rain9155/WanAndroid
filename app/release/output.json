@@ -14,7 +14,7 @@
       "versionCode": 8,
       "versionName": "8",
       "enabled": true,
-      "outputFile": "WanAndroid-release.apk"
+      "outputFile": "app-release.apk"
     }
   ]
 }
