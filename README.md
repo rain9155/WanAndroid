@@ -37,7 +37,7 @@
 ![sc10](/screenshots/sc10.png)
 ![sc11](/screenshots/sc11.png)<br>
 ## Download (v1.7, Android 4.4 or above)
-[点击下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.7/WanAndroid-release.apk) 
+[点击下载apk](https://github.com/rain9155/WanAndroid/releases/download/v1.7/apk-release.apk) 
 
 ## Points And Reference
 1、Rxjava2配合Retrofit进行网络请求
